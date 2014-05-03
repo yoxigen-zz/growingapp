@@ -3,7 +3,8 @@ $secondaryColor: #408492;
 $secondaryColorLighter: #55929e;
 $backgroundColor: #2c2c2c;
 $textColor: White;
-$inputHeight: 2.5em;
+$secondaryTextColor: #979797;
+$inputHeight: 3em;
 $inputBorderRadius: 2px;
 
 @font-face {
@@ -96,9 +97,16 @@ body{
       &.submit-input-wrapper{
         margin: 2em 0 1em;
         height: $inputHeight;
+
+        &.submit-input-external{
+          margin-top: 1em;
+        }
       }
     }
 
+    input{
+      font-family: Roboto, Sans-Serif;
+    }
     input[type=text], input[type=password]{
       height: 100%;
       box-sizing: border-box;
@@ -121,9 +129,9 @@ body{
       }
     }
 
-    input[type=submit]{
+    input[type=submit], .button{
       height: 100%;
-      line-height: $inputHeight - 1;
+      line-height: $inputHeight - .7;
       background: $highlightColor;
       color: $textColor;
       font-size: 18px;
@@ -132,12 +140,48 @@ body{
       border-radius: $inputBorderRadius;
       cursor: pointer;
       outline: none;
-      font-size: 1.4em;
+      font-size: 1.3em;
+      text-shadow: 0 1px 1px rgba(0,0,0,.5);
       padding: 0;
 
       &:hover, &:focus{
         background: lighten($highlightColor, .4);
       }
+
+      &.facebook-button{
+        background: #31353d;
+        display: block;
+
+      }
     }
   }
+}
+
+.secondary-color{
+  color: $secondaryTextColor;
+}
+.facebook-logo{
+  background: -webkit-linear-gradient(top, #5074b0, #405786);
+  height: 1.9em;
+  width: 1.9em;
+  text-align: center;
+  border: solid 1px #394a6a;
+  border-radius: 2px;
+  display: inline-block;
+  float: left;
+  margin: 0.2em;
+  padding: 3px;
+  box-sizing: border-box;
+
+  img{
+    height: 100%;
+  }
+}
+
+.create-user-button{
+  display: block;
+  padding: 1em;
+  text-align: center;
+  font-size: 1.3em;
+  margin-top: 2em;
 }
