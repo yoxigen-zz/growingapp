@@ -1,0 +1,109 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url(fonts/Roboto/Roboto-Regular.ttf);
+  font-weight: 400;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: bold;
+  font-weight: 700;
+  src: url(fonts/Roboto/Roboto-Bold.ttf); }
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf); }
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: bold;
+  font-weight: 700;
+  src: url(fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf); }
+
+html, body {
+  height: 100%; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: white;
+  background: #2c2c2c;
+  text-align: center;
+  padding: 0;
+  margin: 0; }
+
+#logo {
+  font-family: Roboto Condensed, Roboto, Sans-Serif;
+  padding-bottom: 2em;
+  box-sizing: border-box; }
+  #logo img {
+    width: 30%;
+    min-width: 80px;
+    max-width: 120px; }
+  #logo h1 {
+    font-weight: normal;
+    font-size: 2.3em; }
+
+#login {
+  height: 70%;
+  padding-top: 15%; }
+  #login form {
+    height: 66%;
+    width: 72%;
+    margin: 0 auto;
+    max-width: 400px; }
+    #login form label {
+      display: block;
+      height: 2.5em;
+      border-radius: 2px;
+      margin-bottom: 1em;
+      background: #408492; }
+      #login form label .input-image {
+        display: inline-block;
+        float: left;
+        width: 2.5em;
+        height: 100%;
+        line-height: 2.5em; }
+      #login form label img {
+        width: 1.5em;
+        height: 1.5em;
+        margin-top: .5em; }
+    #login form .input-wrapper {
+      margin: 0 0 0 2.5em;
+      height: 100%; }
+      #login form .input-wrapper.submit-input-wrapper {
+        margin: 2em 0 1em;
+        height: 2.5em; }
+    #login form input[type=text], #login form input[type=password] {
+      height: 100%;
+      box-sizing: border-box;
+      line-height: 1.5em;
+      padding: 0 20px;
+      background: #55929e;
+      color: rgba(255, 255, 255, 0.5);
+      border: none;
+      outline: none;
+      border-radius: 0 2px 2px 0;
+      text-align: left;
+      width: 100%;
+      -webkit-transition: all 300ms ease-out;
+      font-size: 1.1em; }
+      #login form input[type=text]:focus, #login form input[type=password]:focus {
+        background: #e0eef1;
+        color: #222; }
+    #login form input[type=submit] {
+      height: 100%;
+      line-height: 1.5em;
+      background: #0abcbe;
+      color: white;
+      font-size: 18px;
+      border: none;
+      width: 100%;
+      border-radius: 2px;
+      cursor: pointer;
+      outline: none;
+      font-size: 1.4em;
+      padding: 0; }
+      #login form input[type=submit]:hover, #login form input[type=submit]:focus {
+        background: #0abec0; }

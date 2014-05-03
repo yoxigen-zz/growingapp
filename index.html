@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Baby Diary</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link href="style/login.css" type="text/css" rel="stylesheet" />
+
+    <script src="phonegap.js"></script>
+</head>
+<body>
+    <div id="login">
+        <div id="logo">
+            <img src="images/logo_with_text.png" alt="Baby Diary" />
+        </div>
+        <form ng-submit="signIn()">
+            <label>
+                <span class="input-image">
+                    <img src="images/icons/user.png" />
+                </span>
+                <div class="input-wrapper">
+                    <input type="text"
+                       placeholder="Username"
+                       ng-model="username"
+                       ng-focus="clearError()"
+                       focus-when="!username">
+                </div>
+            </label>
+            <label>
+                <span class="input-image">
+                    <img src="images/icons/password.png" />
+                </span>
+                <div class="input-wrapper">
+                    <input type="password"
+                           placeholder="Password"
+                           ng-model="password"
+                           ng-focus="clearError()"
+                           focus-when="focusOnPassword">
+                </div>
+            </label>
+            <div class="input-wrapper submit-input-wrapper">
+                <input type="submit" class="btn-primary" value="SIGN IN" />
+            </div>
+        </form>
+    </div>
+</body>
+</html>

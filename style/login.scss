@@ -1,0 +1,143 @@
+$highlightColor: #0abcbe;
+$secondaryColor: #408492;
+$secondaryColorLighter: #55929e;
+$backgroundColor: #2c2c2c;
+$textColor: White;
+$inputHeight: 2.5em;
+$inputBorderRadius: 2px;
+
+@font-face {
+  font-family: 'Roboto';
+  src: url(fonts/Roboto/Roboto-Regular.ttf);
+  font-weight:400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: bold;
+  font-weight: 700;
+  src: url(fonts/Roboto/Roboto-Bold.ttf);
+}
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf);
+}
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: bold;
+  font-weight: 700;
+  src: url(fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf);
+}
+
+html, body{ height: 100%; }
+body{
+  font-family: 'Roboto', sans-serif;
+  color: $textColor;
+  background: $backgroundColor;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+#logo{
+  font-family: Roboto Condensed, Roboto, Sans-Serif;
+  padding-bottom: 2em;
+  box-sizing: border-box;
+
+  img{
+    width: 30%;
+    min-width: 80px;
+    max-width: 120px;
+  }
+
+  h1 {
+    font-weight: normal;
+    font-size: 2.3em;
+
+  }
+}
+#login{
+  height: 70%;
+  padding-top: 15%;
+
+  form{
+    height: 66%;
+    width: 72%;
+    margin: 0 auto;
+    max-width: 400px;
+
+    label{
+      display: block;
+      height: $inputHeight;
+      border-radius: $inputBorderRadius;
+      margin-bottom: 1em;
+      background: $secondaryColor;
+
+      .input-image{
+        display: inline-block;
+        float: left;
+        width: $inputHeight;
+        height: 100%;
+        line-height: $inputHeight;
+      }
+      img{
+        width: 1.5em;
+        height: 1.5em;
+        margin-top: .5em;
+      }
+    }
+
+    .input-wrapper{
+      margin: 0 0 0 $inputHeight;
+      height: 100%;
+
+      &.submit-input-wrapper{
+        margin: 2em 0 1em;
+        height: $inputHeight;
+      }
+    }
+
+    input[type=text], input[type=password]{
+      height: 100%;
+      box-sizing: border-box;
+      line-height: $inputHeight - 1;
+      padding: 0 20px;
+      background: $secondaryColorLighter;
+      color: rgba(255, 255, 255, .5);
+      border: none;
+      outline: none;
+      border-radius: 0 $inputBorderRadius $inputBorderRadius 0;
+      text-align: left;
+      width: 100%;
+
+      -webkit-transition: all 300ms ease-out;
+      font-size: 1.1em;
+
+      &:focus{
+        background: lighten($secondaryColor, 50%);
+        color: #222;
+      }
+    }
+
+    input[type=submit]{
+      height: 100%;
+      line-height: $inputHeight - 1;
+      background: $highlightColor;
+      color: $textColor;
+      font-size: 18px;
+      border: none;
+      width: 100%;
+      border-radius: $inputBorderRadius;
+      cursor: pointer;
+      outline: none;
+      font-size: 1.4em;
+      padding: 0;
+
+      &:hover, &:focus{
+        background: lighten($highlightColor, .4);
+      }
+    }
+  }
+}
