@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url(fonts/Roboto/Roboto-Regular.ttf);
+  font-weight: 400;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: bold;
+  font-weight: 700;
+  src: url(fonts/Roboto/Roboto-Bold.ttf); }
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url(fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf); }
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: bold;
+  font-weight: 700;
+  src: url(fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf); }
+
+html, body {
+  height: 100%; }
+
+body {
+  font-family: 'Roboto', sans-serif;
+  padding: 0;
+  margin: 0; }
+
+body {
+  background: #f4f4f4;
+  color: #243033;
+  padding: 0;
+  margin: 0; }
+
+#actionbar {
+  height: 1cm;
+  line-height: 0.9cm;
+  background: #0099cc;
+  color: white;
+  text-align: center;
+  font-size: 1.2em; }
+  #actionbar #back-button {
+    float: left;
+    line-height: 0.8cm;
+    text-decoration: none;
+    color: White;
+    width: 1.3cm; }
+    #actionbar #back-button .back-icon {
+      height: 0.3cm;
+      float: left;
+      margin: 25% .1cm 0; }
+    #actionbar #back-button #back-img {
+      height: 0.8cm;
+      width: 0.8cm;
+      border-radius: 1px;
+      box-shadow: 0 1px 9px rgba(0, 0, 0, 0.75);
+      margin-top: 0.1cm;
+      vertical-align: middle; }
+  #actionbar #actionbar-name {
+    display: block;
+    margin: 0 1.5cm;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
