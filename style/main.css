@@ -37,32 +37,32 @@ body {
   margin: 0; }
 
 #actionbar {
-  height: 2.5em;
-  line-height: 2.4em;
+  height: 3em;
+  line-height: 2.9em;
   background: #0099cc;
   color: white;
   text-align: center;
   font-size: 1.2em; }
   #actionbar #back-button {
     float: left;
-    line-height: 2em;
+    line-height: 2.4em;
     text-decoration: none;
     color: White;
-    width: 3.25em; }
+    width: 3.9em; }
     #actionbar #back-button .back-icon {
-      height: 0.75em;
+      height: 0.9em;
       float: left;
       margin: 25% .1cm 0; }
     #actionbar #back-button #back-img {
-      height: 2em;
-      width: 2em;
+      height: 2.4em;
+      width: 2.4em;
       border-radius: 1px;
       box-shadow: 0 1px 9px rgba(0, 0, 0, 0.75);
-      margin-top: 0.25em;
+      margin-top: 0.3em;
       vertical-align: middle; }
   #actionbar #actionbar-name {
     display: block;
-    margin: 0 3.75em;
+    margin: 0 4.5em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
