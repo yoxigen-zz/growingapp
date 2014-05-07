@@ -1,0 +1,49 @@
+@import "vars";
+
+$actionbarHeight: 1cm;
+
+body{
+  background: #f4f4f4;
+  color: #243033;
+  padding: 0;
+  margin: 0;
+}
+#actionbar{
+  height: $actionbarHeight;
+  line-height: $actionbarHeight - .1;
+  background: $actionbarBackground;
+  color: $actionbarColor;
+  text-align: center;
+  font-size: 1.2em;
+
+  #back-button{
+    float: left;
+    line-height: $actionbarHeight * .8;
+    text-decoration: none;
+    color: White;
+    width: $actionbarHeight * 1.3;
+
+    .back-icon{
+      height: $actionbarHeight * .3;
+      float: left;
+      margin: 25% .1cm 0;
+    }
+
+    #back-img{
+      height: $actionbarHeight * .8;
+      width: $actionbarHeight * .8;
+      border-radius: 1px;
+      box-shadow: 0 1px 9px rgba(0,0,0,.75);
+      margin-top: $actionbarHeight * .1;
+      vertical-align: middle;
+    }
+  }
+
+  #actionbar-name{
+    display: block;
+    margin: 0 $actionbarHeight * 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

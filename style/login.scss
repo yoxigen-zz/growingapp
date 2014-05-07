@@ -1,47 +1,12 @@
-$highlightColor: #0abcbe;
-$secondaryColor: #408492;
-$secondaryColorLighter: #55929e;
-$backgroundColor: #2c2c2c;
-$textColor: White;
-$secondaryTextColor: #979797;
-$inputHeight: 3em;
-$inputBorderRadius: 2px;
+@import "vars";
 
-@font-face {
-  font-family: 'Roboto';
-  src: url(fonts/Roboto/Roboto-Regular.ttf);
-  font-weight:400;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Roboto';
-  font-style: bold;
-  font-weight: 700;
-  src: url(fonts/Roboto/Roboto-Bold.ttf);
-}
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 400;
-  src: url(fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf);
-}
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: bold;
-  font-weight: 700;
-  src: url(fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf);
-}
-
-html, body{ height: 100%; }
 body{
-  font-family: 'Roboto', sans-serif;
   color: $textColor;
   background: $backgroundColor;
   text-align: center;
-  padding: 0;
-  margin: 0;
 }
 
+a{ color: White; text-decoration: none }
 #logo{
   font-family: Roboto Condensed, Roboto, Sans-Serif;
   padding-bottom: 2em;

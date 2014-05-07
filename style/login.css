@@ -27,11 +27,17 @@ html, body {
 
 body {
   font-family: 'Roboto', sans-serif;
-  color: white;
-  background: #2c2c2c;
-  text-align: center;
   padding: 0;
   margin: 0; }
+
+body {
+  color: white;
+  background: #2c2c2c;
+  text-align: center; }
+
+a {
+  color: White;
+  text-decoration: none; }
 
 #logo {
   font-family: Roboto Condensed, Roboto, Sans-Serif;
