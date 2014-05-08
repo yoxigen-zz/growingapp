@@ -1,6 +1,8 @@
 @import "vars";
 
 $actionbarHeight: 3em;
+$contentsHeaderHeight: 2em;
+$padding: .5em;
 
 body{
   background: #f4f4f4;
@@ -15,6 +17,7 @@ body{
   color: $actionbarColor;
   text-align: center;
   font-size: 1.2em;
+  padding: 0 .1em;
 
   #back-button{
     float: left;
@@ -46,5 +49,29 @@ body{
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 1.3em;
+  }
+}
+
+.contents-header{
+  height: $contentsHeaderHeight;
+  line-height: $contentsHeaderHeight;
+  background: $headerBackground;
+  color: $headerColor;
+  font-size: 1.2em;
+  padding: 0 $padding;
+  border-bottom: solid 1px #d2d2d2;
+  box-sizing: border-box;
+}
+
+.header-controls{
+  float: right;
+
+  a{
+    display: inline-block;
+    height: $contentsHeaderHeight * .65;
+    margin-top: $contentsHeaderHeight * .15;
+  }
+  img{
+    height: 100%
   }
 }

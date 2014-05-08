@@ -42,7 +42,8 @@ body {
   background: #0099cc;
   color: white;
   text-align: center;
-  font-size: 1.2em; }
+  font-size: 1.2em;
+  padding: 0 .1em; }
   #actionbar #back-button {
     float: left;
     line-height: 2.4em;
@@ -67,3 +68,22 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 1.3em; }
+
+.contents-header {
+  height: 2em;
+  line-height: 2em;
+  background: #d9e9ef;
+  color: #373737;
+  font-size: 1.2em;
+  padding: 0 0.5em;
+  border-bottom: solid 1px #d2d2d2;
+  box-sizing: border-box; }
+
+.header-controls {
+  float: right; }
+  .header-controls a {
+    display: inline-block;
+    height: 1.3em;
+    margin-top: 0.3em; }
+  .header-controls img {
+    height: 100%; }
