@@ -37,7 +37,8 @@ select {
   font-size: 1em;
   color: #373737;
   padding-right: .5em;
-  background-size: .5em; }
+  background-size: .5em;
+  outline: none; }
 
 body {
   background: #f4f4f4;
@@ -99,3 +100,22 @@ body {
     margin-top: 0.3em; }
   .header-controls img {
     height: 100%; }
+
+.items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .items-list li {
+    border-bottom: solid 1px rgba(140, 149, 151, 0.2);
+    padding: 0.8em 0.5em; }
+  .items-list .item-icon {
+    float: left;
+    width: 2.5em; }
+  .items-list .item-text {
+    margin-left: 3em; }
+  .items-list .item-details {
+    color: #919191;
+    font-size: .8em;
+    margin-top: .5em; }
+  .items-list .item-value {
+    color: #669900; }

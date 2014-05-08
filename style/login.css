@@ -37,7 +37,8 @@ select {
   font-size: 1em;
   color: #373737;
   padding-right: .5em;
-  background-size: .5em; }
+  background-size: .5em;
+  outline: none; }
 
 body {
   color: white;
