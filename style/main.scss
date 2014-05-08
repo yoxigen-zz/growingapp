@@ -11,6 +11,8 @@ body{
   padding: 0;
   margin: 0;
 
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
   display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: column;
@@ -61,7 +63,11 @@ body{
 
 #contents{
   flex: 1;
+  -webkit-box-flex: 1;
   -webkit-flex: 1;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
   display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: column;
@@ -84,6 +90,7 @@ body{
 }
 
 .contents-scroll{
+  -webkit-box-flex: 1;
   flex: 1;
   -webkit-flex: 1;
   overflow-y: auto;
@@ -105,14 +112,19 @@ body{
 #tabs{
   height: $tabsHeight;
   background: #dadfe1;
+  display: -webkit-box;
+  display: -webkit-box-flex;
   display: -webkit-flex;
   display: flex;
   -webkit-flex-flow: row;
   flex-flow: row;
   flex-direction: row;
   box-shadow: 0 -1px 5px rgba(0,0,0,.5);
+  -webkit-box-orient: horizontal;
 
   a{
+    display: block;
+    -webkit-box-flex: 1;
     flex: 1;
     -webkit-flex: 1;
     text-align: center;
