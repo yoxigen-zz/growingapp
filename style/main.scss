@@ -2,6 +2,7 @@
 
 $actionbarHeight: 3em;
 $contentsHeaderHeight: 2em;
+$tabsHeight: 2.5em;
 $padding: .5em;
 
 body{
@@ -9,6 +10,12 @@ body{
   color: #243033;
   padding: 0;
   margin: 0;
+
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  flex-direction: column;
 }
 #actionbar{
   height: $actionbarHeight;
@@ -52,6 +59,15 @@ body{
   }
 }
 
+#contents{
+  flex: 1;
+  -webkit-flex: 1;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  flex-direction: column;
+}
 .contents-header{
   height: $contentsHeaderHeight;
   line-height: $contentsHeaderHeight;
@@ -61,13 +77,18 @@ body{
   padding: 0 $padding;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
-  font-family: Roboto Condensed, Roboto, Sans-Serif;
 
   select{
     font-family: Roboto Condensed, Roboto, Sans-Serif;
   }
 }
 
+.contents-scroll{
+  flex: 1;
+  -webkit-flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
 .header-controls{
   float: right;
 
@@ -81,4 +102,28 @@ body{
   }
 }
 
+#tabs{
+  height: $tabsHeight;
+  background: #dadfe1;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row;
+  flex-flow: row;
+  flex-direction: row;
+  box-shadow: 0 -1px 5px rgba(0,0,0,.5);
+
+  a{
+    flex: 1;
+    -webkit-flex: 1;
+    text-align: center;
+    line-height: $tabsHeight;
+    text-decoration: none;
+    color: #9da1a2;
+
+    &.selected{
+      background: #edb370;
+      color: #222;
+    }
+  }
+}
 @import "items-list";
