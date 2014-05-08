@@ -42,3 +42,13 @@ body{
   padding: 0;
   margin: 0;
 }
+
+select {
+  -webkit-appearance: none;
+  background: url(../images/icons/triangle.svg) no-repeat right bottom;
+  border: none;
+  font-size: 1em;
+  color: #373737;
+  padding-right: .5em;
+  background-size: .5em;
+}
