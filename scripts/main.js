@@ -1,11 +1,15 @@
 (function(){
     var overlay = document.getElementById("overlay"),
         menu = document.getElementById("menu"),
+        menuButton = document.getElementById("menu-button"),
         isMenuActive,
         toggleTimeout;
 
-    document.getElementById("menu-button").addEventListener("touchstart", toggleMenu);
-    document.getElementById("menu-button").addEventListener("mousedown", toggleMenu);
+    menuButton.addEventListener("touchstart", toggleMenu);
+    menuButton.addEventListener("mousedown", toggleMenu);
+
+    overlay.addEventListener("touchstart", toggleMenu);
+    overlay.addEventListener("mousedown", toggleMenu);
 
     function toggleMenu(e){
         e.preventDefault();
@@ -20,7 +24,7 @@
                 overlay.classList.remove("visible");
                 menu.classList.remove("visible");
 
-            }, 400);
+            }, 300);
         }
         else{
             overlay.classList.add("visible");
@@ -32,6 +36,7 @@
             }, 1);
         }
 
+        menuButton.classList.toggle("active");
         isMenuActive = !isMenuActive;
     }
 })();

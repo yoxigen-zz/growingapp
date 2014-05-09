@@ -64,11 +64,15 @@ body{
     height: 100%;
     width: 2em;
     text-align: center;
+    opacity: .5;
 
     img{
       height: 50%;
       margin-top: 35%;
-      opacity: .5;
+    }
+
+    &.active{
+      opacity: 1;
     }
   }
 }
