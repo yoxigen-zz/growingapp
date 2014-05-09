@@ -10,6 +10,7 @@ $actionbarBackground: #0099cc;
 $actionbarColor: White;
 $headerBackground: #d9e9ef;
 $headerColor: #373737;
+$actionbarHeight: 3.5em;
 
 @font-face {
   font-family: 'Roboto';
@@ -41,6 +42,8 @@ body{
   font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 select {

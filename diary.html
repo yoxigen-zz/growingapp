@@ -13,6 +13,9 @@
             <img class="back-icon" src="images/icons/back.svg" />
             <img id="back-img" src="images/photos/lynn.jpg" />
         </a>
+        <a href="#" id="menu-button">
+            <img src="images/icons/menu.svg" title="Menu" />
+        </a>
         <span id="actionbar-name">Lynn</span>
     </header>
     <div id="contents">
@@ -167,5 +170,55 @@
         <a href="#" class="selected">Diary</a>
         <a href="#">Measures</a>
     </div>
+    <div id="overlay"></div>
+    <div id="menu">
+        <ul id="children-menu">
+            <li class="selected">
+                <a href="#child/lynn">
+                    <img class="child-menu-edit" src="images/icons/edit.svg" />
+                    <img class="child-menu-icon" src="images/photos/lynn.jpg" />
+                    <span class="child-menu-name">Lynn</span>
+                </a>
+            </li>
+            <li>
+                + Add Child
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a href="#settings">
+                    <span class="menu-icon">
+                        <img src="images/icons/settings.svg" />
+                    </span>
+                    <span class="menu-title">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#share">
+                    <span class="menu-icon">
+                        <img src="images/icons/share.svg" />
+                    </span>
+                    <span class="menu-title">Add collaborators</span>
+                </a>
+            </li>
+            <li>
+                <a href="#contact">
+                    <span class="menu-icon">
+                        <img src="images/icons/mail.svg" />
+                    </span>
+                    <span class="menu-title">Report bug / Send feedback</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="menu-icon">
+                        <img src="images/icons/sign_out.svg" />
+                    </span>
+                    <span class="menu-title">Sign out yoxigen</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <script src="scripts/main.js"></script>
 </body>
 </html>

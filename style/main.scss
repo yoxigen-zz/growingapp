@@ -1,6 +1,5 @@
 @import "vars";
 
-$actionbarHeight: 3em;
 $contentsHeaderHeight: 2em;
 $tabsHeight: 2.5em;
 $padding: .5em;
@@ -25,7 +24,6 @@ body{
   background: $actionbarBackground;
   color: $actionbarColor;
   text-align: center;
-  font-size: 1.2em;
   padding: 0 .1em;
 
   #back-button{
@@ -58,6 +56,20 @@ body{
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 1.3em;
+  }
+
+  #menu-button{
+    float: right;
+    display: block;
+    height: 100%;
+    width: 2em;
+    text-align: center;
+
+    img{
+      height: 50%;
+      margin-top: 35%;
+      opacity: .5;
+    }
   }
 }
 
@@ -143,4 +155,21 @@ body{
     }
   }
 }
+
+#overlay{
+  position: absolute;
+  top: $actionbarHeight;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #000;
+  opacity: 0;
+  -webkit-transition: opacity 300ms ease-out;
+  transition: opacity 300ms ease-out;
+  display: none;
+
+  &.visible{ display: block; }
+  &.active{ opacity: .3 }
+}
 @import "items-list";
+@import "menu";
