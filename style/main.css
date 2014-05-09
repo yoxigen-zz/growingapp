@@ -28,9 +28,7 @@ html, body {
 body {
   font-family: 'Roboto', sans-serif;
   padding: 0;
-  margin: 0;
-  overflow-x: hidden;
-  width: 100%; }
+  margin: 0; }
 
 select {
   -webkit-appearance: none;
@@ -81,7 +79,7 @@ body {
       vertical-align: middle; }
   #actionbar #actionbar-name {
     display: block;
-    margin: 0 5.25em;
+    margin: 0 3em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -203,14 +201,22 @@ body {
   .items-list .item-value {
     color: #669900; }
 
-#menu {
+#menu-wrapper {
   position: absolute;
   max-width: 85%;
-  background: #e1e8ea;
-  box-shadow: -2px 2px 15px rgba(0, 0, 0, 0.6);
   top: 3.5em;
   bottom: 0;
   right: 0;
+  overflow: hidden;
+  display: none; }
+  #menu-wrapper.visible {
+    display: block; }
+
+#menu {
+  max-width: 100%;
+  height: 100%;
+  background: #e1e8ea;
+  box-shadow: -2px 2px 15px rgba(0, 0, 0, 0.6);
   padding-bottom: .5em;
   box-sizing: border-box;
   overflow-x: hidden;
@@ -218,10 +224,7 @@ body {
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
   transition: all 300ms ease-out;
-  -webkit-transition: all 300ms ease-out;
-  display: none; }
-  #menu.visible {
-    display: block; }
+  -webkit-transition: all 300ms ease-out; }
   #menu.active {
     -webkit-transform: translateX(0);
     transform: translateX(0); }

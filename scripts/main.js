@@ -1,5 +1,6 @@
 (function(){
     var overlay = document.getElementById("overlay"),
+        menuWrapper = document.getElementById("menu-wrapper"),
         menu = document.getElementById("menu"),
         menuButton = document.getElementById("menu-button"),
         isMenuActive,
@@ -22,13 +23,13 @@
 
             toggleTimeout = setTimeout(function(){
                 overlay.classList.remove("visible");
-                menu.classList.remove("visible");
+                menuWrapper.classList.remove("visible");
 
             }, 300);
         }
         else{
             overlay.classList.add("visible");
-            menu.classList.add("visible");
+            menuWrapper.classList.add("visible");
 
             toggleTimeout = setTimeout(function(){
                 overlay.classList.add("active");
