@@ -21,7 +21,7 @@
     <div id="contents">
         <header class="contents-header">
             <span class="header-controls">
-                <a href="#" title="New entry">
+                <a href="#" title="New entry" id="newEntryButton">
                     <img class="icon" src="images/icons/write.svg" id="write-icon" />
                 </a>
             </span>
@@ -170,7 +170,7 @@
         <a href="#" class="selected">Diary</a>
         <a href="#">Measures</a>
     </div>
-    <div id="overlay"></div>
+    <div id="overlay" class="overlay"></div>
     <div id="menu-wrapper">
         <div id="menu">
             <ul id="children-menu">
@@ -219,6 +219,30 @@
                     </a>
                 </li>
             </ul>
+        </div>
+    </div>
+
+    <div id="newEntry" class="popup-wrapper">
+        <div class="popup">
+            <header>
+                <a href="#" class="close-button" title="Close" id="closeNewEntry">
+                    <img src="images/icons/close.svg" />
+                </a>
+                <span class="popup-title">New Diary Entry</span>
+            </header>
+            <div class="popup-contents">
+                <form>
+                    <input type="text" placeholder="What did she say?" />
+                    <textarea placeholder="Any other details? To whom? Under which circumstances?" rows="4"></textarea>
+                </form>
+            </div>
+            <footer>
+                <a href="#" class="button save-button" style="width: 50%; float: right">
+                    <img src="images/icons/ok.svg" />
+                    Save Entry
+                </a>
+                <a href="#" class="button cancel-button" id="cancelNewEntry" style="width: 48%">Cancel</a>
+            </footer>
         </div>
     </div>
     <script src="scripts/main.js"></script>

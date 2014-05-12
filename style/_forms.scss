@@ -1,0 +1,41 @@
+form{
+  input[type=text], textarea, input[type=number]{
+    border: solid 1px #b9cfd6;
+    border-radius: 2px;
+    background: White;
+    padding: .5em;
+    margin: 0 0 1em;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+    font-size: 1em;
+  }
+}
+
+.button{
+  display: inline-block;
+  padding: .8em;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-size: 1.1em;
+  white-space: nowrap;
+
+  img{
+    height: 1em;
+    vertical-align: middle;
+    margin-right: .2em;
+    position: relative;
+    top: -.1em;
+  }
+}
+
+.save-button{
+  background: #39b54a;
+  color: White;
+  font-weight: bold;
+}
+
+.cancel-button{
+  color: rgba(0,0,0,.6);
+}

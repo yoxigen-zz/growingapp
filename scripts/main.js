@@ -4,13 +4,16 @@
         menu = document.getElementById("menu"),
         menuButton = document.getElementById("menu-button"),
         isMenuActive,
-        toggleTimeout;
+        toggleTimeout,
+        newEntryPopup = document.getElementById("newEntry"),
+        newEntryButton = document.getElementById("newEntryButton"),
+        isNewEntryActive;
 
-    menuButton.addEventListener("touchstart", toggleMenu);
-    menuButton.addEventListener("mousedown", toggleMenu);
-
-    overlay.addEventListener("touchstart", toggleMenu);
-    overlay.addEventListener("mousedown", toggleMenu);
+    addTapListener(menuButton, toggleMenu);
+    addTapListener(overlay, toggleMenu);
+    addTapListener(newEntryButton, toggleNewEntry);
+    addTapListener(document.getElementById("closeNewEntry"), toggleNewEntry);
+    addTapListener(document.getElementById("cancelNewEntry"), toggleNewEntry);
 
     function toggleMenu(e){
         e.preventDefault();
@@ -39,5 +42,34 @@
 
         menuButton.classList.toggle("active");
         isMenuActive = !isMenuActive;
+    }
+
+    function toggleNewEntry(e){
+        e.preventDefault();
+
+        clearTimeout(toggleTimeout);
+
+        if (isNewEntryActive){
+            newEntryPopup.classList.remove("active");
+
+            toggleTimeout = setTimeout(function(){
+                newEntryPopup.classList.remove("visible");
+            }, 300);
+        }
+        else{
+            newEntryPopup.classList.add("visible");
+
+            toggleTimeout = setTimeout(function(){
+                newEntryPopup.classList.add("active");
+            }, 1);
+        }
+
+        newEntryButton.classList.toggle("active");
+        isNewEntryActive = !isNewEntryActive;
+    }
+
+    function addTapListener(el, handler){
+        el.addEventListener("touchstart", handler);
+        el.addEventListener("mousedown", handler);
     }
 })();
