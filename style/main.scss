@@ -1,6 +1,5 @@
 @import "vars";
 
-$contentsHeaderHeight: 2em;
 $tabsHeight: 2.5em;
 $padding: .5em;
 
@@ -95,13 +94,19 @@ body{
   line-height: $contentsHeaderHeight;
   background: $headerBackground;
   color: $headerColor;
-  font-size: 1.2em;
-  padding: 0 $padding;
+  padding-left: $padding;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
 
   select{
     font-family: Roboto Condensed, Roboto, Sans-Serif;
+  }
+
+  h2{
+    font-size: 1.2em;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
   }
 }
 
@@ -116,13 +121,24 @@ body{
   float: right;
 
   a{
-    display: inline-block;
-    height: $contentsHeaderHeight * .65;
-    margin-top: $contentsHeaderHeight * .15;
+    display: block;
+    height: $contentsHeaderHeight;
+    width: $contentsHeaderHeight;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 60%;
+
+    &.active{
+      background-color: $activeColor;
+    }
   }
   img{
     height: 100%
   }
+}
+
+#newEntryButton{
+  background-image: url(../images/icons/write.svg);
 }
 
 #tabs{
@@ -145,7 +161,7 @@ body{
       border-right: none;
     }
     &.selected{
-      background: #FCC435;
+      background: $activeColor;
       color: #222;
     }
   }
@@ -179,3 +195,4 @@ body{
 @import "menu";
 @import "popup";
 @import "forms";
+@import "entry_types";

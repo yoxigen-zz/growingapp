@@ -1,19 +1,27 @@
 (function(){
     var overlay = document.getElementById("overlay"),
         menuWrapper = document.getElementById("menu-wrapper"),
+        newEntryTypesWrapper = document.getElementById("newEntryTypesWrapper"),
+        newEntryTypes = document.getElementById("newEntryType"),
         menu = document.getElementById("menu"),
         menuButton = document.getElementById("menu-button"),
         isMenuActive,
         toggleTimeout,
+        toggleNewEntryTypesTimeout,
         newEntryPopup = document.getElementById("newEntry"),
-        newEntryButton = document.getElementById("newEntryButton"),
-        isNewEntryActive;
+        newEntryTypesButton = document.getElementById("newEntryButton"),
+        isNewEntryActive,
+        isNewEntryTypesActive;
 
     addTapListener(menuButton, toggleMenu);
     addTapListener(overlay, toggleMenu);
-    addTapListener(newEntryButton, toggleNewEntry);
+    addTapListener(newEntryTypesButton, toggleNewEntryTypeSelection);
     addTapListener(document.getElementById("closeNewEntry"), toggleNewEntry);
     addTapListener(document.getElementById("cancelNewEntry"), toggleNewEntry);
+    addTapListener(newEntryTypes, function(e){
+        toggleNewEntryTypeSelection(e);
+        toggleNewEntry();
+    });
 
     function toggleMenu(e){
         e.preventDefault();
@@ -45,7 +53,7 @@
     }
 
     function toggleNewEntry(e){
-        e.preventDefault();
+        e && e.preventDefault();
 
         clearTimeout(toggleTimeout);
 
@@ -64,8 +72,31 @@
             }, 1);
         }
 
-        newEntryButton.classList.toggle("active");
         isNewEntryActive = !isNewEntryActive;
+    }
+
+    function toggleNewEntryTypeSelection(e){
+        e.preventDefault();
+
+        clearTimeout(toggleNewEntryTypesTimeout);
+
+        if (isNewEntryTypesActive){
+            newEntryTypes.classList.remove("active");
+
+            toggleNewEntryTypesTimeout = setTimeout(function(){
+                newEntryTypesWrapper.classList.remove("visible");
+            }, 300);
+        }
+        else{
+            newEntryTypesWrapper.classList.add("visible");
+
+            toggleNewEntryTypesTimeout = setTimeout(function(){
+                newEntryTypes.classList.add("active");
+            }, 1);
+        }
+
+        newEntryTypesButton.classList.toggle("active");
+        isNewEntryTypesActive = !isNewEntryTypesActive;
     }
 
     function addTapListener(el, handler){
