@@ -19,11 +19,17 @@
     addTapListener(document.getElementById("closeNewEntry"), toggleNewEntry);
     addTapListener(document.getElementById("cancelNewEntry"), toggleNewEntry);
     addTapListener(newEntryTypes, function(e){
+        if (e.originalEvent.button === 2)
+            return true;
+
         toggleNewEntryTypeSelection(e);
-        toggleNewEntry();
+        toggleNewEntry(e);
     });
 
     function toggleMenu(e){
+        if (e.originalEvent.button === 2)
+            return true;
+
         e.preventDefault();
 
         clearTimeout(toggleTimeout);
@@ -53,6 +59,9 @@
     }
 
     function toggleNewEntry(e){
+        if (e.originalEvent.button === 2)
+            return true;
+
         e && e.preventDefault();
 
         clearTimeout(toggleTimeout);
@@ -76,6 +85,9 @@
     }
 
     function toggleNewEntryTypeSelection(e){
+        if (e.originalEvent.button === 2)
+            return true;
+
         e.preventDefault();
 
         clearTimeout(toggleNewEntryTypesTimeout);
@@ -100,7 +112,6 @@
     }
 
     function addTapListener(el, handler){
-        el.addEventListener("touchstart", handler);
-        el.addEventListener("mousedown", handler);
+        el.addEventListener("tap", handler);
     }
 })();

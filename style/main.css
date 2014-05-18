@@ -386,7 +386,7 @@ form input[type=text], form textarea, form input[type=number] {
   -webkit-transition: all 200ms ease-out;
   position: absolute;
   top: 0;
-  bottom: 1em;
+  max-height: 95%;
   left: 0;
   right: 0; }
   .entry-types-dialog.active {
@@ -395,7 +395,7 @@ form input[type=text], form textarea, form input[type=number] {
     list-style: none;
     margin: 0;
     padding: 0;
-    -webkit-column-width: 8em;
+    -webkit-column-width: 7em;
     -webkit-column-gap: 0;
     -webkit-column-rule: solid 1px rgba(0, 0, 0, 0.06); }
     .entry-types-dialog .entry-types-list li {
