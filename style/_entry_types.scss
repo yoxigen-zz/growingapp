@@ -1,14 +1,12 @@
 .entry-types-dialog-wrapper{
   position: absolute;
-  top: $contentsHeaderHeight + $actionbarHeight;
-  lleft: 0;
+  top: $contentsHeaderHeight;
+  left: 0;
   width: 100%;
   padding-bottom: 1em;
   overflow: hidden;
-  /*
   display: none;
-  */
-  height: 60%;
+  height: 70%;
 
   &.visible{
     display: block;
@@ -20,10 +18,8 @@
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
   overflow-x: hidden;
   overflow-y: auto;
-  /*
   -webkit-transform: translateY(-100%);
   -webkit-transition: all 200ms ease-out;
-  */
   position: absolute;
   top: 0;
   max-height: 95%;
@@ -60,12 +56,12 @@
         font-size: .9em;
       }
 
-      @media all and (min-width: 600px){
+      @media all and (min-width: 500px){
         width: 20%;
         padding-bottom: 20%;
       }
 
-      @media all and (min-width: 800px){
+      @media all and (min-width: 700px){
         width: 12.5%;
         padding-bottom: 12.5%;
       }

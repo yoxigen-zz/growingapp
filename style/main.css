@@ -97,7 +97,40 @@ body {
     #actionbar #menu-button.active {
       opacity: 1; }
 
+#contents-wrapper {
+  overflow: hidden;
+  position: relative;
+  flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  flex-direction: column; }
+  @media all and (max-height: 500px) and (orientation: landscape) {
+    #contents-wrapper {
+      -webkit-flex-flow: row;
+      flex-flow: row;
+      flex-direction: row-reverse; }
+      #contents-wrapper #tabs {
+        height: auto;
+        width: 2.5em;
+        -webkit-flex-flow: column;
+        flex-flow: column;
+        flex-direction: column;
+        box-shadow: none;
+        border-right: solid 1px rgba(0, 0, 0, 0.1); }
+        #contents-wrapper #tabs a {
+          border-right: none;
+          border-bottom: solid 1px rgba(0, 0, 0, 0.1); }
+          #contents-wrapper #tabs a:last-child {
+            border-bottom: none; } }
+
 #contents {
+  position: relative;
   flex: 1;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
@@ -152,17 +185,23 @@ body {
 #tabs {
   height: 2.5em;
   background: #dadfe1;
-  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.5); }
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.5);
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  box-sizing: border-box; }
   #tabs a {
     display: block;
-    float: left;
-    width: 50%;
+    flex: 1;
+    -webkit-flex: 1;
     text-align: center;
     line-height: 2.5em;
     text-decoration: none;
     color: #9da1a2;
     border-right: solid 1px rgba(0, 0, 0, 0.1);
-    box-sizing: border-box; }
+    box-sizing: border-box;
+    overflow: hidden; }
     #tabs a:last-child {
       border-right: none; }
     #tabs a.selected {
@@ -367,15 +406,13 @@ form input[type=text], form textarea, form input[type=number] {
 
 .entry-types-dialog-wrapper {
   position: absolute;
-  top: 6em;
-  lleft: 0;
+  top: 2.5em;
+  left: 0;
   width: 100%;
   padding-bottom: 1em;
   overflow: hidden;
-  /*
   display: none;
-  */
-  height: 60%; }
+  height: 70%; }
   .entry-types-dialog-wrapper.visible {
     display: block; }
 
@@ -384,10 +421,8 @@ form input[type=text], form textarea, form input[type=number] {
   box-shadow: 0 2px 15px rgba(0, 0, 0, 0.6);
   overflow-x: hidden;
   overflow-y: auto;
-  /*
   -webkit-transform: translateY(-100%);
   -webkit-transition: all 200ms ease-out;
-  */
   position: absolute;
   top: 0;
   max-height: 95%;
@@ -418,11 +453,11 @@ form input[type=text], form textarea, form input[type=number] {
           width: 33.3%;
           padding-bottom: 33.3%;
           font-size: .9em; } }
-      @media all and (min-width: 600px) {
+      @media all and (min-width: 500px) {
         .entry-types-dialog .entry-types-list li {
           width: 20%;
           padding-bottom: 20%; } }
-      @media all and (min-width: 800px) {
+      @media all and (min-width: 700px) {
         .entry-types-dialog .entry-types-list li {
           width: 12.5%;
           padding-bottom: 12.5%; } }
