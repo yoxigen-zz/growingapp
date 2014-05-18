@@ -98,7 +98,7 @@ body{
 
     #tabs{
       height: auto;
-      width: $tabsHeight;
+      width: $tabsHeight + 1;
       -webkit-flex-flow: column;
       flex-flow: column;
       flex-direction: column;
@@ -196,7 +196,10 @@ body{
   box-sizing: border-box;
 
   a{
-    display: block;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+
     flex: 1;
     -webkit-flex: 1;
     text-align: center;
@@ -206,6 +209,7 @@ body{
     border-right: solid 1px rgba(0,0,0,.1);
     box-sizing: border-box;
     overflow: hidden;
+    -webkit-align-items: center;
 
     &:last-child{
       border-right: none;
@@ -213,6 +217,12 @@ body{
     &.selected{
       background: $activeColor;
       color: #222;
+    }
+
+    span{
+      display: block;
+      text-align: center;
+      width: 100%;
     }
   }
 }
