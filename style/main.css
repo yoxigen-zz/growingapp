@@ -344,6 +344,8 @@ body {
   display: none;
   opacity: 0;
   -webkit-align-items: center;
+  -moz-justify-content: center;
+  justify-content: center;
   -webkit-transition: opacity 200ms ease-out;
   transition: opacity 200ms ease-out; }
   .popup-wrapper.visible {
@@ -355,6 +357,7 @@ body {
 
 .popup {
   width: 100%;
+  max-width: 15cm;
   background: #f4f4f4;
   border-radius: 2px;
   box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.5); }

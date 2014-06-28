@@ -1,0 +1,24 @@
+<script type="text/ng-template" id="entry_editor_weight">
+    <label>
+        The new weight:
+        <input type="number" ng-model="entry.value" placeholder="e.g '8.60'" />
+    </label>
+    <select ng-model="entry.units" ng-options="unit for unit in ['kg', 'lb']"></select>
+</script>
+<script type="text/ng-template" id="entry_editor_height">
+    <label>
+        The new height:
+        <input type="number" ng-model="entry.value" placeholder="e.g '78', '2'" />
+    </label>
+    <select ng-model="entry.units" ng-options="unit for unit in ['cm', 'inches']"></select>
+</script>
+<script type="text/ng-template" id="entry_editor_speech">
+    <label>
+        What did {{ child.pronoun }} say?
+        <input type="text" ng-model="entry.value" placeholder="The new word(s) or sentence" />
+    </label>
+    <label>
+        Additional Details
+        <textarea ng-model="entry.description" placeholder="To whom? Under which circumstances? What did {{ child.pronoun }} want?"></textarea>
+    </label>
+</script>
