@@ -17,6 +17,24 @@ body{
   flex-flow: column;
   flex-direction: column;
 }
+a{ cursor: pointer; }
+
+.flex-horizontal{
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row;
+  flex-flow: row;
+  flex-direction: row;
+}
+
+.flex-1{
+  flex: 1;
+  -webkit-flex: 1;
+  -webkit-box-flex: 1;
+}
+
 #actionbar{
   height: $actionbarHeight;
   line-height: $actionbarHeight - .1;
@@ -54,7 +72,8 @@ body{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 1.3em;
+    font-size: 1.5em;
+    font-weight: 300;
   }
 
   #menu-button{
@@ -146,10 +165,10 @@ body{
   }
 
   h2{
-    font-size: 1.2em;
+    font-size: 1.3em;
     margin: 0;
     padding: 0;
-    font-weight: normal;
+    font-weight: 300;
   }
 }
 
@@ -223,6 +242,8 @@ body{
       display: block;
       text-align: center;
       width: 100%;
+      font-weight: 300;
+      font-size: 1.2em;
     }
   }
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("BabyApp").factory("Entry", function getEntryClassFactory(){
+app.factory("Entry", function getEntryClassFactory(){
     function Entry(id){
         var entryTime;
 

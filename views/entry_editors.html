@@ -1,24 +1,22 @@
 <script type="text/ng-template" id="entry_editor_weight">
-    <label>
-        The new weight:
-        <input type="number" ng-model="entry.value" placeholder="e.g '8.60'" />
-    </label>
-    <select ng-model="entry.units" ng-options="unit for unit in ['kg', 'lb']"></select>
+    <div class="flex-horizontal">
+        <div class="flex-1"><input type="number" min=0 ng-model="entry.value" placeholder="The new weight" /></div>
+        <select ng-model="config.localization.weight.selected" ng-options="unit for unit in config.localization.weight.all"></select>
+    </div>
 </script>
 <script type="text/ng-template" id="entry_editor_height">
-    <label>
-        The new height:
-        <input type="number" ng-model="entry.value" placeholder="e.g '78', '2'" />
-    </label>
-    <select ng-model="entry.units" ng-options="unit for unit in ['cm', 'inches']"></select>
+    <div class="flex-horizontal">
+        <div class="flex-1"><input type="number" min=0 ng-model="entry.value" placeholder="The new height" /></div>
+        <select ng-model="config.localization.length.selected" ng-options="unit for unit in config.localization.length.all"></select>
+    </div>
 </script>
 <script type="text/ng-template" id="entry_editor_speech">
     <label>
-        What did {{ child.pronoun }} say?
+        <span class="label-text">What did {{ child.pronoun }} say?</span>
         <input type="text" ng-model="entry.value" placeholder="The new word(s) or sentence" />
     </label>
     <label>
-        Additional Details
+        <span class="label-text">Additional Details</span>
         <textarea ng-model="entry.description" placeholder="To whom? Under which circumstances? What did {{ child.pronoun }} want?"></textarea>
     </label>
 </script>

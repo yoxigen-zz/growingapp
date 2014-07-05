@@ -1,7 +1,13 @@
-angular.module("BabyApp").factory("entries", function entriesFactory(){
+app.factory("entries", function entriesFactory(){
     var entryTypes = [
-        { "name": "weight", "icon": "share" },
-        { "name": "height", "icon": "settings" },
-        { "name": "speech", "icon": "word" }
+        { "id": "weight", "name": "Weight", "icon": "share" },
+        { "id": "height", "name": "Height", "icon": "settings" },
+        { "id": "speech", "name": "Speech", "icon": "word" }
     ];
+
+    return {
+        get types(){
+            return entryTypes;
+        }
+    }
 });

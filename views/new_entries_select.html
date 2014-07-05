@@ -1,0 +1,37 @@
+<div ng-controller="NewEntryController">
+    <div id="newEntryType" class="entry-types-dialog" >
+        <ul class="entry-types-list">
+            <li ng-repeat="entryType in entryTypes"
+                ng-tap="showNewEntryForm(entryType)"
+                ng-style="{ 'background-image': 'url(images/icons/' + entryType.icon + '.svg)' }">
+                <span>{{ entryType.name }}</span>
+            </li>
+        </ul>
+    </div>
+    <div id="newEntry"
+         class="popup-wrapper"
+         ng-show="newEntryType"
+         data-toggle-display="showNewEntry">
+        <div class="popup">
+            <header>
+                <a class="close-button"
+                   title="Close"
+                   ng-tap="showNewEntry = false">
+                    <img src="images/icons/close.svg" />
+                </a>
+                <span class="popup-title">New Diary Entry: {{ newEntryType.name }}</span>
+            </header>
+            <div class="popup-contents">
+                <form ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id">
+                </form>
+            </div>
+            <footer>
+                <a href="#" class="button save-button" style="width: 50%; float: right">
+                    <img src="images/icons/ok.svg" />
+                    Save Entry
+                </a>
+                <a ng-tap="showNewEntry = false" class="button cancel-button" style="width: 48%">Cancel</a>
+            </footer>
+        </div>
+    </div>
+</div>
