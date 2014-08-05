@@ -17,4 +17,8 @@ app.controller("MainController", ["$scope", function($scope){
             }
         }
     };
+
+    $scope.toggleNewEntriesSelection = function(state){
+        $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
+    };
 }]);
