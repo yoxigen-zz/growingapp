@@ -4,7 +4,7 @@ app.factory("entries", function entriesFactory(){
             "id": "weight",
             "name": "Weight",
             "icon": "share",
-            "html": 'Lynn weights <span class="item-measure">{{properties.weight}}{{config.localization.weight.selected}}</span>'
+            "html": 'Lynn weights <span class="item-measure">{{data.properties.weight}}{{config.localization.weight.selected}}</span>'
         },
         { "id": "height", "name": "Height", "icon": "settings" },
         { "id": "speech", "name": "Speech", "icon": "word" }

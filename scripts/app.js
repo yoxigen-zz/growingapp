@@ -1,1 +1,1 @@
-app = angular.module("Diary", ["Tap", "ToggleDisplay", "EventBus"]);
+app = angular.module("Diary", ["Tap", "ToggleDisplay", "EventBus", "Utils"]);
