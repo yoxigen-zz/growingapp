@@ -1,28 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Diary">
 <head lang="en">
     <meta charset="UTF-8">
     <title>Diary</title>
     <meta name="viewport" content="width=device-width">
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <link rel="stylesheet" type="text/css" href="style/main.css" />
+    <script src="components/parse-1.2.18.min.js"></script>
+    <script src="components/angular.min.js"></script>
+    <script src="components/Tocca.min.js"></script>
+
+    <script src="scripts/directives/ng-tap.js"></script>
+    <script src="scripts/directives/toggle-display.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/entry.js"></script>
+    <script src="scripts/services/entries.js"></script>
+    <script src="scripts/controllers/main_controller.js"></script>
+
+    <script src="scripts/controllers/main_controller.js"></script>
+    <script src="scripts/controllers/new_entry_controller.js"></script>
 </head>
-<body>
+<body ng-controller="MainController">
     <header id="actionbar">
         <a href="index.html" id="back-button">
             <img class="back-icon" src="images/icons/back.svg" />
             <img id="back-img" src="images/photos/lynn.jpg" />
         </a>
-        <a href="#" id="menu-button">
+        <a id="menu-button" ng-click="showMenu = !showMenu">
             <img src="images/icons/menu.svg" title="Menu" />
         </a>
-        <span id="actionbar-name">Lynn</span>
+        <span id="actionbar-name">{{ child.name }}</span>
     </header>
     <div id="contents-wrapper">
         <div id="contents">
             <header class="contents-header">
                 <div class="header-controls">
-                    <a href="#" title="New entry" id="newEntryButton"></a>
+                    <a href="#" title="New entry" id="newEntryButton" ng-tap="toggleNewEntriesSelection()"></a>
                 </div>
                 <h2>Diary</h2>
             </header>
@@ -40,9 +54,10 @@
                     <li>
                         <img class="item-icon" src="images/icons/word.svg" title="New word" />
                         <div class="item-text">
-                            Today Lynn said <span class="item-value">"Daddy"</span> for the first time!
+                            Lynn weights <span class="item-measure">8.5kg</span>
+                            <div class="item-note">UP 0.65kg in 21 days</div>
                             <div class="item-details">
-                                04/23 | 1 year, 2 months, 16 days
+                                04/28 | 1 year, 2 months, 21 days
                             </div>
                         </div>
                     </li>
@@ -156,35 +171,11 @@
                     </li>
                 </ul>
             </div>
-            <div id="newEntryTypesWrapper" class="entry-types-dialog-wrapper">
-                <div id="newEntryType" class="entry-types-dialog">
-                    <ul class="entry-types-list">
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                        <li style="background-image: url(images/icons/word.svg)">
-                            <span>Anecdote</span>
-                        </li>
-                    </ul>
-                </div>
+            <div id="newEntryTypesWrapper"
+                 class="entry-types-dialog-wrapper"
+                 ng-include="'views/new_entries_select.html'"
+                 data-toggle-display="showNewEntriesSelection"
+                 data-toggle-element="#newEntryType">
             </div>
         </div>
         <div id="tabs">
@@ -192,12 +183,12 @@
                 <span>Diary</span>
             </a>
             <a href="#">
-                <span>Measures</span>
+                <span>Insights</span>
             </a>
         </div>
     </div>
     <div id="overlay" class="overlay"></div>
-    <div id="menu-wrapper">
+    <div id="menu-wrapper" data-toggle-display="showMenu">
         <div id="menu">
             <ul id="children-menu">
                 <li class="selected">
@@ -247,31 +238,6 @@
             </ul>
         </div>
     </div>
-
-    <div id="newEntry" class="popup-wrapper">
-        <div class="popup">
-            <header>
-                <a href="#" class="close-button" title="Close" id="closeNewEntry">
-                    <img src="images/icons/close.svg" />
-                </a>
-                <span class="popup-title">New Diary Entry</span>
-            </header>
-            <div class="popup-contents">
-                <form>
-                    <input type="text" placeholder="What did she say?" />
-                    <textarea placeholder="Any other details? To whom? Under which circumstances?" rows="4"></textarea>
-                </form>
-            </div>
-            <footer>
-                <a href="#" class="button save-button" style="width: 50%; float: right">
-                    <img src="images/icons/ok.svg" />
-                    Save Entry
-                </a>
-                <a href="#" class="button cancel-button" id="cancelNewEntry" style="width: 48%">Cancel</a>
-            </footer>
-        </div>
-    </div>
-    <script src="components/Tocca.min.js"></script>
-    <script src="scripts/main.js"></script>
+    <ng-include src="'views/entry_editors.html'"></ng-include>
 </body>
 </html>

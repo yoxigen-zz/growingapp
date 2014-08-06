@@ -4,12 +4,31 @@ form{
     border-radius: 2px;
     background: White;
     padding: .5em;
-    margin: 0 0 1em;
     width: 100%;
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
     font-size: 1em;
+    font-weight: 300;
+
+    &.input-small{
+      width: 10em;
+    }
   }
+
+  label{
+    margin-bottom: 1em;
+    display: block;
+
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+}
+
+select{
+  padding: .5em;
+  border: solid 1px #b9cfd6;
+  font-size: 1em;
 }
 
 .button{
@@ -20,6 +39,7 @@ form{
   box-sizing: border-box;
   font-size: 1.1em;
   white-space: nowrap;
+  font-weight: 300;
 
   img{
     height: 1em;
@@ -33,9 +53,17 @@ form{
 .save-button{
   background: #39b54a;
   color: White;
-  font-weight: bold;
 }
 
 .cancel-button{
   color: rgba(0,0,0,.6);
+}
+
+.label-text{
+  color: #7B8B91;
+  text-transform: uppercase;
+  font-size: .8em;
+  font-weight: bold;
+  display: block;
+  margin-bottom: .3em;
 }

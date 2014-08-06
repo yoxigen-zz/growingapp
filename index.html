@@ -1,15 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="Diary">
 <head lang="en">
     <meta charset="UTF-8">
     <title>Baby Diary</title>
     <meta name="viewport" content="width=device-width">
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <link href="style/login.css" type="text/css" rel="stylesheet" />
-
     <script src="phonegap.js"></script>
+    <script src="components/angular.min.js"></script>
+
+    <script src="scripts/services/entry"></script>
+    <script src="scripts/services/entries"></script>
+    <script src="scripts/controllers/main_controller.js"></script>
+
+    <script src="scripts/controllers/main_controller.js"></script>
 </head>
-<body>
+<body ng-controller="MainController">
     <div id="login">
         <div id="logo">
             <img src="images/logo_with_text.png" alt="Baby Diary" />

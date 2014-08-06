@@ -11,16 +11,10 @@
   src: url(fonts/Roboto/Roboto-Bold.ttf); }
 
 @font-face {
-  font-family: 'Roboto Condensed';
+  font-family: 'Roboto';
   font-style: normal;
-  font-weight: 400;
-  src: url(fonts/Roboto_Condensed/RobotoCondensed-Regular.ttf); }
-
-@font-face {
-  font-family: 'Roboto Condensed';
-  font-style: bold;
-  font-weight: 700;
-  src: url(fonts/Roboto_Condensed/RobotoCondensed-Bold.ttf); }
+  font-weight: 300;
+  src: url(fonts/Roboto/Roboto-Light.ttf); }
 
 html, body {
   height: 100%; }
@@ -29,16 +23,6 @@ body {
   font-family: 'Roboto', sans-serif;
   padding: 0;
   margin: 0; }
-
-select {
-  -webkit-appearance: none;
-  background: url(../images/icons/triangle.svg) no-repeat right bottom;
-  border: none;
-  font-size: 1em;
-  color: #373737;
-  padding-right: .5em;
-  background-size: .5em;
-  outline: none; }
 
 body {
   color: white;
@@ -132,7 +116,7 @@ a {
         background: #31353d;
         display: block; }
         #login form input[type=submit].facebook-button span, #login form .button.facebook-button span {
-          font-size: 0.8em; }
+          font-size: .8em; }
 
 .secondary-color {
   color: #979797; }
