@@ -12,6 +12,7 @@
 
     <script src="scripts/directives/ng-tap.js"></script>
     <script src="scripts/directives/toggle-display.js"></script>
+    <script src="scripts/services/eventbus.js"></script>
 
     <script src="scripts/app.js"></script>
     <script src="scripts/services/entry.js"></script>
@@ -20,6 +21,7 @@
 
     <script src="scripts/controllers/main_controller.js"></script>
     <script src="scripts/controllers/new_entry_controller.js"></script>
+    <script src="scripts/controllers/entries_list_controller.js"></script>
 </head>
 <body ng-controller="MainController">
     <header id="actionbar">
@@ -40,7 +42,15 @@
                 </div>
                 <h2>Diary</h2>
             </header>
-            <div class="contents-scroll">
+            <div class="contents-scroll" ng-controller="EntriesListController">
+                <ul class="items-list">
+                    <li ng-repeat="entry in entries">
+                        <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
+                        <div class="item-text">
+                            <div ng-bind-html="entry.html"></div>
+                        </div>
+                    </li>
+                </ul>
                 <ul class="items-list">
                     <li>
                         <img class="item-icon" src="images/icons/word.svg" title="New word" />

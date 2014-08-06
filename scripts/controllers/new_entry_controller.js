@@ -1,5 +1,5 @@
-app.controller("NewEntryController", ["$scope", "entries", "Entry", function($scope, entries, Entry){
-    $scope.entryTypes = entries.types;
+app.controller("NewEntryController", ["$scope", "entries", "Entry", "eventBus", function($scope, entries, Entry, eventBus){
+    $scope.entryTypes = entries.typesArray;
 
     $scope.showNewEntryForm = function(entryType){
         $scope.newEntryType = entryType;
@@ -14,6 +14,7 @@ app.controller("NewEntryController", ["$scope", "entries", "Entry", function($sc
             console.log("saved: ", savedEntry.id, savedEntry.properties);
             $scope.showNewEntry = false;
             $scope.toggleNewEntriesSelection(false);
+            eventBus.triggerEvent(savedEntry.isNewEntry ? "newEntry" : "updatedEntry", savedEntry);
         }, function(error){
             console.error("Couldn't save entry", error);
         });

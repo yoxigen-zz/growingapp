@@ -29,8 +29,12 @@ app.factory("Entry", ["$q", function getEntryClassFactory($q){
 
         },
         save: function(){
-            if (!this.id)
+            if (!this.id) {
+                this.isNewEntry = true;
                 this.id = +new Date();
+            }
+            else
+                this.isNewEntry = false;
 
             return $q.when(this);
         }
