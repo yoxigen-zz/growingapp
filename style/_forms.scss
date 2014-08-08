@@ -1,5 +1,5 @@
 form{
-  input[type=text], textarea, input[type=number]{
+  input[type=text], textarea, input[type=number], input[type=date]{
     border: solid 1px #b9cfd6;
     border-radius: 2px;
     background: White;
@@ -19,7 +19,7 @@ form{
     margin-bottom: 1em;
     display: block;
 
-    &:last-child{
+    &.no-margin{
       margin-bottom: 0;
     }
   }

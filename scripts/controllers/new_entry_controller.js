@@ -11,7 +11,7 @@ app.controller("NewEntryController", ["$scope", "entries", "Entry", "eventBus", 
 
     $scope.saveEntry = function(){
         $scope.entry.save().then(function(savedEntry){
-            console.log("saved: ", savedEntry.id, savedEntry.properties);
+            console.log("saved: ", savedEntry);
             $scope.showNewEntry = false;
             $scope.toggleNewEntriesSelection(false);
             eventBus.triggerEvent(savedEntry.isNewEntry ? "newEntry" : "updatedEntry", savedEntry);

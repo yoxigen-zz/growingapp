@@ -22,7 +22,9 @@
                 <span class="popup-title">New Diary Entry: {{ newEntryType.name }}</span>
             </header>
             <div class="popup-contents">
-                <form ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id">
+                <form>
+                    <div ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id"></div>
+                    <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entry.date" /></label>
                 </form>
             </div>
             <footer>

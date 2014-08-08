@@ -35,4 +35,17 @@
   .item-measure{
     color: rgb(71, 125, 184);
   }
+
+  blockquote{
+    @extend .item-value;
+    font-style: italic;
+
+    &:before{
+      content: open-quote;
+    }
+
+    &:after{
+      content: close-quote;
+    }
+  }
 }

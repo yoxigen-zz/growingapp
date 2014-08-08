@@ -260,10 +260,16 @@ a {
     color: #888;
     font-size: .9em;
     margin: .3em 0; }
-  .items-list .item-value {
+  .items-list .item-value, .items-list blockquote {
     color: #669900; }
   .items-list .item-measure {
     color: #477db8; }
+  .items-list blockquote {
+    font-style: italic; }
+    .items-list blockquote:before {
+      content: open-quote; }
+    .items-list blockquote:after {
+      content: close-quote; }
 
 #menu-wrapper {
   position: absolute;
@@ -392,7 +398,7 @@ a {
   .popup footer {
     padding: 1em; }
 
-form input[type=text], form textarea, form input[type=number] {
+form input[type=text], form textarea, form input[type=number], form input[type=date] {
   border: solid 1px #b9cfd6;
   border-radius: 2px;
   background: White;
@@ -402,12 +408,12 @@ form input[type=text], form textarea, form input[type=number] {
   font-family: Roboto, sans-serif;
   font-size: 1em;
   font-weight: 300; }
-  form input[type=text].input-small, form textarea.input-small, form input[type=number].input-small {
+  form input[type=text].input-small, form textarea.input-small, form input[type=number].input-small, form input[type=date].input-small {
     width: 10em; }
 form label {
   margin-bottom: 1em;
   display: block; }
-  form label:last-child {
+  form label.no-margin {
     margin-bottom: 0; }
 
 select {

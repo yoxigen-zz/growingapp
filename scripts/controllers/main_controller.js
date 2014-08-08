@@ -2,12 +2,12 @@ app.controller("MainController", ["$scope", function($scope){
     $scope.child = {
         name: "Lynn",
         pronoun: "she",
-        birthday: "2013-04-18"
+        birthday: new Date(2013, 3, 18, 0, 0, 0)
     };
 
     $scope.config = {
         localization: {
-            length: {
+            height: {
                 all: ["cm", "inches"],
                 selected: "cm"
             },

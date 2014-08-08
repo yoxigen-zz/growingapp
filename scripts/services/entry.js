@@ -1,13 +1,13 @@
 "use strict";
 
-app.factory("Entry", ["$q", function getEntryClassFactory($q){
-    function Entry(type, id){
+app.factory("Entry", ["$q", function getEntryClassFactory($q) {
+    function Entry(type, id) {
         var entryTime;
 
-        this.__defineGetter__("id", function(){
+        this.__defineGetter__("id", function () {
             return id;
         });
-        this.__defineSetter__("id", function(value){
+        this.__defineSetter__("id", function (value) {
             if (!value)
                 throw new Error("Can't set empty id to Entry.");
 
@@ -17,18 +17,19 @@ app.factory("Entry", ["$q", function getEntryClassFactory($q){
                 throw new Error("Can't set id to Entry, since it already has one.");
         });
 
-       this.__defineGetter__("type", function(){
-           return type;
-       });
+        this.__defineGetter__("type", function () {
+            return type;
+        });
 
+        this.date = new Date();
         this.properties = {};
     }
 
     Entry.prototype = {
-        delete: function(){
+        delete: function () {
 
         },
-        save: function(){
+        save: function () {
             if (!this.id) {
                 this.isNewEntry = true;
                 this.id = +new Date();
@@ -40,7 +41,7 @@ app.factory("Entry", ["$q", function getEntryClassFactory($q){
         }
     };
 
-    Entry.getEntries = function(options){
+    Entry.getEntries = function (options) {
 
     };
 
