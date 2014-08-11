@@ -1,6 +1,9 @@
 "use strict";
 
-app.factory("Entry", ["$q", function getEntryClassFactory($q) {
+app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $indexedDB) {
+    var OBJECT_STORE_NAME = "entries",
+        entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
+
     function Entry(type, id) {
         var entryTime;
 
@@ -32,12 +35,24 @@ app.factory("Entry", ["$q", function getEntryClassFactory($q) {
         save: function () {
             if (!this.id) {
                 this.isNewEntry = true;
-                this.id = +new Date();
+                //this.id = +new Date();
             }
             else
                 this.isNewEntry = false;
 
-            return $q.when(this);
+            var newEntry = this,
+                dbEntry = {
+                    date: this.date.valueOf(),
+                    properties: this.properties,
+                    type: this.type.id,
+                    createTime: new Date().valueOf()
+                };
+
+
+            return entriesObjectStore.insert(dbEntry).then(function(id){
+                newEntry.id = id;
+                return newEntry;
+            });
         }
     };
 
