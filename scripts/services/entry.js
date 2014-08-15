@@ -49,16 +49,20 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
                     createTime: new Date()
                 };
 
-
-            return entriesObjectStore.insert(dbEntry).then(function(id){
-                newEntry.id = id;
-                return newEntry;
-            });
+            try {
+                return entriesObjectStore.insert(dbEntry).then(function (id) {
+                    newEntry.id = id;
+                    return newEntry;
+                });
+            } catch(error){
+                alert(error);
+            }
         }
     };
 
     Entry.getEntries = function (options) {
         options = options || {};
+
         return entriesObjectStore.internalObjectStore(OBJECT_STORE_NAME, "readonly").then(function(objectStore){
             var idx = objectStore.index("date_idx");
             var count = options.count || PAGE_SIZE,
