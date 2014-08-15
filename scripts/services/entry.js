@@ -53,9 +53,11 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
                 return entriesObjectStore.insert(dbEntry).then(function (id) {
                     newEntry.id = id;
                     return newEntry;
+                }, function(error){
+                    alert("ERROR: " + JSON.stringify(error));
                 });
             } catch(error){
-                alert(error);
+                alert("ERR");
             }
         }
     };
