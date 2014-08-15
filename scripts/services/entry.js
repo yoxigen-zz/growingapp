@@ -2,6 +2,7 @@
 
 app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $indexedDB) {
     var OBJECT_STORE_NAME = "entries",
+        PAGE_SIZE = 10,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
     function Entry(type, id) {
@@ -42,10 +43,10 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
 
             var newEntry = this,
                 dbEntry = {
-                    date: this.date.valueOf(),
+                    date: this.date,
                     properties: this.properties,
                     type: this.type.id,
-                    createTime: new Date().valueOf()
+                    createTime: new Date()
                 };
 
 
@@ -57,7 +58,39 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
     };
 
     Entry.getEntries = function (options) {
+        options = options || {};
+        return entriesObjectStore.internalObjectStore(OBJECT_STORE_NAME, "readonly").then(function(objectStore){
+            var idx = objectStore.index("date_idx");
+            var count = options.count || PAGE_SIZE,
+                entries = [],
+                currentRecord = 0,
+                deferred = $q.defer(),
+                cursor = idx.openCursor(null, "prev");
 
+            cursor.onsuccess = function(event) {
+                var cursor = event.target.result;
+                if (!cursor || currentRecord === count) {
+                    deferred.resolve(entries);
+                    return;
+                }
+
+                if (options.offset && currentRecord < options.offset) {
+                    currentRecord = options.offset;
+                    cursor.advance(options.offset);
+                }
+                else{
+                    entries.push(cursor.value);
+                    cursor.continue();
+                    currentRecord++;
+                }
+            };
+
+            cursor.onerror = function(event){
+                deferred.reject(event);
+            };
+
+            return deferred.promise;
+        });
     };
 
     return Entry;

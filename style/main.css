@@ -247,6 +247,8 @@ a {
   .items-list li {
     border-bottom: solid 1px rgba(140, 149, 151, 0.2);
     padding: 0.8em 0.7em; }
+    .items-list li:last-child {
+      border-bottom: none; }
   .items-list .item-icon {
     float: left;
     width: 2.5em; }
