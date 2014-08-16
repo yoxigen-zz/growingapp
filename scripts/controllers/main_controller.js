@@ -2,7 +2,9 @@ app.controller("MainController", ["$scope", function($scope){
     $scope.child = {
         name: "Lynn",
         pronoun: "she",
-        birthday: new Date(2013, 3, 18, 0, 0, 0)
+        birthday: new Date(2013, 3, 18, 0, 0, 0),
+        id: 1,
+        gender: "f"
     };
 
     $scope.config = {

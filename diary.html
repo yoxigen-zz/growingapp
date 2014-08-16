@@ -45,13 +45,21 @@
                 </div>
                 <h2>Diary</h2>
             </header>
-            <div class="contents-scroll" ng-controller="EntriesListController">
+            <div class="contents-scroll flex-1 flex-vertical" ng-controller="EntriesListController">
+                <div id="contents-empty-message" class="flex-1" ng-cloak ng-show="entries && !entries.length">
+                    <div>
+                        <p>No entries added yet.</p>
+                        <a class="button save-button" ng-tap="toggleNewEntriesSelection()">Start adding</a>
+                    </div>
+                </div>
                 <ul class="items-list">
                     <li ng-repeat="entry in entries">
-                        <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
-                        <div class="item-text">
-                            <div ng-bind-html="entry.html"></div>
-                            <div class="item-details" bindonce="entry" bo-bind="entry.dateText"></div>
+                        <div class="items-list-item-content">
+                            <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
+                            <div class="item-text">
+                                <div ng-bind-html="entry.html"></div>
+                                <div class="item-details" bindonce="entry" bo-bind="entry.dateText"></div>
+                            </div>
                         </div>
                     </li>
                 </ul>

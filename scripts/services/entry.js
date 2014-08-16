@@ -5,20 +5,23 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
         PAGE_SIZE = 10,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
-    function Entry(type, id) {
-        var entryTime;
+    function Entry(type, child) {
+        var entryTime,
+            timestamp;
 
-        this.__defineGetter__("id", function () {
-            return id;
+        this.child = child;
+
+        this.__defineGetter__("timestamp", function () {
+            return timestamp;
         });
-        this.__defineSetter__("id", function (value) {
+        this.__defineSetter__("timestamp", function (value) {
             if (!value)
-                throw new Error("Can't set empty id to Entry.");
+                throw new Error("Can't set empty timestamp to Entry.");
 
-            if (!id)
-                id = value;
+            if (!timestamp)
+                timestamp = value;
             else
-                throw new Error("Can't set id to Entry, since it already has one.");
+                throw new Error("Can't set timestamp to Entry, since it already has one.");
         });
 
         this.__defineGetter__("type", function () {
@@ -34,9 +37,9 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
 
         },
         save: function () {
-            if (!this.id) {
+            if (!this.timestamp) {
                 this.isNewEntry = true;
-                //this.id = +new Date();
+                this.timestamp = new Date();
             }
             else
                 this.isNewEntry = false;
@@ -46,11 +49,11 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
                     date: this.date,
                     properties: this.properties,
                     type: this.type.id,
-                    createTime: new Date()
+                    timestamp: this.timestamp,
+                    childId: this.child.id
                 };
 
             return entriesObjectStore.insert(dbEntry).then(function (id) {
-                newEntry.id = id;
                 return newEntry;
             }, function(error){
                 alert("ERROR: " + JSON.stringify(error));
@@ -92,6 +95,8 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
             };
 
             return deferred.promise;
+        }, function(){
+            return $q.when([]);
         });
     };
 

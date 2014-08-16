@@ -53,6 +53,11 @@ select{
 .save-button{
   background: #39b54a;
   color: White;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #3ED453;
+  }
 }
 
 .cancel-button{

@@ -49,6 +49,15 @@ a {
   flex-flow: row;
   flex-direction: row; }
 
+.flex-vertical {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: column;
+  flex-flow: column;
+  flex-direction: column; }
+
 .flex-1 {
   flex: 1;
   -webkit-flex: 1;
@@ -161,11 +170,21 @@ a {
     font-weight: 300; }
 
 .contents-scroll {
-  -webkit-box-flex: 1;
-  flex: 1;
-  -webkit-flex: 1;
   overflow-y: auto;
   overflow-x: hidden; }
+
+#contents-empty-message {
+  -webkit-align-items: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  text-align: center; }
+  #contents-empty-message div {
+    margin: 0 auto; }
+  #contents-empty-message p {
+    opacity: .5;
+    font-size: 1.2em;
+    font-weight: 300; }
 
 .header-controls {
   float: right; }
@@ -245,10 +264,11 @@ a {
   margin: 0;
   padding: 0; }
   .items-list li {
-    border-bottom: solid 1px rgba(140, 149, 151, 0.2);
-    padding: 0.8em 0.7em; }
+    border-bottom: solid 1px rgba(140, 149, 151, 0.2); }
     .items-list li:last-child {
       border-bottom: none; }
+  .items-list .items-list-item-content {
+    padding: 0.8em 0.7em; }
   .items-list .item-icon {
     float: left;
     width: 2.5em; }
@@ -441,7 +461,10 @@ select {
 
 .save-button {
   background: #39b54a;
-  color: White; }
+  color: White;
+  cursor: pointer; }
+  .save-button:hover {
+    background-color: #3ED453; }
 
 .cancel-button {
   color: rgba(0, 0, 0, 0.6); }
