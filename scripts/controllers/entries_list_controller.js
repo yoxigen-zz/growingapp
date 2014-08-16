@@ -18,6 +18,12 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     function addEntry(newEntry){
         $scope.entries.splice(0, 0, parseEntry(newEntry));
+        $scope.entries.sort(function(a, b){
+            if (a.date === b.date)
+                return 0;
+
+            return a.date < b.date ? 1 : -1;
+        });
     }
 
     function parseEntry(entryData){

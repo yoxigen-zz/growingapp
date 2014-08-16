@@ -325,7 +325,8 @@ a {
   right: 0;
   overflow: hidden;
   display: none;
-  padding-left: 1em; }
+  padding-left: 1em;
+  z-index: 101; }
   #menu-wrapper.visible {
     display: block; }
   #menu-wrapper.active #menu {
@@ -352,6 +353,8 @@ a {
     #menu ul li {
       border-top: solid 1px rgba(154, 167, 172, 0.2);
       padding: 1em 1.5em 1em 1em; }
+      #menu ul li:hover {
+        background-color: #D7E0E2; }
   #menu #children-menu {
     background: #eff5f7;
     padding-bottom: 2em; }
