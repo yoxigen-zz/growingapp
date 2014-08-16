@@ -110,7 +110,7 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
                     monthsCount = 0;
 
                 if (month1 === month2)
-                    return Math.abs(d1.getDate() - d2.getDate());
+                    return { days: Math.abs(d1.getDate() - d2.getDate()), months: 0 };
 
                 for (var month = month1; month < month2; month++){
                     if (month < month2 - 1 || secondDateIsHigher) {
@@ -136,7 +136,7 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
                 if (daysAndMonths.days)
                     str.push(daysAndMonths.days + " day" + (daysAndMonths.days > 1 ? "s" : ""));
 
-                return methods.arrays.toSentence(str) + " old";
+                return str.length ? methods.arrays.toSentence(str) + " old" : "Birthday!";
             }
         },
         strings: {

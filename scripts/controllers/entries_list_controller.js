@@ -35,7 +35,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             ? newEntry.type.html(newEntry, $scope.child, $scope.config)
             : utils.strings.parse(newEntry.type.html, newEntry, $scope));
 
-        newEntry.dateText = newEntry.date.toLocaleDateString() + " | " + utils.dates.dateDiff(newEntry.date, $scope.child.birthday);
+        newEntry.dateText = newEntry.date.toLocaleDateString() + " (" + utils.dates.dateDiff(newEntry.date, $scope.child.birthday) + ")";
         return newEntry;
     }
     
