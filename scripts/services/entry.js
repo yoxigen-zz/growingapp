@@ -1,15 +1,28 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $indexedDB) {
+app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFactory($q, $indexedDB, entries) {
     var OBJECT_STORE_NAME = "entries",
         PAGE_SIZE = 10,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
     function Entry(type, child) {
-        var entryTime,
-            timestamp;
+        var timestamp;
 
-        this.child = child;
+        if (type.timestamp && type.childId && type.properties)
+        {
+            var entryData = type;
+            type = entries.types[entryData.type];
+
+            timestamp = entryData.timestamp;
+            this.date = entryData.date;
+            this.properties = entryData.properties;
+            this.childId = { id: entryData.childId };
+        }
+        else{
+            this.date = new Date();
+            this.properties = {};
+            this.child = child;
+        }
 
         this.__defineGetter__("timestamp", function () {
             return timestamp;
@@ -27,19 +40,22 @@ app.factory("Entry", ["$q", "$indexedDB", function getEntryClassFactory($q, $ind
         this.__defineGetter__("type", function () {
             return type;
         });
-
-        this.date = new Date();
-        this.properties = {};
     }
 
     Entry.prototype = {
-        delete: function () {
+        remove: function () {
+            if (!this.timestamp)
+                throw new Error("Can't delete entry - it hasn't been saved yet.");
 
+            return entriesObjectStore.delete(this.timestamp).catch(function(error){
+                console.error("Can't delete entry: ", error);
+                return $q.reject("Can't delete entry");
+            });
         },
         save: function () {
             if (!this.timestamp) {
                 this.isNewEntry = true;
-                this.timestamp = new Date();
+                this.timestamp = new Date().valueOf();
             }
             else
                 this.isNewEntry = false;

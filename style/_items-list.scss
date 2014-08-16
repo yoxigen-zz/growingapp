@@ -5,6 +5,8 @@
 
   li{
     border-bottom: solid 1px rgba(140, 149, 151, 0.20);
+    position: relative;
+    overflow: hidden;
 
     &:last-child{
       border-bottom: none;
@@ -13,8 +15,35 @@
 
   .items-list-item-content{
     padding: 0.8em 0.7em;
+    -webkit-transition: -webkit-transform 200ms ease-out;
+    position: relative;
+    z-index: 2;
+    background: $contentBackgroundColor;
+
+    &.removed{
+      -webkit-transform: translateX(-80%);
+      box-shadow: 5px 0 8px rgba(0,0,0,.6);
+    }
   }
 
+  .items-list-item-removed{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.8em 0.7em;
+    height: 100%;
+    box-sizing: border-box;
+    background: #555;
+    color: White;
+    text-align: right;
+
+    .item-removed-undo{
+      padding: .4em .8em;
+      margin-left: .5em;
+    }
+  }
   .item-icon{
     float: left;
     width: 2.5em;

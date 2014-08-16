@@ -7,6 +7,7 @@
   overflow: hidden;
   display: none;
   height: 70%;
+  z-index: 100;
 
   &.visible{
     display: block;

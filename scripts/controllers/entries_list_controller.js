@@ -1,16 +1,29 @@
 'use strict';
 
-app.controller("EntriesListController", ["$scope", "$sce", "utils", "eventBus", "entries", "Entry", function($scope, $sce, utils, eventBus, entries, Entry){
+app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", function($scope, $sce, $timeout, utils, eventBus, entries, Entry){
     eventBus.subscribe("newEntry", addEntry);
+
+    $scope.removeEntry = function(entry){
+        entry.removed = true;
+        entry.removeTimeout = $timeout(function(){
+            entry.remove();
+            $scope.entries.splice($scope.entries.indexOf(entry), 1);
+        }, 3000);
+    };
+
+    $scope.undoRemoveEntry = function(entry){
+        entry.removed = false;
+        $timeout.cancel(entry.removeTimeout);
+    };
 
     function addEntry(newEntry){
         $scope.entries.splice(0, 0, parseEntry(newEntry));
     }
 
-    function parseEntry(entry){
-        var newEntry = angular.copy(entry);
-        if (typeof(newEntry.type) === "string")
-            newEntry.type = entries.types[newEntry.type];
+    function parseEntry(entryData){
+        var newEntry = entryData instanceof Entry ? entryData : new Entry(entryData);
+        //if (typeof(newEntry.type) === "string")
+            //newEntry.type = entries.types[newEntry.type];
 
         newEntry.html = $sce.trustAsHtml(angular.isFunction(newEntry.type.html)
             ? newEntry.type.html(newEntry, $scope.child, $scope.config)

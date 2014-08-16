@@ -54,12 +54,15 @@
                 </div>
                 <ul class="items-list">
                     <li ng-repeat="entry in entries">
-                        <div class="items-list-item-content">
+                        <div class="items-list-item-content" swipe-left="removeEntry(entry)" ng-class="{ removed: entry.removed }">
                             <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                             <div class="item-text">
                                 <div ng-bind-html="entry.html"></div>
                                 <div class="item-details" bindonce="entry" bo-bind="entry.dateText"></div>
                             </div>
+                        </div>
+                        <div class="items-list-item-removed">
+                            Item removed <a class="button undo-button item-removed-undo" ng-click="undoRemoveEntry(entry)">Undo</a>
                         </div>
                     </li>
                 </ul>

@@ -264,11 +264,35 @@ a {
   margin: 0;
   padding: 0; }
   .items-list li {
-    border-bottom: solid 1px rgba(140, 149, 151, 0.2); }
+    border-bottom: solid 1px rgba(140, 149, 151, 0.2);
+    position: relative;
+    overflow: hidden; }
     .items-list li:last-child {
       border-bottom: none; }
   .items-list .items-list-item-content {
-    padding: 0.8em 0.7em; }
+    padding: 0.8em 0.7em;
+    -webkit-transition: -webkit-transform 200ms ease-out;
+    position: relative;
+    z-index: 2;
+    background: #f4f4f4; }
+    .items-list .items-list-item-content.removed {
+      -webkit-transform: translateX(-80%);
+      box-shadow: 5px 0 8px rgba(0, 0, 0, 0.6); }
+  .items-list .items-list-item-removed {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.8em 0.7em;
+    height: 100%;
+    box-sizing: border-box;
+    background: #555;
+    color: White;
+    text-align: right; }
+    .items-list .items-list-item-removed .item-removed-undo {
+      padding: .4em .8em;
+      margin-left: .5em; }
   .items-list .item-icon {
     float: left;
     width: 2.5em; }
@@ -466,6 +490,20 @@ select {
   .save-button:hover {
     background-color: #3ED453; }
 
+.remove-button {
+  background-color: #b52d35;
+  color: White;
+  cursor: pointer; }
+  .remove-button:hover {
+    background-color: #cc3038; }
+
+.undo-button {
+  background-color: #DFC822;
+  color: Black;
+  cursor: pointer; }
+  .undo-button:hover {
+    background-color: #f6df22; }
+
 .cancel-button {
   color: rgba(0, 0, 0, 0.6); }
 
@@ -485,7 +523,8 @@ select {
   padding-bottom: 1em;
   overflow: hidden;
   display: none;
-  height: 70%; }
+  height: 70%;
+  z-index: 100; }
   .entry-types-dialog-wrapper.visible {
     display: block; }
 

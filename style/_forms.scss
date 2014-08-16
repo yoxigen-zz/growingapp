@@ -60,6 +60,27 @@ select{
   }
 }
 
+.remove-button{
+  background-color: #b52d35;
+  color: White;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #cc3038;
+  }
+}
+
+.undo-button{
+  background-color: #DFC822;
+  color: Black;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #f6df22;
+  }
+}
+
+
 .cancel-button{
   color: rgba(0,0,0,.6);
 }
