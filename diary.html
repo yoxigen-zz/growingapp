@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="style/main.css" />
     <script src="components/parse-1.2.18.min.js"></script>
     <script src="components/angular.min.js"></script>
-    <script src="components/Tocca.min.js"></script>
+    <script src="components/angular-touch.min.js"></script>
     <script src="components/bindonce.min.js"></script>
     <script src="components/indexeddb.js"></script>
 
@@ -41,7 +41,7 @@
         <div id="contents">
             <header class="contents-header">
                 <div class="header-controls">
-                    <a href="#" title="New entry" id="newEntryButton" ng-tap="toggleNewEntriesSelection()"></a>
+                    <a href="#" title="New entry" id="newEntryButton" ng-click="toggleNewEntriesSelection()"></a>
                 </div>
                 <h2>Diary</h2>
             </header>
@@ -49,12 +49,12 @@
                 <div id="contents-empty-message" class="flex-1" ng-cloak ng-show="entries && !entries.length">
                     <div>
                         <p>No entries added yet.</p>
-                        <a class="button save-button" ng-tap="toggleNewEntriesSelection()">Start adding</a>
+                        <a class="button save-button" ng-click="toggleNewEntriesSelection()">Start adding</a>
                     </div>
                 </div>
                 <ul class="items-list">
                     <li ng-repeat="entry in entries">
-                        <div class="items-list-item-content" swipe-left="removeEntry(entry)" ng-class="{ removed: entry.removed }">
+                        <div class="items-list-item-content" ng-swipe-left="removeEntry(entry)" ng-class="{ removed: entry.removed }">
                             <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                             <div class="item-text">
                                 <div ng-bind-html="entry.html"></div>

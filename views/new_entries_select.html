@@ -2,7 +2,7 @@
     <div id="newEntryType" class="entry-types-dialog" >
         <ul class="entry-types-list">
             <li ng-repeat="entryType in entryTypes"
-                ng-tap="showNewEntryForm(entryType)"
+                ng-click="showNewEntryForm(entryType)"
                 ng-style="{ 'background-image': 'url(images/icons/' + entryType.icon + '.svg)' }">
                 <span>{{ entryType.name }}</span>
             </li>
@@ -16,7 +16,7 @@
             <header>
                 <a class="close-button"
                    title="Close"
-                   ng-tap="showNewEntry = false">
+                   ng-click="showNewEntry = false">
                     <img src="images/icons/close.svg" />
                 </a>
                 <span class="popup-title">New Diary Entry: {{ newEntryType.name }}</span>
@@ -32,7 +32,7 @@
                     <img src="images/icons/ok.svg" />
                     Save Entry
                 </a>
-                <a ng-tap="showNewEntry = false" class="button cancel-button" style="width: 48%">Cancel</a>
+                <a ng-click="showNewEntry = false" class="button cancel-button" style="width: 48%">Cancel</a>
             </footer>
         </div>
     </div>

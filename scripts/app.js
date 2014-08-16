@@ -1,4 +1,4 @@
-app = angular.module("Diary", ["Tap", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB"])
+app = angular.module("Diary", ["ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB"])
     .config(function ($indexedDBProvider) {
         var ENTRIES_STORE_NAME = "entries";
 

@@ -8,7 +8,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         entry.removeTimeout = $timeout(function(){
             entry.remove();
             $scope.entries.splice($scope.entries.indexOf(entry), 1);
-        }, 3000);
+        }, 5000);
     };
 
     $scope.undoRemoveEntry = function(entry){
