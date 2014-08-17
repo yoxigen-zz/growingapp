@@ -79,6 +79,9 @@
     color: rgb(71, 125, 184);
   }
 
+  .item-error{
+    color: #c00;
+  }
   blockquote{
     @extend .item-value;
     font-style: italic;

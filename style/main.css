@@ -314,6 +314,8 @@ a {
     color: #669900; }
   .items-list .item-measure {
     color: #477db8; }
+  .items-list .item-error {
+    color: #c00; }
   .items-list blockquote {
     font-style: italic; }
     .items-list blockquote:before {

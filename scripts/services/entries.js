@@ -26,7 +26,7 @@ app.factory("entries", ["utils", function entriesFactory(utils){
             "name": "Speech",
             "icon": "word",
             html: function(entry, child, config){
-                var description = "<p class='item-description'>" + utils.strings.escapeHtml(entry.properties.description) + "</p>";
+                var description = entry.properties.description ? "<p class='item-description'>" + utils.strings.escapeHtml(entry.properties.description) + "</p>" : "";
                 if (/[\s\.\,\!\?]/.test(entry.properties.words))
                     return child.name + ' said: <blockquote>' + utils.strings.escapeHtml(entry.properties.words) + '</blockquote>' + description;
                 else

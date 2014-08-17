@@ -31,9 +31,14 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         //if (typeof(newEntry.type) === "string")
             //newEntry.type = entries.types[newEntry.type];
 
-        newEntry.html = $sce.trustAsHtml(angular.isFunction(newEntry.type.html)
-            ? newEntry.type.html(newEntry, $scope.child, $scope.config)
-            : utils.strings.parse(newEntry.type.html, newEntry, $scope));
+        try {
+            newEntry.html = $sce.trustAsHtml(angular.isFunction(newEntry.type.html)
+                ? newEntry.type.html(newEntry, $scope.child, $scope.config)
+                : utils.strings.parse(newEntry.type.html, newEntry, $scope));
+        }
+        catch(e){
+            newEntry.html = $sce.trustAsHtml("<span class='item-error'>Error parsing entry HTML!</span>");
+        }
 
         newEntry.dateText = newEntry.date.toLocaleDateString() + " (" + utils.dates.dateDiff(newEntry.date, $scope.child.birthday) + ")";
         return newEntry;
