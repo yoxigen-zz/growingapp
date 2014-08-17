@@ -3,7 +3,7 @@ app.factory("entries", ["utils", function entriesFactory(utils){
         {
             "id": "weight",
             "name": "Weight",
-            "icon": "share",
+            "icon": "weight",
             "html": '{{child.name}} weights <span class="item-measure">{{data.properties.weight}}{{config.localization.weight.selected}}</span>',
             "properties": [
                 {
@@ -18,7 +18,7 @@ app.factory("entries", ["utils", function entriesFactory(utils){
         {
             "id": "height",
             "name": "Height",
-            "icon": "settings",
+            "icon": "height",
             "html": '{{child.name}} is <span class="item-measure">{{data.properties.height}}{{config.localization.height.selected}}</span> tall'
         },
         {
@@ -26,10 +26,11 @@ app.factory("entries", ["utils", function entriesFactory(utils){
             "name": "Speech",
             "icon": "word",
             html: function(entry, child, config){
+                var description = "<p class='item-description'>" + utils.strings.escapeHtml(entry.properties.description) + "</p>";
                 if (/[\s\.\,\!\?]/.test(entry.properties.words))
-                    return child.name + ' said: <blockquote>' + entry.properties.words + '</blockquote>';
+                    return child.name + ' said: <blockquote>' + utils.strings.escapeHtml(entry.properties.words) + '</blockquote>' + description;
                 else
-                    return child.name + ' said <span class="item-value">&quot;' + entry.properties.words + '&quot;</span> for the first time!';
+                    return child.name + ' said <span class="item-value">&quot;' + utils.strings.escapeHtml(entry.properties.words) + '&quot;</span> for the first time!' + description;
             }
         }
     ];

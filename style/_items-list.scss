@@ -47,6 +47,7 @@
   .item-icon{
     float: left;
     width: 2.5em;
+    max-height: 2.5em;
   }
 
   .item-text{
@@ -64,6 +65,12 @@
     font-size: .9em;
     margin: .3em 0;
   }
+
+  .item-description{
+    color: #666;
+    font-size: .9em;
+  }
+
   .item-value{
     color: #669900;
   }

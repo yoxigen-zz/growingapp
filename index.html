@@ -2,65 +2,128 @@
 <html ng-app="Diary">
 <head lang="en">
     <meta charset="UTF-8">
-    <title>Baby Diary</title>
+    <title>Diary</title>
     <meta name="viewport" content="width=device-width">
     <link rel="icon" type="image/png" href="images/favicon.png" />
-    <link href="style/login.css" type="text/css" rel="stylesheet" />
-    <script src="phonegap.js"></script>
+    <link rel="stylesheet" type="text/css" href="style/main.css" />
+    <script src="components/parse-1.2.18.min.js"></script>
     <script src="components/angular.min.js"></script>
+    <script src="components/angular-touch.min.js"></script>
+    <script src="components/bindonce.min.js"></script>
+    <script src="components/indexeddb.js"></script>
 
-    <script src="scripts/services/entry"></script>
-    <script src="scripts/services/entries"></script>
+    <script src="scripts/directives/ng-tap.js"></script>
+    <script src="scripts/directives/self-click.js"></script>
+    <script src="scripts/directives/toggle-display.js"></script>
+    <script src="scripts/services/eventbus.js"></script>
+    <script src="scripts/services/utils.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/services/entry.js"></script>
+    <script src="scripts/services/entries.js"></script>
     <script src="scripts/controllers/main_controller.js"></script>
 
     <script src="scripts/controllers/main_controller.js"></script>
+    <script src="scripts/controllers/new_entry_controller.js"></script>
+    <script src="scripts/controllers/entries_list_controller.js"></script>
 </head>
 <body ng-controller="MainController">
-    <div id="login">
-        <div id="logo">
-            <img src="images/logo_with_text.png" alt="Baby Diary" />
+    <header id="actionbar">
+        <a href="index.html" id="back-button">
+            <img class="back-icon" src="images/icons/back.svg" />
+            <img id="back-img" src="images/photos/lynn.jpg" />
+        </a>
+        <a id="menu-button" ng-click="showMenu = !showMenu">
+            <img src="images/icons/menu.svg" title="Menu" />
+        </a>
+        <span id="actionbar-name">{{ child.name }}</span>
+    </header>
+    <div id="contents-wrapper">
+        <div id="contents">
+            <header class="contents-header">
+                <div class="header-controls">
+                    <a href="#" title="New entry" id="newEntryButton" ng-click="toggleNewEntriesSelection()"></a>
+                </div>
+                <h2>Diary</h2>
+            </header>
+            <div class="contents-scroll flex-1 flex-vertical" ng-controller="EntriesListController">
+                <div id="contents-empty-message" class="flex-1" ng-cloak ng-show="entries && !entries.length">
+                    <div>
+                        <p>No entries added yet.</p>
+                        <a class="button save-button" ng-click="toggleNewEntriesSelection()">Start adding</a>
+                    </div>
+                </div>
+                <ul class="items-list">
+                    <li ng-repeat="entry in entries">
+                        <div class="items-list-item-content" ng-swipe-left="removeEntry(entry)" ng-class="{ removed: entry.removed }">
+                            <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
+                            <div class="item-text">
+                                <div ng-bind-html="entry.html"></div>
+                                <div class="item-details" bindonce="entry" bo-bind="entry.dateText"></div>
+                            </div>
+                        </div>
+                        <div class="items-list-item-removed">
+                            Item removed <a class="button undo-button item-removed-undo" ng-click="undoRemoveEntry(entry)">Undo</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div id="newEntryTypesWrapper"
+                 class="entry-types-dialog-wrapper"
+                 self-click="toggleNewEntriesSelection()"
+                 ng-include="'views/new_entries_select.html'"
+                 data-toggle-display="showNewEntriesSelection"
+                 data-toggle-element="#newEntryType">
+            </div>
         </div>
-        <form ng-submit="signIn()">
-            <label>
-                <span class="input-image">
-                    <img src="images/icons/user.png" />
-                </span>
-                <div class="input-wrapper">
-                    <input type="text"
-                       placeholder="Username"
-                       ng-model="username"
-                       ng-focus="clearError()"
-                       focus-when="!username">
-                </div>
-            </label>
-            <label>
-                <span class="input-image">
-                    <img src="images/icons/password.png" />
-                </span>
-                <div class="input-wrapper">
-                    <input type="password"
-                           placeholder="Password"
-                           ng-model="password"
-                           ng-focus="clearError()"
-                           focus-when="focusOnPassword">
-                </div>
-            </label>
-            <div class="input-wrapper submit-input-wrapper">
-                <input type="submit" class="btn-primary" value="SIGN IN" />
-            </div>
-            <span class="secondary-color">or</span>
-            <div class="input-wrapper submit-input-wrapper submit-input-external">
-                <a class="button facebook-button">
-                    <i class="facebook-logo">
-                        <img src="images/icons/facebook.png" />
-                    </i>
-                    <span>Login with Facebook</span>
-                </a>
-            </div>
-            <a class="create-user-button" href="diary.html">
-                Create a new user
+        <div id="tabs">
+            <a href="#" class="selected">
+                <span>Diary</span>
             </a>
-        </form>
+            <a href="#">
+                <span>Insights</span>
+            </a>
+        </div>
     </div>
+    <div id="overlay" class="overlay"></div>
+    <div id="menu-wrapper" data-toggle-display="showMenu">
+        <div id="menu">
+            <ul>
+                <li>
+                    <a href="#settings">
+                        <span class="menu-icon">
+                            <img src="images/icons/settings.svg" />
+                        </span>
+                        <span class="menu-title">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#share">
+                        <span class="menu-icon">
+                            <img src="images/icons/share.svg" />
+                        </span>
+                        <span class="menu-title">Add collaborators</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#contact">
+                        <span class="menu-icon">
+                            <img src="images/icons/mail.svg" />
+                        </span>
+                        <span class="menu-title">Report bug / Send feedback</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="menu-icon">
+                            <img src="images/icons/sign_out.svg" />
+                        </span>
+                        <span class="menu-title">Sign out yoxigen</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <ng-include src="'views/entry_editors.html'"></ng-include>
 </body>
 </html>

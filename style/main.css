@@ -295,7 +295,8 @@ a {
       margin-left: .5em; }
   .items-list .item-icon {
     float: left;
-    width: 2.5em; }
+    width: 2.5em;
+    max-height: 2.5em; }
   .items-list .item-text {
     margin-left: 3em; }
   .items-list .item-details {
@@ -306,6 +307,9 @@ a {
     color: #888;
     font-size: .9em;
     margin: .3em 0; }
+  .items-list .item-description {
+    color: #666;
+    font-size: .9em; }
   .items-list .item-value, .items-list blockquote {
     color: #669900; }
   .items-list .item-measure {

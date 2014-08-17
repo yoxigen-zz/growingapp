@@ -140,6 +140,9 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
             }
         },
         strings: {
+            escapeHtml: function(str){
+                return str.replace(/\&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            },
             parse: function(expression, data, scope){
                 if (!expression)
                     return "";
