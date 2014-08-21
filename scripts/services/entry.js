@@ -5,10 +5,10 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
         PAGE_SIZE = 10,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
-    function Entry(type, child) {
+    function Entry(type, player) {
         var timestamp;
 
-        if (type.timestamp && type.childId && type.properties)
+        if (type.timestamp && type.playerId && type.properties)
         {
             var entryData = type;
             type = entries.types[entryData.type];
@@ -16,12 +16,12 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
             timestamp = entryData.timestamp;
             this.date = entryData.date;
             this.properties = entryData.properties;
-            this.childId = { id: entryData.childId };
+            this.playerId = { id: entryData.playerId };
         }
         else{
             this.date = new Date();
             this.properties = {};
-            this.child = child;
+            this.player = player;
         }
 
         this.__defineGetter__("timestamp", function () {
@@ -66,7 +66,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
                     properties: this.properties,
                     type: this.type.id,
                     timestamp: this.timestamp,
-                    childId: this.child.id
+                    playerId: this.player.id
                 };
 
             return entriesObjectStore.insert(dbEntry).then(function (id) {
@@ -81,12 +81,16 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
         options = options || {};
 
         return entriesObjectStore.internalObjectStore(OBJECT_STORE_NAME, "readonly").then(function(objectStore){
-            var idx = objectStore.index("date_idx");
+            var idx = objectStore.index(options.type ? "type_idx" : "date_idx");
             var count = options.count || PAGE_SIZE,
                 entries = [],
                 currentRecord = 0,
                 deferred = $q.defer(),
-                cursor = idx.openCursor(null, "prev");
+                cursorRange = IDBKeyRange.bound(
+                    options.type ? [options.playerId, options.type] : [options.playerId],
+                    options.type ? [options.playerId, options.type, new Date()] : [options.playerId, new Date()]
+                ),
+                cursor = idx.openCursor(cursorRange, "prev");
 
             cursor.onsuccess = function(event) {
                 var cursor = event.target.result;

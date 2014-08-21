@@ -2,7 +2,7 @@
     <label>
         <span class="label-text">The new weight</span>
         <div class="flex-horizontal">
-            <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.weight" placeholder="The new weight" /></div>
+            <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.weight" placeholder="The new weight" required /></div>
             <select ng-model="config.localization.weight.selected" ng-options="unit for unit in config.localization.weight.all"></select>
         </div>
     </label>
@@ -15,11 +15,11 @@
 </script>
 <script type="text/ng-template" id="entry_editor_speech">
     <label>
-        <span class="label-text">What did {{ child.pronoun }} say?</span>
+        <span class="label-text">What did {{ player.pronoun }} say?</span>
         <input type="text" ng-model="entry.properties.words" placeholder="The new word(s) or sentence" />
     </label>
     <label>
         <span class="label-text">Additional Details</span>
-        <textarea ng-model="entry.properties.description" placeholder="To whom? Under which circumstances? What did {{ child.pronoun }} want?"></textarea>
+        <textarea ng-model="entry.properties.description" placeholder="To whom? Under which circumstances? What did {{ player.pronoun }} want?"></textarea>
     </label>
 </script>

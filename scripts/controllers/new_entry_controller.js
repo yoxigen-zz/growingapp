@@ -6,7 +6,7 @@ app.controller("NewEntryController", ["$scope", "entries", "Entry", "eventBus", 
         $scope.showNewEntry = true;
         //$scope.toggleNewEntriesSelection(false);
 
-        $scope.entry = new Entry(entryType, $scope.child);
+        $scope.entry = new Entry(entryType, $scope.player);
     };
 
     $scope.saveEntry = function(){

@@ -167,10 +167,6 @@ a{ cursor: pointer; }
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
 
-  select{
-    font-family: Roboto Condensed, Roboto, Sans-Serif;
-  }
-
   h2{
     font-size: 1.3em;
     margin: 0;
@@ -203,16 +199,16 @@ a{ cursor: pointer; }
 }
 
 .header-controls{
-  float: right;
+  text-align: right;
 
   a{
-    display: block;
+    display: inline-block;
     height: $contentsHeaderHeight;
     width: $contentsHeaderHeight;
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 60%;
-
+    vertical-align: middle;
     &.active{
       background-color: $activeColor;
     }
@@ -223,7 +219,12 @@ a{ cursor: pointer; }
 }
 
 #newEntryButton{
-  background-image: url(../images/icons/write.svg);
+  background-image: url(../images/icons/plus.svg);
+  opacity: .5;
+
+  &:hover, &.active{
+    opacity: 1;
+  }
 }
 
 #tabs{

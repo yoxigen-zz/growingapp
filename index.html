@@ -36,17 +36,22 @@
         <a id="menu-button" ng-click="showMenu = !showMenu">
             <img src="images/icons/menu.svg" title="Menu" />
         </a>
-        <span id="actionbar-name">{{ child.name }}</span>
+        <span id="actionbar-name">{{ player.name }}</span>
     </header>
     <div id="contents-wrapper">
-        <div id="contents">
-            <header class="contents-header">
-                <div class="header-controls">
-                    <a href="#" title="New entry" id="newEntryButton" ng-click="toggleNewEntriesSelection()"></a>
-                </div>
+        <div id="contents" ng-controller="EntriesListController">
+            <header class="contents-header flex-horizontal">
                 <h2>Diary</h2>
+                <div class="header-controls flex-1">
+                    <select class="fancy-select"
+                            ng-model="currentEntriesType"
+                            ng-change="onEntriesTypeChange()"
+                            ng-options="entryType.id as entryType.name for entryType in entryTypes">
+                    </select>
+                    <a href="#" title="New entry" id="newEntryButton" ng-class="{ active: showNewEntriesSelection }" ng-click="toggleNewEntriesSelection()"></a>
+                </div>
             </header>
-            <div class="contents-scroll flex-1 flex-vertical" ng-controller="EntriesListController">
+            <div class="contents-scroll flex-1 flex-vertical">
                 <div id="contents-empty-message" class="flex-1" ng-cloak ng-show="entries && !entries.length">
                     <div>
                         <p>No entries added yet.</p>

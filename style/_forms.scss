@@ -29,6 +29,17 @@ select{
   padding: .5em;
   border: solid 1px #b9cfd6;
   font-size: 1em;
+
+  &.fancy-select{
+    background: url(../images/icons/triangle.svg) no-repeat bottom right;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    border-bottom: solid 2px #BEC9CC;
+    padding: .2em 1em .2em 0;
+    color: rgba(0,0,0,.6);
+    font-weight: 300;
+  }
 }
 
 .button{

@@ -16,6 +16,12 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $timeout.cancel(entry.removeTimeout);
     };
 
+    $scope.entryTypes = [{ name: "All entry types" }].concat(entries.typesArray);
+
+    $scope.onEntriesTypeChange = function(){
+        setEntries($scope.currentEntriesType);
+    };
+
     function addEntry(newEntry){
         $scope.entries.splice(0, 0, parseEntry(newEntry));
         $scope.entries.sort(function(a, b){
@@ -33,18 +39,22 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
         try {
             newEntry.html = $sce.trustAsHtml(angular.isFunction(newEntry.type.html)
-                ? newEntry.type.html(newEntry, $scope.child, $scope.config)
+                ? newEntry.type.html(newEntry, $scope.player, $scope.config)
                 : utils.strings.parse(newEntry.type.html, newEntry, $scope));
         }
         catch(e){
             newEntry.html = $sce.trustAsHtml("<span class='item-error'>Error parsing entry HTML!</span>");
         }
 
-        newEntry.dateText = newEntry.date.toLocaleDateString() + " (" + utils.dates.dateDiff(newEntry.date, $scope.child.birthday) + ")";
+        newEntry.dateText = newEntry.date.toLocaleDateString() + " (" + utils.dates.dateDiff(newEntry.date, $scope.player.birthday) + ")";
         return newEntry;
     }
-    
-    Entry.getEntries().then(function(entryValues){
-        $scope.entries = entryValues.map(parseEntry);
-    });
+
+    function setEntries(entriesType){
+        Entry.getEntries({ type: entriesType, playerId: $scope.player.id }).then(function(entryValues){
+            $scope.entries = entryValues.map(parseEntry);
+        });
+    }
+
+    setEntries();
 }]);

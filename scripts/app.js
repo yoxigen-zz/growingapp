@@ -4,7 +4,7 @@ app = angular.module("Diary", ["ngTouch", "ToggleDisplay", "EventBus", "Utils", 
 
         $indexedDBProvider
             .connection('diaryDB')
-            .upgradeDatabase(3, function(event, db, tx){
+            .upgradeDatabase(7, function(event, db, tx){
                 if (event.newVersion > event.oldVersion) {
                     try {
                         if (db.objectStoreNames.contains(ENTRIES_STORE_NAME))
@@ -16,10 +16,9 @@ app = angular.module("Diary", ["ngTouch", "ToggleDisplay", "EventBus", "Utils", 
 
                     try {
                         var objStore = db.createObjectStore(ENTRIES_STORE_NAME, { keyPath: "timestamp" });
-                        objStore.createIndex('type_idx', 'type', {unique: false});
-                        objStore.createIndex('date_idx', 'date', {unique: false});
+                        objStore.createIndex('type_idx', ['playerId', 'type', 'date'], {unique: false});
+                        objStore.createIndex('date_idx', ['playerId', 'date'], {unique: false});
                         objStore.createIndex('timestamp_idx', 'timestamp', {unique: true});
-                        objStore.createIndex('child_idx', 'childId', { unique: false });
                     }
                     catch(error){
                         alert("can't create store: " + JSON.stringify(error))

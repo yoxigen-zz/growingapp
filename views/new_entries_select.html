@@ -21,19 +21,21 @@
                 </a>
                 <span class="popup-title">New Diary Entry: {{ newEntryType.name }}</span>
             </header>
-            <div class="popup-contents">
-                <form>
-                    <div ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id"></div>
-                    <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entry.date" /></label>
-                </form>
-            </div>
-            <footer>
-                <a href="#" class="button save-button" ng-click="saveEntry()" style="width: 50%; float: right">
-                    <img src="images/icons/ok.svg" />
-                    Save Entry
-                </a>
-                <a ng-click="showNewEntry = false" class="button cancel-button" style="width: 48%">Cancel</a>
-            </footer>
+            <form>
+                <div class="popup-contents">
+                    <form>
+                        <div ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id"></div>
+                        <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entry.date" /></label>
+                    </form>
+                </div>
+                <footer>
+                    <a href="#" class="button save-button" ng-click="saveEntry()" style="width: 50%; float: right">
+                        <img src="images/icons/ok.svg" />
+                        Save Entry
+                    </a>
+                    <a ng-click="showNewEntry = false" class="button cancel-button" style="width: 48%">Cancel</a>
+                </footer>
+            </form>
         </div>
     </div>
 </div>
