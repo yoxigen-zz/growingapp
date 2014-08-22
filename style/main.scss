@@ -46,6 +46,13 @@ a{ cursor: pointer; }
   -webkit-flex: 2;
   -webkit-box-flex: 2;
 }
+
+.hide-small-width{
+  @media all and (max-width: 500px){
+    display: none;
+  }
+}
+
 #actionbar{
   height: $actionbarHeight;
   line-height: $actionbarHeight - .1;
@@ -54,8 +61,6 @@ a{ cursor: pointer; }
   padding: 0 $padding;
 
   select{
-    font-size: 1.2em;
-    color: White;
   }
   .edit-button{
     height: .8em;

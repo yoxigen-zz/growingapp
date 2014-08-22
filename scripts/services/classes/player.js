@@ -9,6 +9,7 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
         if (data && data.id && data.name)
         {
             angular.extend(this, data);
+            id = data.id;
         }
         else{
             this.properties = {};
@@ -39,7 +40,7 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             });
         },
         save: function () {
-            this.isNewPlayer = !!this.id;
+            this.isNewPlayer = !this.id;
 
             var player = this,
                 dbPlayer = {
@@ -47,8 +48,13 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
                     properties: this.properties
                 };
 
-            return entriesObjectStore.insert(dbPlayer).then(function (id) {
-                player.id = id;
+            if (this.id)
+                dbPlayer.id = this.id;
+
+            return entriesObjectStore.upsert(dbPlayer).then(function (id) {
+                if (player.isNewPlayer)
+                    player.id = id;
+
                 return player;
             }, function(error){
                 alert("ERROR: " + JSON.stringify(error));

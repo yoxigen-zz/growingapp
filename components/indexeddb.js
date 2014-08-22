@@ -86,6 +86,17 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
 
         var IDBKeyRange = $window.IDBKeyRange || $window.mozIDBKeyRange || $window.webkitIDBKeyRange || $window.msIDBKeyRange;
 
+        function safeApply(fn) {
+            var phase = $rootScope.$$phase;
+            if (phase == '$apply' || phase == '$digest') {
+                if (fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                $rootScope.$apply(fn);
+            }
+        }
+
         /**
          * @ngdoc object
          * @name defaultQueryOptions
@@ -121,7 +132,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                 dbReq = $window.indexedDB.open(module.dbName, module.dbVersion || 1);
                 dbReq.onsuccess = function(e) {
                     module.db = dbReq.result;
-                    $rootScope.$apply(function(){
+                    safeApply(function(){
                         deferred.resolve(module.db);
                     });
                 };
@@ -206,18 +217,18 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                         data.forEach(function(item, i){
                             req = store.add(item);
                             req.onnotify = function(e) {
-                               $rootScope.$apply(function(){
+                               safeApply(function(){
                                     d.notify(e.target.result);
                                 }); 
                             }
                             req.onerror = function(e) {
-                                $rootScope.$apply(function(){
+                                safeApply(function(){
                                     d.reject(e.target.result);
                                 });
                             };
                             req.onsuccess = function(e) {
                                 if(i == data.length - 1) {
-                                    $rootScope.$apply(function(){
+                                    safeApply(function(){
                                         d.resolve(e.target.result);
                                     });
                                 }
@@ -226,7 +237,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                     } else {
                         req = store.add(data);
                         req.onsuccess = req.onerror = function(e) {
-                            $rootScope.$apply(function(){
+                            safeApply(function(){
                                 d.resolve(e.target.result);
                             });
                         };
@@ -255,18 +266,18 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                         data.forEach(function(item, i){
                             req = store.put(item);
                             req.onnotify = function(e) {
-                               $rootScope.$apply(function(){
+                               safeApply(function(){
                                     d.notify(e.target.result);
                                 }); 
                             }
                             req.onerror = function(e) {
-                                $rootScope.$apply(function(){
+                                safeApply(function(){
                                     d.reject(e.target.result);
                                 });
                             };
                             req.onsuccess = function(e) {
                                 if(i == data.length - 1) {
-                                    $rootScope.$apply(function(){
+                                    safeApply(function(){
                                         d.resolve(e.target.result);
                                     });
                                 }
@@ -275,7 +286,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                     } else {
                         req = store.put(data);
                         req.onsuccess = req.onerror = function(e) {
-                            $rootScope.$apply(function(){
+                            safeApply(function(){
                                 d.resolve(e.target.result);
                             });
                         };
@@ -299,7 +310,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                 return this.internalObjectStore(this.storeName, READWRITE).then(function(store){
                     var req = store.delete(key);
                     req.onsuccess = req.onerror = function(e) {
-                        $rootScope.$apply(function(){
+                        safeApply(function(){
                             d.resolve(e.target.result);
                         });
                     };
@@ -321,7 +332,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                 return this.internalObjectStore(this.storeName, READWRITE).then(function(store){
                     var req = store.clear();
                     req.onsuccess = req.onerror = function(e) {
-                        $rootScope.$apply(function(){
+                        safeApply(function(){
                             d.resolve(e.target.result);
                         });
                     };
@@ -367,7 +378,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                         req = store.get(keyOrIndex);
                     }
                     req.onsuccess = req.onerror = function(e) {
-                        $rootScope.$apply(function(){
+                        safeApply(function(){
                             d.resolve(e.target.result);
                         });
                     };
@@ -392,7 +403,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                     if (store.getAll) {
                         req = store.getAll();
                         req.onsuccess = req.onerror = function(e) {
-                            $rootScope.$apply(function(){
+                            safeApply(function(){
                                 d.resolve(e.target.result);
                             });
                         };
@@ -404,7 +415,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                                 results.push(cursor.value);
                                 cursor.continue();
                             } else {
-                                $rootScope.$apply(function(){
+                                safeApply(function(){
                                     d.resolve(results);
                                 });
                             }
@@ -442,7 +453,7 @@ angular.module('xc.indexedDB', []).provider('$indexedDB', function() {
                         req = store.openCursor(options.keyRange, options.direction);
                     }
                     req.onsuccess = req.onerror = function(e) {
-                        $rootScope.$apply(function(){
+                        safeApply(function(){
                             if(!e.target.result){
                                 d.resolve(e.target.result);
                             }

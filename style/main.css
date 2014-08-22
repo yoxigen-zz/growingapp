@@ -68,15 +68,16 @@ a {
   -webkit-flex: 2;
   -webkit-box-flex: 2; }
 
+@media all and (max-width: 500px) {
+  .hide-small-width {
+    display: none; } }
+
 #actionbar {
   height: 3.5em;
   line-height: 3.4em;
   background: #0099cc;
   color: white;
   padding: 0 0.5em; }
-  #actionbar select {
-    font-size: 1.2em;
-    color: White; }
   #actionbar .edit-button {
     height: .8em; }
   #actionbar #back-button {

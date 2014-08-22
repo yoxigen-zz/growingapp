@@ -1,13 +1,4 @@
 app.controller("MainController", ["$scope", "Player", function($scope, Player){
-    /*
-    $scope.player = {
-        name: "Lynn",
-        pronoun: "she",
-        birthday: new Date(2013, 3, 18, 0, 0, 0),
-        id: 1,
-        gender: "f"
-    };
-    */
     $scope.setCurrentPlayer = function(player){
         $scope.player = player;
     };
@@ -15,6 +6,17 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
     Player.getAll().then(function(players){
         $scope.players = players;
         setPlayersSelection(players);
+
+        var storagePlayerId = localStorage.player;
+        if (storagePlayerId){
+            storagePlayerId = parseInt(storagePlayerId, 10);
+            for(var i=0; i < $scope.players.length; i++) {
+                if ($scope.players[i].id === storagePlayerId) {
+                    $scope.currentPlayer = $scope.players[i];
+                    break;
+                }
+            }
+        }
     });
 
     $scope.config = {
@@ -34,6 +36,16 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
         $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
     };
 
+    $scope.editPlayer = function(player){
+        if (player instanceof Player) {
+            $scope.editedPlayer = player;
+            $scope.toggleEditPlayer(true);
+        }
+        else{
+            console.error("Can't edit player - expecting a Player object, got: ", player);
+        }
+    };
+
     $scope.toggleEditPlayer = function(state){
         $scope.showEditPlayer = state === true || state === false ? state : !$scope.showEditPlayer;
     };
@@ -49,11 +61,41 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
                 $scope.players.sort(function(a,b){
                     return a.name < b.name ? 1 : -1;
                 });
+                $scope.currentPlayer = player;
             }
 
             setPlayersSelection($scope.players);
         });
     };
+
+    $scope.removePlayer = function(){
+        if (!confirm("Are you sure you wish to remove this child from the list?"))
+            return;
+
+        $scope.editedPlayer.remove().then(function(){
+            for(var i=0; i < $scope.players.length; i++){
+                if ($scope.players[i].id === $scope.editedPlayer.id){
+                    $scope.players.splice(i, 1);
+                    setPlayersSelection($scope.players);
+                    $scope.toggleEditPlayer(false);
+                    $scope.editedPlayer = null;
+                    break;
+                }
+            }
+        });
+    };
+
+    $scope.$watch("currentPlayer", function(value){
+        if (!value)
+            return;
+
+        if (value.id) {
+            $scope.player = value;
+            localStorage.player = String(value.id);
+        }
+        else
+            addNewPlayer();
+    });
 
     function setPlayersSelection(players){
         $scope.playersSelection = players.concat([{ name: "+ Add New Child" }]);
