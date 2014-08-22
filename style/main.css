@@ -63,13 +63,22 @@ a {
   -webkit-flex: 1;
   -webkit-box-flex: 1; }
 
+.flex-2 {
+  flex: 2;
+  -webkit-flex: 2;
+  -webkit-box-flex: 2; }
+
 #actionbar {
   height: 3.5em;
   line-height: 3.4em;
   background: #0099cc;
   color: white;
-  text-align: center;
-  padding: 0 .1em; }
+  padding: 0 0.5em; }
+  #actionbar select {
+    font-size: 1.2em;
+    color: White; }
+  #actionbar .edit-button {
+    height: .8em; }
   #actionbar #back-button {
     float: left;
     line-height: 2.8em;
@@ -192,8 +201,7 @@ a {
 #newEntryButton {
   padding: .5em .75em;
   line-height: 1em;
-  border-radius: 3px;
-  margin-left: .2em; }
+  border-radius: 3px; }
 
 #tabs {
   height: 2.5em;

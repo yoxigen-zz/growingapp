@@ -1,24 +1,34 @@
 app = angular.module("Diary", ["ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB", "SelfClick"])
-    .config(function ($indexedDBProvider) {
-        var ENTRIES_STORE_NAME = "entries";
+    .config(function ($indexedDBProvider, config) {
 
         $indexedDBProvider
             .connection('diaryDB')
-            .upgradeDatabase(7, function(event, db, tx){
+            .upgradeDatabase(8, function(event, db, tx){
                 if (event.newVersion > event.oldVersion) {
-                    try {
-                        if (db.objectStoreNames.contains(ENTRIES_STORE_NAME))
-                            db.deleteObjectStore(ENTRIES_STORE_NAME);
-                    }
-                    catch(e){
-                        alert("Can't delete store '" + ENTRIES_STORE_NAME + "'");
-                    }
+                    Object.keys(config.objectStores).forEach(function(objectStoreName){
+                        if (db.objectStoreNames.contains(objectStoreName)) {
+                            try {
+                            db.deleteObjectStore(objectStoreName);
+                            }
+                            catch(e){
+                                alert("Can't delete store '" + config.objectStores.entries + "'");
+                            }
+                        }
+                    });
 
                     try {
-                        var objStore = db.createObjectStore(ENTRIES_STORE_NAME, { keyPath: "timestamp" });
+                        var objStore = db.createObjectStore(config.objectStores.entries, { keyPath: "timestamp" });
                         objStore.createIndex('type_idx', ['playerId', 'type', 'date'], {unique: false});
                         objStore.createIndex('date_idx', ['playerId', 'date'], {unique: false});
                         objStore.createIndex('timestamp_idx', 'timestamp', {unique: true});
+                    }
+                    catch(error){
+                        alert("can't create store: " + JSON.stringify(error))
+                    }
+
+                    try {
+                        var objStore = db.createObjectStore(config.objectStores.players, { keyPath: "id", autoIncrement: true });
+                        objStore.createIndex('name_idx', ['name'], {unique: true});
                     }
                     catch(error){
                         alert("can't create store: " + JSON.stringify(error))

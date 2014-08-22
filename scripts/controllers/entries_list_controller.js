@@ -51,9 +51,11 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     }
 
     function setEntries(entriesType){
-        Entry.getEntries({ type: entriesType, playerId: $scope.player.id }).then(function(entryValues){
-            $scope.entries = entryValues.map(parseEntry);
-        });
+        if ($scope.player) {
+            Entry.getEntries({ type: entriesType, playerId: $scope.player.id }).then(function (entryValues) {
+                $scope.entries = entryValues.map(parseEntry);
+            });
+        }
     }
 
     setEntries();
