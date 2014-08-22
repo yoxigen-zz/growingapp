@@ -163,7 +163,7 @@ a{ cursor: pointer; }
   line-height: $contentsHeaderHeight;
   background: $headerBackground;
   color: $headerColor;
-  padding-left: $padding;
+  padding: 0 $padding;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
 
@@ -201,30 +201,16 @@ a{ cursor: pointer; }
 .header-controls{
   text-align: right;
 
-  a{
-    display: inline-block;
-    height: $contentsHeaderHeight;
-    width: $contentsHeaderHeight;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 60%;
-    vertical-align: middle;
-    &.active{
-      background-color: $activeColor;
-    }
-  }
   img{
     height: 100%
   }
 }
 
 #newEntryButton{
-  background-image: url(../images/icons/plus.svg);
-  opacity: .5;
-
-  &:hover, &.active{
-    opacity: 1;
-  }
+  padding: .5em .75em;
+  line-height: 1em;
+  border-radius: 3px;
+  margin-left: .2em;
 }
 
 #tabs{
@@ -235,7 +221,8 @@ a{ cursor: pointer; }
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-
+  position: relative;
+  z-index: 5;
   box-sizing: border-box;
 
   a{

@@ -62,12 +62,12 @@ select{
 }
 
 .save-button{
-  background: #39b54a;
-  color: White;
+  background: $saveBackgroundColor;
+  color: $saveColor;
   cursor: pointer;
 
-  &:hover{
-    background-color: #3ED453;
+  &:hover, &.active{
+    background-color: $saveBackgroundColorHover;
   }
 }
 

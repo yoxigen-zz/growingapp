@@ -158,7 +158,7 @@ a {
   line-height: 3em;
   background: #d9e9ef;
   color: #373737;
-  padding-left: 0.5em;
+  padding: 0 0.5em;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box; }
   .contents-header h2 {
@@ -186,24 +186,14 @@ a {
 
 .header-controls {
   text-align: right; }
-  .header-controls a {
-    display: inline-block;
-    height: 3em;
-    width: 3em;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 60%;
-    vertical-align: middle; }
-    .header-controls a.active {
-      background-color: #fcc435; }
   .header-controls img {
     height: 100%; }
 
 #newEntryButton {
-  background-image: url(../images/icons/plus.svg);
-  opacity: .5; }
-  #newEntryButton:hover, #newEntryButton.active {
-    opacity: 1; }
+  padding: .5em .75em;
+  line-height: 1em;
+  border-radius: 3px;
+  margin-left: .2em; }
 
 #tabs {
   height: 2.5em;
@@ -213,6 +203,8 @@ a {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  position: relative;
+  z-index: 5;
   box-sizing: border-box; }
   #tabs a {
     display: -webkit-box;
@@ -505,10 +497,10 @@ select {
 
 .save-button {
   background: #39b54a;
-  color: White;
+  color: white;
   cursor: pointer; }
-  .save-button:hover {
-    background-color: #3ED453; }
+  .save-button:hover, .save-button.active {
+    background-color: #3ed453; }
 
 .remove-button {
   background-color: #b52d35;
