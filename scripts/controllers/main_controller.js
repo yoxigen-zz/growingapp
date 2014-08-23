@@ -56,11 +56,11 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
 
     $scope.savePlayer = function(){
         $scope.editedPlayer.save().then(function(player){
-            $scope.player = player;
             $scope.toggleEditPlayer(false);
             $scope.editedPlayer = null;
 
             if (player.isNewPlayer){
+                $scope.player = player;
                 $scope.players.push(player);
                 $scope.players.sort(function(a,b){
                     return a.name < b.name ? 1 : -1;
