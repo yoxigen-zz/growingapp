@@ -90,7 +90,7 @@ a{ cursor: pointer; }
 
   #actionbar-name{
     display: block;
-    margin: 0 3em;
+    padding: 0 $padding;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

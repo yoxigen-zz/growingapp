@@ -33,14 +33,9 @@
 <body ng-controller="MainController">
     <header id="actionbar" class="flex-horizontal">
         <div class="flex-1">
-            <select class="fancy-select"
-                    ng-model="currentPlayer"
-                    ng-options="player as player.name for player in playersSelection"></select>
-            <a ng-click="editPlayer(currentPlayer)" ng-show="currentPlayer.id">
-                <img src="images/icons/edit.svg" class="edit-button" title="Edit Child" />
-            </a>
+            <span id="actionbar-name">{{ player.name }}</span>
         </div>
-        <a id="menu-button" ng-click="showMenu = !showMenu">
+        <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
             <img src="images/icons/menu.svg" title="Menu" />
         </a>
     </header>
@@ -102,6 +97,20 @@
     <div id="overlay" class="overlay"></div>
     <div id="menu-wrapper" data-toggle-display="showMenu">
         <div id="menu">
+            <ul id="players-menu">
+                <li ng-repeat="player in players" class="flex-horizontal" ng-class="{ selected: player.id === currentPlayer.id }">
+                    <a ng-click="setCurrentPlayer(player); hideMenu()" class="flex-1">{{player.name}}</a>
+                    <a ng-click="editPlayer(player); hideMenu()" class="players-menu-edit">
+                        <img class="child-menu-edit" src="images/icons/edit.svg" />
+                    </a>
+                </li>
+                <li class="players-menu-add">
+                    <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
+                        <img class="child-menu-add" src="images/icons/plus.svg" />
+                        Add Child
+                    </a>
+                </li>
+            </ul>
             <ul>
                 <li>
                     <a href="#settings">

@@ -1,6 +1,6 @@
 app.controller("MainController", ["$scope", "Player", function($scope, Player){
     $scope.setCurrentPlayer = function(player){
-        $scope.player = player;
+        $scope.currentPlayer = player;
     };
 
     Player.getAll().then(function(players){
@@ -18,6 +18,10 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
             }
         }
     });
+
+    $scope.hideMenu = function(){
+        $scope.showMenu = false;
+    };
 
     $scope.config = {
         localization: {
@@ -94,7 +98,7 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
             localStorage.player = String(value.id);
         }
         else
-            addNewPlayer();
+            $scope.addNewPlayer();
     });
 
     function setPlayersSelection(players){
@@ -103,10 +107,10 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
             addNewPlayer();
     }
 
-    function addNewPlayer(){
+    $scope.addNewPlayer = function(){
         $scope.editedPlayer = new Player();
         $scope.editedPlayer.properties.gender = "f";
         $scope.editedPlayer.properties.birthday = new Date();
         $scope.toggleEditPlayer(true);
-    }
+    };
 }]);

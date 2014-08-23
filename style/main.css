@@ -99,7 +99,7 @@ a {
       vertical-align: middle; }
   #actionbar #actionbar-name {
     display: block;
-    margin: 0 3em;
+    padding: 0 0.5em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -364,24 +364,44 @@ a {
       padding: 1em 1.5em 1em 1em; }
       #menu ul li:hover {
         background-color: #D7E0E2; }
-  #menu #children-menu {
+  #menu #players-menu {
     background: #eff5f7;
     padding-bottom: 2em; }
-    #menu #children-menu li {
-      padding-right: 1em; }
-      #menu #children-menu li.selected {
+    #menu #players-menu li {
+      padding: 0; }
+      #menu #players-menu li.selected {
         background: #80cce6; }
-    #menu #children-menu .child-menu-edit {
-      float: right;
-      height: 1.3em;
-      margin-top: .6em;
-      opacity: .4; }
-    #menu #children-menu .child-menu-icon {
+      #menu #players-menu li.players-menu-add {
+        padding: .5em; }
+        #menu #players-menu li.players-menu-add:hover {
+          background: none; }
+        #menu #players-menu li.players-menu-add a {
+          color: White;
+          display: block;
+          padding: .5em 1em;
+          border-radius: 3px; }
+      #menu #players-menu li a {
+        padding: 1em; }
+    #menu #players-menu .players-menu-edit {
+      background: rgba(154, 167, 172, 0.1);
+      border-left: solid 1px rgba(154, 167, 172, 0.2); }
+      #menu #players-menu .players-menu-edit:hover {
+        background: rgba(6, 145, 199, 0.27); }
+    #menu #players-menu .child-menu-edit {
+      height: 1.2em;
+      opacity: .4;
+      position: relative;
+      top: 2px; }
+    #menu #players-menu .child-menu-add {
+      height: 1.2em;
+      margin-right: .3em;
+      vertical-align: middle; }
+    #menu #players-menu .child-menu-icon {
       height: 2.5em;
       vertical-align: middle;
       border: solid 1px #4e5355;
       margin-right: .5em; }
-    #menu #children-menu .child-menu-name {
+    #menu #players-menu .child-menu-name {
       font-weight: bold; }
   #menu a {
     text-decoration: none;
