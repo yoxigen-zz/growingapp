@@ -1,7 +1,7 @@
 @import "vars";
 
 $tabsHeight: 2.5em;
-$padding: .5em;
+$padding: .8em;
 
 body{
   background: $contentBackgroundColor;
@@ -90,7 +90,7 @@ a{ cursor: pointer; }
 
   #actionbar-name{
     display: block;
-    padding: 0 $padding;
+    padding: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -160,18 +160,6 @@ a{ cursor: pointer; }
 
 #contents{
   position: relative;
-
-  flex: 1;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: column;
-  flex-flow: column;
-  flex-direction: column;
 }
 .contents-header{
   height: $contentsHeaderHeight;
@@ -214,7 +202,10 @@ a{ cursor: pointer; }
 }
 
 .header-controls{
-  text-align: right;
+  font-weight: 300;
+  font-size: 1.2em;
+
+  text-align: left;
 
   img{
     height: 100%

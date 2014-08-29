@@ -1,7 +1,8 @@
 "use strict";
 
 app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFactory($q, $indexedDB, config) {
-    var entriesObjectStore = $indexedDB.objectStore(config.objectStores.players);
+    var entriesObjectStore = $indexedDB.objectStore(config.objectStores.players),
+        dayMilliseconds = 1000 * 60 * 60 * 24;
 
     function Player(data) {
         var id;
@@ -30,6 +31,23 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
     }
 
     Player.prototype = {
+        /**
+         * Returns the age of this player, in days, for the specified date. If no date is specified, returns the current age.
+         * @param date
+         * @returns {*}
+         */
+        getAge: function(date){
+            if (!date)
+                date = new Date();
+
+            if (!angular.isDate(date))
+                throw new Error("Invalid date: ", date);
+
+            if (!this.properties || !this.properties.birthday || date < this.properties.birthday)
+                return null;
+
+            return Math.floor((date - this.properties.birthday) / dayMilliseconds);
+        },
         remove: function () {
             if (!this.id)
                 throw new Error("Can't delete player - it hasn't been saved yet.");

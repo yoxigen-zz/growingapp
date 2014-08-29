@@ -15,6 +15,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
 
             timestamp = entryData.timestamp;
             this.date = entryData.date;
+            this.age = entryData.age;
             this.properties = entryData.properties;
             this.playerId = { id: entryData.playerId };
         }
@@ -22,6 +23,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
             this.date = new Date();
             this.properties = {};
             this.player = player;
+            this.age = player.getAge(this.date);
         }
 
         this.__defineGetter__("timestamp", function () {
@@ -63,6 +65,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
             var newEntry = this,
                 dbEntry = {
                     date: this.date,
+                    age: this.player.getAge(this.date),
                     properties: this.properties,
                     type: this.type.id,
                     timestamp: this.timestamp,

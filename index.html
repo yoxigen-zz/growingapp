@@ -7,8 +7,9 @@
     <link rel="icon" type="image/png" href="images/favicon.png" />
     <link rel="stylesheet" type="text/css" href="style/main.css" />
     <script src="components/parse-1.2.18.min.js"></script>
-    <script src="components/angular.min.js"></script>
-    <script src="components/angular-touch.min.js"></script>
+    <script src="components/angular/angular.min.js"></script>
+    <script src="components/angular/angular-touch.min.js"></script>
+    <script src="components/angular/angular-route.min.js"></script>
     <script src="components/bindonce.min.js"></script>
     <script src="components/indexeddb.js"></script>
 
@@ -26,7 +27,8 @@
     <script src="scripts/filters/pronoun.js"></script>
 
     <script src="scripts/controllers/main_controller.js"></script>
-    <script src="scripts/controllers/main_controller.js"></script>
+    <script src="scripts/controllers/edit_player_controller.js"></script>
+    <script src="scripts/controllers/insights_controller.js"></script>
     <script src="scripts/controllers/new_entry_controller.js"></script>
     <script src="scripts/controllers/entries_list_controller.js"></script>
 </head>
@@ -40,56 +42,12 @@
         </a>
     </header>
     <div id="contents-wrapper">
-        <div id="contents" ng-controller="EntriesListController">
-            <header class="contents-header flex-horizontal">
-                <div>
-                    <a id="newEntryButton" ng-click="toggleNewEntriesSelection()" class="button save-button" ng-class="{ active: showNewEntriesSelection }">
-                        <img src="images/icons/plus.svg" /> New Entry
-                    </a>
-                </div>
-                <div class="header-controls flex-1">
-                    <select class="fancy-select"
-                            ng-model="currentEntriesType"
-                            ng-change="onEntriesTypeChange()"
-                            ng-options="entryType.id as entryType.name for entryType in entryTypes">
-                    </select>
-                </div>
-            </header>
-            <div class="contents-scroll flex-1" ng-class="{ 'flex-vertical': entries && !entries.length }">
-                <div id="contents-empty-message" class="flex-1" ng-cloak ng-show="entries && !entries.length">
-                    <div>
-                        <p>No {{currentEntriesType || ''}} entries added yet.</p>
-                        <a class="button save-button" ng-click="toggleNewEntriesSelection()">Start adding</a>
-                    </div>
-                </div>
-                <ul class="items-list">
-                    <li ng-repeat="entry in entries">
-                        <div class="items-list-item-content" ng-swipe-left="removeEntry(entry)" ng-class="{ removed: entry.removed }">
-                            <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
-                            <div class="item-text">
-                                <div ng-bind-html="entry.html"></div>
-                                <div class="item-details" bindonce="entry" bo-bind="entry.dateText"></div>
-                            </div>
-                        </div>
-                        <div class="items-list-item-removed">
-                            Item removed <a class="button undo-button item-removed-undo" ng-click="undoRemoveEntry(entry)">Undo</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div id="newEntryTypesWrapper"
-                 class="entry-types-dialog-wrapper"
-                 self-click="toggleNewEntriesSelection()"
-                 ng-include="'views/new_entries_select.html'"
-                 data-toggle-display="showNewEntriesSelection"
-                 data-toggle-element="#newEntryType">
-            </div>
-        </div>
+        <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         <div id="tabs">
-            <a href="#" class="selected">
+            <a href="#/" ng-class="{ selected: currentPage == 'diary' }">
                 <span>Diary</span>
             </a>
-            <a href="#">
+            <a href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
                 <span>Insights</span>
             </a>
         </div>

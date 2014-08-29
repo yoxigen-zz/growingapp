@@ -1,0 +1,46 @@
+<div class="flex-vertical">
+    <header class="contents-header flex-horizontal">
+        <div class="header-controls flex-1">
+            Diary -
+            <select class="fancy-select"
+                    ng-model="currentEntriesType"
+                    ng-change="onEntriesTypeChange()"
+                    ng-options="entryType.id as entryType.name for entryType in entryTypes">
+            </select>
+        </div>
+        <div>
+            <a id="newEntryButton" ng-click="toggleNewEntriesSelection()" class="button save-button" ng-class="{ active: showNewEntriesSelection }">
+                <img src="images/icons/plus.svg" /> New Entry
+            </a>
+        </div>
+    </header>
+    <div class="contents-scroll flex-1" ng-class="{ 'flex-vertical': entries && !entries.length }">
+        <div id="contents-empty-message" class="flex-1" ng-cloak ng-show="entries && !entries.length">
+            <div>
+                <p>No {{currentEntriesType || ''}} entries added yet.</p>
+                <a class="button save-button" ng-click="toggleNewEntriesSelection()">Start adding</a>
+            </div>
+        </div>
+        <ul class="items-list">
+            <li ng-repeat="entry in entries">
+                <div class="items-list-item-content" ng-swipe-left="removeEntry(entry)" ng-class="{ removed: entry.removed }">
+                    <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
+                    <div class="item-text">
+                        <div ng-bind-html="entry.html"></div>
+                        <div class="item-details" bindonce="entry" bo-bind="entry.dateText"></div>
+                    </div>
+                </div>
+                <div class="items-list-item-removed">
+                    Item removed <a class="button undo-button item-removed-undo" ng-click="undoRemoveEntry(entry)">Undo</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div id="newEntryTypesWrapper"
+         class="entry-types-dialog-wrapper"
+         self-click="toggleNewEntriesSelection()"
+         ng-include="'views/new_entries_select.html'"
+         data-toggle-display="showNewEntriesSelection"
+         data-toggle-element="#newEntryType">
+    </div>
+</div>

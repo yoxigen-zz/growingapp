@@ -1,0 +1,13 @@
+<div class="flex-vertical">
+    <header class="contents-header">
+        <div class="header-controls">
+            Insights -
+            <select class="fancy-select"
+                    ng-model="currentInsight"
+                    ng-change="onInsightChange(currentInsight)"
+                    ng-options="insight as insight.name for insight in insights">
+                <option value="">(Select an insight)</option>
+            </select>
+        </div>
+    </header>
+</div>

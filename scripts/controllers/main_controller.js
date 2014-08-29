@@ -1,7 +1,11 @@
-app.controller("MainController", ["$scope", "Player", function($scope, Player){
+app.controller("MainController", ["$scope", "$route", "Player", function($scope, $route, Player){
     $scope.setCurrentPlayer = function(player){
         $scope.currentPlayer = player;
     };
+
+    $scope.$on("$routeChangeSuccess", function(){
+        $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
+    });
 
     Player.getAll().then(function(players){
         $scope.players = players;
@@ -104,7 +108,7 @@ app.controller("MainController", ["$scope", "Player", function($scope, Player){
     function setPlayersSelection(players){
         $scope.playersSelection = players.concat([{ name: "+ Add New Child" }]);
         if (!players.length)
-            addNewPlayer();
+            $scope.addNewPlayer();
     }
 
     $scope.addNewPlayer = function(){

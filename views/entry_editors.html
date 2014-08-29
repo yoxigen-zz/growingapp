@@ -2,7 +2,7 @@
     <label>
         <span class="label-text">The new weight</span>
         <div class="flex-horizontal">
-            <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.weight" placeholder="The new weight" required /></div>
+            <div class="flex-1"><input type="number" min=0 step="0.01" ng-model="entry.properties.weight" placeholder="The new weight" required /></div>
             <select ng-model="config.localization.weight.selected" ng-options="unit for unit in config.localization.weight.all"></select>
         </div>
     </label>
