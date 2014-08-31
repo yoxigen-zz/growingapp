@@ -60,6 +60,12 @@ select{
     position: relative;
     top: -.1em;
   }
+
+  .button-text{
+    @media all and (max-width: 320px){
+      display: none;
+    }
+  }
 }
 
 .save-button{

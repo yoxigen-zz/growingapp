@@ -47,6 +47,11 @@ a{ cursor: pointer; }
   -webkit-box-flex: 2;
 }
 
+.scroll-vertical{
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .hide-small-width{
   @media all and (max-width: 500px){
     display: none;
@@ -155,6 +160,13 @@ a{ cursor: pointer; }
         }
       }
     }
+  }
+}
+
+
+.large-width-only{
+    @media all and (max-width: 400px){
+    display: none;
   }
 }
 

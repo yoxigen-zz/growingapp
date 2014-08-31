@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Diary</title>
     <meta name="viewport" content="width=device-width">
-    <link rel="icon" type="image/png" href="images/favicon.png" />
-    <link rel="stylesheet" type="text/css" href="style/main.css" />
+    <link rel="icon" type="image/png" href="images/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="components/parse-1.2.18.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
     <script src="components/angular/angular-touch.min.js"></script>
@@ -33,119 +33,129 @@
     <script src="scripts/controllers/entries_list_controller.js"></script>
 </head>
 <body ng-controller="MainController">
-    <header id="actionbar" class="flex-horizontal">
-        <div class="flex-1">
-            <span id="actionbar-name">{{ player.name }}</span>
-        </div>
-        <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
-            <img src="images/icons/menu.svg" title="Menu" />
+<header id="actionbar" class="flex-horizontal">
+    <div class="flex-1">
+        <span id="actionbar-name">{{ player.name }}</span>
+    </div>
+    <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
+        <img src="images/icons/menu.svg" title="Menu"/>
+    </a>
+</header>
+<div id="contents-wrapper">
+    <div id="contents" class="flex-1 flex-vertical" ng-view></div>
+    <div id="tabs">
+        <a href="#/" ng-class="{ selected: currentPage == 'diary' }">
+            <span>Diary</span>
         </a>
-    </header>
-    <div id="contents-wrapper">
-        <div id="contents" class="flex-1 flex-vertical" ng-view></div>
-        <div id="tabs">
-            <a href="#/" ng-class="{ selected: currentPage == 'diary' }">
-                <span>Diary</span>
-            </a>
-            <a href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
-                <span>Insights</span>
-            </a>
-        </div>
+        <a href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
+            <span>Insights</span>
+        </a>
     </div>
-    <div id="overlay" class="overlay"></div>
-    <div id="menu-wrapper" data-toggle-display="showMenu">
-        <div id="menu">
-            <ul id="players-menu">
-                <li ng-repeat="player in players" class="flex-horizontal" ng-class="{ selected: player.id === currentPlayer.id }">
-                    <a ng-click="setCurrentPlayer(player); hideMenu()" class="flex-1">{{player.name}}</a>
-                    <a ng-click="editPlayer(player); hideMenu()" class="players-menu-edit">
-                        <img class="child-menu-edit" src="images/icons/edit.svg" />
-                    </a>
-                </li>
-                <li class="players-menu-add">
-                    <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
-                        <img class="child-menu-add" src="images/icons/plus.svg" />
-                        Add Child
-                    </a>
-                </li>
-            </ul>
-            <ul>
-                <li>
-                    <a href="#settings">
+</div>
+<div id="overlay" class="overlay"></div>
+<div id="menu-wrapper" data-toggle-display="showMenu">
+    <div id="menu">
+        <ul id="players-menu">
+            <li ng-repeat="player in players" class="flex-horizontal"
+                ng-class="{ selected: player.id === currentPlayer.id }">
+                <a ng-click="setCurrentPlayer(player); hideMenu()" class="flex-1">{{player.name}}</a>
+                <a ng-click="editPlayer(player); hideMenu()" class="players-menu-edit">
+                    <img class="child-menu-edit" src="images/icons/edit.svg"/>
+                </a>
+            </li>
+            <li class="players-menu-add">
+                <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
+                    <img class="child-menu-add" src="images/icons/plus.svg"/>
+                    Add Child
+                </a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <a href="#settings">
                         <span class="menu-icon">
-                            <img src="images/icons/settings.svg" />
+                            <img src="images/icons/settings.svg"/>
                         </span>
-                        <span class="menu-title">Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#share">
+                    <span class="menu-title">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="#share">
                         <span class="menu-icon">
-                            <img src="images/icons/share.svg" />
+                            <img src="images/icons/share.svg"/>
                         </span>
-                        <span class="menu-title">Add collaborators</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#contact">
+                    <span class="menu-title">Add collaborators</span>
+                </a>
+            </li>
+            <li>
+                <a href="#contact">
                         <span class="menu-icon">
-                            <img src="images/icons/mail.svg" />
+                            <img src="images/icons/mail.svg"/>
                         </span>
-                        <span class="menu-title">Report bug / Send feedback</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
+                    <span class="menu-title">Report bug / Send feedback</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
                         <span class="menu-icon">
-                            <img src="images/icons/sign_out.svg" />
+                            <img src="images/icons/sign_out.svg"/>
                         </span>
-                        <span class="menu-title">Sign out yoxigen</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+                    <span class="menu-title">Sign out yoxigen</span>
+                </a>
+            </li>
+        </ul>
     </div>
-    <div id="playerEdit"
-         class="popup-wrapper"
-         ng-show="editedPlayer"
-         data-toggle-display="showEditPlayer">
-        <div class="popup">
+</div>
+<div id="playerEdit"
+     class="popup-wrapper"
+     ng-show="editedPlayer"
+     data-toggle-display="showEditPlayer">
+    <div class="popup flex-vertical">
+        <div class="flex-vertical">
             <header>
                 <a class="close-button"
                    title="Close"
                    ng-click="showEditPlayer = false">
-                    <img src="images/icons/close.svg" />
+                    <img src="images/icons/close.svg"/>
                 </a>
                 <span class="popup-title">{{editedPlayer.id && 'Edit Child' || 'Add New Child'}}</span>
             </header>
-            <form>
-                <div class="popup-contents">
-                    <label>
-                        <span class="label-text">Child Name</span>
-                        <input type="text" ng-model="editedPlayer.name" required />
-                    </label>
-                    <div class="flex-horizontal">
-                        <label class="flex-1">
-                            <span class="label-text">Gender</span>
-                            <select ng-model="editedPlayer.properties.gender" ng-options="gender.id as gender.label for gender in [{ id: 'f', label: 'Female'}, { id: 'm', label: 'Male' }]"></select>
-                        </label>
-                        <label class="flex-2">
-                            <span class="label-text">Birthday</span>
-                            <input type="date" ng-model="editedPlayer.properties.birthday" required />
-                        </label>
-                    </div>
+            <div class="flex-1 flex-vertical">
+                <div class="scroll-vertical">
+                    <form>
+                        <div class="popup-contents">
+                            <label>
+                                <span class="label-text">Child Name</span>
+                                <input type="text" ng-model="editedPlayer.name" required/>
+                            </label>
+
+                            <div class="flex-horizontal">
+                                <label class="flex-1">
+                                    <span class="label-text">Gender</span>
+                                    <select ng-model="editedPlayer.properties.gender"
+                                            ng-options="gender.id as gender.label for gender in [{ id: 'f', label: 'Female'}, { id: 'm', label: 'Male' }]"></select>
+                                </label>
+                                <label class="flex-2">
+                                    <span class="label-text">Birthday</span>
+                                    <input type="date" ng-model="editedPlayer.properties.birthday" required/>
+                                </label>
+                            </div>
+                        </div>
+                        <footer class="flex-horizontal">
+                            <a ng-click="showEditPlayer = false" class="flex-1 button cancel-button">Cancel</a>
+                            <a href="#" class="flex-1 button remove-button" ng-click="removePlayer()"
+                               ng-show="editedPlayer.id">Delete<span class="hide-small-width"> Child</span></a>
+                            <a href="#" class="flex-1 button save-button" ng-click="savePlayer()">
+                                <img src="images/icons/ok.svg"/>
+                                <span class="button-text">Save<span class="large-width-only"> Child</span></span>
+                            </a>
+                        </footer>
+                    </form>
                 </div>
-                <footer class="flex-horizontal">
-                    <a ng-click="showEditPlayer = false" class="flex-1 button cancel-button">Cancel</a>
-                    <a href="#" class="flex-1 button remove-button" ng-click="removePlayer()" ng-show="editedPlayer.id">Delete<span class="hide-small-width"> Child</span></a>
-                    <a href="#" class="flex-1 button save-button" ng-click="savePlayer()">
-                        <img src="images/icons/ok.svg" />
-                        Save<span class="hide-small-width"> Child</span>
-                    </a>
-                </footer>
-            </form>
+            </div>
         </div>
     </div>
-    <ng-include src="'views/entry_editors.html'"></ng-include>
+</div>
+<ng-include src="'views/entry_editors.html'"></ng-include>
 </body>
 </html>
