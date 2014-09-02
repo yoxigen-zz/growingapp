@@ -55,7 +55,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     function setEntries(entriesType){
         if ($scope.player && $scope.player.id) {
-            Entry.getEntries({ type: entriesType, playerId: $scope.player.id }).then(function (entryValues) {
+            Entry.getEntries({ type: entriesType, playerId: $scope.player.id, reverse: true }).then(function (entryValues) {
                 $scope.entries = entryValues.map(parseEntry);
             });
         }

@@ -5,6 +5,6 @@ app.controller("InsightsController", ["$scope", "$location", function($scope, $l
     ];
 
     $scope.onInsightChange = function(insight){
-
+        $scope.currentInsightInclude = "insights/" + insight.id + "/" + insight.id + ".html";
     };
 }]);

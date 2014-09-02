@@ -85,7 +85,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
 
         return entriesObjectStore.internalObjectStore(OBJECT_STORE_NAME, "readonly").then(function(objectStore){
             var idx = objectStore.index(options.type ? "type_idx" : "date_idx");
-            var count = options.count || PAGE_SIZE,
+            var count = options.count || null,
                 entries = [],
                 currentRecord = 0,
                 deferred = $q.defer(),
@@ -93,11 +93,11 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
                     options.type ? [options.playerId, options.type] : [options.playerId],
                     options.type ? [options.playerId, options.type, new Date()] : [options.playerId, new Date()]
                 ),
-                cursor = idx.openCursor(cursorRange, "prev");
+                cursor = idx.openCursor(cursorRange, options.reverse ? "prev" : "next");
 
             cursor.onsuccess = function(event) {
                 var cursor = event.target.result;
-                if (!cursor || currentRecord === count) {
+                if (!cursor || count && currentRecord === count) {
                     deferred.resolve(entries);
                     return;
                 }

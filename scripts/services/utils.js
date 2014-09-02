@@ -2,7 +2,8 @@
 
 angular.module("Utils", []).factory("utils", ["$filter", function($filter){
     var stringParsers = {},
-        dayMilliseconds = 1000 * 60 * 60 * 24;
+        dayMilliseconds = 1000 * 60 * 60 * 24,
+        avgMonthLength = 365 / 12;
 
     function getValueVariable(val, data, scope){
         var pathProperties = val.split("."),
@@ -137,6 +138,54 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
                     str.push(daysAndMonths.days + " day" + (daysAndMonths.days > 1 ? "s" : ""));
 
                 return str.length ? methods.arrays.toSentence(str) + " old" : "Birthday!";
+            },
+            daysToMonths: function(days){
+                return Math.floor(days / avgMonthLength);
+            },
+            millisecondsToMonths: function(milli){
+                return Math.floor(milli / dayMilliseconds / avgMonthLength);
+            }
+        },
+        math: {
+            avg: function (data, field) {
+                return methods.math.sum(data, field) / data.length;
+            },
+            max: function(data, field){
+                if (!data || !data.length)
+                    return null;
+
+                var value = -Infinity;
+
+                data.forEach(function(item){
+                    value = Math.max(field ? item[field] : item, value);
+                });
+
+                return value;
+            },
+            min: function(data, field){
+                if (!data || !data.length)
+                    return null;
+
+                var value = Infinity;
+
+                data.forEach(function(item){
+                    value = Math.min(field ? item[field] : item, value);
+                });
+
+                return value;
+            },
+            sum: function(data, field){
+                var sum = 0;
+                if (field) {
+                    data.forEach(function (item) {
+                        sum += item[field];
+                    });
+                }
+                else{
+                    data.forEach(function (item) {
+                        sum += item;
+                    });
+                }
             }
         },
         strings: {
