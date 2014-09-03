@@ -24,6 +24,7 @@
     <script src="scripts/services/classes/entry.js"></script>
     <script src="scripts/services/classes/player.js"></script>
     <script src="scripts/services/entries.js"></script>
+    <script src="scripts/services/insights.js"></script>
     <script src="scripts/filters/pronoun.js"></script>
 
     <script src="scripts/controllers/main_controller.js"></script>
@@ -45,14 +46,6 @@
 </header>
 <div id="contents-wrapper">
     <div id="contents" class="flex-1 flex-vertical" ng-view></div>
-    <div id="tabs">
-        <a href="#/" ng-class="{ selected: currentPage == 'diary' }">
-            <span>Diary</span>
-        </a>
-        <a href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
-            <span>Insights</span>
-        </a>
-    </div>
 </div>
 <div id="overlay" class="overlay"></div>
 <div id="menu-wrapper" data-toggle-display="showMenu">
@@ -73,36 +66,12 @@
             </li>
         </ul>
         <ul>
-            <li>
-                <a href="#settings">
+            <li bindonce ng-repeat="item in menuItems" ng-class="{ selected: item.selected }">
+                <a bo-href="item.href" bindonce="item">
                         <span class="menu-icon">
-                            <img src="images/icons/settings.svg"/>
+                            <img bo-src="item.icon"/>
                         </span>
-                    <span class="menu-title">Settings</span>
-                </a>
-            </li>
-            <li>
-                <a href="#share">
-                        <span class="menu-icon">
-                            <img src="images/icons/share.svg"/>
-                        </span>
-                    <span class="menu-title">Add collaborators</span>
-                </a>
-            </li>
-            <li>
-                <a href="#contact">
-                        <span class="menu-icon">
-                            <img src="images/icons/mail.svg"/>
-                        </span>
-                    <span class="menu-title">Report bug / Send feedback</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                        <span class="menu-icon">
-                            <img src="images/icons/sign_out.svg"/>
-                        </span>
-                    <span class="menu-title">Sign out yoxigen</span>
+                    <span class="menu-title" bo-text="item.text"></span>
                 </a>
             </li>
         </ul>

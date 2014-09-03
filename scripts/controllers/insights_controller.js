@@ -1,10 +1,15 @@
-app.controller("InsightsController", ["$scope", "$location", function($scope, $location){
-    $scope.insights = [
-        { id: "weight", name: "Weight Chart" },
-        { id: "height", name: "Height Chart" }
-    ];
+app.controller("InsightsController", ["$scope", "insights", function($scope, insights){
+    $scope.insights = insights.insightsList;
 
     $scope.onInsightChange = function(insight){
-        $scope.currentInsightInclude = "insights/" + insight.id + "/" + insight.id + ".html";
+        setCurrentInsightInclude(insight);
+        insights.currentInsight = insight;
     };
+
+    if ($scope.currentInsight = insights.currentInsight)
+        setCurrentInsightInclude(insights.currentInsight);
+
+    function setCurrentInsightInclude(insight){
+        $scope.currentInsightInclude = "insights/" + insight.id + "/" + insight.id + ".html";
+    }
 }]);

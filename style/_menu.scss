@@ -45,6 +45,10 @@
       &:hover{
         background-color: #D7E0E2;
       }
+
+      &.selected{
+        background: #80cce6;
+      }
     }
   }
 
@@ -54,10 +58,6 @@
 
     li{
       padding: 0;
-
-      &.selected{
-        background: #80cce6;
-      }
 
       &.players-menu-add{
         padding: .5em;

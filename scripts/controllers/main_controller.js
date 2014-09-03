@@ -5,6 +5,7 @@ app.controller("MainController", ["$scope", "$route", "Player", function($scope,
 
     $scope.$on("$routeChangeSuccess", function(){
         $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
+        setCurrentMenuItem();
     });
 
     Player.getAll().then(function(players){
@@ -26,6 +27,30 @@ app.controller("MainController", ["$scope", "$route", "Player", function($scope,
     $scope.hideMenu = function(){
         $scope.showMenu = false;
     };
+
+    var currentMenuItem;
+    function setCurrentMenuItem(){
+        var hash = window.location.hash;
+        if (currentMenuItem)
+            currentMenuItem.selected = false;
+
+        for(var i= 0, item; item = $scope.menuItems[i]; i++){
+            if (item.href === hash){
+                currentMenuItem = item;
+                item.selected = true;
+                return;
+            }
+        }
+    }
+
+    $scope.menuItems = [
+        { text: "Diary", href: "#/", icon: "images/icons/weight.svg" },
+        { text: "Insights", href: "#/insights", icon: "images/icons/word.svg" },
+        { text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
+        { text: "Share", href: "#/share", icon: "images/icons/share.svg" },
+        { text: "Report bug / Send feedback", href: "#/", icon: "images/icons/mail.svg" },
+        { text: "Sign out", icon: "images/icons/sign_out.svg" }
+    ];
 
     $scope.config = {
         localization: {

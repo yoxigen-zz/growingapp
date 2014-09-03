@@ -364,13 +364,13 @@ a {
       padding: 1em 1.5em 1em 1em; }
       #menu ul li:hover {
         background-color: #D7E0E2; }
+      #menu ul li.selected {
+        background: #80cce6; }
   #menu #players-menu {
     background: #eff5f7;
     padding-bottom: 2em; }
     #menu #players-menu li {
       padding: 0; }
-      #menu #players-menu li.selected {
-        background: #80cce6; }
       #menu #players-menu li.players-menu-add {
         padding: .5em; }
         #menu #players-menu li.players-menu-add:hover {
