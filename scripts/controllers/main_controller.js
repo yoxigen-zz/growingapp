@@ -5,6 +5,7 @@ app.controller("MainController", ["$scope", "$route", "Player", function($scope,
 
     $scope.$on("$routeChangeSuccess", function(){
         $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
+        $scope.hideMenu();
         setCurrentMenuItem();
     });
 
