@@ -188,6 +188,20 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
                 }
             }
         },
+        objects: {
+            getObjectByPath: function(rootObj, path){
+                var parts = path.split("."),
+                    obj = rootObj;
+
+                for(var i= 0, part; part = parts[i]; i++){
+                    obj = obj[part];
+                    if (obj === null || obj === undefined)
+                        return obj;
+                }
+
+                return obj;
+            }
+        },
         strings: {
             escapeHtml: function(str){
                 return str.replace(/\&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

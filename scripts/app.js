@@ -1,4 +1,4 @@
-app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB", "SelfClick"])
+app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB", "SelfClick", "Charts"])
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "config", function ($routeProvider, $locationProvider, $indexedDBProvider, config) {
         $indexedDBProvider
             .connection('diaryDB')
@@ -56,6 +56,20 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
             });
 
         $locationProvider.html5Mode(false);
+    }])
+    .run(["$rootScope", function($rootScope) {
+        if (!$rootScope.safeApply) {
+            $rootScope.safeApply = function (fn) {
+                var phase = $rootScope.$$phase;
+                if (phase == '$apply' || phase == '$digest') {
+                    if (fn && (typeof(fn) === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
+        }
     }]);
 
 

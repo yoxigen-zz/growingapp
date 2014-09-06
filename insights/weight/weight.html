@@ -1,5 +1,5 @@
-<div ng-controller="WeightInsightController">
-    <line-chart chart-data="weightData" settings="chartSettings"></line-chart>
+<div class="flex-1 scroll-vertical" ng-controller="WeightInsightController">
+    <line-chart ng-model="weightData" settings="chartSettings" height="100%"></line-chart>
     <div class="insight-statistics">
         <div ng-repeat="stat in stats" ng-style="{ 'background-color': stat.color }">
             <h4>{{stat.title}}</h4>

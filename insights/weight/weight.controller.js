@@ -6,6 +6,30 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", function(
         setData();
     });
 
+    $scope.chartSettings = {
+        dataSeries: "playerId",
+        x: "date",
+        y: "properties.weight",
+        minYValue: 1.8,
+        interpolate: "cardinal",
+        "axes": {
+            "x": {
+                "type": "time",
+                renderGrid: false
+            },
+            "y": {
+                tickFormat: "d",
+                unit: "kg"
+            }
+        },
+        "scales": {
+            "x": {
+                "type": "time"
+            },
+            "y": {}
+        }
+    };
+
     function setData() {
         if (!$scope.currentPlayer || !$scope.currentPlayer.id){
             $scope.weightData = [];
@@ -14,7 +38,6 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", function(
 
         Entry.getEntries({ playerId: $scope.currentPlayer.id, type: "weight" }).then(function (data) {
             $scope.weightData = data;
-            console.log("DatA: ", data)
             setStats(data);
         });
     }
