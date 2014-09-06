@@ -188,6 +188,17 @@ a{ cursor: pointer; }
     padding: 0;
     font-weight: 300;
   }
+
+  &.dark{
+    background: $darkHeaderBackground;
+    color: $darkHeaderColor;
+    border-bottom: none;
+
+    select.fancy-select{
+      color: White;
+      border-bottom: none;
+    }
+  }
 }
 
 .contents-scroll{
