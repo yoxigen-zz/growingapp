@@ -49,7 +49,7 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                 controller: "InsightsController",
                 currentPage: "insights"
             })
-            .otherwise({
+            .when("/", {
                 templateUrl: "views/diary.html",
                 controller: "EntriesListController",
                 currentPage: "diary"

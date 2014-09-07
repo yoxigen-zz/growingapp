@@ -14,7 +14,7 @@ angular.module("EventBus", []).factory("eventBus", ["$rootScope", function($root
         unsubscribe: function(eventName, eventHandler){
             var event = eventHandlers[eventName];
             if (event){
-                for(var i=event.length - 1; i !== 0; i--){
+                for(var i=event.length - 1; i >= 0; i--){
                     if (event[i] === eventHandler)
                         event.splice(i, 1);
                 }

@@ -10,6 +10,8 @@ svg.graph{
 
 .chart{
   background: #183e5b;
+  padding: 1em;
+  box-sizing: border-box;
 
   .axis path,
   .axis line {

@@ -3,6 +3,10 @@
 app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", function($scope, $sce, $timeout, utils, eventBus, entries, Entry){
     eventBus.subscribe("newEntry", addEntry);
 
+    $scope.$on("$destroy", function(){
+        eventBus.unsubscribe("newEntry", addEntry);
+    });
+
     $scope.removeEntry = function(entry){
         entry.removed = true;
         entry.removeTimeout = $timeout(function(){
@@ -53,14 +57,19 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         return newEntry;
     }
 
+    var settingEntries;
     function setEntries(entriesType){
         if ($scope.player && $scope.player.id) {
+            if (settingEntries)
+                return;
+
+            settingEntries = true;
+
             Entry.getEntries({ type: entriesType, playerId: $scope.player.id, reverse: true }).then(function (entryValues) {
                 $scope.entries = entryValues.map(parseEntry);
+            }).finally(function(){
+                settingEntries = false;
             });
         }
     }
-
-    if ($scope.player)
-        setEntries();
 }]);

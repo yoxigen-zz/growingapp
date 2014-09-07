@@ -643,7 +643,9 @@ svg.graph {
     fill: #666666; }
 
 .chart {
-  background: #183e5b; }
+  background: #183e5b;
+  padding: 1em;
+  box-sizing: border-box; }
   .chart .axis path,
   .chart .axis line {
     fill: none; }

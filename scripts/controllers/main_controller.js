@@ -51,7 +51,10 @@ app.controller("MainController", ["$scope", "$route", "Player", function($scope,
         { text: "Share", href: "#/share", icon: "images/icons/share.svg" },
         { text: "Report bug / Send feedback", href: "#/", icon: "images/icons/mail.svg" },
         //{ text: "Sign out", icon: "images/icons/sign_out.svg" },
-        { text: "Close app", icon: "images/icons/sign_out.svg", href: "javascript:navigator.app.exitApp()" }
+        { text: "Close app", icon: "images/icons/sign_out.svg", onClick: function(e){
+            if (confirm("Are you sure you want to close the app?"))
+                navigator.app.exitApp();
+        } }
     ];
 
     $scope.config = {

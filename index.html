@@ -72,7 +72,7 @@
         </ul>
         <ul>
             <li bindonce ng-repeat="item in menuItems" ng-class="{ selected: item.selected }">
-                <a bo-href="item.href" bindonce="item">
+                <a bo-href="item.href" ng-click="item.onClick($event)" bindonce="item">
                         <span class="menu-icon">
                             <img bo-src="item.icon"/>
                         </span>

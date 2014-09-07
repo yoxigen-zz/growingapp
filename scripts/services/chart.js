@@ -538,8 +538,8 @@
             if (this.preRender)
                 this.preRender();
 
-            this.width = this.element.innerWidth();
-            this.height = this.element.innerHeight();
+            this.width = this.element.width();
+            this.height = this.element.height();
 
             if (this.settings.legend && this.legendData){
                 this._createLegend();
@@ -635,8 +635,8 @@
         resize: function(){
             var legendWidth = this.elements.legend && this.elements.legend._width;
             this.svg.attr("height", getHeight(this.attrs.height, this.element[0]));
-            this.width = this.element.innerWidth();
-            this.height = this.element.innerHeight();
+            this.width = this.element.width();
+            this.height = this.element.height();
 
             this.width -= this.options.margins.left + this.options.margins.right;
             this.height -= this.options.margins.top + this.options.margins.bottom;
