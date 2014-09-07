@@ -27,7 +27,6 @@
         return tickFormatter(tickSettings.tickFormat);
     }
 
-    var contents;
     function getHeight(heightSetting, element){
         if (!heightSetting)
             return "100%";
@@ -38,8 +37,7 @@
         if (typeof(heightSetting) === "string") {
             if (/\%$/.test(heightSetting)) {
                 var percent = parseInt(heightSetting);
-                if (!contents)
-                    contents = document.getElementById("contents");
+                    var contents = document.getElementById("contents");
                 return contents.clientHeight * percent / 100;
             }
 

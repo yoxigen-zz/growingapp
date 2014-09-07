@@ -1,7 +1,10 @@
-app.controller("InsightsController", ["$scope", "insights", function($scope, insights){
+app.controller("InsightsController", ["$scope", "insights", "$timeout", function($scope, insights, $timeout){
     $scope.insights = insights.insightsList;
 
     $scope.onInsightChange = function(insight){
+        if (!insight)
+            return;
+
         setCurrentInsightInclude(insight);
         insights.currentInsight = insight;
     };
