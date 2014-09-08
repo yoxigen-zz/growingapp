@@ -466,12 +466,14 @@
             }));
         },
         makeDataSeries: function(){
+            var self = this;
+
             if (this.data && this.settings && this.settings.dataSeries){
                 var seriesIndex = {},
                     seriesField = this.settings.dataSeries;
 
                 this.data.forEach(function(item){
-                    var itemSeries = item[seriesField];
+                    var itemSeries = self.utils.objects.getObjectByPath(item, seriesField);
                     if (itemSeries) {
                         var series = seriesIndex[itemSeries];
                         if (!series)

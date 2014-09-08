@@ -7,7 +7,7 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", function(
     });
 
     $scope.chartSettings = {
-        dataSeries: "playerId",
+        dataSeries: "player.id",
         x: "date",
         y: "properties.weight",
         minYValue: 1.8,
@@ -39,6 +39,8 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", function(
         Entry.getEntries({ playerId: $scope.currentPlayer.id, type: "weight" }).then(function (data) {
             $scope.weightData = data;
             setStats(data);
+        }).catch(function(error){
+            console.error("Can't get entries for weight chart: ", error);
         });
     }
 

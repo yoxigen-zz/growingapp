@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFactory($q, $indexedDB, entries) {
+app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntryClassFactory($q, $indexedDB, entries, Player) {
     var OBJECT_STORE_NAME = "entries",
         PAGE_SIZE = 10,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
@@ -17,7 +17,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
             this.date = entryData.date;
             this.age = entryData.age;
             this.properties = entryData.properties;
-            this.playerId = { id: entryData.playerId };
+            this.player = Player.getById(entryData.playerId);
         }
         else{
             this.date = new Date();
@@ -72,7 +72,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
                     playerId: this.player.id
                 };
 
-            return entriesObjectStore.insert(dbEntry).then(function (id) {
+            return entriesObjectStore.upsert(dbEntry).then(function (id) {
                 return newEntry;
             }, function(error){
                 alert("ERROR: " + JSON.stringify(error));
@@ -84,6 +84,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
         options = options || {};
 
         return entriesObjectStore.internalObjectStore(OBJECT_STORE_NAME, "readonly").then(function(objectStore){
+            //var objectStore = results[1];
             var idx = objectStore.index(options.type ? "type_idx" : "date_idx");
             var count = options.count || null,
                 entries = [],
@@ -107,7 +108,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", function getEntryClassFacto
                     cursor.advance(options.offset);
                 }
                 else{
-                    entries.push(cursor.value);
+                    entries.push(new Entry(cursor.value));
                     cursor.continue();
                     currentRecord++;
                 }

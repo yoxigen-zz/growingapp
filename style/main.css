@@ -276,7 +276,8 @@ a {
   .items-list li {
     border-bottom: solid 1px rgba(140, 149, 151, 0.2);
     position: relative;
-    overflow: hidden; }
+    overflow: hidden;
+    cursor: pointer; }
     .items-list li:last-child {
       border-bottom: none; }
   .items-list .items-list-item-content {

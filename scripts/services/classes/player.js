@@ -92,6 +92,11 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             cursor.onsuccess = function(event) {
                 var cursor = event.target.result;
                 if (!cursor) {
+                    Player.players = {};
+                    players.forEach(function(player){
+                        Player.players[player.id] = player;
+                    });
+
                     deferred.resolve(players);
                     return;
                 }
@@ -108,6 +113,18 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
         }, function(){
             return $q.when([]);
         });
+    };
+
+    Player.getById = function(playerId){
+        if (!Player.players){
+            return Player.getAll().then(function(players){
+                return Player.players[playerId];
+            }).catch(function(error){
+                return $q.reject("Can't get Player by ID, can't get all players.");
+            });
+        }
+
+        return Player.players[playerId];
     };
 
     return Player;

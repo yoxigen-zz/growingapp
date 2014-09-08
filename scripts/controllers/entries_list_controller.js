@@ -20,17 +20,47 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $timeout.cancel(entry.removeTimeout);
     };
 
-    $scope.entryTypes = [{ name: "All entry types" }].concat(entries.typesArray);
+    $scope.currentEntriesType = "";
+    $scope.entryTypes = entries.typesArray;
 
     $scope.onEntriesTypeChange = function(){
         setEntries($scope.currentEntriesType);
     };
 
+    $scope.entryClick = function(entry){
+        openEditEntryDialog(entry.type);
+        $scope.entry = entry;
+    };
+
     $scope.$watch("player", function(value){
         setEntries($scope.currentEntriesType);
     });
-    function addEntry(newEntry){
-        $scope.entries.splice(0, 0, parseEntry(newEntry));
+
+    $scope.showEditEntryForm = function(entryType){
+        openEditEntryDialog(entryType);
+        $scope.entry = new Entry(entryType, $scope.player);
+    };
+
+    $scope.saveEntry = function(){
+        $scope.entry.save().then(function(savedEntry){
+            console.log("saved: ", savedEntry);
+            $scope.showEditEntry = false;
+            $scope.toggleNewEntriesSelection(false);
+            if (savedEntry.isNewEntry)
+                addEntry(savedEntry);
+            else
+                updateEntry($scope.entry);
+        }, function(error){
+            console.error("Couldn't save entry", error);
+        });
+    };
+
+    function openEditEntryDialog(entryType){
+        $scope.newEntryType = entryType;
+        $scope.showEditEntry = true;
+    }
+
+    function sortEntries(){
         $scope.entries.sort(function(a, b){
             if (a.date === b.date)
                 return 0;
@@ -39,11 +69,17 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         });
     }
 
-    function parseEntry(entryData){
-        var newEntry = entryData instanceof Entry ? entryData : new Entry(entryData);
-        //if (typeof(newEntry.type) === "string")
-            //newEntry.type = entries.types[newEntry.type];
+    function addEntry(newEntry){
+        $scope.entries.splice(0, 0, parseEntry(newEntry));
+        sortEntries();
+    }
 
+    function updateEntry(entry){
+        parseEntry(entry);
+        sortEntries();
+    }
+
+    function parseEntry(newEntry){
         try {
             newEntry.html = $sce.trustAsHtml(angular.isFunction(newEntry.type.html)
                 ? newEntry.type.html(newEntry, $scope.player, $scope.config)
