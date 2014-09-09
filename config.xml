@@ -15,7 +15,7 @@
     <author href="http://yossikolesnicov.com" email="yk@yossikolesnicov.com">
         Yossi Kolesnicov
     </author>
-
+    <content src="index.html" />
     <!--
         If you do not want any permissions to be added to your app, add the
         following tag to your config.xml; you will still have the INTERNET

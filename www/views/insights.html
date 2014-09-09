@@ -1,0 +1,14 @@
+<div class="flex-1 scroll-vertical">
+    <header class="contents-header dark">
+        <div class="header-controls">
+            Insights -
+            <select class="fancy-select"
+                    ng-model="currentInsight"
+                    ng-change="onInsightChange(currentInsight)"
+                    ng-options="insight as insight.name for insight in insights">
+                <option value="">(Select)</option>
+            </select>
+        </div>
+    </header>
+    <div ng-include="currentInsightInclude"></div>
+</div>

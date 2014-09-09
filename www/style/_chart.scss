@@ -1,0 +1,99 @@
+svg.graph{
+  margin: 0 auto;
+
+  .legend{
+    text{
+      fill: #666666;
+    }
+  }
+}
+
+.chart{
+  background: #183e5b;
+  padding: 1em;
+  box-sizing: border-box;
+
+  .axis path,
+  .axis line {
+    fill: none;
+
+  }
+
+  .grid{
+    line{
+      stroke: #2a4d68;
+      stroke-width: 2px;
+    }
+    text{
+      fill: none;
+    }
+  }
+  .axis text {
+    fill: White;
+    font-size: .9em;
+  }
+
+  .labels{
+    pointer-events: none;
+
+    &.selected{
+      color: White;
+    }
+  }
+
+  .crisp{
+    shape-rendering: crispEdges;
+  }
+
+  .handle-events{
+    cursor: pointer;
+
+    &.label-box{
+      opacity: 0;
+      -webkit-transition: opacity 300ms ease-out;
+
+      &.selected{
+        opacity: 1 !important;
+      }
+      &:hover{
+        opacity: .2;
+      }
+    }
+  }
+
+  .vertical-bar{
+
+    &:hover{
+    }
+  }
+
+  .line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+
+  .point{
+    stroke-width: 10px;
+    stroke: transparent;
+    -webkit-transition: stroke 200ms ease-out;
+
+    &:hover{
+      stroke: rgba(159, 193, 206, 0.53);
+    }
+  }
+}
+
+.chart-description{
+  float: left;
+  font-weight: bold;
+}
+
+.chart-legend {
+  text-align: right;
+
+  li {
+    display: inline-block;
+    margin: 0 10px 0 0;
+  }
+}

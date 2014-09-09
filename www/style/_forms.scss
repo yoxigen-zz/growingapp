@@ -1,0 +1,131 @@
+form{
+  input[type=text], textarea, input[type=number], input[type=date]{
+    border: solid 1px #b9cfd6;
+    border-radius: 2px;
+    background: White;
+    padding: .5em;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+    font-size: 1em;
+    font-weight: 300;
+
+    &.input-small{
+      width: 10em;
+    }
+  }
+
+  label{
+    margin-bottom: 1em;
+    display: block;
+
+    &.no-margin{
+      margin-bottom: 0;
+    }
+  }
+}
+
+select{
+  padding: .5em;
+  border: solid 1px #b9cfd6;
+  font-size: 1em;
+
+  &.fancy-select{
+    background: url(../images/icons/triangle.svg) no-repeat bottom right;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    border-bottom: solid 2px #BEC9CC;
+    padding: .2em 1em .1em 0;
+    color: #373737;
+    font-family: Roboto;
+    font-weight: 300;
+  }
+}
+
+.button{
+  display: inline-block;
+  padding: .8em;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-size: 1.1em;
+  white-space: nowrap;
+  font-weight: 300;
+  background: $defaultButtonBackgroundColor;
+  color: White;
+  cursor: pointer;
+
+  &:hover{
+    background: $defaultButtonBackgroundColorHover;
+  }
+  img{
+    height: 1em;
+    vertical-align: middle;
+    margin-right: .2em;
+    position: relative;
+    top: -.1em;
+  }
+
+  .button-text{
+    @media all and (max-width: 320px){
+      display: none;
+    }
+  }
+}
+
+.save-button{
+  background: $saveBackgroundColor;
+  color: $saveColor;
+  cursor: pointer;
+
+  &:hover, &.active{
+    background-color: $saveBackgroundColorHover;
+  }
+}
+
+.remove-button{
+  background-color: #b52d35;
+  color: White;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #cc3038;
+  }
+}
+
+.undo-button{
+  background-color: #DFC822;
+  color: Black;
+  cursor: pointer;
+
+  &:hover{
+    background-color: #f6df22;
+  }
+}
+
+.buttons-bar{
+  @extend .flex-horizontal;
+
+  a{
+    margin-right: .5em;
+    @extend .flex-1;
+
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+}
+.cancel-button{
+  background: none;
+  color: rgba(0,0,0,.6);
+}
+
+.label-text{
+  color: #7B8B91;
+  text-transform: uppercase;
+  font-size: .8em;
+  font-weight: bold;
+  display: block;
+  margin-bottom: .3em;
+}
