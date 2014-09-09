@@ -40,7 +40,7 @@ body {
 a {
   cursor: pointer; }
 
-.flex-horizontal {
+.flex-horizontal, .buttons-bar {
   display: -webkit-box;
   -webkit-box-orient: horizontal;
   display: -webkit-flex;
@@ -58,7 +58,7 @@ a {
   flex-flow: column;
   flex-direction: column; }
 
-.flex-1 {
+.flex-1, .buttons-bar a {
   flex: 1;
   -webkit-flex: 1;
   -webkit-box-flex: 1; }
@@ -75,6 +75,11 @@ a {
 @media all and (max-width: 500px) {
   .hide-small-width {
     display: none; } }
+
+.player-image {
+  height: 50px;
+  width: 50px;
+  border: solid 1px rgba(0, 0, 0, 0.2); }
 
 #actionbar {
   height: 3.5em;
@@ -526,7 +531,12 @@ select {
   box-sizing: border-box;
   font-size: 1.1em;
   white-space: nowrap;
-  font-weight: 300; }
+  font-weight: 300;
+  background: #57a3e5;
+  color: White;
+  cursor: pointer; }
+  .button:hover {
+    background: #58aef1; }
   .button img {
     height: 1em;
     vertical-align: middle;
@@ -558,7 +568,13 @@ select {
   .undo-button:hover {
     background-color: #f6df22; }
 
+.buttons-bar a {
+  margin-right: .5em; }
+  .buttons-bar a:last-child {
+    margin-right: 0; }
+
 .cancel-button {
+  background: none;
   color: rgba(0, 0, 0, 0.6); }
 
 .label-text {

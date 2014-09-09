@@ -52,7 +52,13 @@ select{
   font-size: 1.1em;
   white-space: nowrap;
   font-weight: 300;
+  background: $defaultButtonBackgroundColor;
+  color: White;
+  cursor: pointer;
 
+  &:hover{
+    background: $defaultButtonBackgroundColorHover;
+  }
   img{
     height: 1em;
     vertical-align: middle;
@@ -98,8 +104,20 @@ select{
   }
 }
 
+.buttons-bar{
+  @extend .flex-horizontal;
 
+  a{
+    margin-right: .5em;
+    @extend .flex-1;
+
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+}
 .cancel-button{
+  background: none;
   color: rgba(0,0,0,.6);
 }
 

@@ -1,4 +1,4 @@
-app.controller("MainController", ["$scope", "$route", "Player", function($scope, $route, Player){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", function($scope, $route, Player, phonegap){
     $scope.setCurrentPlayer = function(player){
         $scope.currentPlayer = player;
     };
@@ -103,6 +103,19 @@ app.controller("MainController", ["$scope", "$route", "Player", function($scope,
             }
 
             setPlayersSelection($scope.players);
+        });
+    };
+
+    $scope.takePlayerPicture = function(){
+        phonegap.images.takePhoto({
+            allowEdit : true,
+            targetWidth: 200,
+            targetHeight: 200
+        }).then(function(fileUrl){
+            $scope.editedPlayer.image = fileUrl;
+        }, function(error){
+            alert(error);
+            console.error("Error taking picture: ", error);
         });
     };
 

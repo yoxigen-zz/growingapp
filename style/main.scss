@@ -58,6 +58,12 @@ a{ cursor: pointer; }
   }
 }
 
+.player-image{
+  height: 50px;
+  width: 50px;
+  border: solid 1px rgba(0,0,0,.2);
+}
+
 #actionbar{
   height: $actionbarHeight;
   line-height: $actionbarHeight - .1;

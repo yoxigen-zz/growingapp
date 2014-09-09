@@ -69,6 +69,9 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             if (this.id)
                 dbPlayer.id = this.id;
 
+            if (this.image)
+                dbPlayer.image = this.image;
+
             return entriesObjectStore.upsert(dbPlayer).then(function (id) {
                 if (player.isNewPlayer)
                     player.id = id;

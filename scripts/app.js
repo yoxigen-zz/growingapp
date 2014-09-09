@@ -1,4 +1,4 @@
-app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB", "SelfClick", "Charts"])
+app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB", "SelfClick", "Charts", "Phonegap"])
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "config", function ($routeProvider, $locationProvider, $indexedDBProvider, config) {
         $indexedDBProvider
             .connection('diaryDB')
