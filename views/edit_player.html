@@ -2,7 +2,7 @@
     <header>
         <a class="close-button"
            title="Close"
-           ng-click="showEditPlayer = false">
+           ng-click="closeEditPlayer()">
             <img src="images/icons/close.svg"/>
         </a>
         <span class="popup-title">{{editedPlayer.id && 'Edit Child' || 'Add New Child'}}</span>
@@ -42,7 +42,7 @@
                     </label>
                 </div>
                 <footer class="flex-horizontal buttons-bar">
-                    <a ng-click="showEditPlayer = false" class="flex-1 button cancel-button">Cancel</a>
+                    <a ng-click="closeEditPlayer()" class="flex-1 button cancel-button">Cancel</a>
                     <a href="#" class="flex-1 button remove-button" ng-click="removePlayer()"
                        ng-show="editedPlayer.id">Delete<span class="hide-small-width"> Child</span></a>
                     <a href="#" class="flex-1 button save-button" ng-click="savePlayer()">

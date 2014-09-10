@@ -84,6 +84,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
         }
     };
 
+    $scope.closeEditPlayer = function(){
+        $scope.showEditPlayer = false;
+    };
+
     $scope.toggleEditPlayer = function(state){
         $scope.showEditPlayer = state === true || state === false ? state : !$scope.showEditPlayer;
     };
@@ -110,7 +114,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
         phonegap.images.takePhoto({
             allowEdit : true,
             targetWidth: 200,
-            targetHeight: 200
+            targetHeight: 200,
+            saveToPhotoAlbum: false
         }).then(function(fileUrl){
             $scope.editedPlayer.image = fileUrl;
         }, function(error){

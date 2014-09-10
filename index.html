@@ -42,8 +42,13 @@
 </head>
 <body ng-controller="MainController">
 <header id="actionbar" class="flex-horizontal">
+    <div>
+        <img id="actionbar-image" ng-src="{{player.image}}" ng-show="player.image" />
+    </div>
     <div class="flex-1">
-        <span id="actionbar-name">{{ player.name }}</span>
+        <span id="actionbar-name">
+            {{ player.name }}
+        </span>
     </div>
     <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
         <img src="images/icons/menu.svg" title="Menu"/>
