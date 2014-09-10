@@ -115,8 +115,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
             allowEdit : true,
             targetWidth: 200,
             targetHeight: 200,
-            saveToPhotoAlbum: false
+            saveToPhotoAlbum: false,
+            sourceType : Camera.PictureSourceType.PHOTOLIBRARY
         }).then(function(fileUrl){
+            alert("url: ", fileUrl);
             $scope.editedPlayer.image = fileUrl;
         }, function(error){
             alert(error);
