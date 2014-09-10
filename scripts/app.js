@@ -70,6 +70,10 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                 }
             };
         }
+
+        document.addEventListener("deviceready", function(){
+            alert("camera: ", navigator.camera);
+        }, false);
     }]);
 
 
