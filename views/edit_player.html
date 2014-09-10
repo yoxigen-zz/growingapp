@@ -29,7 +29,7 @@
                     <label>
                         <span class="label-text">Image</span>
                         <div class="flex-horizontal">
-                            <img src="images/photos/lynn.jpg" class="player-edit-image" />
+                            <img ng-src="{{editedPlayer.image}}" ng-show="editedPlayer.image" class="player-edit-image" />
                             <div class="flex-1 vertical-buttons-bar">
                                 <a class="button" ng-click="takePlayerPicture()">
                                     <img src="images/icons/camera.svg" />
