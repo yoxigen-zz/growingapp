@@ -114,11 +114,15 @@ a{ cursor: pointer; }
   }
 
   #actionbar-image{
+    display: block;
     height: 3em;
-    max-width: 3em;
+    width: 3em;
     margin-right: .5em;
     margin-top: .2em;
     border: solid 1px rgba(255,255,255,.2);
+    background-position: 20% center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 
   #menu-button{

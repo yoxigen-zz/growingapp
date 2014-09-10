@@ -44,7 +44,7 @@
 <body ng-controller="MainController">
 <header id="actionbar" class="flex-horizontal">
     <div>
-        <img  ng-src="{{player.image}}" ng-show="player.image" />
+        <span id="actionbar-image" ng-style="{ 'background-image': 'url(' + player.image + ')' }" ng-show="player.image"></span>
     </div>
     <div class="flex-1">
         <span id="actionbar-name">

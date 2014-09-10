@@ -118,11 +118,15 @@ a {
     font-size: 1.5em;
     font-weight: 300; }
   #actionbar #actionbar-image {
+    display: block;
     height: 3em;
-    max-width: 3em;
+    width: 3em;
     margin-right: .5em;
     margin-top: .2em;
-    border: solid 1px rgba(255, 255, 255, 0.2); }
+    border: solid 1px rgba(255, 255, 255, 0.2);
+    background-position: 20% center;
+    background-size: cover;
+    background-repeat: no-repeat; }
   #actionbar #menu-button {
     float: right;
     display: block;
