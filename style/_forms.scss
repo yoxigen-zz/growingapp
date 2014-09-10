@@ -116,6 +116,17 @@ select{
     }
   }
 }
+
+.vertical-buttons-bar{
+  a{
+    display: block;
+
+    &:first-child{
+      margin-bottom: .5em;
+    }
+  }
+}
+
 .cancel-button{
   background: none;
   color: rgba(0,0,0,.6);

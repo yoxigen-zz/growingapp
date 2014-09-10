@@ -29,13 +29,15 @@
                     <label>
                         <span class="label-text">Image</span>
                         <div class="flex-horizontal">
-                            <img ng-src="{{editedPlayer.image}}" ng-show="editedPlayer.image" class="player-image" />
-                            <div class="flex-1 buttons-bar">
+                            <img src="images/photos/lynn.jpg" class="player-edit-image" />
+                            <div class="flex-1 vertical-buttons-bar">
                                 <a class="button" ng-click="takePlayerPicture()">
-                                    <span class="button-text">Take Photo</span>
+                                    <img src="images/icons/camera.svg" />
+                                    <span class="button-text"><span class="large-width-only">From </span>Camera</span>
                                 </a>
                                 <a class="button" ng-click="browsePlayerPicture()">
-                                    <span class="button-text">Browse Photos</span>
+                                    <img src="images/icons/folders.svg" />
+                                    <span class="button-text">Browse<span class="large-width-only"> Library</span></span>
                                 </a>
                             </div>
                         </div>

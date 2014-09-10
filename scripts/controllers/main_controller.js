@@ -113,8 +113,22 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
     $scope.takePlayerPicture = function(){
         phonegap.images.takePhoto({
             allowEdit : true,
-            targetWidth: 200,
-            targetHeight: 200,
+            targetWidth: 400,
+            targetHeight: 400,
+            saveToPhotoAlbum: false
+        }).then(function(fileUrl){
+            $scope.editedPlayer.image = fileUrl;
+        }, function(error){
+            alert(error);
+            console.error("Error taking picture: ", error);
+        });
+    };
+
+    $scope.browsePlayerPicture = function(){
+        phonegap.images.browsePhotos({
+            allowEdit : true,
+            targetWidth: 400,
+            targetHeight: 400,
             saveToPhotoAlbum: false
         }).then(function(fileUrl){
             $scope.editedPlayer.image = fileUrl;
