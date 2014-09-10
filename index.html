@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="images/favicon.png"/>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="phonegap.js"></script>
+    <script src="camera.js"></script>
     <script src="components/d3.v3.min.js"></script>
     <script src="components/jquery/jquery-2.0.3.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
@@ -43,7 +44,7 @@
 <body ng-controller="MainController">
 <header id="actionbar" class="flex-horizontal">
     <div>
-        <img id="actionbar-image" ng-src="{{player.image}}" ng-show="player.image" />
+        <img  ng-src="{{player.image}}" ng-show="player.image" />
     </div>
     <div class="flex-1">
         <span id="actionbar-name">
