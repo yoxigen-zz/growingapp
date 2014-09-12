@@ -78,7 +78,7 @@ a {
 
 .player-edit-image {
   height: 6.9em;
-  width: 7em;
+  max-width: 7em;
   border: solid 1px rgba(0, 0, 0, 0.2);
   margin-right: .5em; }
 
@@ -384,8 +384,7 @@ a {
     margin: 0;
     padding: 0; }
     #menu ul li {
-      border-top: solid 1px rgba(154, 167, 172, 0.2);
-      padding: 1em 1.5em 1em 1em; }
+      border-top: solid 1px rgba(154, 167, 172, 0.2); }
       #menu ul li:hover {
         background-color: #D7E0E2; }
       #menu ul li.selected {
@@ -429,7 +428,9 @@ a {
       font-weight: bold; }
   #menu a {
     text-decoration: none;
-    color: #333; }
+    color: #333;
+    padding: 1em 1.5em 1em 1em;
+    display: block; }
   #menu .menu-icon {
     display: block;
     float: left;
