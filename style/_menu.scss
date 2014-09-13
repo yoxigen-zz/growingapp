@@ -20,18 +20,9 @@
 }
 
 #menu{
-  max-width: 100%;
-  height: 100%;
   background: #e1e8ea;
-  box-shadow: -2px 2px 15px rgba(0,0,0,.6);
-  padding-bottom: .5em;
   box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
-  transition: all 300ms ease-out;
-  -webkit-transition: all 300ms ease-out;
+  margin: 0;
 
   ul{
     list-style: none;

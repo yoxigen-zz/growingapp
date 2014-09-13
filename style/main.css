@@ -24,6 +24,9 @@ body {
   padding: 0;
   margin: 0; }
 
+html, body {
+  height: 100%; }
+
 body {
   background: #f4f4f4;
   color: #243033;
@@ -82,10 +85,14 @@ a {
   border: solid 1px rgba(0, 0, 0, 0.2);
   margin-right: .5em; }
 
+core-toolbar, core-scaffold::shadow core-toolbar {
+  background: #03a9f4;
+  color: white; }
+
 #actionbar {
   height: 3.5em;
   line-height: 3.4em;
-  background: #0099cc;
+  background: #03a9f4;
   color: white;
   padding: 0 0.8em; }
   #actionbar .edit-button {
@@ -137,6 +144,11 @@ a {
       margin-top: 0.875em; }
     #actionbar #menu-button.active {
       opacity: 1; }
+
+#main-toolbar {
+  width: 100%; }
+  #main-toolbar [flex] {
+    padding: 5px; }
 
 #contents-wrapper {
   overflow: hidden;
@@ -291,20 +303,13 @@ a {
   padding: 0; }
   .items-list li {
     border-bottom: solid 1px rgba(140, 149, 151, 0.2);
-    position: relative;
     overflow: hidden;
     cursor: pointer; }
     .items-list li:last-child {
       border-bottom: none; }
   .items-list .items-list-item-content {
     padding: 0.8em 0.7em;
-    -webkit-transition: -webkit-transform 200ms ease-out;
-    position: relative;
-    z-index: 2;
     background: #f4f4f4; }
-    .items-list .items-list-item-content.removed {
-      -webkit-transform: translateX(-80%);
-      box-shadow: 5px 0 8px rgba(0, 0, 0, 0.6); }
   .items-list .items-list-item-removed {
     position: absolute;
     z-index: 1;
@@ -367,18 +372,9 @@ a {
     transform: translateX(0); }
 
 #menu {
-  max-width: 100%;
-  height: 100%;
   background: #e1e8ea;
-  box-shadow: -2px 2px 15px rgba(0, 0, 0, 0.6);
-  padding-bottom: .5em;
   box-sizing: border-box;
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
-  transition: all 300ms ease-out;
-  -webkit-transition: all 300ms ease-out; }
+  margin: 0; }
   #menu ul {
     list-style: none;
     margin: 0;
@@ -477,7 +473,7 @@ a {
   border-radius: 2px;
   box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.5); }
   .popup header {
-    background: #0099cc;
+    background: #03a9f4;
     color: white;
     padding-left: 1em;
     font-weight: bold;
@@ -726,3 +722,20 @@ svg.graph {
   .chart-legend li {
     display: inline-block;
     margin: 0 10px 0 0; }
+
+core-scaffold {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.content {
+  background-color: #fff; }
+
+/* some default styles for mode="cover" on core-scaffold */
+core-scaffold[mode=cover]::shadow core-header-panel::shadow #mainContainer {
+  left: 120px; }
+
+core-scaffold[mode=cover] .content {
+  margin: 20px 100px 20px 0; }

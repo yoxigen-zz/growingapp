@@ -46,10 +46,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
 
     $scope.menuItems = [
         { text: "Diary", href: "#/", icon: "images/icons/weight.svg" },
-        { text: "Insights", href: "#/insights", icon: "images/icons/word.svg" },
+        { text: "Insights", href: "#/insights", icon: "images/icons/charts.svg" },
         { text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
         { text: "Share", href: "#/share", icon: "images/icons/share.svg" },
-        { text: "Report bug / Send feedback", href: "#/", icon: "images/icons/mail.svg" },
+        { text: "Send feedback", href: "#/", icon: "images/icons/mail.svg" },
         //{ text: "Sign out", icon: "images/icons/sign_out.svg" },
         { text: "Close app", icon: "images/icons/sign_out.svg", onClick: function(e){
             if (confirm("Are you sure you want to close the app?"))

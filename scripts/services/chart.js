@@ -37,8 +37,8 @@
         if (typeof(heightSetting) === "string") {
             if (/\%$/.test(heightSetting)) {
                 var percent = parseInt(heightSetting);
-                    var contents = document.getElementById("contents");
-                return contents.clientHeight * percent / 100;
+                    var header = document.querySelector(".actionbar");
+                return (document.documentElement.clientHeight - header.clientHeight) * percent / 100;
             }
 
             return parseInt(heightSetting, 10);

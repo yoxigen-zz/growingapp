@@ -24,15 +24,12 @@
         </div>
         <ul class="items-list">
             <li ng-repeat="entry in entries" ng-click="entryClick(entry)">
-                <div class="items-list-item-content" ng-swipe-left="removeEntry(entry)" ng-class="{ removed: entry.removed }">
+                <div class="items-list-item-content" ng-class="{ removed: entry.removed }">
                     <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                     <div class="item-text">
                         <div ng-bind-html="entry.html"></div>
                         <div class="item-details">{{entry.dateText}}</div>
                     </div>
-                </div>
-                <div class="items-list-item-removed">
-                    Item removed <a class="button undo-button item-removed-undo" ng-click="undoRemoveEntry(entry)">Undo</a>
                 </div>
             </li>
         </ul>

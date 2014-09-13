@@ -7,6 +7,13 @@
     <link rel="icon" type="image/png" href="images/favicon.png"/>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="phonegap.js"></script>
+
+    <script src="components/polymer/platform.js"></script>
+    <link rel="import" href="components/polymer/core-scaffold/core-scaffold.html">
+    <link rel="import" href="components/polymer/core-header-panel/core-header-panel.html">
+    <link rel="import" href="components/polymer/core-menu/core-menu.html">
+    <link rel="import" href="components/polymer/core-item/core-item.html">
+
     <script src="components/d3.v3.min.js"></script>
     <script src="components/jquery/jquery-2.0.3.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
@@ -41,52 +48,56 @@
     <script src="insights/weight/weight.controller.js"></script>
 </head>
 <body ng-controller="MainController">
-<header id="actionbar" class="flex-horizontal">
-    <div>
-        <span id="actionbar-image" ng-style="{ 'background-image': 'url(' + player.image + ')' }" ng-show="player.image"></span>
-    </div>
-    <div class="flex-1">
-        <span id="actionbar-name">
-            {{ player.name }}
-        </span>
-    </div>
-    <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
-        <img src="images/icons/menu.svg" title="Menu"/>
-    </a>
-</header>
-<div id="contents-wrapper">
-    <div id="contents" class="flex-1 flex-vertical" ng-view></div>
-</div>
-<div id="overlay" class="overlay"></div>
-<div id="menu-wrapper" data-toggle-display="showMenu">
-    <div id="menu">
-        <ul id="players-menu">
-            <li ng-repeat="player in players" class="flex-horizontal"
-                ng-class="{ selected: player.id === currentPlayer.id }">
-                <a ng-click="setCurrentPlayer(player); hideMenu()" class="flex-1">{{player.name}}</a>
-                <a ng-click="editPlayer(player); hideMenu()" class="players-menu-edit">
-                    <img class="child-menu-edit" src="images/icons/edit.svg"/>
-                </a>
-            </li>
-            <li class="players-menu-add">
-                <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
-                    <img class="child-menu-add" src="images/icons/plus.svg"/>
-                    Add Child
-                </a>
-            </li>
-        </ul>
-        <ul>
-            <li bindonce ng-repeat="item in menuItems" ng-class="{ selected: item.selected }">
-                <a bo-href="item.href" ng-click="item.onClick($event)" bindonce="item">
+<core-scaffold>
+
+    <core-header-panel id="main-header" navigation flex mode="seamed">
+        <core-toolbar class="actionbar">Baby Diary</core-toolbar>
+        <core-menu id="menu">
+            <ul id="players-menu">
+                <li ng-repeat="player in players" class="flex-horizontal"
+                    ng-class="{ selected: player.id === currentPlayer.id }">
+                    <a ng-click="setCurrentPlayer(player); hideMenu()" class="flex-1">{{player.name}}</a>
+                    <a ng-click="editPlayer(player); hideMenu()" class="players-menu-edit">
+                        <img class="child-menu-edit" src="images/icons/edit.svg"/>
+                    </a>
+                </li>
+                <li class="players-menu-add">
+                    <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
+                        <img class="child-menu-add" src="images/icons/plus.svg"/>
+                        Add Child
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li bindonce ng-repeat="item in menuItems" ng-class="{ selected: item.selected }">
+                    <a bo-href="item.href" ng-click="item.onClick($event)" bindonce="item">
                         <span class="menu-icon">
                             <img bo-src="item.icon"/>
                         </span>
-                    <span class="menu-title" bo-text="item.text"></span>
-                </a>
-            </li>
-        </ul>
+                        <span class="menu-title" bo-text="item.text"></span>
+                    </a>
+                </li>
+            </ul>
+        </core-menu>
+    </core-header-panel>
+
+    <div tool id="main-toolbar" class="flex-horizontal">
+        <span id="actionbar-image" ng-style="{ 'background-image': 'url(' + player.image + ')' }" ng-show="player.image"></span>
+        <span flex>{{player.name}}</span>
+        <a href="#/" title="Diary">
+            <core-icon-button icon="list"></core-icon-button>
+        </a>
+        <a href="#/insights" title="Insights">
+            <core-icon-button src="images/icons/charts-white.svg">
+            </core-icon-button>
+        </a>
     </div>
-</div>
+
+    <div class="content" ng-view></div>
+
+</core-scaffold>
+
+<div id="overlay" class="overlay"></div>
 <div id="playerEdit"
      class="popup-wrapper"
      ng-show="editedPlayer"
