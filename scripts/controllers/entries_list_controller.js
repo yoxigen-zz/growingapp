@@ -2,9 +2,13 @@
 
 app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", function($scope, $sce, $timeout, utils, eventBus, entries, Entry){
     eventBus.subscribe("newEntry", addEntry);
+    eventBus.subscribe("editPlayer", setEntries);
+    eventBus.subscribe("playerSelect", setEntries);
 
     $scope.$on("$destroy", function(){
         eventBus.unsubscribe("newEntry", addEntry);
+        eventBus.unsubscribe("editPlayer", setEntries);
+        eventBus.unsubscribe("playerSelect", setEntries);
     });
 
     $scope.removeEntry = function(entry){
@@ -24,17 +28,13 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     $scope.entryTypes = entries.typesArray;
 
     $scope.onEntriesTypeChange = function(){
-        setEntries($scope.currentEntriesType);
+        setEntries();
     };
 
     $scope.entryClick = function(entry){
         openEditEntryDialog(entry.type);
         $scope.entry = entry;
     };
-
-    $scope.$watch("player", function(value){
-        setEntries($scope.currentEntriesType);
-    });
 
     $scope.showEditEntryForm = function(entryType){
         openEditEntryDialog(entryType);
@@ -94,18 +94,25 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     }
 
     var settingEntries;
-    function setEntries(entriesType){
+    function setEntries(){
         if ($scope.player && $scope.player.id) {
             if (settingEntries)
                 return;
 
             settingEntries = true;
 
-            Entry.getEntries({ type: entriesType, playerId: $scope.player.id, reverse: true }).then(function (entryValues) {
-                $scope.entries = entryValues.map(parseEntry);
+            Entry.getEntries({ type: $scope.currentEntriesType, playerId: $scope.player.id, reverse: true }).then(function (entryValues) {
+                if (settingEntries)
+                    $scope.entries = entryValues.map(parseEntry);
             }).finally(function(){
                 settingEntries = false;
             });
         }
+        else {
+            settingEntries = false;
+            $scope.entries = [];
+        }
     }
+
+    setEntries();
 }]);

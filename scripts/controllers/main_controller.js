@@ -1,6 +1,22 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", function($scope, $route, Player, phonegap){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", function($scope, $route, Player, phonegap, eventBus){
     $scope.setCurrentPlayer = function(player){
-        $scope.currentPlayer = player;
+        if ($scope.player === player)
+            return;
+
+        if (!player)
+            player = $scope.players.length ? $scope.players[0] : null;
+
+        $scope.player = player;
+
+        if (player && player.id) {
+            localStorage.player = String(player.id);
+        }
+        else {
+            localStorage.removeItem("player");
+            $scope.addNewPlayer();
+        }
+
+        eventBus.triggerEvent("playerSelect", player);
     };
 
     $scope.$on("$routeChangeSuccess", function(){
@@ -13,15 +29,19 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
         $scope.players = players;
         setPlayersSelection(players);
 
-        var storagePlayerId = localStorage.player;
-        if (storagePlayerId){
-            storagePlayerId = parseInt(storagePlayerId, 10);
-            for(var i=0; i < $scope.players.length; i++) {
-                if ($scope.players[i].id === storagePlayerId) {
-                    $scope.currentPlayer = $scope.players[i];
-                    break;
+        if ($scope.players.length) {
+            var storagePlayerId = localStorage.player;
+            if (storagePlayerId) {
+                storagePlayerId = parseInt(storagePlayerId, 10);
+                for (var i = 0; i < $scope.players.length; i++) {
+                    if ($scope.players[i].id === storagePlayerId) {
+                        $scope.setCurrentPlayer($scope.players[i]);
+                        break;
+                    }
                 }
             }
+            else
+                $scope.setCurrentPlayer($scope.players[0]);
         }
     });
 
@@ -76,7 +96,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
 
     $scope.editPlayer = function(player){
         if (player instanceof Player) {
-            $scope.editedPlayer = player;
+            $scope.editedPlayer = angular.copy(player);
             $scope.toggleEditPlayer(true);
         }
         else{
@@ -96,17 +116,24 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
         $scope.editedPlayer.save().then(function(player){
             $scope.toggleEditPlayer(false);
             $scope.editedPlayer = null;
+            $scope.setCurrentPlayer(player);
 
             if (player.isNewPlayer){
-                $scope.player = player;
                 $scope.players.push(player);
                 $scope.players.sort(function(a,b){
                     return a.name < b.name ? 1 : -1;
                 });
-                $scope.currentPlayer = player;
             }
-
+            else{
+                for(var i= 0, menuPlayer; menuPlayer = $scope.players[i]; i++){
+                    if (menuPlayer.id === player.id) {
+                        $scope.players[i] = player;
+                        break;
+                    }
+                }
+            }
             setPlayersSelection($scope.players);
+            eventBus.triggerEvent("editPlayer", player);
         });
     };
 
@@ -148,24 +175,16 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", func
                     $scope.players.splice(i, 1);
                     setPlayersSelection($scope.players);
                     $scope.toggleEditPlayer(false);
+
+                    if ($scope.player && $scope.editedPlayer.id === $scope.player.id)
+                        $scope.setCurrentPlayer($scope.players.length ? $scope.players[0] : null);
+
                     $scope.editedPlayer = null;
                     break;
                 }
             }
         });
     };
-
-    $scope.$watch("currentPlayer", function(value){
-        if (!value)
-            return;
-
-        if (value.id) {
-            $scope.player = value;
-            localStorage.player = String(value.id);
-        }
-        else
-            $scope.addNewPlayer();
-    });
 
     function setPlayersSelection(players){
         $scope.playersSelection = players.concat([{ name: "+ Add New Child" }]);

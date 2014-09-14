@@ -1,9 +1,10 @@
 'use strict';
 
-app.controller("WeightInsightController", ["$scope", "Entry", "utils", function($scope, Entry, utils){
-    var init;
-    $scope.$watch("currentPlayer", function(value) {
-        setData();
+app.controller("WeightInsightController", ["$scope", "Entry", "utils", "eventBus", function($scope, Entry, utils, eventBus){
+    eventBus.subscribe("playerSelect", setData);
+
+    $scope.$on("$destroy", function(){
+        eventBus.unsubscribe("playerSelect", setData);
     });
 
     $scope.chartSettings = {
@@ -31,12 +32,12 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", function(
     };
 
     function setData() {
-        if (!$scope.currentPlayer || !$scope.currentPlayer.id){
+        if (!$scope.player || !$scope.player.id){
             $scope.weightData = [];
             return;
         }
 
-        Entry.getEntries({ playerId: $scope.currentPlayer.id, type: "weight" }).then(function (data) {
+        Entry.getEntries({ playerId: $scope.player.id, type: "weight" }).then(function (data) {
             $scope.weightData = data;
             setStats(data);
         }).catch(function(error){
@@ -47,6 +48,11 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", function(
     function setStats(data){
         var stats = [],
             weights = [];
+
+        if (!data || !data.length){
+            $scope.stats = null;
+            return;
+        }
 
         data.forEach(function(item){
             weights.push(item.properties.weight);
@@ -60,4 +66,6 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", function(
 
         $scope.stats = stats;
     }
+
+    setData();
 }]);

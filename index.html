@@ -61,10 +61,10 @@
 <div id="menu-wrapper" data-toggle-display="showMenu">
     <div id="menu">
         <ul id="players-menu">
-            <li ng-repeat="player in players" class="flex-horizontal"
-                ng-class="{ selected: player.id === currentPlayer.id }">
-                <a ng-click="setCurrentPlayer(player); hideMenu()" class="flex-1">{{player.name}}</a>
-                <a ng-click="editPlayer(player); hideMenu()" class="players-menu-edit">
+            <li ng-repeat="listPlayer in players" class="flex-horizontal"
+                ng-class="{ selected: listPlayer.id === player.id }">
+                <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1">{{listPlayer.name}}</a>
+                <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
                     <img class="child-menu-edit" src="images/icons/edit.svg"/>
                 </a>
             </li>

@@ -9,7 +9,7 @@ angular.module('Charts')
             replace: true,
             link: function postLink(scope, element, attrs, ngModel) {
                 var defaultOptions = {
-                        circleRadius: 6
+                        circleRadius: 3
                     },
                     chart = new Chart(defaultOptions, draw),
                     line,
