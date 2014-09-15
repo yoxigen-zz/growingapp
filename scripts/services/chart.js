@@ -46,23 +46,52 @@
 
         return heightSetting;
     }
+    var avgMonthLength = 365 / 12;
 
     Chart.prototype = {
-        timeFormat:{
-            days: d3.time.format.multi([
-                ["%m/%d", function(d){ return d.getFullYear() === new Date().getFullYear(); }],
-                ["%m/%d/%y", function(){ return true; }]
-            ]),
-            "default": d3.time.format.multi([
-                [".%L", function(d) { return d.getMilliseconds(); }],
-                [":%S", function(d) { return d.getSeconds(); }],
-                ["%H:%M", function(d) { return d.getMinutes(); }],
-                ["%H:00", function(d) { return d.getHours(); }],
-                ["%a %d", function(d) { return d.getDay() && d.getDate() != 1; }],
-                ["%b %d", function(d) { return d.getDate() != 1; }],
-                ["%B", function(d) { return d.getMonth(); }],
-                ["%Y", function() { return true; }]
-            ])
+        tickFormats: {
+            age: function(d){
+                if (!d)
+                    return "Birth";
+
+                var years = Math.floor(d / 365),
+                    months = Math.round(d / avgMonthLength);
+
+                if (!years){
+                    if (!months) {
+                        var weeks = Math.floor(d / 7);
+                        if (weeks)
+                            return weeks + "w";
+                        return d;
+                    }
+                    else{
+                        return months + "m";
+                    }
+                }
+                else{
+                    var yearMonths = Math.floor(d % 365 / avgMonthLength);
+                    if (!yearMonths)
+                        return years + "y";
+
+                    return months + "m";
+                }
+            },
+            time: {
+                days: d3.time.format.multi([
+                    ["%m/%d", function(d){ return d.getFullYear() === new Date().getFullYear(); }],
+                    ["%m/%d/%y", function(){ return true; }]
+                ]),
+                "default": d3.time.format.multi([
+                    [".%L", function(d) { return d.getMilliseconds(); }],
+                    [":%S", function(d) { return d.getSeconds(); }],
+                    ["%H:%M", function(d) { return d.getMinutes(); }],
+                    ["%H:00", function(d) { return d.getHours(); }],
+                    ["%a %d", function(d) { return d.getDay() && d.getDate() != 1; }],
+                    ["%b %d", function(d) { return d.getDate() != 1; }],
+                    ["%B", function(d) { return d.getMonth(); }],
+                    ["%Y", function() { return true; }]
+                ])
+            }
         },
         createScales: function(){
             if (this.scale)
@@ -142,6 +171,24 @@
                 }
             };
         },
+        formatAxis: function(axis, scale, axisSettings){
+            if (axisSettings.type === "age"){
+                var domain = scale.domain(),
+                    range = scale.range();
+
+                axis.ticks(Math.floor((range[1] - range[0]) / 100));
+            }
+            else{
+                var tickFormat = this.tickFormats[axisSettings.tickFormat] || getTickFormatter.call(this, axisSettings);
+                axis.tickFormat(tickFormat);
+            }
+
+        },
+        updateAxes: function(){
+            if (this.settings.axes.x){
+                this.formatAxis(this.axes.x, this.scale.x, this.settings.axes.x);
+            }
+        },
         createAxes: function(){
             if (!this.settings.axes)
                 return;
@@ -158,17 +205,7 @@
                     .scale(this.scale.x)
                     .orient("bottom");
 
-                if (this.settings.axes.x.ticks){
-                    this.axes.x.ticks(d3.time[this.settings.axes.x.ticks.unit], this.settings.axes.x.interval);
-                }
-
-                if (this.settings.axes.x.tickFormat){
-                    this.axes.x.tickFormat(getTickFormatter.call(this, this.settings.axes.x));
-                }
-                else if (this.settings.axes.x.type === "time") {
-                    var timeFormat = this.timeFormat[this.settings.axes.x.timeFormat] || this.timeFormat.default;
-                    this.axes.x.tickFormat(timeFormat);
-                }
+                this.formatAxis(this.axes.x, this.scale.x, this.settings.axes.x);
 
                 if (this.settings.axes.x.renderGrid !== false) {
                     this.axes.x._grid = grids.append("g")
@@ -198,9 +235,7 @@
                     .orient("left")
                     .ticks(this.settings.axes.y.ticks);
 
-                if (this.settings.axes.y.tickFormat){
-                    this.axes.y.tickFormat(getTickFormatter.call(this, this.settings.axes.y));
-                }
+                this.formatAxis(this.axes.y, this.scale.y, this.settings.axes.y);
 
                 if (this.settings.axes.y.renderGrid !== false) {
                     this.axes.y._grid = grids.append("g")
@@ -310,6 +345,9 @@
 
                         showTooltip(elementBoundingRect);
                         window.addEventListener("mousemove", tooltipMoveHandler);
+                        self.scope.$on("$destroy", function(e, data){
+                            window.removeEventListener("mousemove", tooltipMoveHandler);
+                        });
                     }
                 });
 
@@ -626,15 +664,20 @@
                 this.createBrush();
 
             var selfResize = this.resize.bind(this);
-            window.addEventListener("resize", function(){
+            function onResize(){
                 self.$rootScope.safeApply(selfResize);
+            }
+
+            window.addEventListener("resize", onResize);
+            self.scope.$on("$destroy", function(e, data){
+                window.removeEventListener("resize", onResize);
             });
 
             this.loaded = true;
 
             return true;
         },
-        resize: function(){
+        resize: function(){console.log("resi")
             var legendWidth = this.elements.legend && this.elements.legend._width;
             this.svg.attr("height", getHeight(this.attrs.height, this.element[0]));
             this.width = this.element.width();
@@ -704,6 +747,8 @@
                     this.axes.y._element.attr("transform", "translate(" + marginLeft + ", " + this.options.margins.top + ")")
                         .call(this.axes.y);
                 }
+
+                this.updateAxes();
             }
         },
         get yAxisWidth(){

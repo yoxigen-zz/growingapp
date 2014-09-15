@@ -111,7 +111,7 @@ angular.module('Charts')
                         });
                     });
 
-                    return[min || minValue, max || maxValue];
+                    return[min !== undefined ? min : minValue, max !== undefined ? max : maxValue];
                 }
             }
         };

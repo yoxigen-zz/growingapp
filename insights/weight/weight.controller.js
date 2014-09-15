@@ -9,13 +9,14 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", "eventBus
 
     $scope.chartSettings = {
         dataSeries: "player.id",
-        x: "date",
+        x: "age",
         y: "properties.weight",
         minYValue: 1.8,
         interpolate: "cardinal",
         "axes": {
             "x": {
-                "type": "time",
+                "type": "age",
+                "tickFormat": "age",
                 renderGrid: false
             },
             "y": {
@@ -24,9 +25,7 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", "eventBus
             }
         },
         "scales": {
-            "x": {
-                "type": "time"
-            },
+            "x": {},
             "y": {}
         }
     };
