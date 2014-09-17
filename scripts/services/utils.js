@@ -84,6 +84,17 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
                 }
 
                 return arrayCopy.slice(0, -1).join(", ") + " " + connector + " " + arrayCopy[arrayCopy.length - 1];
+            },
+            uniqueValues: function(array){
+                var unique = [];
+
+                array.forEach(function(member){
+                    if (!~unique.indexOf(member)){
+                        unique.push(member);
+                    }
+                });
+
+                return unique;
             }
         },
         dates: {

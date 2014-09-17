@@ -11,12 +11,17 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         eventBus.unsubscribe("playerSelect", setEntries);
     });
 
-    $scope.removeEntry = function(entry){
+    $scope.removeEntry = function($event, entry){
+        $event.preventDefault();
+        $event.stopPropagation();
+
         entry.removed = true;
         entry.removeTimeout = $timeout(function(){
             entry.remove();
             $scope.entries.splice($scope.entries.indexOf(entry), 1);
         }, 5000);
+
+        return false;
     };
 
     $scope.undoRemoveEntry = function(entry){

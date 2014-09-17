@@ -54,10 +54,11 @@
                 if (!d)
                     return "Birth";
 
-                var years = Math.floor(d / 365),
-                    months = Math.round(d / avgMonthLength);
+                var years = d / 365,
+                    months = Math.round(d / avgMonthLength),
+                    weeks = Math.floor(d / 7);
 
-                if (!years){
+                if (!Math.floor(years)){
                     if (!months) {
                         var weeks = Math.floor(d / 7);
                         if (weeks)
@@ -69,12 +70,12 @@
                     }
                 }
                 else{
-                    var yearMonths = Math.floor(d % 365 / avgMonthLength);
-                    if (!yearMonths)
-                        return years + "y";
-
-                    return months + "m";
+                    return (years).toFixed(d % 365 ? 1 : 0) + "y";
                 }
+            },
+            weeks: function(d){
+                var week = Math.floor(d / 7);
+                return week || "Birth";
             },
             time: {
                 days: d3.time.format.multi([
@@ -173,10 +174,70 @@
         },
         formatAxis: function(axis, scale, axisSettings){
             if (axisSettings.type === "age"){
-                var domain = scale.domain(),
-                    range = scale.range();
+                var domain = scale.domain();
 
-                axis.ticks(Math.floor((range[1] - range[0]) / 100));
+                if (isNaN(domain[0]) || isNaN(domain[1]))
+                    return;
+
+                var minSpace = 80;
+
+                var range = scale.range(),
+                    tickCount = Math.floor((range[1] - range[0]) / minSpace),
+                    valuesRange = domain[1],
+                    tickSpan = valuesRange / tickCount,
+                    tickValues = [];
+
+                if (valuesRange < avgMonthLength){
+                    tickValues = [0, Math.min(valuesRange, 28)];
+                    if (tickCount > 2)
+                        tickValues.push(14);
+                    if (tickCount >= 5)
+                        tickValues.push(7, 21);
+
+                }
+                else if (valuesRange < 365){
+                    var maxMonth = valuesRange - valuesRange % avgMonthLength + avgMonthLength;
+                    if (Math.floor(maxMonth) > domain[1])
+                        maxMonth -= avgMonthLength;
+
+                    tickValues = [];
+
+                    var monthIncrease = 1;
+                    while(maxMonth / avgMonthLength > tickCount * monthIncrease)
+                        monthIncrease++;
+
+                    for(var i= 0; i * avgMonthLength <= maxMonth; i += monthIncrease){
+                        tickValues.push(i * avgMonthLength);
+                    }
+                }
+                else{
+                    var years = Math.floor(valuesRange / 365);
+
+                    for(i = 0; i <= years; i++){
+                        tickValues.push(i * 365);
+                    }
+
+                    if (tickCount >= tickValues.length + years - 1){
+                        for(i = 1; i <= years; i++){
+                            tickValues.push(i * 365 - 365 / 2)
+                        }
+                    }
+
+                    if (tickCount >= tickValues.length * 2 - 1){
+                        var currentLength = tickValues.length;
+                        for(i = 0; i <= currentLength; i++){
+                            tickValues.push(tickValues[i] + 365 / 4);
+                        }
+                    }
+                }
+
+                tickValues.sort();
+
+                if (scale(domain[1]) > scale(tickValues[tickValues.length - 1]) + minSpace / 2)
+                    tickValues.push(domain[1]);
+
+                axis.tickValues(tickValues);
+                axis.tickFormat(this.tickFormats.age);
             }
             else{
                 var tickFormat = this.tickFormats[axisSettings.tickFormat] || getTickFormatter.call(this, axisSettings);
@@ -677,7 +738,7 @@
 
             return true;
         },
-        resize: function(){console.log("resi")
+        resize: function(){
             var legendWidth = this.elements.legend && this.elements.legend._width;
             this.svg.attr("height", getHeight(this.attrs.height, this.element[0]));
             this.width = this.element.width();
