@@ -79,7 +79,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             users.logout();
             eventBus.triggerEvent("logout");
         } },
-        { text: "Close app", hide: !navigator || !navigator.app, icon: "images/icons/sign_out.svg", onClick: function(e){
+        { id: "closeApp", text: "Close app", hide: true, icon: "images/icons/sign_out.svg", onClick: function(e){
             if (confirm("Are you sure you want to close the app?"))
                 navigator.app.exitApp();
         } }
@@ -249,6 +249,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         var user = users.getCurrentUser();
         if (user)
             eventBus.triggerEvent("login", { user: user });
+
+        document.addEventListener("deviceready",function(){
+            getMenuItemById("closeApp").hide = false;
+        });
     }
 
     init();
