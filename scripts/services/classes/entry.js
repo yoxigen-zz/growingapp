@@ -2,7 +2,6 @@
 
 app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntryClassFactory($q, $indexedDB, entries, Player) {
     var OBJECT_STORE_NAME = "entries",
-        PAGE_SIZE = 10,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
     function Entry(type, player) {
@@ -69,7 +68,8 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
                     properties: this.properties,
                     type: this.type.id,
                     timestamp: this.timestamp,
-                    playerId: this.player.id
+                    playerId: this.player.playerId,
+                    synced: false
                 };
 
             return entriesObjectStore.upsert(dbEntry).then(function (id) {

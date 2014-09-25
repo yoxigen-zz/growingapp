@@ -68,7 +68,7 @@
     <div id="menu">
         <ul id="players-menu">
             <li ng-repeat="listPlayer in players" class="flex-horizontal"
-                ng-class="{ selected: listPlayer.id === player.id }">
+                ng-class="{ selected: listPlayer.playerId === player.playerId }">
                 <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1">{{listPlayer.name}}</a>
                 <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
                     <img class="child-menu-edit" src="images/icons/edit.svg"/>
@@ -87,7 +87,7 @@
                         <span class="menu-icon">
                             <img bo-src="item.icon"/>
                         </span>
-                    <span class="menu-title" bo-text="item.text"></span>
+                    <span class="menu-title">{{item.text}}</span>
                 </a>
             </li>
         </ul>

@@ -1,10 +1,4 @@
 angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $rootScope){
-    var appId = "5WepL2v5DjXU0RgKukUSlW3BeAuEOGqDOSgJtKeE",
-        javascriptKey = "Pk4mymaX6wXccyywaQeMeuvvJLWeyqRpYLpzWdoX",
-        restApiKey = "RLyjCSfspsAGkt3o1IR9HKgnqC9UyMIQeUpTVwjJ",
-        facebookUtilsInit;
-
-    Parse.initialize(appId, javascriptKey);
     Parse.Object.prototype.getData = function(){
         var data = angular.copy(this.attributes);
         delete data.user;
@@ -118,20 +112,7 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
         login: function(username, password){
             var deferred = $q.defer();
 
-            Parse.User.logIn(username, password, {
-                success: function(user) {
-                    $rootScope.$apply(function(){
-                        deferred.resolve(user);
-                    });
-                },
-                error: function(user, error) {
-                    $rootScope.$apply(function(){
-                        deferred.reject(error);
-                    });
-                }
-            });
-
-            return deferred.promise;
+            return $q.when(Parse.User.logIn(username, password));
         },
         logout: function(){
             Parse.User.logOut();
@@ -199,8 +180,7 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
         },
         save: function(className, data, options){
             var ObjType = Parse.Object.extend(className),
-                obj = new ObjType(),
-                deferred = $q.defer();
+                obj = new ObjType();
 
             options = angular.extend({}, defaultSaveOptions, options);
 
@@ -211,22 +191,7 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
                     obj.setACL(new Parse.ACL(currentUser));
             }
 
-            obj.save(data, {
-                success: function(obj){
-                    console.log("Saved object %s:", className, obj);
-                    $rootScope.$apply(function(){
-                        deferred.resolve(obj);
-                    })
-                },
-                error: function(obj, error){
-                    console.error("NOOO: ", error);
-                    $rootScope.$apply(function(){
-                        deferred.reject(error);
-                    });
-                }
-            });
-
-            return deferred.promise;
+            return $q.when(obj.save(data));
         },
         signUp: function(userDetails){
             var user = new Parse.User(userDetails),

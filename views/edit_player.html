@@ -5,7 +5,7 @@
            ng-click="closeEditPlayer()">
             <img src="images/icons/close.svg"/>
         </a>
-        <span class="popup-title">{{editedPlayer.id && 'Edit Child' || 'Add New Child'}}</span>
+        <span class="popup-title">{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}</span>
     </header>
     <div class="flex-1 flex-vertical">
         <div class="scroll-vertical">
@@ -46,7 +46,7 @@
                 <footer class="flex-horizontal buttons-bar">
                     <a ng-click="closeEditPlayer()" class="flex-1 button cancel-button">Cancel</a>
                     <a class="flex-1 button remove-button" ng-click="removePlayer()"
-                       ng-show="editedPlayer.id">Delete<span class="hide-small-width"> Child</span></a>
+                       ng-show="editedPlayer.playerId">Delete<span class="hide-small-width"> Child</span></a>
                     <a class="flex-1 button save-button" ng-click="savePlayer()">
                         <img src="images/icons/ok.svg"/>
                         <span class="button-text">Save<span class="large-width-only"> Child</span></span>

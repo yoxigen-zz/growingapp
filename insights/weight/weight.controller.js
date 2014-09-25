@@ -8,7 +8,7 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", "eventBus
     });
 
     $scope.chartSettings = {
-        dataSeries: "player.id",
+        dataSeries: "player.playerId",
         x: "age",
         y: "properties.weight",
         minYValue: 1.8,
@@ -31,12 +31,12 @@ app.controller("WeightInsightController", ["$scope", "Entry", "utils", "eventBus
     };
 
     function setData() {
-        if (!$scope.player || !$scope.player.id){
+        if (!$scope.player || !$scope.player.playerId){
             $scope.weightData = [];
             return;
         }
 
-        Entry.getEntries({ playerId: $scope.player.id, type: "weight" }).then(function (data) {
+        Entry.getEntries({ playerId: $scope.player.playerId, type: "weight" }).then(function (data) {
             $scope.weightData = data;
             setStats(data);
         }).catch(function(error){

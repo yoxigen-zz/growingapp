@@ -7,16 +7,16 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
     function Player(data) {
         var id;
 
-        if (data && data.id && data.name)
+        if (data && data.playerId && data.name)
         {
             angular.extend(this, data);
-            id = data.id;
+            id = data.playerId;
         }
 
-        this.__defineGetter__("id", function () {
+        this.__defineGetter__("playerId", function () {
             return id;
         });
-        this.__defineSetter__("id", function (value) {
+        this.__defineSetter__("playerId", function (value) {
             if (!value)
                 throw new Error("Can't set empty id to Player.");
 
@@ -46,33 +46,34 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             return Math.floor((date - this.birthday) / dayMilliseconds);
         },
         remove: function () {
-            if (!this.id)
+            if (!this.playerId)
                 throw new Error("Can't delete player - it hasn't been saved yet.");
 
-            return entriesObjectStore.delete(this.id).catch(function(error){
+            return entriesObjectStore.delete(this.playerId).catch(function(error){
                 console.error("Can't delete player: ", error);
                 return $q.reject("Can't delete player");
             });
         },
         save: function () {
-            this.isNewPlayer = !this.id;
+            this.isNewPlayer = !this.playerId;
 
             var player = this,
                 dbPlayer = {
                     name: this.name,
                     birthday: this.birthday,
-                    gender: this.gender
+                    gender: this.gender,
+                    synced: false
                 };
 
-            if (this.id)
-                dbPlayer.id = this.id;
+            if (this.playerId)
+                dbPlayer.playerId = this.playerId;
 
             if (this.image)
                 dbPlayer.image = this.image;
 
             return entriesObjectStore.upsert(dbPlayer).then(function (id) {
                 if (player.isNewPlayer)
-                    player.id = id;
+                    player.playerId = id;
 
                 return player;
             }, function(error){
@@ -95,7 +96,7 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
                 if (!cursor) {
                     Player.players = {};
                     players.forEach(function(player){
-                        Player.players[player.id] = player;
+                        Player.players[player.playerId] = player;
                     });
 
                     deferred.resolve(players);

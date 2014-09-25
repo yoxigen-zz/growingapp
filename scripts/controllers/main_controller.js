@@ -8,8 +8,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         $scope.player = player;
 
-        if (player && player.id) {
-            localStorage.player = String(player.id);
+        if (player && player.playerId) {
+            localStorage.player = String(player.playerId);
         }
         else {
             localStorage.removeItem("player");
@@ -34,7 +34,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             if (storagePlayerId) {
                 storagePlayerId = parseInt(storagePlayerId, 10);
                 for (var i = 0; i < $scope.players.length; i++) {
-                    if ($scope.players[i].id === storagePlayerId) {
+                    if ($scope.players[i].playerId === storagePlayerId) {
                         $scope.setCurrentPlayer($scope.players[i]);
                         break;
                     }
@@ -79,7 +79,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             users.logout();
             eventBus.triggerEvent("logout");
         } },
-        { id: "closeApp", text: "Close app", hide: true, icon: "images/icons/sign_out.svg", onClick: function(e){
+        { id: "closeApp", text: "Close app", icon: "images/icons/sign_out.svg", onClick: function(e){
             if (confirm("Are you sure you want to close the app?"))
                 navigator.app.exitApp();
         } }
@@ -146,7 +146,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             }
             else{
                 for(var i= 0, menuPlayer; menuPlayer = $scope.players[i]; i++){
-                    if (menuPlayer.id === player.id) {
+                    if (menuPlayer.playerId === player.playerId) {
                         $scope.players[i] = player;
                         break;
                     }
@@ -191,12 +191,12 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         $scope.editedPlayer.remove().then(function(){
             for(var i=0; i < $scope.players.length; i++){
-                if ($scope.players[i].id === $scope.editedPlayer.id){
+                if ($scope.players[i].playerId === $scope.editedPlayer.playerId){
                     $scope.players.splice(i, 1);
                     setPlayersSelection($scope.players);
                     $scope.toggleEditPlayer(false);
 
-                    if ($scope.player && $scope.editedPlayer.id === $scope.player.id)
+                    if ($scope.player && $scope.editedPlayer.playerId === $scope.player.playerId)
                         $scope.setCurrentPlayer($scope.players.length ? $scope.players[0] : null);
 
                     $scope.editedPlayer = null;
@@ -249,10 +249,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         var user = users.getCurrentUser();
         if (user)
             eventBus.triggerEvent("login", { user: user });
-
-        document.addEventListener("deviceready",function(){
-            getMenuItemById("closeApp").hide = false;
-        });
     }
 
     init();

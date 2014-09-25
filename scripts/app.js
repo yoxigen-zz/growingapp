@@ -2,7 +2,7 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "config", function ($routeProvider, $locationProvider, $indexedDBProvider, config) {
         $indexedDBProvider
             .connection('diaryDB')
-            .upgradeDatabase(10, function(event, db, tx){
+            .upgradeDatabase(13, function(event, db, tx){
                 if (event.newVersion > event.oldVersion) {
                     Object.keys(config.objectStores).forEach(function(objectStoreName){
                         if (db.objectStoreNames.contains(objectStoreName)) {
@@ -15,13 +15,15 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                         }
                     });
 
+                    var objStore;
                     // Create the entries object store:
                     try {
-                        var objStore = db.createObjectStore(config.objectStores.entries, { keyPath: "timestamp" });
+                        objStore = db.createObjectStore(config.objectStores.entries, { keyPath: "timestamp" });
                         objStore.createIndex('type_idx', ['playerId', 'type', 'date'], {unique: false});
                         objStore.createIndex('date_idx', ['playerId', 'date'], {unique: false});
                         objStore.createIndex('age_idx', ['age'], {unique: false});
                         objStore.createIndex('timestamp_idx', 'timestamp', {unique: true});
+                        objStore.createIndex('sync_idx', 'synced', {unique: false});
                     }
                     catch(error){
                         alert("can't create store: " + JSON.stringify(error))
@@ -29,10 +31,11 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
 
                     // Create the players object store:
                     try {
-                        var objStore = db.createObjectStore(config.objectStores.players, { keyPath: "id", autoIncrement: true });
+                        objStore = db.createObjectStore(config.objectStores.players, { keyPath: "playerId", autoIncrement: true });
                         objStore.createIndex('name_idx', ['name'], {unique: true});
                         objStore.createIndex('gender_idx', ['gender'], {unique: false});
                         objStore.createIndex('birthday_idx', ['birthday'], {unique: false});
+                        objStore.createIndex('sync_idx', 'synced', {unique: false});
                     }
                     catch(error){
                         alert("can't create store: " + JSON.stringify(error))
@@ -72,6 +75,13 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                 }
             };
         }
+
+        var parseConfig = {
+                appId: "5WepL2v5DjXU0RgKukUSlW3BeAuEOGqDOSgJtKeE",
+                javascriptKey:"Pk4mymaX6wXccyywaQeMeuvvJLWeyqRpYLpzWdoX"
+            };
+
+        Parse.initialize(parseConfig.appId, parseConfig.javascriptKey);
     }]);
 
 
