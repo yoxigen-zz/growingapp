@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="images/favicon.png"/>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="phonegap.js"></script>
+    <script src="components/parse-1.2.18.min.js"></script>
     <script src="components/d3.v3.min.js"></script>
     <script src="components/jquery/jquery-2.0.3.min.js"></script>
     <script src="components/angular/angular.min.js"></script>
@@ -15,6 +16,10 @@
     <script src="components/bindonce.min.js"></script>
     <script src="components/indexeddb.js"></script>
     <script src="scripts/services/phonegap.js"></script>
+
+    <script src="scripts/services/parse.js"></script>
+    <script src="scripts/services/storage.js"></script>
+    <script src="scripts/services/users.js"></script>
 
     <script src="scripts/directives/ng-tap.js"></script>
     <script src="scripts/directives/self-click.js"></script>
@@ -37,6 +42,7 @@
     <script src="scripts/controllers/edit_player_controller.js"></script>
     <script src="scripts/controllers/insights_controller.js"></script>
     <script src="scripts/controllers/entries_list_controller.js"></script>
+    <script src="scripts/controllers/login_controller.js"></script>
 
     <script src="insights/weight/weight.controller.js"></script>
 </head>
@@ -76,7 +82,7 @@
             </li>
         </ul>
         <ul>
-            <li bindonce ng-repeat="item in menuItems" ng-class="{ selected: item.selected }">
+            <li bindonce ng-repeat="item in menuItems" ng-class="{ selected: item.selected }" ng-show="!item.hide">
                 <a bo-href="item.href" ng-click="item.onClick($event)" bindonce="item">
                         <span class="menu-icon">
                             <img bo-src="item.icon"/>
@@ -92,6 +98,11 @@
      ng-show="editedPlayer"
      data-toggle-display="showEditPlayer">
     <div class="popup flex-vertical" ng-include="'views/edit_player.html'"></div>
+</div>
+<div id="login"
+     class="popup-wrapper"
+     data-toggle-display="showLogin">
+    <div class="popup flex-vertical" ng-include="'views/login.html'"></div>
 </div>
 <ng-include src="'views/entry_editors.html'"></ng-include>
 </body>

@@ -12,9 +12,6 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             angular.extend(this, data);
             id = data.id;
         }
-        else{
-            this.properties = {};
-        }
 
         this.__defineGetter__("id", function () {
             return id;
@@ -43,10 +40,10 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             if (!angular.isDate(date))
                 throw new Error("Invalid date: ", date);
 
-            if (!this.properties || !this.properties.birthday || date < this.properties.birthday)
+            if (!this.birthday || date < this.birthday)
                 return null;
 
-            return Math.floor((date - this.properties.birthday) / dayMilliseconds);
+            return Math.floor((date - this.birthday) / dayMilliseconds);
         },
         remove: function () {
             if (!this.id)
@@ -63,7 +60,8 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             var player = this,
                 dbPlayer = {
                     name: this.name,
-                    properties: this.properties
+                    birthday: this.birthday,
+                    gender: this.gender
                 };
 
             if (this.id)

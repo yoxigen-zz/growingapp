@@ -18,12 +18,12 @@
                     <div class="flex-horizontal">
                         <label class="flex-1">
                             <span class="label-text">Gender</span>
-                            <select ng-model="editedPlayer.properties.gender"
+                            <select ng-model="editedPlayer.gender"
                                     ng-options="gender.id as gender.label for gender in [{ id: 'f', label: 'Female'}, { id: 'm', label: 'Male' }]"></select>
                         </label>
                         <label class="flex-2">
                             <span class="label-text">Birthday</span>
-                            <input type="date" ng-model="editedPlayer.properties.birthday" required/>
+                            <input type="date" ng-model="editedPlayer.birthday" required/>
                         </label>
                     </div>
                     <label>

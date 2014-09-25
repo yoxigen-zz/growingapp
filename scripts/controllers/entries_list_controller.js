@@ -94,7 +94,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             newEntry.html = $sce.trustAsHtml("<span class='item-error'>Error parsing entry HTML!</span>");
         }
 
-        newEntry.dateText = newEntry.date.toLocaleDateString() + " (" + utils.dates.dateDiff(newEntry.date, $scope.player.properties.birthday) + ")";
+        newEntry.dateText = newEntry.date.toLocaleDateString() + " (" + utils.dates.dateDiff(newEntry.date, $scope.player.birthday) + ")";
         return newEntry;
     }
 

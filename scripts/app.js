@@ -1,8 +1,8 @@
-app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB", "SelfClick", "Charts", "Phonegap"])
+app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "pasvaz.bindonce", "xc.indexedDB", "SelfClick", "Charts", "Phonegap", "Parse", "Storage", "Users"])
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "config", function ($routeProvider, $locationProvider, $indexedDBProvider, config) {
         $indexedDBProvider
             .connection('diaryDB')
-            .upgradeDatabase(9, function(event, db, tx){
+            .upgradeDatabase(10, function(event, db, tx){
                 if (event.newVersion > event.oldVersion) {
                     Object.keys(config.objectStores).forEach(function(objectStoreName){
                         if (db.objectStoreNames.contains(objectStoreName)) {
@@ -31,6 +31,8 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                     try {
                         var objStore = db.createObjectStore(config.objectStores.players, { keyPath: "id", autoIncrement: true });
                         objStore.createIndex('name_idx', ['name'], {unique: true});
+                        objStore.createIndex('gender_idx', ['gender'], {unique: false});
+                        objStore.createIndex('birthday_idx', ['birthday'], {unique: false});
                     }
                     catch(error){
                         alert("can't create store: " + JSON.stringify(error))

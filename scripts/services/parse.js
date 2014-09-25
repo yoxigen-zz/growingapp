@@ -1,9 +1,10 @@
 angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $rootScope){
-    var homepageAppId = "WqKXJxJYkLJF4QavOnURbZOmWeIVPmIu7Iy3XjMa",
-        homepageJavascriptKey = "lofx3rk1xTk7502I88bkYnXodCsUIY16N3MRGufb",
+    var appId = "5WepL2v5DjXU0RgKukUSlW3BeAuEOGqDOSgJtKeE",
+        javascriptKey = "Pk4mymaX6wXccyywaQeMeuvvJLWeyqRpYLpzWdoX",
+        restApiKey = "RLyjCSfspsAGkt3o1IR9HKgnqC9UyMIQeUpTVwjJ",
         facebookUtilsInit;
 
-    Parse.initialize(homepageAppId, homepageJavascriptKey);
+    Parse.initialize(appId, javascriptKey);
     Parse.Object.prototype.getData = function(){
         var data = angular.copy(this.attributes);
         delete data.user;
@@ -38,7 +39,7 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
                 facebookUtilsInit = true;
             }
 
-            Parse.FacebookUtils.logIn("manage_notifications,user_photos", {
+            Parse.FacebookUtils.logIn("", {
                 success: function(user) {
                     // If it's a new user, let's fetch their name from FB
                     if (!user.existed()) {

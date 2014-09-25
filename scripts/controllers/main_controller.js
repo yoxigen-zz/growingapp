@@ -1,4 +1,4 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", function($scope, $route, Player, phonegap, eventBus){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", function($scope, $route, Player, phonegap, eventBus, users){
     $scope.setCurrentPlayer = function(player){
         if ($scope.player === player)
             return;
@@ -67,15 +67,35 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.menuItems = [
         { text: "Diary", href: "#/", icon: "images/icons/weight.svg" },
         { text: "Insights", href: "#/insights", icon: "images/icons/charts.svg" },
-        { text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
-        { text: "Share", href: "#/share", icon: "images/icons/share.svg" },
-        { text: "Report bug / Send feedback", href: "#/", icon: "images/icons/mail.svg" },
-        //{ text: "Sign out", icon: "images/icons/sign_out.svg" },
-        { text: "Close app", icon: "images/icons/sign_out.svg", onClick: function(e){
+        //{ text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
+        //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
+        //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },
+        { id: "signIn", text: "Sign in", icon: "images/icons/sign_out.svg", onClick: function(e){
+            $scope.hideMenu();
+            $scope.showLogin = true;
+        } },
+        { id: "signOut", hide: true, text: "Sign out", icon: "images/icons/sign_out.svg", onClick: function(e){
+            $scope.hideMenu();
+            users.logout();
+            eventBus.triggerEvent("logout");
+        } },
+        { text: "Close app", hide: !navigator || !navigator.app, icon: "images/icons/sign_out.svg", onClick: function(e){
             if (confirm("Are you sure you want to close the app?"))
                 navigator.app.exitApp();
         } }
     ];
+
+    function getMenuItemById(itemId){
+        if (!itemId)
+            return null;
+
+        for(var i= 0, item; item = $scope.menuItems[i]; i++){
+            if (item.id === itemId)
+                return item;
+        }
+
+        return null;
+    }
 
     $scope.config = {
         localization: {
@@ -194,8 +214,42 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
     $scope.addNewPlayer = function(){
         $scope.editedPlayer = new Player();
-        $scope.editedPlayer.properties.gender = "f";
-        $scope.editedPlayer.properties.birthday = new Date();
+        $scope.editedPlayer.gender = "f";
+        $scope.editedPlayer.birthday = new Date();
         $scope.toggleEditPlayer(true);
     };
+
+    $scope.closeLogin = function(){
+        $scope.showLogin = false;
+    };
+
+    eventBus.subscribe("login", function(data){
+        $scope.closeLogin();
+        var signinItem = getMenuItemById("signIn"),
+            signoutItem = getMenuItemById("signOut");
+
+        signinItem.hide = true;
+        signoutItem.hide = false;
+        signoutItem.text = "Sign out " + data.user.attributes.username;
+
+        $scope.currentUser = data.user;
+    });
+
+    eventBus.subscribe("logout", function(){
+        var signinItem = getMenuItemById("signIn"),
+            signoutItem = getMenuItemById("signOut");
+
+        signinItem.hide = false;
+        signoutItem.hide = true;
+
+        $scope.currentUser = null;
+    });
+
+    function init(){
+        var user = users.getCurrentUser();
+        if (user)
+            eventBus.triggerEvent("login", { user: user });
+    }
+
+    init();
 }]);
