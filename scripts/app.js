@@ -2,7 +2,7 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "config", function ($routeProvider, $locationProvider, $indexedDBProvider, config) {
         $indexedDBProvider
             .connection('diaryDB')
-            .upgradeDatabase(13, function(event, db, tx){
+            .upgradeDatabase(14, function(event, db, tx){
                 if (event.newVersion > event.oldVersion) {
                     Object.keys(config.objectStores).forEach(function(objectStoreName){
                         if (db.objectStoreNames.contains(objectStoreName)) {
@@ -23,7 +23,7 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                         objStore.createIndex('date_idx', ['playerId', 'date'], {unique: false});
                         objStore.createIndex('age_idx', ['age'], {unique: false});
                         objStore.createIndex('timestamp_idx', 'timestamp', {unique: true});
-                        objStore.createIndex('sync_idx', 'synced', {unique: false});
+                        objStore.createIndex('unsync_idx', 'unsynced', {unique: false});
                     }
                     catch(error){
                         alert("can't create store: " + JSON.stringify(error))
@@ -35,7 +35,7 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                         objStore.createIndex('name_idx', ['name'], {unique: true});
                         objStore.createIndex('gender_idx', ['gender'], {unique: false});
                         objStore.createIndex('birthday_idx', ['birthday'], {unique: false});
-                        objStore.createIndex('sync_idx', 'synced', {unique: false});
+                        objStore.createIndex('unsync_idx', 'unsynced', {unique: false});
                     }
                     catch(error){
                         alert("can't create store: " + JSON.stringify(error))

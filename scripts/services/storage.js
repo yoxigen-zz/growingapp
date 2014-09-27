@@ -82,7 +82,7 @@
 
         function ParseStorage(id){
             this.getParseClassName = function(key){
-                return id + (key ? "_" + key : "");
+                return id  ? id + (key ? "_" + key : "") : key;
             };
         }
 
@@ -113,10 +113,16 @@
                 return parse.query(this.getParseClassName(), constrains, options);
             },
             removeItem: function(key, options){
-                console.error("NOT DEFINED remove item yet");
+                return parse.remove(this.getParseClassName(key), data, options);
+            },
+            removeItems: function(key, data, options){
+                return parse.removeAll(this.getParseClassName(key), data, options);
             },
             setItem: function(key, data, options){
                 return parse.save(this.getParseClassName(key), data, options);
+            },
+            setItems: function(key, data, options){
+                return parse.saveAll(this.getParseClassName(key), data, options);
             }
         };
 

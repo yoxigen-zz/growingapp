@@ -45,6 +45,15 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
 
             return Math.floor((date - this.birthday) / dayMilliseconds);
         },
+        getCloudData: function(){
+            return {
+                playerId: this.playerId,
+                birthday: this.birthday,
+                name: this.name,
+                gender: this.gender,
+                id: this.cloudId
+            }
+        },
         remove: function () {
             if (!this.playerId)
                 throw new Error("Can't delete player - it hasn't been saved yet.");
@@ -54,7 +63,7 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
                 return $q.reject("Can't delete player");
             });
         },
-        save: function () {
+        save: function (isSynced) {
             this.isNewPlayer = !this.playerId;
 
             var player = this,
@@ -62,8 +71,11 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
                     name: this.name,
                     birthday: this.birthday,
                     gender: this.gender,
-                    synced: false
+                    cloudId: this.cloudId
                 };
+
+            if (!isSynced)
+                dbPlayer.unsynced = 1;
 
             if (this.playerId)
                 dbPlayer.playerId = this.playerId;
@@ -86,7 +98,7 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
         options = options || {};
 
         return entriesObjectStore.internalObjectStore(config.objectStores.players, "readonly").then(function(objectStore){
-            var idx = objectStore.index("name_idx");
+            var idx = objectStore.index(options.unsynced ? "unsync_idx" : "name_idx");
             var players = [],
                 deferred = $q.defer(),
                 cursor = idx.openCursor(null);
@@ -94,9 +106,12 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
             cursor.onsuccess = function(event) {
                 var cursor = event.target.result;
                 if (!cursor) {
-                    Player.players = {};
+                    if (!Player.players)
+                        Player.players = {};
+
                     players.forEach(function(player){
-                        Player.players[player.playerId] = player;
+                        if (!Player.players[player.playerId])
+                            Player.players[player.playerId] = player;
                     });
 
                     deferred.resolve(players);

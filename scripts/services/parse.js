@@ -25,6 +25,33 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
         isPrivate: true
     };
 
+    function toParseObjects(className, data, options){
+        options = angular.extend({}, defaultSaveOptions, options);
+
+        var ObjType = Parse.Object.extend(className),
+            objs = [],
+            currentUser = options.setUser && Parse.User.current(),
+            acl = options.isPrivate && new Parse.ACL(currentUser);
+
+        data.forEach(function(item){
+            var obj = new ObjType();
+            if (currentUser)
+                obj.set("user", currentUser);
+
+            if (acl)
+                obj.setACL(acl);
+
+            for(var p in item){
+                if (item.hasOwnProperty(p))
+                    obj.set(p, item[p]);
+            }
+
+            objs.push(obj);
+        });
+
+        return objs;
+    }
+
     var methods = {
         facebookLogin: function(){
             var deferred = $q.defer();
@@ -160,6 +187,21 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
 
             return deferred.promise;
         },
+        remove: function(className, data){
+            if (angular.isArray(data))
+                return this.removeAll(className, data, options);
+
+            var obj = toParseObjects(className, [data], options)[0];
+            return $q.when(obj.destroy());
+        },
+        removeAll: function(className, data){
+            if (!angular.isArray(data)){
+                data = [data];
+            }
+
+            var objs = toParseObjects(className, data, options);
+            return $q.when(Parse.Object.destroyAll(objs));
+        },
         runFunction: function(functionName, params){
             var deferred = $q.defer();
 
@@ -178,20 +220,34 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
 
             return deferred.promise;
         },
+        /**
+         * Saves a single object to Parse cloud
+         * @param className Name of the class to save
+         * @param data Object to save. Can also be an array of objects, in which case all are saved
+         * @param options Object with options: 'setUser' - add a 'user' property with the currently signed in user to the saved object, 'isPrivate' - if true, adds ACL with permission for the current user only to the saved object.
+         * @returns {Promise}
+         */
         save: function(className, data, options){
-            var ObjType = Parse.Object.extend(className),
-                obj = new ObjType();
+            if (angular.isArray(data))
+                return this.saveAll(className, data, options);
 
-            options = angular.extend({}, defaultSaveOptions, options);
-
-            if (options.setUser){
-                var currentUser = Parse.User.current();
-                obj.set("user", currentUser);
-                if (options.isPrivate)
-                    obj.setACL(new Parse.ACL(currentUser));
+            var obj = toParseObjects(className, [data], options)[0];
+            return $q.when(obj.save());
+        },
+        /**
+         * Saves an array of objects to Parse cloud
+         * @param className Name of the class to save
+         * @param Array of objects to save. If a single object is specified, it's put inside an array
+         * @param options Object with options: 'setUser' - add a 'user' property with the currently signed in user to the saved object, 'isPrivate' - if true, adds ACL with permission for the current user only to the saved object.
+         * @returns {Promise}
+         */
+        saveAll: function(className, data, options){
+            if (!angular.isArray(data)){
+                data = [data];
             }
 
-            return $q.when(obj.save(data));
+            var objs = toParseObjects(className, data, options);
+            return $q.when(Parse.Object.saveAll(objs));
         },
         signUp: function(userDetails){
             var user = new Parse.User(userDetails),

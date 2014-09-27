@@ -11,17 +11,9 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         eventBus.unsubscribe("playerSelect", setEntries);
     });
 
-    $scope.removeEntry = function($event, entry){
-        $event.preventDefault();
-        $event.stopPropagation();
-
-        entry.removed = true;
-        entry.removeTimeout = $timeout(function(){
-            entry.remove();
-            $scope.entries.splice($scope.entries.indexOf(entry), 1);
-        }, 5000);
-
-        return false;
+    $scope.removeEntry = function(entry){
+        entry.remove();
+        $scope.entries.splice($scope.entries.indexOf(entry), 1);
     };
 
     $scope.undoRemoveEntry = function(entry){
@@ -51,10 +43,14 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             console.log("saved: ", savedEntry);
             $scope.showEditEntry = false;
             $scope.toggleNewEntriesSelection(false);
-            if (savedEntry.isNewEntry)
+            if (savedEntry.isNewEntry) {
                 addEntry(savedEntry);
-            else
+                eventBus.triggerEvent("saveEntry", savedEntry);
+            }
+            else {
                 updateEntry($scope.entry);
+                eventBus.triggerEvent("saveEntry", $scope.entry);
+            }
         }, function(error){
             console.error("Couldn't save entry", error);
         });

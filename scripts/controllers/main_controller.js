@@ -1,4 +1,4 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", function($scope, $route, Player, phonegap, eventBus, users){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", function($scope, $route, Player, phonegap, eventBus, users, cloud){
     $scope.setCurrentPlayer = function(player){
         if ($scope.player === player)
             return;
@@ -249,6 +249,11 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         var user = users.getCurrentUser();
         if (user)
             eventBus.triggerEvent("login", { user: user });
+
+        // This inits the players:
+        Player.getAll().then(function(){
+            cloud.sync();
+        });
     }
 
     init();
