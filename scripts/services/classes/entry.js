@@ -23,12 +23,15 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
 
             if (entryData.cloudId)
                 this.cloudId = entryData.cloudId;
+
+            this.isNewEntry = false;
         }
         else{
             this.date = new Date();
             this.properties = {};
             this.player = player;
             this.age = player.getAge(this.date);
+            this.isNewEntry = true;
         }
 
         this.__defineGetter__("timestamp", function () {
@@ -50,13 +53,10 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
     }
 
     Entry.prototype = {
-        isNewEntry: function(){
-            return !this.timestamp;
-        },
         getCloudData: function(){
             return {
                 playerId: this.player.playerId,
-                age: this.age,
+                age: this.player.getAge(this.date),
                 timestamp: this.timestamp,
                 date: this.date,
                 properties: this.properties,

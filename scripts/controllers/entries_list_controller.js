@@ -4,16 +4,19 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     eventBus.subscribe("newEntry", addEntry);
     eventBus.subscribe("editPlayer", setEntries);
     eventBus.subscribe("playerSelect", setEntries);
+    eventBus.subscribe("updateEntries", onUpdateEntries);
 
     $scope.$on("$destroy", function(){
         eventBus.unsubscribe("newEntry", addEntry);
         eventBus.unsubscribe("editPlayer", setEntries);
         eventBus.unsubscribe("playerSelect", setEntries);
+        eventBus.unsubscribe("updateEntries", onUpdateEntries);
     });
 
     $scope.removeEntry = function(entry){
         entry.remove();
         $scope.entries.splice($scope.entries.indexOf(entry), 1);
+        eventBus.triggerEvent("deleteEntry", entry);
     };
 
     $scope.undoRemoveEntry = function(entry){
@@ -115,5 +118,35 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         }
     }
 
+    function onUpdateEntries(data){
+        var entriesIndex = {},
+            handled = 0;
+
+        data.entries.forEach(function(entry){
+            if (entry.update === "new") {
+                $scope.entries.push(entry);
+                handled++;
+            }
+            else
+                entriesIndex[entry.timestamp] = entry;
+        });
+
+        var indexEntry;
+        for(var i= 0, entry; i < $scope.entries.length; i++){
+            entry = $scope.entries[i];
+            if (indexEntry = entriesIndex[entry.timestamp]){
+                if (entry.update === "update")
+                    $scope.entries[i] = indexEntry;
+                else if (entry.deleted)
+                    $scope.entries.splice(i, 1);
+
+                handled++;
+                if (handled === data.entries.length)
+                    break;
+            }
+        }
+
+        sortEntries();
+    }
     setEntries();
 }]);

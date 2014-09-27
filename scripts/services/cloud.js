@@ -1,10 +1,17 @@
 app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", function($q, eventBus, Entry, Player, Storage){
     eventBus.subscribe("saveEntry", syncEntry);
+    eventBus.subscribe("deleteEntry", syncEntry);
 
     var storage = new Storage().cloud;
 
     function syncEntry(entry){
-        console.log("sync entry: ", entry);
+        storage.setItem("Entry", entry.getCloudData()).then(function(savedData){
+            entry.cloudId = savedData.id;
+            entry.save(true);
+            eventBus.triggerEvent("updateEntries", { entries: [entry] });
+        }, function(error){
+            console.error("ERROR syncing entries: ", error);
+        });
     }
 
     function sync(){
@@ -22,7 +29,6 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", function($
                         entry.save(true);
                     });
 
-                    // TODO: Update the saved entries in the entries list, so the cloud ID is added - needed for updates / deletes
                     eventBus.triggerEvent("updateEntries", { entries: unsyncedEntries });
                 }, function(error){
                     console.error("ERROR syncing entries: ", error);
