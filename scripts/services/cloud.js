@@ -1,14 +1,19 @@
-app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", function($q, eventBus, Entry, Player, Storage){
+app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", function($q, eventBus, Entry, Player, Storage, users){
     eventBus.subscribe("saveEntry", syncEntry);
     eventBus.subscribe("deleteEntry", syncEntry);
+    eventBus.subscribe("login", sync);
 
     var storage = new Storage().cloud,
-        lastUpdateTime = localStorage.getItem("lastSync");
+        lastUpdateTime = localStorage.getItem("lastSync"),
+        cloudEnabled = users.getCurrentUser();
 
     if (lastUpdateTime)
         lastUpdateTime = new Date(parseInt(lastUpdateTime));
 
     function syncEntry(entry){
+        if (!cloudEnabled)
+            return;
+
         storage.setItem("Entry", entry.getCloudData()).then(function(savedData){
             entry.cloudId = savedData.id;
             entry.save(true);
@@ -19,6 +24,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", function($
     }
 
     function syncFromCloud(){
+        if (!cloudEnabled)
+            return;
+
         storage.query("Entry", lastUpdateTime ? { greaterThan: ["updatedAt", lastUpdateTime] } : null).then(function(results){
             if (!results || !results.length)
                 return;
@@ -44,6 +52,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", function($
     }
 
     function syncToCloud(){
+        if (!cloudEnabled)
+            return;
+
         Entry.getUnsyncedEntries().then(function(unsyncedEntries){
             if (unsyncedEntries.length){
                 var entriesToSave = [];
@@ -86,6 +97,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", function($
     }
 
     function sync(){
+        if (!cloudEnabled)
+            return;
+
         syncFromCloud();
         syncToCloud();
     }
