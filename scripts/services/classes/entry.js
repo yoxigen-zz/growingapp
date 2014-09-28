@@ -99,7 +99,8 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
                     type: this.type.id,
                     timestamp: this.timestamp,
                     playerId: this.player.playerId,
-                    cloudId: this.cloudId
+                    cloudId: this.cloudId,
+                    updatedAt: new Date()
                 };
 
             if (!isSynced)

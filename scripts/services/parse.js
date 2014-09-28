@@ -154,16 +154,18 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
                 query.equalTo("user", Parse.User.current());
             }
 
-            if (angular.isArray(constrains)){
-                angular.forEach(constrains, function(constrain){
-                    for(var method in constrain){
-                        query[method] && query[method].apply(query, constrain[method]);
+            if (constrains) {
+                if (angular.isArray(constrains)) {
+                    angular.forEach(constrains, function (constrain) {
+                        for (var method in constrain) {
+                            query[method] && query[method].apply(query, angular.isArray(constrain[method]) ? constrain[method] : [constrain[method]]);
+                        }
+                    });
+                }
+                else {
+                    for (var method in constrains) {
+                        query[method] && query[method].apply(query, angular.isArray(constrains[method]) ? constrains[method] : [constrains[method]]);
                     }
-                });
-            }
-            else{
-                for(var method in constrains){
-                    query[method] && query[method].apply(query, constrains[method]);
                 }
             }
 

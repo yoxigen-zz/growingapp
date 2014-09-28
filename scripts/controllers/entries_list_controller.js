@@ -98,7 +98,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     }
 
     var settingEntries;
-    function setEntries(){
+    function setEntries(data){
         if ($scope.player && $scope.player.playerId) {
             if (settingEntries)
                 return;
@@ -110,6 +110,9 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
                     $scope.entries = entryValues.map(parseEntry);
             }).finally(function(){
                 settingEntries = false;
+            }).catch(function(error){
+                $scope.entries = [];
+                console.error("Error getting entries: ", error);
             });
         }
         else {
@@ -123,8 +126,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             handled = 0;
 
         data.entries.forEach(function(entry){
-            if (entry.update === "new") {
-                $scope.entries.push(entry);
+            if (entry.status === "new") {
+                $scope.entries.push(parseEntry(entry));
                 handled++;
             }
             else
@@ -135,8 +138,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         for(var i= 0, entry; i < $scope.entries.length; i++){
             entry = $scope.entries[i];
             if (indexEntry = entriesIndex[entry.timestamp]){
-                if (entry.update === "update")
-                    $scope.entries[i] = indexEntry;
+                if (entry.status === "update")
+                    $scope.entries[i] = parseEntry(indexEntry);
                 else if (entry.deleted)
                     $scope.entries.splice(i, 1);
 

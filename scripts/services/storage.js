@@ -109,8 +109,8 @@
 
                 return deferred.promise;
             },
-            query: function(constrains, options){
-                return parse.query(this.getParseClassName(), constrains, options);
+            query: function(key, constrains, options){
+                return parse.query(this.getParseClassName(key), constrains, options);
             },
             removeItem: function(key, options){
                 return parse.remove(this.getParseClassName(key), data, options);
