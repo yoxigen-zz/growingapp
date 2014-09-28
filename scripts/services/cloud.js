@@ -1,7 +1,10 @@
 app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", function($q, eventBus, Entry, Player, Storage, users){
     eventBus.subscribe("saveEntry", syncEntry);
     eventBus.subscribe("deleteEntry", syncEntry);
-    eventBus.subscribe("login", sync);
+    eventBus.subscribe("login", onLogin);
+    eventBus.subscribe("logout", function(){
+        cloudEnabled = false;
+    });
 
     var storage = new Storage().cloud,
         lastUpdateTime = localStorage.getItem("lastSync"),
@@ -9,6 +12,11 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
 
     if (lastUpdateTime)
         lastUpdateTime = new Date(parseInt(lastUpdateTime));
+
+    function onLogin(){
+        cloudEnabled = true;
+        sync();
+    }
 
     function syncEntry(entry){
         if (!cloudEnabled)
