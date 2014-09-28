@@ -6,7 +6,7 @@
         id        = "com.yoxigen.baby_diary"
         version   = "1.0.0">
 
-    <name>Growing App</name>
+    <name>GrowingApp</name>
 
     <description>
         Keep a record of your children's development, see charts and compare between them
