@@ -83,7 +83,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             users.logout();
             eventBus.triggerEvent("logout");
         } },
-        { id: "closeApp", text: "Close app", icon: "images/icons/sign_out.svg", onClick: function(e){
+        { id: "closeApp", text: "Close app", icon: "images/icons/close-black.svg", onClick: function(e){
             if (confirm("Are you sure you want to close the app?"))
                 navigator.app.exitApp();
         } }

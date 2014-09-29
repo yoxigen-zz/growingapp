@@ -35,9 +35,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
         if (!cloudEnabled)
             return;
 
-        // TODO: debug why this doesn't seem to work on mobile!
-
-        storage.query("Entry", lastUpdateTime ? { greaterThan: ["updatedAt", lastUpdateTime] } : null).then(function(results){
+        return storage.query("Entry", lastUpdateTime ? { greaterThan: ["updatedAt", lastUpdateTime] } : null).then(function(results){
             if (!results || !results.length)
                 return;
 
@@ -56,8 +54,10 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
             localStorage.setItem("lastSync", lastUpdateTime.valueOf());
 
             eventBus.triggerEvent("updateEntries", { entries: entries });
+            return entries;
         }, function(error){
             console.error("Can't fetch entries from cloud. Error: ", error);
+            return $q.reject(error);
         });
     }
 
@@ -65,7 +65,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
         if (!cloudEnabled)
             return;
 
-        Entry.getUnsyncedEntries().then(function(unsyncedEntries){
+        var promises = [];
+
+        promises.push(Entry.getUnsyncedEntries().then(function(unsyncedEntries){
             if (unsyncedEntries.length){
                 var entriesToSave = [];
                 unsyncedEntries.forEach(function(entry){
@@ -84,9 +86,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
                     console.error("ERROR syncing entries: ", error);
                 });
             }
-        });
+        }));
 
-        Player.getAll({ unsynced: true}).then(function(unsyncedPlayers){
+        promises.push(Player.getAll({ unsynced: true}).then(function(unsyncedPlayers){
             if (unsyncedPlayers.length){
                 var syncData = [];
                 unsyncedPlayers.forEach(function(player){
@@ -103,15 +105,16 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
                     console.error("ERROR syncing players: ", error);
                 });
             }
-        });
+        }));
+
+        return $q.all(promises);
     }
 
     function sync(){
         if (!cloudEnabled)
             return;
 
-        syncFromCloud();
-        syncToCloud();
+        syncFromCloud().finally(syncToCloud);
     }
 
     return {
