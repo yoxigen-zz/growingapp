@@ -35,6 +35,8 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
         if (!cloudEnabled)
             return;
 
+        // TODO: debug why this doesn't seem to work on mobile!
+
         storage.query("Entry", lastUpdateTime ? { greaterThan: ["updatedAt", lastUpdateTime] } : null).then(function(results){
             if (!results || !results.length)
                 return;

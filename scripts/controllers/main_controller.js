@@ -70,9 +70,13 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         //{ text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
         //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
         //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },
-        { id: "signIn", text: "Sign in", icon: "images/icons/sign_out.svg", onClick: function(e){
+        { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", onClick: function(e){
+            if (users.getCurrentUser())
+                cloud.sync();
+            else
+                $scope.showLogin = true;
+
             $scope.hideMenu();
-            $scope.showLogin = true;
         } },
         { id: "signOut", hide: true, text: "Sign out", icon: "images/icons/sign_out.svg", onClick: function(e){
             $scope.hideMenu();
@@ -225,10 +229,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
     eventBus.subscribe("login", function(data){
         $scope.closeLogin();
-        var signinItem = getMenuItemById("signIn"),
-            signoutItem = getMenuItemById("signOut");
+        var signoutItem = getMenuItemById("signOut");
 
-        signinItem.hide = true;
         signoutItem.hide = false;
         signoutItem.text = "Sign out " + data.user.attributes.username;
 
@@ -236,10 +238,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     });
 
     eventBus.subscribe("logout", function(){
-        var signinItem = getMenuItemById("signIn"),
-            signoutItem = getMenuItemById("signOut");
-
-        signinItem.hide = false;
+        var signoutItem = getMenuItemById("signOut");
         signoutItem.hide = true;
 
         $scope.currentUser = null;

@@ -195,7 +195,7 @@ a{ cursor: pointer; }
   line-height: $contentsHeaderHeight;
   background: $headerBackground;
   color: $headerColor;
-  padding: 0 $padding;
+  padding-left: $padding;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
 
@@ -214,6 +214,14 @@ a{ cursor: pointer; }
     select.fancy-select{
       color: White;
       border-bottom: none;
+    }
+  }
+
+  .text-button{
+    opacity: .5;
+
+    &:hover{
+      opacity: 1;
     }
   }
 }

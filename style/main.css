@@ -182,7 +182,7 @@ a {
   line-height: 3em;
   background: #d9e9ef;
   color: #373737;
-  padding: 0 0.8em;
+  padding-left: 0.8em;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box; }
   .contents-header h2 {
@@ -197,6 +197,10 @@ a {
     .contents-header.dark select.fancy-select {
       color: White;
       border-bottom: none; }
+  .contents-header .text-button {
+    opacity: .5; }
+    .contents-header .text-button:hover {
+      opacity: 1; }
 
 .contents-scroll {
   overflow-y: auto;
@@ -572,6 +576,13 @@ select {
   cursor: pointer; }
   .remove-button:hover {
     background-color: #cc3038; }
+
+.text-button {
+  background: none;
+  color: #333;
+  cursor: pointer; }
+  .text-button:hover, .text-button.active {
+    background: none; }
 
 .undo-button {
   background-color: #DFC822;
