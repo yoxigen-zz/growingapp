@@ -58,6 +58,12 @@ a{ cursor: pointer; }
   }
 }
 
+.hide-smallest-width{
+  @media all and (max-width: 380px){
+    display: none;
+  }
+}
+
 .player-edit-image{
   height: 6.9em;
   max-width: 7em;

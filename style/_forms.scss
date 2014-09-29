@@ -55,6 +55,7 @@ select{
   background: $defaultButtonBackgroundColor;
   color: White;
   cursor: pointer;
+  border-radius: 3px;
 
   &:hover{
     background: $defaultButtonBackgroundColorHover;

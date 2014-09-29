@@ -114,6 +114,13 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
             }, function(error){
                 alert("ERROR: " + JSON.stringify(error));
             });
+        },
+        unremove: function(){
+            if (!this._deleted)
+                return false;
+
+            this._deleted = false;
+            this.save();
         }
     };
 

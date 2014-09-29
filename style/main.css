@@ -76,6 +76,10 @@ a {
   .hide-small-width {
     display: none; } }
 
+@media all and (max-width: 380px) {
+  .hide-smallest-width {
+    display: none; } }
+
 .player-edit-image {
   height: 6.9em;
   max-width: 7em;
@@ -550,7 +554,8 @@ select {
   font-weight: 300;
   background: #57a3e5;
   color: White;
-  cursor: pointer; }
+  cursor: pointer;
+  border-radius: 3px; }
   .button:hover {
     background: #58aef1; }
   .button img {

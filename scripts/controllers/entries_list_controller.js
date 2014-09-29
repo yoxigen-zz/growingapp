@@ -13,10 +13,17 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         eventBus.unsubscribe("updateEntries", onUpdateEntries);
     });
 
+    var removedEntryIndex;
     $scope.removeEntry = function(entry){
         entry.remove();
-        $scope.entries.splice($scope.entries.indexOf(entry), 1);
+        $scope.entries.splice(removedEntryIndex = $scope.entries.indexOf(entry), 1);
         eventBus.triggerEvent("deleteEntry", entry);
+    };
+
+    $scope.unremoveEntry = function(entry){
+        entry.unremove();
+        $scope.entries.splice(removedEntryIndex, 0, entry);
+        eventBus.triggerEvent("saveEntry", entry);
     };
 
     $scope.undoRemoveEntry = function(entry){
