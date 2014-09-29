@@ -138,11 +138,12 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         for(var i= 0, entry; i < $scope.entries.length; i++){
             entry = $scope.entries[i];
             if (indexEntry = entriesIndex[entry.timestamp]){
-                if (entry.status === "update")
-                    $scope.entries[i] = parseEntry(indexEntry);
-                else if (entry.deleted)
-                    $scope.entries.splice(i, 1);
-
+                if (indexEntry.status === "update") {
+                    if (indexEntry._deleted)
+                        $scope.entries.splice(i, 1);
+                    else
+                        $scope.entries[i] = parseEntry(indexEntry);
+                }
                 handled++;
                 if (handled === data.entries.length)
                     break;
