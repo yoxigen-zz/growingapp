@@ -39,22 +39,33 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
             if (!results || !results.length)
                 return;
 
-            var entries = [];
+            var entries = [],
+                promises = [];
+
             results.forEach(function(cloudEntry){
-                var entry = new Entry(cloudEntry.getData());
+                var entryData = cloudEntry.getData();
+
+                // If the case was both created and deleted after the last update, no action is required:
+                if (lastUpdateTime && lastUpdateTime < cloudEntry.createdAt && entryData.deleted)
+                    return true;
+
+                var entry = new Entry(entryData);
                 entry.cloudId = cloudEntry.id;
 
-                entry.save(true);
-                entry.status = !lastUpdateTime || cloudEntry.createdAt > lastUpdateTime ? "new" : "update";
-
-                entries.push(entry);
+                promises.push(entry.save(true).then(function(){
+                    entries.push(entry);
+                }));
             });
 
             lastUpdateTime = new Date();
             localStorage.setItem("lastSync", lastUpdateTime.valueOf());
 
-            eventBus.triggerEvent("updateEntries", { entries: entries });
-            return entries;
+            return $q.all(promises).then(function(){
+                if (entries.length)
+                    eventBus.triggerEvent("updateEntries", { entries: entries });
+
+                return entries;
+            });
         }, function(error){
             console.error("Can't fetch entries from cloud. Error: ", error);
             return $q.reject(error);
@@ -110,11 +121,18 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
         return $q.all(promises);
     }
 
+    var isSyncing;
+
     function sync(){
-        if (!cloudEnabled)
+        if (!cloudEnabled || isSyncing)
             return;
 
-        syncFromCloud().finally(syncToCloud);
+        isSyncing = true;
+        syncFromCloud().finally(function(){
+            syncToCloud().finally(function(){
+                isSyncing = false;
+            });
+        });
     }
 
     return {

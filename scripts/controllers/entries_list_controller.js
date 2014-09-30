@@ -133,7 +133,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             handled = 0;
 
         data.entries.forEach(function(entry){
-            if (entry.status === "new") {
+            if (entry.isNewEntry) {
                 $scope.entries.push(parseEntry(entry));
                 handled++;
             }
@@ -145,7 +145,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         for(var i= 0, entry; i < $scope.entries.length; i++){
             entry = $scope.entries[i];
             if (indexEntry = entriesIndex[entry.timestamp]){
-                if (indexEntry.status === "update") {
+                if (!indexEntry.isNewEntry) {
                     if (indexEntry._deleted)
                         $scope.entries.splice(i, 1);
                     else

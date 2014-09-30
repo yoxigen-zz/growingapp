@@ -79,41 +79,56 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
                 this._deleted = true;
                 this.save();
             }
+
+            return this;
         },
         save: function (isSynced) {
+            var doSave = _doSave.bind(this),
+                self = this;
+
             if (!this.timestamp) {
                 this.isNewEntry = true;
                 this.timestamp = new Date().valueOf();
+                return doSave();
             }
             else {
-                this.isNewEntry = false;
-                // The entry is deleted and the changed has been synced to cloud, can proceed to completely delete:
-                if (this._deleted && isSynced)
-                    return this.remove(true);
+                return entriesObjectStore.find(this.timestamp).then(function(existingEntry){
+                    self.isNewEntry = !existingEntry;
+
+                    // The entry is deleted and the changed has been synced to cloud, can proceed to completely delete:
+                    if (self._deleted && isSynced) {
+                        self.isNewEntry = false;
+                        return existingEntry ? self.remove(true) : self;
+                    }
+
+                    return doSave();
+                });
             }
-            var newEntry = this,
-                dbEntry = {
-                    date: this.date,
-                    age: this.player.getAge(this.date),
-                    properties: this.properties,
-                    type: this.type.id,
-                    timestamp: this.timestamp,
-                    playerId: this.player.playerId,
-                    cloudId: this.cloudId,
-                    updatedAt: new Date()
-                };
 
-            if (!isSynced)
-                dbEntry.unsynced = 1;
+            function _doSave() {
+                var dbEntry = {
+                        date: this.date,
+                        age: this.player.getAge(this.date),
+                        properties: this.properties,
+                        type: this.type.id,
+                        timestamp: this.timestamp,
+                        playerId: this.player.playerId,
+                        cloudId: this.cloudId,
+                        updatedAt: new Date()
+                    };
 
-            if (this._deleted)
-                dbEntry.unsynced = dbEntry.deleted = 1;
+                if (!isSynced)
+                    dbEntry.unsynced = 1;
 
-            return entriesObjectStore.upsert(dbEntry).then(function (id) {
-                return newEntry;
-            }, function(error){
-                alert("ERROR: " + JSON.stringify(error));
-            });
+                if (this._deleted)
+                    dbEntry.unsynced = dbEntry.deleted = 1;
+
+                return entriesObjectStore.upsert(dbEntry).then(function (id) {
+                    return self;
+                }, function (error) {
+                    alert("ERROR: " + JSON.stringify(error));
+                });
+            }
         },
         unremove: function(){
             if (!this._deleted)
