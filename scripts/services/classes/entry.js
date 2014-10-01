@@ -83,8 +83,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
             return this;
         },
         save: function (isSynced) {
-            var doSave = _doSave.bind(this),
-                self = this;
+            var self = this;
 
             if (!this.timestamp) {
                 this.isNewEntry = true;
@@ -105,22 +104,22 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
                 });
             }
 
-            function _doSave() {
+            function doSave() {
                 var dbEntry = {
-                        date: this.date,
-                        age: this.player.getAge(this.date),
-                        properties: this.properties,
-                        type: this.type.id,
-                        timestamp: this.timestamp,
-                        playerId: this.player.playerId,
-                        cloudId: this.cloudId,
+                        date: self.date,
+                        age: self.player.getAge(self.date),
+                        properties: self.properties,
+                        type: self.type.id,
+                        timestamp: self.timestamp,
+                        playerId: self.player.playerId,
+                        cloudId: self.cloudId,
                         updatedAt: new Date()
                     };
 
                 if (!isSynced)
                     dbEntry.unsynced = 1;
 
-                if (this._deleted)
+                if (self._deleted)
                     dbEntry.unsynced = dbEntry.deleted = 1;
 
                 return entriesObjectStore.upsert(dbEntry).then(function (id) {

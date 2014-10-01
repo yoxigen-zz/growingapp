@@ -10,10 +10,9 @@
     <script src="components/parse-1.2.18.min.js"></script>
     <script src="components/d3.v3.min.js"></script>
     <script src="components/jquery/jquery-2.0.3.min.js"></script>
-    <script src="components/angular/angular.min.js"></script>
+    <script src="components/angular/angular.js"></script>
     <script src="components/angular/angular-touch.min.js"></script>
     <script src="components/angular/angular-route.min.js"></script>
-    <script src="components/bindonce.min.js"></script>
     <script src="components/indexeddb.js"></script>
     <script src="scripts/services/phonegap.js"></script>
 
@@ -83,10 +82,10 @@
             </li>
         </ul>
         <ul>
-            <li bindonce ng-repeat="item in menuItems" ng-class="{ selected: item.selected }" ng-show="!item.hide">
-                <a bo-href="item.href" ng-click="item.onClick($event)" bindonce="item">
+            <li ng-repeat="item in menuItems" ng-class="{ selected: item.selected }" ng-show="!item.hide">
+                <a href="item.href" ng-click="item.onClick($event)">
                         <span class="menu-icon">
-                            <img bo-src="item.icon"/>
+                            <img ng-src="{{item.icon}}"/>
                         </span>
                     <span class="menu-title">{{item.text}}</span>
                 </a>

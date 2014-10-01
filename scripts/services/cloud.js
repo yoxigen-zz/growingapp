@@ -128,9 +128,11 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
             return;
 
         isSyncing = true;
-        syncFromCloud().finally(function(){
-            syncToCloud().finally(function(){
-                isSyncing = false;
+        Player.getAll().then(function(){
+            syncFromCloud().finally(function(){
+                syncToCloud().finally(function(){
+                    isSyncing = false;
+                });
             });
         });
     }

@@ -134,7 +134,10 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
         data.entries.forEach(function(entry){
             if (entry.isNewEntry) {
-                $scope.entries.push(parseEntry(entry));
+                var parsedEntry = parseEntry(entry);
+                if (!~$scope.entries.indexOf(parsedEntry))
+                    $scope.entries.push(parsedEntry);
+
                 handled++;
             }
             else
