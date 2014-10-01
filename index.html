@@ -83,7 +83,7 @@
         </ul>
         <ul>
             <li ng-repeat="item in menuItems" ng-class="{ selected: item.selected }" ng-show="!item.hide">
-                <a href="item.href" ng-click="item.onClick($event)">
+                <a href="{{item.href}}" ng-click="item.onClick($event)">
                         <span class="menu-icon">
                             <img ng-src="{{item.icon}}"/>
                         </span>
