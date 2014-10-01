@@ -51,7 +51,7 @@
                        ng-click="showEditEntry = false">
                         <img src="images/icons/close.svg" />
                     </a>
-                    <span class="popup-title">{{entry.isNewEntry && 'New' || 'Edit'}} Entry: {{ newEntryType.name }}</span>
+                    <span class="popup-title">{{editedEntryIsNew && 'New' || 'Edit'}} Entry: {{ newEntryType.name }}</span>
                 </header>
                 <div class="flex-1 flex-vertical">
                     <div class="scroll-vertical">
@@ -64,7 +64,7 @@
                             </div>
                             <footer class="flex-horizontal buttons-bar">
                                 <a ng-click="showEditEntry = false" ng-show="!entry._deleted" class="button cancel-button" style="width: 48%">Cancel</a>
-                                <a class="button remove-button" ng-click="removeEntry(entry)" ng-show="!entry.isNewEntry && !entry._deleted">
+                                <a class="button remove-button" ng-click="removeEntry(entry)" ng-show="!editedEntryIsNew && !entry._deleted">
                                     <img class="button-icon" src="images/icons/close.svg" />
                                     <span class="hide-smallest-width">Delete</span><span class="hide-small-width"> Entry</span></a>
                                 <a class="button save-button" ng-click="saveEntry()" ng-show="!entry._deleted">

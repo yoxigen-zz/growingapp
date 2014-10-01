@@ -41,11 +41,13 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     $scope.entryClick = function(entry){
         openEditEntryDialog(entry.type);
         $scope.entry = entry;
+        $scope.editedEntryIsNew = false;
     };
 
-    $scope.showEditEntryForm = function(entryType){
+    $scope.showNewEntryForm = function(entryType){
         openEditEntryDialog(entryType);
         $scope.entry = new Entry(entryType, $scope.player);
+        $scope.editedEntryIsNew = true;
     };
 
     $scope.saveEntry = function(){
