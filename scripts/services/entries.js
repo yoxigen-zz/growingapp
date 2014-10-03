@@ -22,15 +22,30 @@ app.factory("entries", ["utils", function entriesFactory(utils){
             "html": '{{player.name}} is <span class="item-measure">{{data.properties.height}}{{config.localization.height.selected}}</span> tall'
         },
         {
+            "id": "milestone",
+            "name": "Milestone",
+            "icon": "star",
+            "html": function(entry, player, config){
+                var type = config.entries.milestone.typesIndex[entry.properties.type],
+                    text;
+
+                if (type)
+                    text = type.text;
+                else
+                    text = entry.properties.text;
+
+                return text ? player.name + " " + text.toLowerCase() : "Unknown milestone";
+            }
+        },
+        {
             "id": "speech",
             "name": "Speech",
             "icon": "word",
             html: function(entry, player, config){
-                var description = entry.properties.description ? "<p class='item-description'>" + utils.strings.escapeHtml(entry.properties.description) + "</p>" : "";
                 if (/[\s\.\,\!\?]/.test(entry.properties.words))
-                    return player.name + ' said: <blockquote>' + utils.strings.escapeHtml(entry.properties.words) + '</blockquote>' + description;
+                    return player.name + ' said: <blockquote>' + utils.strings.escapeHtml(entry.properties.words) + '</blockquote>';
                 else
-                    return player.name + ' said <span class="item-value">&quot;' + utils.strings.escapeHtml(entry.properties.words) + '&quot;</span> for the first time!' + description;
+                    return player.name + ' said <span class="item-value">&quot;' + utils.strings.escapeHtml(entry.properties.words) + '&quot;</span> for the first time!';
             }
         }
     ];

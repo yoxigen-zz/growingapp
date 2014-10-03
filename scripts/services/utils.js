@@ -69,6 +69,20 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
 
     var methods = {
         arrays: {
+            toIndex: function(array, idPropery){
+                var index = {};
+                array.forEach(function(member){
+                    if (!member)
+                        return true;
+
+                    var id = member[idPropery];
+                    if (!id)
+                        return true;
+
+                    index[id] = member;
+                });
+                return index;
+            },
             toSentence: function(array, connector, wrapper){
                 var arrayCopy = angular.copy(array);
 

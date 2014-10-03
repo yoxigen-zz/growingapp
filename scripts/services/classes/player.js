@@ -1,7 +1,7 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFactory($q, $indexedDB, config) {
-    var entriesObjectStore = $indexedDB.objectStore(config.objectStores.players),
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", function getPlayerClassFactory($q, $indexedDB, dbConfig) {
+    var entriesObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
     function Player(data) {
@@ -97,7 +97,7 @@ app.factory("Player", ["$q", "$indexedDB", "config", function getPlayerClassFact
     Player.getAll = function (options) {
         options = options || {};
 
-        return entriesObjectStore.internalObjectStore(config.objectStores.players, "readonly").then(function(objectStore){
+        return entriesObjectStore.internalObjectStore(dbConfig.objectStores.players, "readonly").then(function(objectStore){
             var idx = objectStore.index(options.unsynced ? "unsync_idx" : "name_idx");
             var players = [],
                 deferred = $q.defer(),

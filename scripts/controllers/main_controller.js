@@ -1,4 +1,6 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", function($scope, $route, Player, phonegap, eventBus, users, cloud){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", function($scope, $route, Player, phonegap, eventBus, users, cloud, config){
+    $scope.config = config;
+
     $scope.setCurrentPlayer = function(player){
         if ($scope.player === player)
             return;
@@ -100,19 +102,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         return null;
     }
-
-    $scope.config = {
-        localization: {
-            height: {
-                all: ["cm", "inches"],
-                selected: "cm"
-            },
-            weight: {
-                all: ["kg", "lb"],
-                selected: "kg"
-            }
-        }
-    };
 
     $scope.toggleNewEntriesSelection = function(state){
         $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;

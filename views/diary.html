@@ -27,6 +27,7 @@
                 <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                 <div class="item-text">
                     <div ng-bind-html="entry.html"></div>
+                    <p ng-if="entry.description" class='item-description'>{{entry.description}}</p>
                     <div class="item-details">{{entry.dateText}}</div>
                 </div>
             </li>
@@ -59,6 +60,10 @@
                             <div class="popup-contents">
                                 <form>
                                     <div ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id"></div>
+                                    <label>
+                                        <span class="label-text">Additional Details</span>
+                                        <textarea ng-model="entry.description"></textarea>
+                                    </label>
                                     <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entry.date" /></label>
                                 </form>
                             </div>

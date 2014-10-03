@@ -1,16 +1,16 @@
 app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "xc.indexedDB", "SelfClick", "Charts", "Phonegap", "Parse", "Storage", "Users"])
-    .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "config", function ($routeProvider, $locationProvider, $indexedDBProvider, config) {
+    .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "dbConfig", function ($routeProvider, $locationProvider, $indexedDBProvider, dbConfig) {
         $indexedDBProvider
             .connection('diaryDB')
             .upgradeDatabase(14, function(event, db, tx){
                 if (event.newVersion > event.oldVersion) {
-                    Object.keys(config.objectStores).forEach(function(objectStoreName){
+                    Object.keys(dbConfig.objectStores).forEach(function(objectStoreName){
                         if (db.objectStoreNames.contains(objectStoreName)) {
                             try {
                             db.deleteObjectStore(objectStoreName);
                             }
                             catch(e){
-                                alert("Can't delete store '" + config.objectStores.entries + "'");
+                                alert("Can't delete store '" + dbConfig.objectStores.entries + "'");
                             }
                         }
                     });
@@ -18,7 +18,7 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
                     var objStore;
                     // Create the entries object store:
                     try {
-                        objStore = db.createObjectStore(config.objectStores.entries, { keyPath: "timestamp" });
+                        objStore = db.createObjectStore(dbConfig.objectStores.entries, { keyPath: "timestamp" });
                         objStore.createIndex('type_idx', ['playerId', 'type', 'date'], {unique: false});
                         objStore.createIndex('date_idx', ['playerId', 'date'], {unique: false});
                         objStore.createIndex('age_idx', ['age'], {unique: false});
@@ -31,7 +31,7 @@ app = angular.module("Diary", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus"
 
                     // Create the players object store:
                     try {
-                        objStore = db.createObjectStore(config.objectStores.players, { keyPath: "playerId", autoIncrement: true });
+                        objStore = db.createObjectStore(dbConfig.objectStores.players, { keyPath: "playerId", autoIncrement: true });
                         objStore.createIndex('name_idx', ['name'], {unique: true});
                         objStore.createIndex('gender_idx', ['gender'], {unique: false});
                         objStore.createIndex('birthday_idx', ['birthday'], {unique: false});

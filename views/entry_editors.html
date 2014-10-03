@@ -18,8 +18,12 @@
         <span class="label-text">What did {{ player.gender | pronoun }} say?</span>
         <input type="text" ng-model="entry.properties.words" placeholder="The new word(s) or sentence" />
     </label>
+</script>
+<script type="text/ng-template" id="entry_editor_milestone">
     <label>
-        <span class="label-text">Additional Details</span>
-        <textarea ng-model="entry.description" placeholder="To whom? Under which circumstances? What did {{ player.gender | pronoun }} want?"></textarea>
+        <span class="label-text">The Milestone</span>
+        <div class="flex-horizontal">
+            <select ng-model="entry.properties.type" ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types"></select>
+        </div>
     </label>
 </script>

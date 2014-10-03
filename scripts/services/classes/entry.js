@@ -17,6 +17,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
             this.age = entryData.age;
             this.properties = entryData.properties;
             this.player = Player.getById(entryData.playerId);
+            this.description = entryData.description;
 
             if (entryData.deleted)
                 this._deleted = entryData.deleted;
@@ -62,7 +63,8 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
                 properties: this.properties,
                 type: this.type.id,
                 id: this.cloudId,
-                deleted: !!this._deleted
+                deleted: !!this._deleted,
+                description: this.description
             }
         },
         remove: function (absoluteDelete) {
@@ -113,6 +115,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
                         timestamp: self.timestamp,
                         playerId: self.player.playerId,
                         cloudId: self.cloudId,
+                        description: self.description,
                         updatedAt: new Date()
                     };
 
