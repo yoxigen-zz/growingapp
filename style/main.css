@@ -383,6 +383,8 @@ a {
   #menu .actionbar {
     padding: 0 0.8em;
     font-weight: bold; }
+  #menu .app-name {
+    font-size: 1.2em; }
   #menu ul {
     list-style: none;
     margin: 0;
