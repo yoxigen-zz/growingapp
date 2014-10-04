@@ -1,12 +1,12 @@
 #menu-wrapper{
   position: absolute;
-  max-width: 85%;
-  top: $actionbarHeight;
+  max-width: 80%;
+  top: 0;
   bottom: 0;
-  right: 0;
+  left: 0;
   overflow: hidden;
   display: none;
-  padding-left: 1em;
+  padding-right: 1em;
   z-index: 101;
 
   &.visible{ display: block; }
@@ -21,18 +21,23 @@
 
 #menu{
   max-width: 100%;
-  min-width: 18em;
+  min-width: 16em;
   height: 100%;
   background: #e1e8ea;
-  box-shadow: -2px 2px 15px rgba(0,0,0,.6);
+  box-shadow: 2px 2px 15px rgba(0,0,0,.6);
   padding-bottom: .5em;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
-  -webkit-transform: translateX(100%);
-  transform: translateX(100%);
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
   transition: all 300ms ease-out;
   -webkit-transition: all 300ms ease-out;
+
+  .actionbar{
+    padding: 0 $padding;
+    font-weight: bold;
+  }
 
   ul{
     list-style: none;

@@ -47,7 +47,10 @@
     <script src="insights/weight/weight.controller.js"></script>
 </head>
 <body ng-controller="MainController">
-<header id="actionbar" class="flex-horizontal">
+<header class="flex-horizontal actionbar">
+    <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
+        <img src="images/icons/menu-lines.svg" title="Menu"/>
+    </a>
     <div>
         <span id="actionbar-image" ng-style="{ 'background-image': 'url(' + player.image + ')' }" ng-show="player.image"></span>
     </div>
@@ -56,16 +59,14 @@
             {{ player.name }}
         </span>
     </div>
-    <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
-        <img src="images/icons/menu.svg" title="Menu"/>
-    </a>
 </header>
 <div id="contents-wrapper">
     <div id="contents" class="flex-1 flex-vertical" ng-view></div>
 </div>
-<div id="overlay" class="overlay"></div>
+<div id="overlay" data-toggle-display="showMenu" ng-click="showMenu = false"></div>
 <div id="menu-wrapper" data-toggle-display="showMenu">
     <div id="menu">
+        <header class="actionbar">GrowingApp</header>
         <ul id="players-menu">
             <li ng-repeat="listPlayer in players" class="flex-horizontal"
                 ng-class="{ selected: listPlayer.playerId === player.playerId }">

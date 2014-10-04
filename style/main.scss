@@ -71,12 +71,11 @@ a{ cursor: pointer; }
   margin-right: .5em;
 }
 
-#actionbar{
+.actionbar{
   height: $actionbarHeight;
   line-height: $actionbarHeight - .1;
   background: $actionbarBackground;
   color: $actionbarColor;
-  padding: 0 $padding;
 
   .edit-button{
     height: .8em;
@@ -106,7 +105,7 @@ a{ cursor: pointer; }
 
   #actionbar-name{
     display: block;
-    padding: 0;
+    padding-right: .5em;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -127,12 +126,11 @@ a{ cursor: pointer; }
   }
 
   #menu-button{
-    float: right;
     display: block;
     height: 100%;
     width: 2em;
     text-align: center;
-    opacity: .5;
+    padding: 0 .5em;
 
     img{
       height: $actionbarHeight / 2;
@@ -140,7 +138,7 @@ a{ cursor: pointer; }
     }
 
     &.active{
-      opacity: 1;
+      background: rgba(255,255,255,.3);
     }
   }
 }
@@ -318,7 +316,7 @@ a{ cursor: pointer; }
   }
 }
 
-.overlay{
+#overlay{
   position: absolute;
   top: 0;
   bottom: 0;
@@ -332,14 +330,6 @@ a{ cursor: pointer; }
 
   &.visible{ display: block; }
   &.active{ opacity: .4 }
-}
-
-#overlay{
-  top: $actionbarHeight;
-
-  &.active{
-    opacity: .3
-  }
 }
 
 @import "items-list";
