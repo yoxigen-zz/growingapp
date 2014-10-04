@@ -48,6 +48,15 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         openEditEntryDialog(entryType);
         $scope.entry = new Entry(entryType, $scope.player);
         $scope.editedEntryIsNew = true;
+        $scope.showNewEntriesSelection = false;
+    };
+
+    $scope.toggleNewEntriesSelection = function(state){
+        $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
+    };
+
+    $scope.closeNewEntriesSelection = function(){
+        $scope.showNewEntriesSelection = false;
     };
 
     $scope.saveEntry = function(){

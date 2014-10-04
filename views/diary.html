@@ -33,12 +33,32 @@
             </li>
         </ul>
     </div>
-    <div id="newEntryTypesWrapper"
-         class="entry-types-dialog-wrapper"
-         self-click="toggleNewEntriesSelection()"
-         ng-include="'views/new_entries_select.html'"
-         data-toggle-display="showNewEntriesSelection"
-         data-toggle-element="#newEntryType">
+    <div
+         class="popup-wrapper"
+         data-toggle-display="showNewEntriesSelection">
+        <div class="popup flex-vertical">
+            <div class="flex-vertical">
+                <header>
+                    <a class="close-button"
+                       title="Close"
+                       ng-click="closeNewEntriesSelection()">
+                        <img src="images/icons/close.svg" />
+                    </a>
+                    <span class="popup-title">New Entry Type</span>
+                </header>
+                <div class="flex-1 flex-vertical">
+                    <div class="scroll-vertical">
+                        <ul class="entry-types-list">
+                            <li ng-repeat="entryType in entryTypes"
+                                ng-click="showNewEntryForm(entryType)">
+                                <img ng-src="images/icons/{{entryType.icon}}.svg" />
+                                <span>{{ entryType.name }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div id="newEntry"
          class="popup-wrapper"

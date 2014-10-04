@@ -103,10 +103,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         return null;
     }
 
-    $scope.toggleNewEntriesSelection = function(state){
-        $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
-    };
-
     $scope.editPlayer = function(player){
         if (player instanceof Player) {
             $scope.editedPlayer = angular.copy(player);
