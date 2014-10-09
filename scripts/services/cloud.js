@@ -77,7 +77,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
         if (!cloudEnabled)
             return;
 
-        return $q.all([syncObjects("Player"), syncObjects("Entry")]);
+        return syncObjects("Player").then(function(){ return syncObjects("Entry"); });
     }
 
     function syncToCloud(){
