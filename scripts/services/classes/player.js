@@ -121,12 +121,14 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", fu
     };
 
     Player.updatePlayers = function(updatedPlayers){
-        updatedPlayers.forEach(function(player){
-            if (player.deleted && Player.players[player.playerId])
-                delete Player.players[player.playerId];
-            else
-                Player.players[player.playerId] = player;
-        });
+        if (updatedPlayers && updatedPlayers.length){
+            updatedPlayers.forEach(function(player){
+                if (player.deleted && Player.players[player.playerId])
+                    delete Player.players[player.playerId];
+                else
+                    Player.players[player.playerId] = player;
+            });
+        }
     };
 
     Player.getById = function(playerId){
