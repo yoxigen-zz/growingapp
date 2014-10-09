@@ -508,7 +508,7 @@ a {
   .popup footer {
     padding: 1em; }
 
-form input[type=text], form textarea, form input[type=number], form input[type=date], form input[type=password] {
+form input[type=text], form textarea, form input[type=number], form input[type=date], form input[type=password], form input[type=email] {
   border: solid 1px #b9cfd6;
   border-radius: 2px;
   background: White;
@@ -518,7 +518,7 @@ form input[type=text], form textarea, form input[type=number], form input[type=d
   font-family: Roboto, sans-serif;
   font-size: 1em;
   font-weight: 300; }
-  form input[type=text].input-small, form textarea.input-small, form input[type=number].input-small, form input[type=date].input-small, form input[type=password].input-small {
+  form input[type=text].input-small, form textarea.input-small, form input[type=number].input-small, form input[type=date].input-small, form input[type=password].input-small, form input[type=email].input-small {
     width: 10em; }
 form label {
   margin-bottom: 1em;

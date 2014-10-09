@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", function getPlayerClassFactory($q, $indexedDB, dbConfig, DataObject) {
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", function getPlayerClassFactory($q, $indexedDB, dbConfig, DataObject, utils) {
     var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
@@ -117,6 +117,15 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", function ge
             return deferred.promise;
         }, function(){
             return $q.when([]);
+        });
+    };
+
+    Player.updatePlayers = function(updatedPlayers){
+        updatedPlayers.forEach(function(player){
+            if (player.deleted && Player.players[player.playerId])
+                delete Player.players[player.playerId];
+            else
+                Player.players[player.playerId] = player;
         });
     };
 

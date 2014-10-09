@@ -55,9 +55,6 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
                 }));
             });
 
-            lastUpdateTime = new Date();
-            localStorage.setItem("lastSync", lastUpdateTime.valueOf());
-
             return $q.all(promises).then(function(){
                 if (objs.length) {
                     if (className === "Entry")
@@ -73,11 +70,19 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
         });
     }
 
+    function setLastUpdateTime(){
+        lastUpdateTime = new Date();
+        localStorage.setItem("lastSync", lastUpdateTime.valueOf());
+    }
+
     function syncFromCloud(){
         if (!cloudEnabled)
             return;
 
-        return syncObjects("Player").then(function(){ return syncObjects("Entry"); });
+        return syncObjects("Player").then(function(players){
+            Player.updatePlayers(players);
+            syncObjects("Entry").then(setLastUpdateTime);
+        });
     }
 
     function syncToCloud(){
