@@ -144,6 +144,9 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             handled = 0;
 
         data.entries.forEach(function(entry){
+            if (entry.player.playerId !== $scope.player.playerId)
+                return true;
+
             if (entry.isNew) {
                 var parsedEntry = parseEntry(entry);
                 if (!~$scope.entries.indexOf(parsedEntry))
