@@ -1,4 +1,4 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", function($scope, $route, Player, phonegap, eventBus, users, cloud, config){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils){
     $scope.config = config;
 
     $scope.setCurrentPlayer = function(player){
@@ -186,7 +186,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
                     $scope.toggleEditPlayer(false);
 
                     if ($scope.player && $scope.editedPlayer.playerId === $scope.player.playerId)
-                        $scope.setCurrentPlayer($scope.players.length ? $scope.players[0] : null);
+                        setFirstPlayer();
 
                     $scope.editedPlayer = null;
                     break;
@@ -194,6 +194,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             }
         });
     };
+
+    function setFirstPlayer(){
+        $scope.setCurrentPlayer($scope.players && $scope.players.length ? $scope.players[0] : null);
+    }
 
     function setPlayersSelection(players){
         $scope.playersSelection = players.concat([{ name: "+ Add New Child" }]);
@@ -227,6 +231,45 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         signoutItem.hide = true;
 
         $scope.currentUser = null;
+    });
+
+    eventBus.subscribe("updatePlayers", function(e){
+        var deletedCurrentPlayer;
+
+        e.players.forEach(function(player){
+            if (player.isNew){
+                if (!player.deleted)
+                    $scope.players.push(player);
+            }
+            else {
+                var existingPlayer = utils.arrays.find($scope.players, function (p) {
+                        return p.playerId === player.playerId;
+                    }),
+                    existingPlayerIndex;
+
+                if (existingPlayer) {
+                    existingPlayerIndex = $scope.players.indexOf(existingPlayer);
+                    if (player.deleted)
+                        $scope.players.splice(existingPlayerIndex, 1);
+                    else {
+                        if (!$scope.players)
+                            $scope.players = [];
+
+                        $scope.players[existingPlayerIndex] = player;
+                    }
+                }
+
+                if ($scope.player && player.playerId === $scope.player.playerId) {
+                    if (player.deleted)
+                        deletedCurrentPlayer = true;
+                    else
+                        $scope.player = player;
+                }
+            }
+        });
+
+        if ((!$scope.player && $scope.players.length)|| deletedCurrentPlayer)
+            setFirstPlayer();
     });
 
     function init(){

@@ -10,7 +10,7 @@ app.factory("config", ["utils", function(utils){
         milestone: {
             types: [
                 { id: "smile", text: "Smiled for the first time! :)" },
-                { id: "turnedOver", text: "Turned over for the first time!)" },
+                { id: "turnedOver", text: "Turned over for the first time!" },
                 { id: "laughter", text: "Laughed for the first time! :D" },
                 { id: "solids", text: "Has started eating solids." },
                 { id: "crawling", text: "Has started crawling!" },

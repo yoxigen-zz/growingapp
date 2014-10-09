@@ -1,7 +1,7 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", function getPlayerClassFactory($q, $indexedDB, dbConfig) {
-    var entriesObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", function getPlayerClassFactory($q, $indexedDB, dbConfig, DataObject) {
+    var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
     function Player(data) {
@@ -11,6 +11,12 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", function getPlayerClassFa
         {
             angular.extend(this, data);
             id = data.playerId;
+
+            if (data.deleted)
+                this._deleted = data.deleted;
+
+            if (data.cloudId)
+                this.cloudId = data.cloudId;
         }
 
         this.__defineGetter__("playerId", function () {
@@ -22,8 +28,8 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", function getPlayerClassFa
 
             if (!id)
                 id = value;
-            else
-                throw new Error("Can't set id to Player, since it already has one.");
+            else if (value !== id)
+                throw new Error("Can't change a Player's id.");
         });
     }
 
@@ -54,50 +60,32 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", function getPlayerClassFa
                 id: this.cloudId
             }
         },
-        remove: function () {
-            if (!this.playerId)
-                throw new Error("Can't delete player - it hasn't been saved yet.");
-
-            return entriesObjectStore.delete(this.playerId).catch(function(error){
-                console.error("Can't delete player: ", error);
-                return $q.reject("Can't delete player");
-            });
-        },
-        save: function (isSynced) {
-            this.isNewPlayer = !this.playerId;
-
-            var player = this,
-                dbPlayer = {
-                    name: this.name,
-                    birthday: this.birthday,
-                    gender: this.gender,
-                    cloudId: this.cloudId
-                };
-
-            if (!isSynced)
-                dbPlayer.unsynced = 1;
+        getLocalData: function(){
+            var localData = {
+                name: this.name,
+                birthday: this.birthday,
+                gender: this.gender,
+                cloudId: this.cloudId
+            };
 
             if (this.playerId)
-                dbPlayer.playerId = this.playerId;
+                localData.playerId = this.playerId;
 
             if (this.image)
-                dbPlayer.image = this.image;
+                localData.image = this.image;
 
-            return entriesObjectStore.upsert(dbPlayer).then(function (id) {
-                if (player.isNewPlayer)
-                    player.playerId = id;
-
-                return player;
-            }, function(error){
-                alert("ERROR: " + JSON.stringify(error));
-            });
-        }
+            return localData;
+        },
+        get idProperty(){ return "playerId" },
+        objectStore: playersObjectStore
     };
+
+    Player.prototype.__proto__ = new DataObject();
 
     Player.getAll = function (options) {
         options = options || {};
 
-        return entriesObjectStore.internalObjectStore(dbConfig.objectStores.players, "readonly").then(function(objectStore){
+        return playersObjectStore.internalObjectStore(dbConfig.objectStores.players, "readonly").then(function(objectStore){
             var idx = objectStore.index(options.unsynced ? "unsync_idx" : "name_idx");
             var players = [],
                 deferred = $q.defer(),

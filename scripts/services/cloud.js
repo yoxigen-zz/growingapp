@@ -31,29 +31,27 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
         });
     }
 
-    function syncFromCloud(){
-        if (!cloudEnabled)
-            return;
-
-        return storage.query("Entry", lastUpdateTime ? { greaterThan: ["updatedAt", lastUpdateTime] } : null).then(function(results){
+    function syncObjects(className){
+        return storage.query(className, lastUpdateTime ? { greaterThan: ["updatedAt", lastUpdateTime] } : null).then(function(results){
             if (!results || !results.length)
                 return;
 
-            var entries = [],
-                promises = [];
+            var objs = [],
+                promises = [],
+                objectClass = className === "Entry" ? Entry : Player;
 
-            results.forEach(function(cloudEntry){
-                var entryData = cloudEntry.getData();
+            results.forEach(function(cloudObject){
+                var objectData = cloudObject.getData();
 
-                // If the case was both created and deleted after the last update, no action is required:
-                if (lastUpdateTime && lastUpdateTime < cloudEntry.createdAt && entryData.deleted)
+                // If the case that the object was both created and deleted after the last update, no action is required:
+                if (lastUpdateTime && lastUpdateTime < cloudObject.createdAt && objectData.deleted)
                     return true;
 
-                var entry = new Entry(entryData);
-                entry.cloudId = cloudEntry.id;
+                var obj = new objectClass(objectData);
+                obj.cloudId = cloudObject.id;
 
-                promises.push(entry.save(true).then(function(){
-                    entries.push(entry);
+                promises.push(obj.save(true).then(function(){
+                    objs.push(obj);
                 }));
             });
 
@@ -61,15 +59,25 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
             localStorage.setItem("lastSync", lastUpdateTime.valueOf());
 
             return $q.all(promises).then(function(){
-                if (entries.length)
-                    eventBus.triggerEvent("updateEntries", { entries: entries });
-
-                return entries;
+                if (objs.length) {
+                    if (className === "Entry")
+                        eventBus.triggerEvent("updateEntries", { entries: objs });
+                    else if (className === "Player")
+                        eventBus.triggerEvent("updatePlayers", { players: objs });
+                }
+                return objs;
             });
         }, function(error){
-            console.error("Can't fetch entries from cloud. Error: ", error);
+            console.error("Can't fetch " + className + " data from cloud. Error: ", error);
             return $q.reject(error);
         });
+    }
+
+    function syncFromCloud(){
+        if (!cloudEnabled)
+            return;
+
+        return $q.all([syncObjects("Player"), syncObjects("Entry")]);
     }
 
     function syncToCloud(){

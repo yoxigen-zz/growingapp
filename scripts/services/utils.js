@@ -69,6 +69,18 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
 
     var methods = {
         arrays: {
+            find: function(array, findFunction){
+                if (!angular.isArray(array) || !array || !array.length)
+                    return null;
+
+                var member;
+                for(var i=0; i < array.length; i++){
+                    if (findFunction(member = array[i]))
+                        return member;
+                }
+
+                return null;
+            },
             toIndex: function(array, idPropery){
                 var index = {};
                 array.forEach(function(member){

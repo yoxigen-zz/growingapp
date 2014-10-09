@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntryClassFactory($q, $indexedDB, entries, Player) {
+app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", function getEntryClassFactory($q, $indexedDB, entries, Player, DataObject) {
     var OBJECT_STORE_NAME = "entries",
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
@@ -25,14 +25,14 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
             if (entryData.cloudId)
                 this.cloudId = entryData.cloudId;
 
-            this.isNewEntry = false;
+            this.isNew = false;
         }
         else{
             this.date = new Date();
             this.properties = {};
             this.player = player;
             this.age = player.getAge(this.date);
-            this.isNewEntry = true;
+            this.isNew = true;
         }
 
         this.__defineGetter__("timestamp", function () {
@@ -44,8 +44,8 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
 
             if (!timestamp)
                 timestamp = value;
-            else
-                throw new Error("Can't set timestamp to Entry, since it already has one.");
+            else if (value !== timestamp)
+                throw new Error("Can't change an Entry's timestamp.");
         });
 
         this.__defineGetter__("type", function () {
@@ -67,79 +67,31 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", function getEntry
                 description: this.description
             }
         },
-        remove: function (absoluteDelete) {
-            if (!this.timestamp)
-                throw new Error("Can't delete entry - it hasn't been saved yet.");
-
-            if (absoluteDelete){
-                return entriesObjectStore.delete(this.timestamp).catch(function(error){
-                    console.error("Can't delete entry: ", error);
-                    return $q.reject("Can't delete entry");
-                });
-            }
-            else {
-                this._deleted = true;
-                this.save();
-            }
-
-            return this;
+        /**
+         * Gets the entry's data, for saving in the offline database.
+         * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
+         */
+        getLocalData: function(){
+            return {
+                date: this.date,
+                age: this.player.getAge(this.date),
+                properties: this.properties,
+                type: this.type.id,
+                timestamp: this.timestamp,
+                playerId: this.player.playerId,
+                cloudId: this.cloudId,
+                description: this.description,
+                updatedAt: new Date()
+            };
         },
-        save: function (isSynced) {
-            var self = this;
-
-            if (!this.timestamp) {
-                this.isNewEntry = true;
-                this.timestamp = new Date().valueOf();
-                return doSave();
-            }
-            else {
-                return entriesObjectStore.find(this.timestamp).then(function(existingEntry){
-                    self.isNewEntry = !existingEntry;
-
-                    // The entry is deleted and the changed has been synced to cloud, can proceed to completely delete:
-                    if (self._deleted && isSynced) {
-                        self.isNewEntry = false;
-                        return existingEntry ? self.remove(true) : self;
-                    }
-
-                    return doSave();
-                });
-            }
-
-            function doSave() {
-                var dbEntry = {
-                        date: self.date,
-                        age: self.player.getAge(self.date),
-                        properties: self.properties,
-                        type: self.type.id,
-                        timestamp: self.timestamp,
-                        playerId: self.player.playerId,
-                        cloudId: self.cloudId,
-                        description: self.description,
-                        updatedAt: new Date()
-                    };
-
-                if (!isSynced)
-                    dbEntry.unsynced = 1;
-
-                if (self._deleted)
-                    dbEntry.unsynced = dbEntry.deleted = 1;
-
-                return entriesObjectStore.upsert(dbEntry).then(function (id) {
-                    return self;
-                }, function (error) {
-                    alert("ERROR: " + JSON.stringify(error));
-                });
-            }
+        get idProperty(){ return "timestamp" },
+        getNewId: function(){
+            return new Date().valueOf()
         },
-        unremove: function(){
-            if (!this._deleted)
-                return false;
-
-            this._deleted = false;
-            this.save();
-        }
+        objectStore: entriesObjectStore
     };
+
+    Entry.prototype.__proto__ = new DataObject();
 
     Entry.getEntries = function (options) {
         options = options || {};

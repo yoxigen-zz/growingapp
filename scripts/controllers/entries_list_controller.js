@@ -64,7 +64,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             console.log("saved: ", savedEntry);
             $scope.showEditEntry = false;
             $scope.toggleNewEntriesSelection(false);
-            if (savedEntry.isNewEntry) {
+            if (savedEntry.isNew) {
                 addEntry(savedEntry);
                 eventBus.triggerEvent("saveEntry", savedEntry);
             }
@@ -144,7 +144,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             handled = 0;
 
         data.entries.forEach(function(entry){
-            if (entry.isNewEntry) {
+            if (entry.isNew) {
                 var parsedEntry = parseEntry(entry);
                 if (!~$scope.entries.indexOf(parsedEntry))
                     $scope.entries.push(parsedEntry);
@@ -159,7 +159,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         for(var i= 0, entry; i < $scope.entries.length; i++){
             entry = $scope.entries[i];
             if (indexEntry = entriesIndex[entry.timestamp]){
-                if (!indexEntry.isNewEntry) {
+                if (!indexEntry.isNew) {
                     if (indexEntry._deleted)
                         $scope.entries.splice(i, 1);
                     else
