@@ -1,6 +1,8 @@
 app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", function($q, eventBus, Entry, Player, Storage, users){
     eventBus.subscribe("saveEntry", syncEntry);
     eventBus.subscribe("deleteEntry", syncEntry);
+    eventBus.subscribe("savePlayer", syncPlayer);
+    eventBus.subscribe("deletePlayer", syncPlayer);
     eventBus.subscribe("login", onLogin);
     eventBus.subscribe("logout", function(){
         cloudEnabled = false;
@@ -28,6 +30,19 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
             eventBus.triggerEvent("updateEntries", { entries: [entry] });
         }, function(error){
             console.error("ERROR syncing entries: ", error);
+        });
+    }
+
+    function syncPlayer(player){
+        if (!cloudEnabled)
+            return;
+
+        storage.setItem("Player", player.getCloudData()).then(function(savedData){
+            player.cloudId = savedData.id;
+            player.save(true);
+            eventBus.triggerEvent("updatePlayers", { players: [player] });
+        }, function(error){
+            console.error("ERROR syncing players: ", error);
         });
     }
 

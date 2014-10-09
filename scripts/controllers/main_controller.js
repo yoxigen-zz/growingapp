@@ -188,6 +188,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
                     if ($scope.player && $scope.editedPlayer.playerId === $scope.player.playerId)
                         setFirstPlayer();
 
+                    eventBus.triggerEvent("deletePlayer", $scope.editedPlayer);
+
                     $scope.editedPlayer = null;
                     break;
                 }

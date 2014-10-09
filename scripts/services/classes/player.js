@@ -57,7 +57,8 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", fu
                 birthday: this.birthday,
                 name: this.name,
                 gender: this.gender,
-                id: this.cloudId
+                id: this.cloudId,
+                deleted: !!this._deleted
             }
         },
         getLocalData: function(){

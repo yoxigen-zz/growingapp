@@ -18,9 +18,8 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
             else {
                 this._deleted = true;
                 this.save();
+                return $q.when(this)
             }
-
-            return this;
         },
         save: function(isSynced){
             var self = this,
