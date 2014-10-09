@@ -49,7 +49,7 @@
 </head>
 <body ng-controller="MainController">
 <header class="flex-horizontal actionbar">
-    <a id="menu-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
+    <a class="actionbar-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
         <img src="images/icons/menu-lines.svg" title="Menu"/>
     </a>
     <div>
@@ -59,6 +59,14 @@
         <span id="actionbar-name">
             {{ player.name }}
         </span>
+    </div>
+    <div>
+        <a class="actionbar-button selectable" href="#/" ng-class="{ selected: currentPage == 'diary' }">
+            <img src="images/icons/list.svg" title="Diary" />
+        </a>
+        <a class="actionbar-button selectable" href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
+            <img src="images/icons/charts-white.svg" title="Charts" />
+        </a>
     </div>
 </header>
 <div id="contents-wrapper">

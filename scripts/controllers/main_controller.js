@@ -67,8 +67,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     $scope.menuItems = [
-        { text: "Diary", href: "#/", icon: "images/icons/weight.svg" },
-        { text: "Insights", href: "#/insights", icon: "images/icons/charts.svg" },
         //{ text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
         //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
         //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },

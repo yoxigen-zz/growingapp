@@ -125,8 +125,8 @@ a{ cursor: pointer; }
     background-repeat: no-repeat;
   }
 
-  #menu-button{
-    display: block;
+  .actionbar-button{
+    display: inline-block;
     height: 100%;
     width: 2em;
     text-align: center;
@@ -139,6 +139,22 @@ a{ cursor: pointer; }
 
     &.active{
       background: rgba(255,255,255,.3);
+    }
+
+    &.selectable{
+      opacity: .5;
+      -webkit-transition: all 200ms ease-out;
+      -moz-transition: all 200ms ease-out;
+      -ms-transition: all 200ms ease-out;
+      -o-transition: all 200ms ease-out;
+      transition: all 200ms ease-out;
+
+      transform: scale(.8);
+    }
+
+    &.selected{
+      opacity: 1;
+      transform: scale(.9);
     }
   }
 }

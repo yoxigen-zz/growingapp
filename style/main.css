@@ -128,17 +128,28 @@ a {
     background-position: 20% center;
     background-size: cover;
     background-repeat: no-repeat; }
-  .actionbar #menu-button {
-    display: block;
+  .actionbar .actionbar-button {
+    display: inline-block;
     height: 100%;
     width: 2em;
     text-align: center;
     padding: 0 .5em; }
-    .actionbar #menu-button img {
+    .actionbar .actionbar-button img {
       height: 1.75em;
       margin-top: 0.875em; }
-    .actionbar #menu-button.active {
+    .actionbar .actionbar-button.active {
       background: rgba(255, 255, 255, 0.3); }
+    .actionbar .actionbar-button.selectable {
+      opacity: .5;
+      -webkit-transition: all 200ms ease-out;
+      -moz-transition: all 200ms ease-out;
+      -ms-transition: all 200ms ease-out;
+      -o-transition: all 200ms ease-out;
+      transition: all 200ms ease-out;
+      transform: scale(0.8); }
+    .actionbar .actionbar-button.selected {
+      opacity: 1;
+      transform: scale(0.9); }
 
 #contents-wrapper {
   overflow: hidden;
