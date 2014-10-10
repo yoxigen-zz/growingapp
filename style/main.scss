@@ -150,11 +150,14 @@ a{ cursor: pointer; }
       transition: all 200ms ease-out;
 
       transform: scale(.8);
+      -webkit-transform: scale(.8);
+      -ms-transform: scale(.8);
     }
 
     &.selected{
       opacity: 1;
-      transform: scale(.9);
+      -webkit-transform: scale(.9);
+      -ms-transform: scale(.9);
     }
   }
 }

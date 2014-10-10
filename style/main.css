@@ -146,10 +146,13 @@ a {
       -ms-transition: all 200ms ease-out;
       -o-transition: all 200ms ease-out;
       transition: all 200ms ease-out;
-      transform: scale(0.8); }
+      transform: scale(0.8);
+      -webkit-transform: scale(0.8);
+      -ms-transform: scale(0.8); }
     .actionbar .actionbar-button.selected {
       opacity: 1;
-      transform: scale(0.9); }
+      -webkit-transform: scale(0.9);
+      -ms-transform: scale(0.9); }
 
 #contents-wrapper {
   overflow: hidden;
