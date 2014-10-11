@@ -5,6 +5,7 @@ app.controller("InsightsController", ["$scope", "insights", "$timeout", function
         if (!insight)
             return;
 
+        $scope.currentInsight = insight;
         setCurrentInsightInclude(insight);
         insights.currentInsight = insight;
     };

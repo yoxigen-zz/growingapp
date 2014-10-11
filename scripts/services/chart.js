@@ -504,7 +504,7 @@
         init: function(scope, element, attrs){
             var self = this,
                 defaults = {
-                    axisWidth: 20,
+                    axisWidth: 25,
                     axisLabelsWidth: { y: 25, x: 25 },
                     margins: { top: 10, left: 20, right: 20, bottom: 10 }
                 };
