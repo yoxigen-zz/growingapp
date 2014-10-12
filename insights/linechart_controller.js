@@ -13,7 +13,7 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
         dataSeries: "player.playerId",
         x: "age",
         y: "properties." + insightId,
-        minYValue: $scope.currentInsight.minValue,
+        //minYValue: $scope.currentInsight.minValue,
         interpolate: "cardinal",
         "axes": {
             "x": {

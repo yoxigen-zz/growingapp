@@ -60,7 +60,7 @@ angular.module('Charts')
                         .y(function(d) { return chart.scale.y(utils.objects.getObjectByPath(d, chart.settings.y)); });
 
                     chart.scale.x.domain(getDomain("x"));
-                    chart.scale.y.domain(getDomain("y", chart.settings.minYValue, chart.settings.maxYValue));
+                    chart.scale.y.domain(getDomain("y"));
 
                     chart.elements.series = svg.selectAll(".series")
                         .data(self.data)
