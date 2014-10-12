@@ -129,11 +129,16 @@ select{
 }
 
 .vertical-buttons-bar{
+  .vertical-buttons-text{
+    margin-bottom: .5em;
+    text-align: left;
+  }
   a{
     display: block;
+    margin-bottom: .5em;
 
-    &:first-child{
-      margin-bottom: .5em;
+    &:last-child{
+      margin-bottom: 0;
     }
   }
 }

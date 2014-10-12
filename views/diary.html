@@ -1,5 +1,18 @@
-<div class="flex-vertical">
-    <header class="contents-header flex-horizontal">
+<div class="flex-vertical flex-1">
+    <div ng-show="showFirstTimeSelection" ng-cloak class="flex-1 contents-empty-message">
+        <div class="vertical-buttons-bar">
+            <p class="vertical-buttons-text">Get started:</p>
+            <a class="button save-button" ng-click="openLoginForm()">
+                <img src="images/icons/cloud_sync_white.svg" />
+                <span class="button-text">Sync data from cloud</span>
+            </a>
+            <a class="button save-button" ng-click="addNewPlayer()">
+                <img src="images/icons/plus.svg" />
+                <span class="button-text">Add child</span>
+            </a>
+        </div>
+    </div>
+    <header class="contents-header flex-horizontal" ng-show="player && !showFirstTimeSelection">
         <div class="header-controls flex-1">
             Diary -
             <select class="fancy-select"
@@ -15,8 +28,8 @@
             </a>
         </div>
     </header>
-    <div class="contents-scroll flex-1" ng-class="{ 'flex-vertical': entries && !entries.length }">
-        <div id="contents-empty-message" class="flex-1" ng-cloak ng-show="entries && !entries.length">
+    <div class="contents-scroll flex-1" ng-class="{ 'flex-vertical': entries && !entries.length }" ng-show="player && !showFirstTimeSelection">
+        <div class="flex-1 contents-empty-message" ng-cloak ng-show="entries && !entries.length">
             <div>
                 <p>No {{currentEntriesType || ''}} entries added yet.</p>
                 <a class="button save-button" ng-click="toggleNewEntriesSelection()">Start adding</a>

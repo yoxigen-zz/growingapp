@@ -47,19 +47,24 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
             }
 
             function doSave() {
-                var localData = self.getLocalData();
-                if (!isSynced)
-                    localData.unsynced = 1;
+                try {
+                    var localData = self.getLocalData();
+                    if (!isSynced)
+                        localData.unsynced = 1;
 
-                if (self._deleted)
-                    localData.unsynced = localData.deleted = 1;
+                    if (self._deleted)
+                        localData.unsynced = localData.deleted = 1;
 
-                return self.objectStore.upsert(localData).then(function (id) {
-                    self[self.idProperty] = id;
-                    return self;
-                }, function (error) {
-                    alert("ERROR: " + JSON.stringify(error));
-                });
+                    return self.objectStore.upsert(localData).then(function (id) {
+                        self[self.idProperty] = id;
+                        return self;
+                    }, function (error) {
+                        alert("ERROR: " + JSON.stringify(error));
+                    });
+                }
+                catch(e){
+                    console.error("Error saving object: ", e);
+                }
             }
         },
         unremove: function(){

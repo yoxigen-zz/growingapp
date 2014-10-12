@@ -25,6 +25,8 @@ app.factory("config", ["utils", function(utils){
         }
     };
 
+    var lastSync;
+
     entries.milestone.typesIndex = utils.arrays.toIndex(entries.milestone.types, "id");
 
     return {
@@ -37,6 +39,27 @@ app.factory("config", ["utils", function(utils){
             weight: {
                 all: ["kg", "lb"],
                 selected: "kg"
+            }
+        },
+        sync: {
+            get lastSyncTimestamp(){
+                if (lastSync === undefined) {
+                    lastSync = localStorage.getItem("lastSync");
+
+                    if (lastSync)
+                        lastSync = new Date(parseInt(lastSync));
+                    else
+                        lastSync = null;
+                }
+
+                return lastSync;
+            },
+            set lastSyncTimestamp(value){
+                if (!angular.isDate(value))
+                    throw TypeError("Invalid type for lastSyncTimestamp, must be a date.");
+
+                lastSync = value;
+                localStorage.setItem("lastSync", lastSync.valueOf());
             }
         }
     }

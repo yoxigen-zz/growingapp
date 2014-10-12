@@ -1,4 +1,4 @@
-app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", function($q, eventBus, Entry, Player, Storage, users){
+app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "config", function($q, eventBus, Entry, Player, Storage, users, config){
     eventBus.subscribe("saveEntry", syncEntry);
     eventBus.subscribe("deleteEntry", syncEntry);
     eventBus.subscribe("savePlayer", syncPlayer);
@@ -9,11 +9,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
     });
 
     var storage = new Storage().cloud,
-        lastUpdateTime = localStorage.getItem("lastSync"),
         cloudEnabled = users.getCurrentUser();
-
-    if (lastUpdateTime)
-        lastUpdateTime = new Date(parseInt(lastUpdateTime));
 
     function onLogin(){
         cloudEnabled = true;
@@ -47,7 +43,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
     }
 
     function syncObjects(className){
-        return storage.query(className, lastUpdateTime ? { greaterThan: ["updatedAt", lastUpdateTime] } : null).then(function(results){
+        return storage.query(className, config.sync.lastSyncTimestamp ? { greaterThan: ["updatedAt", config.sync.lastSyncTimestamp] } : null).then(function(results){
             if (!results || !results.length)
                 return;
 
@@ -59,15 +55,20 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
                 var objectData = cloudObject.getData();
 
                 // If the case that the object was both created and deleted after the last update, no action is required:
-                if (lastUpdateTime && lastUpdateTime < cloudObject.createdAt && objectData.deleted)
+                if (objectData.deleted && (!config.sync.lastSyncTimestamp || (config.sync.lastSyncTimestamp && config.sync.lastSyncTimestamp < cloudObject.createdAt) ))
                     return true;
 
-                var obj = new objectClass(objectData);
-                obj.cloudId = cloudObject.id;
+                try{
+                    var obj = new objectClass(objectData);
+                    obj.cloudId = cloudObject.id;
 
-                promises.push(obj.save(true).then(function(){
-                    objs.push(obj);
-                }));
+                    promises.push(obj.save(true).then(function(){
+                        objs.push(obj);
+                    }));
+                }
+                catch(e){
+                    console.error("Can't create or save object: ", e);
+                }
             });
 
             return $q.all(promises).then(function(){
@@ -86,8 +87,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", f
     }
 
     function setLastUpdateTime(){
-        lastUpdateTime = new Date();
-        localStorage.setItem("lastSync", lastUpdateTime.valueOf());
+        config.sync.lastSyncTimestamp = new Date();
     }
 
     function syncFromCloud(){

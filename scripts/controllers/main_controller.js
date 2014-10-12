@@ -12,10 +12,14 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         if (player && player.playerId) {
             localStorage.player = String(player.playerId);
+            $scope.showFirstTimeSelection = false;
         }
         else {
             localStorage.removeItem("player");
-            $scope.addNewPlayer();
+            if (config.sync.lastSyncTimestamp)
+                $scope.addNewPlayer();
+            else
+                $scope.showFirstTimeSelection = true;
         }
 
         eventBus.triggerEvent("playerSelect", player);
@@ -74,7 +78,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             if (users.getCurrentUser())
                 cloud.sync();
             else
-                $scope.showLogin = true;
+                $scope.openLoginForm();
 
             $scope.hideMenu();
         } },
@@ -88,6 +92,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
                 navigator.app.exitApp();
         } }
     ];
+
+    $scope.openLoginForm = function(){
+        $scope.showLogin = true;
+    };
 
     function getMenuItemById(itemId){
         if (!itemId)
@@ -201,8 +209,12 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
     function setPlayersSelection(players){
         $scope.playersSelection = players.concat([{ name: "+ Add New Child" }]);
-        if (!players.length)
-            $scope.addNewPlayer();
+        if (!players.length) {
+            if (config.sync.lastSyncTimestamp)
+                $scope.addNewPlayer();
+            else
+                $scope.showFirstTimeSelection = true;
+        }
     }
 
     $scope.addNewPlayer = function(){

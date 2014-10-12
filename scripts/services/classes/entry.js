@@ -17,6 +17,9 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
             this.age = entryData.age;
             this.properties = entryData.properties;
             this.player = Player.getById(entryData.playerId);
+            if (!this.player)
+                throw new Error("Can't create entry - no player found for playerId " + entryData.playerId);
+
             this.description = entryData.description;
 
             if (entryData.deleted)
@@ -72,6 +75,9 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
          * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
          */
         getLocalData: function(){
+            if (!this.player)
+                throw new Error("Can't get local data - entry has no player.");
+
             return {
                 date: this.date,
                 age: this.player.getAge(this.date),

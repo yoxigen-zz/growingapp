@@ -222,15 +222,15 @@ a {
   overflow-y: auto;
   overflow-x: hidden; }
 
-#contents-empty-message {
+.contents-empty-message {
   -webkit-align-items: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   text-align: center; }
-  #contents-empty-message div {
+  .contents-empty-message div {
     margin: 0 auto; }
-  #contents-empty-message p {
+  .contents-empty-message p {
     opacity: .5;
     font-size: 1.2em;
     font-weight: 300; }
@@ -613,10 +613,14 @@ select {
   .buttons-bar a:last-child {
     margin-right: 0; }
 
+.vertical-buttons-bar .vertical-buttons-text {
+  margin-bottom: .5em;
+  text-align: left; }
 .vertical-buttons-bar a {
-  display: block; }
-  .vertical-buttons-bar a:first-child {
-    margin-bottom: .5em; }
+  display: block;
+  margin-bottom: .5em; }
+  .vertical-buttons-bar a:last-child {
+    margin-bottom: 0; }
 
 .cancel-button {
   background: none;
