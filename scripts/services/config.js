@@ -22,7 +22,8 @@ app.factory("config", ["utils", function(utils){
                 { id: "haircut", text: "Had the first haircut!" },
                 { id: "walking", text: "Started walking!" },
                 { id: "daycare", text: "Has started going to daycare" },
-                { id: "diapers", text: "Is not using diapers anymore!" }
+                { id: "diapers", text: "Is not using diapers anymore!" },
+                { id: "pacifier", text: "Has been weaned from the pacifier" }
             ]
         }
     };
