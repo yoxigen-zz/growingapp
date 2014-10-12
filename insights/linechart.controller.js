@@ -2,7 +2,8 @@
 
 app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "eventBus", "config", function($scope, Entry, utils, eventBus, config){
     var insightId = $scope.currentInsight.id;
-    
+    console.log("linechart: " + $scope.currentInsight.id);
+
     eventBus.subscribe("playerSelect", setData);
 
     $scope.$on("$destroy", function(){
