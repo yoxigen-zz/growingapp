@@ -38,6 +38,13 @@ app.factory("entries", ["utils", function entriesFactory(utils){
             }
         },
         {
+            "id": "note",
+            "name": "Note",
+            "icon": "note",
+            "html": "{{data.properties.text}}",
+            allowDescription: false
+        },
+        {
             "id": "speech",
             "name": "Speech",
             "icon": "word",

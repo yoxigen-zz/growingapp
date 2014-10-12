@@ -93,7 +93,7 @@
                             <div class="popup-contents">
                                 <form>
                                     <div ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id"></div>
-                                    <label>
+                                    <label ng-show="newEntryType.allowDescription !== false">
                                         <span class="label-text">Additional Details</span>
                                         <textarea ng-model="entry.description"></textarea>
                                     </label>

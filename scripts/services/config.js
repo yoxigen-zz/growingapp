@@ -15,6 +15,8 @@ app.factory("config", ["utils", function(utils){
                 { id: "solids", text: "Has started eating solids." },
                 { id: "crawling", text: "Has started crawling!" },
                 { id: "sitting", text: "Sat up for the first time!!" },
+                { id: "standing", text: "Stood up for the first time!" },
+                { id: "steps", text: "Has taken the first steps!" },
                 { id: "word", text: "Said:" },
                 { id: "potty", text: "Used the potty for the first time!" },
                 { id: "haircut", text: "Had the first haircut!" },
