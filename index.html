@@ -47,73 +47,75 @@
 
     <script src="insights/linechart_controller.js"></script>
 </head>
-<body ng-controller="MainController">
-<header class="flex-horizontal actionbar">
-    <a class="actionbar-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
-        <img src="images/icons/menu-lines.svg" title="Menu"/>
-    </a>
-    <div>
-        <span id="actionbar-image" ng-style="{ 'background-image': 'url(' + player.image + ')' }" ng-show="player.image"></span>
+<body ng-controller="MainController" class="flex-horizontal">
+    <div id="overlay" data-toggle-display="showMenu" ng-click="showMenu = false"></div>
+    <div id="menu-wrapper" data-toggle-display="showMenu">
+        <div id="menu">
+            <header class="actionbar"><span class="app-name">GrowingApp</span></header>
+            <ul id="players-menu">
+                <li ng-repeat="listPlayer in players" class="flex-horizontal"
+                    ng-class="{ selected: listPlayer.playerId === player.playerId }">
+                    <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1">{{listPlayer.name}}</a>
+                    <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
+                        <img class="child-menu-edit" src="images/icons/edit.svg"/>
+                    </a>
+                </li>
+                <li class="players-menu-add">
+                    <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
+                        <img class="child-menu-add" src="images/icons/plus.svg"/>
+                        Add Child
+                    </a>
+                </li>
+            </ul>
+            <ul>
+                <li ng-repeat="item in menuItems" ng-class="{ selected: item.selected }" ng-show="!item.hide">
+                    <a href="{{item.href}}" ng-click="item.onClick($event)">
+                            <span class="menu-icon">
+                                <img ng-src="{{item.icon}}"/>
+                            </span>
+                        <span class="menu-title">{{item.text}}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="flex-1">
-        <span id="actionbar-name">
-            {{ player.name || 'GrowingApp' }}
-        </span>
-    </div>
-    <div>
-        <a class="actionbar-button selectable" href="#/" ng-class="{ selected: currentPage == 'diary' }">
-            <img src="images/icons/list.svg" title="Diary" />
-        </a>
-        <a class="actionbar-button selectable" href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
-            <img src="images/icons/charts-white.svg" title="Charts" />
-        </a>
-    </div>
-</header>
-<div id="contents-wrapper">
-    <div id="contents" class="flex-1 flex-vertical" ng-view></div>
-</div>
-<div id="overlay" data-toggle-display="showMenu" ng-click="showMenu = false"></div>
-<div id="menu-wrapper" data-toggle-display="showMenu">
-    <div id="menu">
-        <header class="actionbar"><span class="app-name">GrowingApp</span></header>
-        <ul id="players-menu">
-            <li ng-repeat="listPlayer in players" class="flex-horizontal"
-                ng-class="{ selected: listPlayer.playerId === player.playerId }">
-                <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1">{{listPlayer.name}}</a>
-                <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
-                    <img class="child-menu-edit" src="images/icons/edit.svg"/>
+    <div class="flex-vertical flex-1">
+        <header class="flex-horizontal actionbar" id="app-title">
+            <a id="menu-button" class="actionbar-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
+                <img src="images/icons/menu-lines.svg" title="Menu"/>
+            </a>
+            <div>
+                <span id="actionbar-image" ng-style="{ 'background-image': 'url(' + player.image + ')' }" ng-show="player.image"></span>
+            </div>
+            <div class="flex-1">
+                <span id="actionbar-name">
+                    {{ player.name || 'GrowingApp' }}
+                </span>
+            </div>
+            <div>
+                <a class="actionbar-button selectable" href="#/" ng-class="{ selected: currentPage == 'diary' }">
+                    <img src="images/icons/list.svg" title="Diary" />
                 </a>
-            </li>
-            <li class="players-menu-add">
-                <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
-                    <img class="child-menu-add" src="images/icons/plus.svg"/>
-                    Add Child
+                <a class="actionbar-button selectable" href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
+                    <img src="images/icons/charts-white.svg" title="Charts" />
                 </a>
-            </li>
-        </ul>
-        <ul>
-            <li ng-repeat="item in menuItems" ng-class="{ selected: item.selected }" ng-show="!item.hide">
-                <a href="{{item.href}}" ng-click="item.onClick($event)">
-                        <span class="menu-icon">
-                            <img ng-src="{{item.icon}}"/>
-                        </span>
-                    <span class="menu-title">{{item.text}}</span>
-                </a>
-            </li>
-        </ul>
+            </div>
+        </header>
+        <div id="contents-wrapper" class="flex-1">
+            <div id="contents" class="flex-1 flex-vertical" ng-view></div>
+        </div>
     </div>
-</div>
-<div id="playerEdit"
-     class="popup-wrapper"
-     ng-show="editedPlayer"
-     data-toggle-display="showEditPlayer">
-    <div class="popup flex-vertical" ng-include="'views/edit_player.html'"></div>
-</div>
-<div id="login"
-     class="popup-wrapper"
-     data-toggle-display="showLogin">
-    <div class="popup flex-vertical" ng-include="'views/login.html'"></div>
-</div>
-<ng-include src="'views/entry_editors.html'"></ng-include>
+    <div id="playerEdit"
+         class="popup-wrapper"
+         ng-show="editedPlayer"
+         data-toggle-display="showEditPlayer">
+        <div class="popup flex-vertical" ng-include="'views/edit_player.html'"></div>
+    </div>
+    <div id="login"
+         class="popup-wrapper"
+         data-toggle-display="showLogin">
+        <div class="popup flex-vertical" ng-include="'views/login.html'"></div>
+    </div>
+    <ng-include src="'views/entry_editors.html'"></ng-include>
 </body>
 </html>

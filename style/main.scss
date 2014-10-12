@@ -71,6 +71,17 @@ a{ cursor: pointer; }
   margin-right: .5em;
 }
 
+#menu-button{
+  @media all and (min-width: $leftMenuMinWidth){
+    display: none;
+  }
+}
+
+#app-title{
+  @media all and (min-width: $leftMenuMinWidth){
+    padding-left: .8em;
+  }
+}
 .actionbar{
   height: $actionbarHeight;
   line-height: $actionbarHeight - .1;
@@ -336,7 +347,8 @@ a{ cursor: pointer; }
 }
 
 #overlay{
-  position: absolute;
+  position: fixed;
+  z-index: 100;
   top: 0;
   bottom: 0;
   left: 0;
@@ -349,6 +361,10 @@ a{ cursor: pointer; }
 
   &.visible{ display: block; }
   &.active{ opacity: .4 }
+
+  @media all and (min-width: $leftMenuMinWidth){
+    display: none;
+  }
 }
 
 @import "items-list";

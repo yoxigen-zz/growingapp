@@ -146,6 +146,11 @@ select{
 .cancel-button{
   background: none;
   color: rgba(0,0,0,.6);
+
+  &:hover{
+    background: none;
+    color: Black;
+  }
 }
 
 .label-text{
