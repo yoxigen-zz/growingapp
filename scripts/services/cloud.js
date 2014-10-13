@@ -9,11 +9,20 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
     });
 
     var storage = new Storage().cloud,
-        cloudEnabled = users.getCurrentUser();
+        cloudEnabled;
+
+    window.addEventListener("online", setCloudEnabled);
+    window.addEventListener("offline", setCloudEnabled);
+
+    setCloudEnabled();
 
     function onLogin(){
-        cloudEnabled = true;
-        sync();
+        if (cloudEnabled = window.navigator.onLine)
+            sync();
+    }
+
+    function setCloudEnabled(){
+        cloudEnabled = users.getCurrentUser() && window.navigator.onLine;
     }
 
     function syncEntry(entry){

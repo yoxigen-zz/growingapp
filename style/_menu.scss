@@ -164,3 +164,8 @@
     font-size: 1em;
   }
 }
+
+.offline #menu li.disable-offline a{
+  opacity: .4;
+  cursor: not-allowed;
+}

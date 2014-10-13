@@ -49,7 +49,7 @@
 
     <script src="insights/linechart_controller.js"></script>
 </head>
-<body ng-controller="MainController" class="flex-horizontal">
+<body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
     <div id="overlay" data-toggle-display="showMenu" ng-click="showMenu = false"></div>
     <div id="menu-wrapper" data-toggle-display="showMenu">
         <div id="menu">
@@ -70,7 +70,7 @@
                 </li>
             </ul>
             <ul>
-                <li ng-repeat="item in menuItems" ng-class="{ selected: item.selected }" ng-show="!item.hide">
+                <li ng-repeat="item in menuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
                     <a href="{{item.href}}" ng-click="item.onClick($event)">
                             <span class="menu-icon">
                                 <img ng-src="{{item.icon}}"/>

@@ -499,6 +499,10 @@ a {
     margin-left: 2.5em;
     font-size: 1em; }
 
+.offline #menu li.disable-offline a {
+  opacity: .4;
+  cursor: not-allowed; }
+
 .popup-wrapper {
   position: fixed;
   z-index: 102;

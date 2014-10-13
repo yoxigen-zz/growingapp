@@ -31,6 +31,20 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         setCurrentMenuItem();
     });
 
+    window.addEventListener("online", function(){
+        $scope.$apply(function(){
+            $scope.offline = false;
+        });
+    });
+
+    window.addEventListener("offline", function(){
+        $scope.$apply(function(){
+            $scope.offline = true;
+        });
+    });
+
+    $scope.offline = !window.navigator.onLine;
+
     Player.getAll().then(function(players){
         $scope.players = players;
         setPlayersSelection(players);
@@ -74,7 +88,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         //{ text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
         //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
         //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },
-        { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", onClick: function(e){
+        { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", className: "disable-offline", onClick: function(e){
             if (users.getCurrentUser())
                 cloud.sync();
             else
