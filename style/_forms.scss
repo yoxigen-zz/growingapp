@@ -131,7 +131,6 @@ select{
 
   a{
     margin-right: .5em;
-    @extend .flex-1;
 
     &:last-child{
       margin-right: 0;

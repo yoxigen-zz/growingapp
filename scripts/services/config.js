@@ -28,7 +28,8 @@ app.factory("config", ["utils", function(utils){
         }
     };
 
-    var lastSync;
+    var lastSync,
+        syncOfferDeclined;
 
     entries.milestone.typesIndex = utils.arrays.toIndex(entries.milestone.types, "id");
 
@@ -45,6 +46,10 @@ app.factory("config", ["utils", function(utils){
             }
         },
         sync: {
+            declineSyncOffer: function(){
+                syncOfferDeclined = true;
+                localStorage.setItem("syncOfferDeclined", "1");
+            },
             get lastSyncTimestamp(){
                 if (lastSync === undefined) {
                     lastSync = localStorage.getItem("lastSync");
@@ -63,7 +68,14 @@ app.factory("config", ["utils", function(utils){
 
                 lastSync = value;
                 localStorage.setItem("lastSync", lastSync.valueOf());
-            }
+            },
+            get synOfferDeclined(){
+                if (syncOfferDeclined === undefined)
+                    syncOfferDeclined = !!localStorage.getItem("syncOfferDeclined");
+
+                return syncOfferDeclined;
+            },
+            syncOfferEntryCount: 3
         }
     }
 }]);

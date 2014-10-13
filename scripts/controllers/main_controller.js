@@ -129,7 +129,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             $scope.editedPlayer = null;
             $scope.setCurrentPlayer(player);
 
-            if (player.isNewPlayer){
+            if (player.isNew){
                 $scope.players.push(player);
                 $scope.players.sort(function(a,b){
                     return a.name < b.name ? 1 : -1;
@@ -222,7 +222,17 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
     $scope.openSignUp = function(){
         $scope.showLogin = false;
+        $scope.showSyncOffer = false;
         $scope.showSignup = true;
+    };
+
+    $scope.openSyncOffer = function(){
+        $scope.showSyncOffer = true;
+    };
+
+    $scope.declineSyncOffer = function(){
+        $scope.showSyncOffer = false;
+        config.sync.declineSyncOffer();
     };
 
     eventBus.subscribe("login", function(data){

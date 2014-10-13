@@ -58,7 +58,7 @@ a {
   flex-flow: column;
   flex-direction: column; }
 
-.flex-1, .buttons-bar a {
+.flex-1 {
   flex: 1;
   -webkit-flex: 1;
   -webkit-box-flex: 1; }
@@ -249,6 +249,10 @@ a {
   text-align: left; }
   .header-controls img {
     height: 100%; }
+
+.centered-buttons-block {
+  position: relative;
+  top: -1em; }
 
 #newEntryButton {
   padding: .5em .75em;
@@ -549,6 +553,13 @@ a {
         height: 1em; }
   .popup .popup-contents {
     padding: 1em 1em 0; }
+  .popup p.popup-text {
+    margin-top: 0;
+    line-height: 1.5em;
+    text-align: justify;
+    color: #555; }
+    .popup p.popup-text strong {
+      color: #243033; }
   .popup footer {
     padding: 1em; }
 

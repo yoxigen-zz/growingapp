@@ -1,6 +1,6 @@
 <div class="flex-vertical flex-1">
     <div ng-show="showFirstTimeSelection" ng-cloak class="flex-1 contents-empty-message">
-        <div class="vertical-buttons-bar">
+        <div class="vertical-buttons-bar centered-buttons-block">
             <p class="vertical-buttons-text">Get started:</p>
             <a class="button save-button" ng-click="openLoginForm()">
                 <img src="images/icons/cloud_sync_white.svg" />
@@ -68,11 +68,10 @@
                 </form>
             </div>
             <footer class="flex-horizontal buttons-bar">
-                <a data-closes-popup="1" ng-show="!entry._deleted" class="button cancel-button" style="width: 48%">Cancel</a>
-                <a class="button remove-button" ng-click="removeEntry(entry)" ng-show="!editedEntryIsNew && !entry._deleted">
+                <a class="flex-1 button remove-button" ng-click="removeEntry(entry)" ng-show="!editedEntryIsNew && !entry._deleted">
                     <img class="button-icon" src="images/icons/close.svg" />
                     <span class="hide-smallest-width">Delete</span><span class="hide-small-width"> Entry</span></a>
-                <a class="button save-button" ng-click="saveEntry()" ng-show="!entry._deleted">
+                <a class="flex-2 button save-button" ng-click="saveEntry()" ng-show="!entry._deleted">
                     <img class="button-icon" src="images/icons/ok.svg" />
                                     <span class="button-text">
                                         <span class="hide-smallest-width">Save</span>

@@ -72,6 +72,16 @@ $popupHeaderHeight: 3em;
     padding: 1em 1em 0;
   }
 
+  p.popup-text{
+    margin-top: 0;
+    line-height: 1.5em;
+    text-align: justify;
+    color: #555;
+
+    strong{
+      color: $contentTextColor;
+    }
+  }
   footer{
     padding: 1em;
   }

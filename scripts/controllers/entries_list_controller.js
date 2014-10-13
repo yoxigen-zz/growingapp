@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", function($scope, $sce, $timeout, utils, eventBus, entries, Entry){
+app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config){
     eventBus.subscribe("newEntry", addEntry);
     eventBus.subscribe("editPlayer", setEntries);
     eventBus.subscribe("playerSelect", setEntries);
@@ -90,6 +90,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     function addEntry(newEntry){
         $scope.entries.splice(0, 0, parseEntry(newEntry));
         sortEntries();
+        if (!config.sync.lastSyncTimestamp && !config.sync.synOfferDeclined && $scope.entries.length >= config.sync.syncOfferEntryCount)
+            $scope.openSyncOffer();
     }
 
     function updateEntry(entry){
