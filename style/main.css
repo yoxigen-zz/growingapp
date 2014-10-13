@@ -255,9 +255,9 @@ a {
   top: -1em; }
 
 #newEntryButton {
-  padding: .5em .75em;
-  line-height: 1em;
-  border-radius: 3px; }
+  padding: 0;
+  width: 3em;
+  text-align: center; }
 
 #tabs {
   height: 2.5em;
