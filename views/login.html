@@ -1,33 +1,19 @@
-<div class="flex-vertical" ng-controller="LoginController">
-    <header>
-        <a class="close-button"
-           title="Close"
-           ng-click="closeLogin()">
-            <img src="images/icons/close.svg"/>
-        </a>
-        <span class="popup-title">Sign In</span>
-    </header>
-    <div class="flex-1 flex-vertical">
-        <div class="scroll-vertical">
-            <form>
-                <div class="popup-contents">
-                    <label>
-                        <span class="label-text">Username</span>
-                        <input type="email" ng-model="loginUser.username" required/>
-                    </label>
-                    <label>
-                        <span class="label-text">Password</span>
-                        <input type="password" ng-model="loginUser.password" required/>
-                    </label>
-                </div>
-                <footer class="flex-horizontal buttons-bar">
-                    <a ng-click="closeLogin()" class="flex-1 button cancel-button">Cancel</a>
-                    <a class="flex-1 button save-button" ng-click="signIn()">
-                        <img src="images/icons/ok.svg"/>
-                        <span class="button-text">Login</span>
-                    </a>
-                </footer>
-            </form>
-        </div>
+<form>
+    <div class="popup-contents">
+        <label>
+            <span class="label-text">Username</span>
+            <input type="email" ng-model="loginUser.username" required/>
+        </label>
+        <label>
+            <span class="label-text">Password</span>
+            <input type="password" ng-model="loginUser.password" required/>
+        </label>
     </div>
-</div>
+    <footer class="flex-horizontal buttons-bar">
+        <a data-closes-popup="1" class="flex-1 button cancel-button">Cancel</a>
+        <a class="flex-1 button save-button" ng-click="signIn()">
+            <img src="images/icons/ok.svg"/>
+            <span class="button-text">Login</span>
+        </a>
+    </footer>
+</form>

@@ -1,58 +1,44 @@
-<div class="flex-vertical">
-    <header>
-        <a class="close-button"
-           title="Close"
-           ng-click="closeEditPlayer()">
-            <img src="images/icons/close.svg"/>
-        </a>
-        <span class="popup-title">{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}</span>
-    </header>
-    <div class="flex-1 flex-vertical">
-        <div class="scroll-vertical">
-            <form>
-                <div class="popup-contents">
-                    <label>
-                        <span class="label-text">Child Name</span>
-                        <input type="text" ng-model="editedPlayer.name" required/>
-                    </label>
-                    <div class="flex-horizontal">
-                        <label class="flex-1">
-                            <span class="label-text">Gender</span>
-                            <select ng-model="editedPlayer.gender"
-                                    ng-options="gender.id as gender.label for gender in [{ id: 'f', label: 'Female'}, { id: 'm', label: 'Male' }]"></select>
-                        </label>
-                        <label class="flex-2">
-                            <span class="label-text">Birthday</span>
-                            <input type="date" ng-model="editedPlayer.birthday" required/>
-                        </label>
-                    </div>
-                    <label>
-                        <span class="label-text">Image</span>
-                        <div class="flex-horizontal">
-                            <img ng-src="{{editedPlayer.image}}" ng-show="editedPlayer.image" class="player-edit-image" />
-                            <div class="flex-1 vertical-buttons-bar">
-                                <a class="button" ng-click="takePlayerPicture()">
-                                    <img src="images/icons/camera.svg" />
-                                    <span class="button-text"><span class="large-width-only">From </span>Camera</span>
-                                </a>
-                                <a class="button" ng-click="browsePlayerPicture()">
-                                    <img src="images/icons/folders.svg" />
-                                    <span class="button-text">Browse<span class="large-width-only"> Library</span></span>
-                                </a>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-                <footer class="flex-horizontal buttons-bar">
-                    <a ng-click="closeEditPlayer()" class="flex-1 button cancel-button">Cancel</a>
-                    <a class="flex-1 button remove-button" ng-click="removePlayer()"
-                       ng-show="editedPlayer.playerId">Delete<span class="hide-small-width"> Child</span></a>
-                    <a class="flex-1 button save-button" ng-click="savePlayer()">
-                        <img src="images/icons/ok.svg"/>
-                        <span class="button-text">Save<span class="large-width-only"> Child</span></span>
-                    </a>
-                </footer>
-            </form>
+<form>
+    <div class="popup-contents">
+        <label>
+            <span class="label-text">Child Name</span>
+            <input type="text" ng-model="editedPlayer.name" required/>
+        </label>
+        <div class="flex-horizontal">
+            <label class="flex-1">
+                <span class="label-text">Gender</span>
+                <select ng-model="editedPlayer.gender"
+                        ng-options="gender.id as gender.label for gender in [{ id: 'f', label: 'Female'}, { id: 'm', label: 'Male' }]"></select>
+            </label>
+            <label class="flex-2">
+                <span class="label-text">Birthday</span>
+                <input type="date" ng-model="editedPlayer.birthday" required/>
+            </label>
         </div>
+        <label>
+            <span class="label-text">Image</span>
+            <div class="flex-horizontal">
+                <img ng-src="{{editedPlayer.image}}" ng-show="editedPlayer.image" class="player-edit-image" />
+                <div class="flex-1 vertical-buttons-bar">
+                    <a class="button" ng-click="takePlayerPicture()">
+                        <img src="images/icons/camera.svg" />
+                        <span class="button-text"><span class="large-width-only">From </span>Camera</span>
+                    </a>
+                    <a class="button" ng-click="browsePlayerPicture()">
+                        <img src="images/icons/folders.svg" />
+                        <span class="button-text">Browse<span class="large-width-only"> Library</span></span>
+                    </a>
+                </div>
+            </div>
+        </label>
     </div>
-</div>
+    <footer class="flex-horizontal buttons-bar">
+        <a data-closes-popup="1" class="flex-1 button cancel-button">Cancel</a>
+        <a class="flex-1 button remove-button" ng-click="removePlayer()"
+           ng-show="editedPlayer.playerId">Delete<span class="hide-small-width"> Child</span></a>
+        <a class="flex-1 button save-button" ng-click="savePlayer()">
+            <img src="images/icons/ok.svg"/>
+            <span class="button-text">Save<span class="large-width-only"> Child</span></span>
+        </a>
+    </footer>
+</form>

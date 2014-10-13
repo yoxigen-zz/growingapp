@@ -119,10 +119,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         }
     };
 
-    $scope.closeEditPlayer = function(){
-        $scope.showEditPlayer = false;
-    };
-
     $scope.toggleEditPlayer = function(state){
         $scope.showEditPlayer = state === true || state === false ? state : !$scope.showEditPlayer;
     };
@@ -224,12 +220,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         $scope.toggleEditPlayer(true);
     };
 
-    $scope.closeLogin = function(){
-        $scope.showLogin = false;
-    };
-
     eventBus.subscribe("login", function(data){
-        $scope.closeLogin();
+        $scope.showLogin = false;
         var signoutItem = getMenuItemById("signOut");
 
         signoutItem.hide = false;

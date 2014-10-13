@@ -1,0 +1,18 @@
+<div class="popup-wrapper" ng-click="closePopup($event)">
+    <div class="popup flex-vertical">
+        <div class="flex-vertical">
+            <header>
+                <a class="close-button"
+                   title="Close"
+                   ng-click="closePopup()">
+                    <img src="images/icons/close.svg" />
+                </a>
+                <span class="popup-title">{{title}}</span>
+            </header>
+            <div class="flex-1 flex-vertical">
+                <div class="scroll-vertical" ng-transclude>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

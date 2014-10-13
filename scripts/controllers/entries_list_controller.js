@@ -55,10 +55,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
     };
 
-    $scope.closeNewEntriesSelection = function(){
-        $scope.showNewEntriesSelection = false;
-    };
-
     $scope.saveEntry = function(){
         $scope.entry.save().then(function(savedEntry){
             console.log("saved: ", savedEntry);

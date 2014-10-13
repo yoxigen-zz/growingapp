@@ -23,6 +23,7 @@
     <script src="scripts/directives/ng-tap.js"></script>
     <script src="scripts/directives/self-click.js"></script>
     <script src="scripts/directives/toggle-display.js"></script>
+    <script src="scripts/directives/popup/popup.js"></script>
     <script src="scripts/services/eventbus.js"></script>
     <script src="scripts/services/utils.js"></script>
 
@@ -105,17 +106,12 @@
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
     </div>
-    <div id="playerEdit"
-         class="popup-wrapper"
-         ng-show="editedPlayer"
-         data-toggle-display="showEditPlayer">
-        <div class="popup flex-vertical" ng-include="'views/edit_player.html'"></div>
-    </div>
-    <div id="login"
-         class="popup-wrapper"
-         data-toggle-display="showLogin">
-        <div class="popup flex-vertical" ng-include="'views/login.html'"></div>
-    </div>
+    <popup popup-show="showEditPlayer" title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}">
+        <div ng-include="'views/edit_player.html'"></div>
+    </popup>
+    <popup popup-show="showLogin" title="Sign In">
+        <div ng-include="'views/login.html'"></div>
+    </popup>
     <ng-include src="'views/entry_editors.html'"></ng-include>
 </body>
 </html>
