@@ -2,34 +2,34 @@
     <label>
         <span class="label-text">The new weight</span>
         <div class="flex-horizontal">
-            <div class="flex-1"><input type="number" min=0 step="0.01" ng-model="entry.properties.weight" placeholder="The new weight" required /></div>
+            <div class="flex-1"><input type="number" min=0 step="0.01" ng-model="entry.properties.weight" placeholder="The new weight" data-auto-focus required /></div>
             <select ng-model="config.localization.weight.selected" ng-options="unit for unit in config.localization.weight.all"></select>
         </div>
     </label>
 </script>
 <script type="text/ng-template" id="entry_editor_height">
     <div class="flex-horizontal">
-        <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.height" placeholder="The new height" /></div>
+        <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.height" data-auto-focus placeholder="The new height" /></div>
         <select ng-model="config.localization.height.selected" ng-options="unit for unit in config.localization.height.all"></select>
     </div>
 </script>
 <script type="text/ng-template" id="entry_editor_speech">
     <label>
         <span class="label-text">What did {{ player.gender | pronoun }} say?</span>
-        <input type="text" ng-model="entry.properties.words" placeholder="The new word(s) or sentence" />
+        <input type="text" ng-model="entry.properties.words" data-auto-focus placeholder="The new word(s) or sentence" />
     </label>
 </script>
 <script type="text/ng-template" id="entry_editor_milestone">
     <label>
         <span class="label-text">The Milestone</span>
         <div class="flex-horizontal">
-            <select ng-model="entry.properties.type" ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types"></select>
+            <select ng-model="entry.properties.type" data-auto-focus ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types"></select>
         </div>
     </label>
 </script>
 <script type="text/ng-template" id="entry_editor_note">
     <label>
         <span class="label-text">What happened?</span>
-        <textarea ng-model="entry.properties.text" rows="5"></textarea>
+        <textarea ng-model="entry.properties.text" data-auto-focus rows="5"></textarea>
     </label>
 </script>

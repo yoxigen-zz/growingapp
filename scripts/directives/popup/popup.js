@@ -25,6 +25,16 @@ angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
                     toggleTimeout = $timeout(function(){
                         toggleElement && toggleElement.classList.add(TOGGLE_ACTIVE_CLASS);
                     }, 1);
+
+                    $timeout(function(){
+                        var autoFocusElement = toggleElement.querySelector("[data-auto-focus]");
+                        if (autoFocusElement) {
+                            autoFocusElement.focus();
+                            autoFocusElement.select && autoFocusElement.select();
+                        }
+                    }, 40);
+
+                    window.addEventListener("keydown", onKeyDown);
                 }
                 else{
                     toggleElement && toggleElement.classList.remove(TOGGLE_ACTIVE_CLASS);
@@ -32,6 +42,8 @@ angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
                     toggleTimeout = $timeout(function(){
                         element.removeClass(TOGGLE_CLASS);
                     }, TOGGLE_TIMEOUT);
+
+                    window.removeEventListener("keydown", onKeyDown);
                 }
             });
 
@@ -39,6 +51,14 @@ angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
                 if (!e || e.target === toggleElement || e.target.dataset.closesPopup)
                     scope.popupShow = false;
             };
+
+            function onKeyDown(e){
+                if (e.keyCode === 27) {
+                    scope.$apply(function(){
+                        scope.popupShow = false;
+                    });
+                }
+            }
         }
     }
 }]);
