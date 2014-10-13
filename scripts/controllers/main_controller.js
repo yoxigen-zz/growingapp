@@ -220,8 +220,15 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         $scope.toggleEditPlayer(true);
     };
 
+    $scope.openSignUp = function(){
+        $scope.showLogin = false;
+        $scope.showSignup = true;
+    };
+
     eventBus.subscribe("login", function(data){
         $scope.showLogin = false;
+        $scope.showSignup = false;
+
         var signoutItem = getMenuItemById("signOut");
 
         signoutItem.hide = false;

@@ -95,6 +95,17 @@ select{
   }
 }
 
+.form-error{
+  background: #AD0000;
+  padding: 1em;
+  color: white;
+  text-align: center;
+}
+
+.error-highlight{
+  border: solid 2px #ad0000 !important;
+}
+
 .text-button{
   background: none;
   color: #333;

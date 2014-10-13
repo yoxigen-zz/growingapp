@@ -26,40 +26,12 @@ app.controller("LoginController", ["$scope", "users", "eventBus", function($scop
             return;
         }
 
-        if ($scope.newUser){
-            if (!$scope.loginUser.confirmPassword){
-                $scope.loginError = "Please confirm password.";
-                return;
-            }
-
-            if ($scope.loginUser.confirmPassword !== $scope.loginUser.password){
-                $scope.loginError = "Passwords don't match.";
-                return;
-            }
-
-            $scope.loginUser.email = $scope.loginUser.username;
-            var newUser = {
-                email: $scope.loginUser.username,
-                username: $scope.loginUser.username,
-                password: $scope.loginUser.password
-            };
-
-            users.signUp(newUser).then(function(user){
-                onLogin(user);
-            }, function(error){
-                $scope.loginError = error.message;
-                alert("Can't sign up: " + error.message);
-            });
-        }
-        else{
-            users.login($scope.loginUser.username, $scope.loginUser.password).then(function(user){
-                onLogin(user);
-            }, function(error){
-                $scope.loginError = error.message;
-                alert("Can't login: " + error.message);
-            });
-        }
-
+        users.login($scope.loginUser.username, $scope.loginUser.password).then(function(user){
+            onLogin(user);
+        }, function(error){
+            $scope.loginError = error.message;
+            alert("Can't login: " + error.message);
+        });
     };
 
     $scope.facebookLogin = function(){

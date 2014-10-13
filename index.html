@@ -45,6 +45,7 @@
     <script src="scripts/controllers/insights_controller.js"></script>
     <script src="scripts/controllers/entries_list_controller.js"></script>
     <script src="scripts/controllers/login_controller.js"></script>
+    <script src="scripts/controllers/signup_controller.js"></script>
 
     <script src="insights/linechart_controller.js"></script>
 </head>
@@ -111,6 +112,9 @@
     </popup>
     <popup popup-show="showLogin" title="Sign In">
         <div ng-include="'views/login.html'"></div>
+    </popup>
+    <popup popup-show="showSignup" title="Sign Up">
+        <div ng-include="'views/signup.html'"></div>
     </popup>
     <ng-include src="'views/entry_editors.html'"></ng-include>
 </body>

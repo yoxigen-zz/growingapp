@@ -1,7 +1,7 @@
-<form>
+<form ng-controller="LoginController">
     <div class="popup-contents">
         <label>
-            <span class="label-text">Username</span>
+            <span class="label-text">Email Address</span>
             <input type="email" ng-model="loginUser.username" required data-auto-focus />
         </label>
         <label>
@@ -10,7 +10,7 @@
         </label>
     </div>
     <footer class="flex-horizontal buttons-bar">
-        <a data-closes-popup="1" class="flex-1 button cancel-button">Cancel</a>
+        <a class="flex-1 button" ng-click="openSignUp()">New User?</a>
         <a class="flex-1 button save-button" ng-click="signIn()">
             <img src="images/icons/ok.svg"/>
             <span class="button-text">Login</span>

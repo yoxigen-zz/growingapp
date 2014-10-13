@@ -16,6 +16,10 @@ angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
             var toggleTimeout,
                 toggleElement = element[0];
 
+            scope.$watch("$destroy", function(){
+                window.removeEventListener("keydown", onKeyDown);
+            });
+
             scope.$watch("popupShow", function(isVisible){
                 $timeout.cancel(toggleTimeout);
 
