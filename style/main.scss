@@ -351,6 +351,54 @@ a{ cursor: pointer; }
   }
 }
 
+$spinnerSize: 5em;
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(-360deg);
+  }
+}
+
+#spinner{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(255,255,255,.6);
+  z-index: 200;
+  -webkit-transition: opacity 400ms ease-out;
+  -moz-transition: opacity 400ms ease-out;
+  -ms-transition: opacity 400ms ease-out;
+  -o-transition: opacity 400ms ease-out;
+  transition: opacity 400ms ease-out;
+  display: none;
+  opacity: 0;
+
+  img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: $spinnerSize;
+    height: $spinnerSize;
+    margin-top: $spinnerSize / -2;
+    margin-left: $spinnerSize / -2;
+    -webkit-animation-name: rotate;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+  }
+
+  &.visible{
+    display: block;
+  }
+
+  &.active{
+    opacity: 1;
+  }
+}
 #overlay{
   position: fixed;
   z-index: 100;

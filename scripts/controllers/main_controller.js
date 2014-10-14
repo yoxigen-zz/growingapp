@@ -1,4 +1,4 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout){
     $scope.config = config;
 
     $scope.setCurrentPlayer = function(player){
@@ -270,6 +270,19 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         signoutItem.hide = true;
 
         $scope.currentUser = null;
+    });
+
+    var spinnerTimeout;
+    eventBus.subscribe("loadingStart", function(){
+        $timeout.cancel(spinnerTimeout);
+        spinnerTimeout = $timeout(function(){
+            $scope.showSpinner = true;
+        }, 300);
+    });
+
+    eventBus.subscribe("loadingEnd", function(){
+        $scope.showSpinner = false;
+        $timeout.cancel(spinnerTimeout);
     });
 
     eventBus.subscribe("updatePlayers", function(e){

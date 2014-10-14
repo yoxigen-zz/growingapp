@@ -107,6 +107,9 @@
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
     </div>
+    <div id="spinner" class="flex-1" toggle-display="showSpinner">
+        <img src="images/icons/spinner.svg" />
+    </div>
     <popup popup-show="showEditPlayer" title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}">
         <div ng-include="'views/edit_player.html'"></div>
     </popup>

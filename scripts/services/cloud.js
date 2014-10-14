@@ -105,7 +105,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
 
         return syncObjects("Player").then(function(players){
             Player.updatePlayers(players);
-            syncObjects("Entry").then(setLastUpdateTime);
+            return syncObjects("Entry").then(setLastUpdateTime);
         });
     }
 
@@ -165,10 +165,13 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
             return;
 
         isSyncing = true;
+        eventBus.triggerEvent("loadingStart");
+
         Player.getAll().then(function(){
             syncFromCloud().finally(function(){
                 syncToCloud().finally(function(){
                     isSyncing = false;
+                    eventBus.triggerEvent("loadingEnd");
                 });
             });
         });
