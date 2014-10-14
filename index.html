@@ -57,7 +57,7 @@
             <ul id="players-menu">
                 <li ng-repeat="listPlayer in players" class="flex-horizontal"
                     ng-class="{ selected: listPlayer.playerId === player.playerId }">
-                    <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1">{{listPlayer.name}}</a>
+                    <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1">{{::listPlayer.name}}</a>
                     <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
                         <img class="child-menu-edit" src="images/icons/edit.svg"/>
                     </a>
@@ -70,12 +70,12 @@
                 </li>
             </ul>
             <ul>
-                <li ng-repeat="item in menuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
-                    <a href="{{item.href}}" ng-click="item.onClick($event)">
+                <li ng-repeat="item in ::menuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
+                    <a href="{{::item.href}}" ng-click="item.onClick($event)">
                             <span class="menu-icon">
-                                <img ng-src="{{item.icon}}"/>
+                                <img ng-src="{{::item.icon}}"/>
                             </span>
-                        <span class="menu-title">{{item.text}}</span>
+                        <span class="menu-title">{{::item.text}}</span>
                     </a>
                 </li>
             </ul>

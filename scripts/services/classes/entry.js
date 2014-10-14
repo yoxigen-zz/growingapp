@@ -7,16 +7,16 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
     function Entry(type, player) {
         var timestamp;
 
-        if (type.timestamp && type.playerId && type.properties)
+        if (type instanceof Entry || (type.timestamp && type.playerId && type.properties))
         {
             var entryData = type;
-            type = entries.types[entryData.type];
+            type = type instanceof Entry ? type.type : entries.types[entryData.type];
 
             timestamp = entryData.timestamp;
             this.date = entryData.date;
             this.age = entryData.age;
             this.properties = entryData.properties;
-            this.player = Player.getById(entryData.playerId);
+            this.player = entryData.player || Player.getById(entryData.playerId);
             if (!this.player)
                 throw new Error("Can't create entry - no player found for playerId " + entryData.playerId);
 

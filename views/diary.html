@@ -19,7 +19,7 @@
                 <select class="fancy-select"
                         ng-model="currentEntriesType"
                         ng-change="onEntriesTypeChange()"
-                        ng-options="entryType.id as entryType.name for entryType in entryTypes">
+                        ng-options="entryType.id as entryType.name for entryType in ::entryTypes">
                     <option value="">All entry types</option>
                 </select>
             </div>
@@ -39,19 +39,19 @@
             <li ng-repeat="entry in entries" ng-click="entryClick(entry)">
                 <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                 <div class="item-text">
-                    <div ng-bind-html="entry.html"></div>
-                    <p ng-if="entry.description" class='item-description'>{{entry.description}}</p>
-                    <div class="item-details">{{entry.dateText}}</div>
+                    <div ng-bind-html="::entry.html"></div>
+                    <p ng-if="entry.description" class='item-description'>{{::entry.description}}</p>
+                    <div class="item-details">{{::entry.dateText}}</div>
                 </div>
             </li>
         </ul>
     </div>
     <popup popup-show="showNewEntriesSelection" title="New Entry Type">
         <ul class="entry-types-list">
-            <li ng-repeat="entryType in entryTypes"
+            <li ng-repeat="entryType in ::entryTypes"
                 ng-click="showNewEntryForm(entryType)">
-                <img ng-src="images/icons/{{entryType.icon}}.svg" />
-                <span>{{ entryType.name }}</span>
+                <img ng-src="images/icons/{{::entryType.icon}}.svg" />
+                <span>{{ ::entryType.name }}</span>
             </li>
         </ul>
     </popup>

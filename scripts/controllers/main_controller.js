@@ -89,6 +89,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
         //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },
         { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", className: "disable-offline", onClick: function(e){
+            e.preventDefault();
+
             if (users.getCurrentUser())
                 cloud.sync();
             else
@@ -97,11 +99,13 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             $scope.hideMenu();
         } },
         { id: "signOut", hide: true, text: "Sign out", icon: "images/icons/sign_out.svg", onClick: function(e){
+            e.preventDefault();
             $scope.hideMenu();
             users.logout();
             eventBus.triggerEvent("logout");
         } },
         { id: "closeApp", text: "Close app", icon: "images/icons/close-black.svg", onClick: function(e){
+            e.preventDefault();
             if (confirm("Are you sure you want to close the app?"))
                 navigator.app.exitApp();
         } }

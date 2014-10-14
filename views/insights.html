@@ -5,7 +5,7 @@
             <select class="fancy-select"
                     ng-model="currentInsight"
                     ng-change="onInsightChange(currentInsight)"
-                    ng-options="insight as insight.name for insight in insights">
+                    ng-options="insight as insight.name for insight in ::insights">
                 <option value="">(Select)</option>
             </select>
         </div>

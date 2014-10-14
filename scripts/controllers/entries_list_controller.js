@@ -40,7 +40,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     $scope.entryClick = function(entry){
         openEditEntryDialog(entry.type);
-        $scope.entry = entry;
+        $scope.entry = new Entry(entry);
         $scope.editedEntryIsNew = false;
     };
 
@@ -57,7 +57,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     $scope.saveEntry = function(){
         $scope.entry.save().then(function(savedEntry){
-            console.log("saved: ", savedEntry);
             $scope.showEditEntry = false;
             $scope.toggleNewEntriesSelection(false);
             if (savedEntry.isNew) {
