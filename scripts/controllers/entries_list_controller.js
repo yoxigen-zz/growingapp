@@ -14,21 +14,28 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     });
 
     var removedEntryIndex;
+
     $scope.removeEntry = function(entry){
+        removedEntryIndex = $scope.entries.indexOf(utils.arrays.find($scope.entries, function(obj){ return obj.timestamp === entry.timestamp; }));
         entry.remove();
-        $scope.entries.splice(removedEntryIndex = $scope.entries.indexOf(entry), 1);
+        $scope.entries.splice(removedEntryIndex, 1);
         eventBus.triggerEvent("deleteEntry", entry);
+        $scope.removedEntry = entry;
+        $scope.showEditEntry = false;
+        setTimeout(function(){
+            document.body.addEventListener("click", onClickAfterRemove);
+            //document.body.addEventListener("scroll", onScrollAfterRemove);
+        }, 50);
     };
 
-    $scope.unremoveEntry = function(entry){
-        entry.unremove();
-        $scope.entries.splice(removedEntryIndex, 0, entry);
-        eventBus.triggerEvent("saveEntry", entry);
-    };
+    $scope.unremoveEntry = function(){
+        if (!$scope.removedEntry)
+            return false;
 
-    $scope.undoRemoveEntry = function(entry){
-        entry.removed = false;
-        $timeout.cancel(entry.removeTimeout);
+        $scope.removedEntry.unremove();
+        $scope.entries.splice(removedEntryIndex, 0, parseEntry($scope.removedEntry));
+        eventBus.triggerEvent("saveEntry", $scope.removedEntry);
+        hideUnremoveMessage();
     };
 
     $scope.currentEntriesType = "";
@@ -71,6 +78,22 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             console.error("Couldn't save entry", error);
         });
     };
+
+    function onClickAfterRemove(e){
+        if (e.target.id !== "undoEntryRemove") {
+            $scope.$apply(hideUnremoveMessage);
+            document.body.removeEventListener("click", onClickAfterRemove);
+        }
+    }
+
+    function onScrollAfterRemove(){
+        $scope.$apply(hideUnremoveMessage);
+        document.body.removeEventListener("scroll", onScrollAfterRemove);
+    }
+
+    function hideUnremoveMessage(){
+        $scope.removedEntry = null;
+    }
 
     function openEditEntryDialog(entryType){
         $scope.newEntryType = entryType;

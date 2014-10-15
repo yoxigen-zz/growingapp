@@ -46,6 +46,12 @@
             </li>
         </ul>
     </div>
+    <div class="floating-message" ng-show="removedEntry">
+        <div class="floating-message-contents">
+            <span class="floating-message-text"><span class="hide-smallest-width">Entry</span> Deleted</span>
+            <a ng-click="unremoveEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
+        </div>
+    </div>
     <popup popup-show="showNewEntriesSelection" title="New Entry Type">
         <ul class="entry-types-list">
             <li ng-repeat="entryType in ::entryTypes"
@@ -68,18 +74,15 @@
                 </form>
             </div>
             <footer class="flex-horizontal buttons-bar">
-                <a class="flex-1 button remove-button" ng-click="removeEntry(entry)" ng-show="!editedEntryIsNew && !entry._deleted">
+                <a class="flex-1 button remove-button" ng-click="removeEntry(entry)" ng-show="!editedEntryIsNew">
                     <img class="button-icon" src="images/icons/close.svg" />
                     <span class="hide-smallest-width">Delete</span><span class="hide-small-width"> Entry</span></a>
-                <a class="flex-2 button save-button" ng-click="saveEntry()" ng-show="!entry._deleted">
+                <a class="flex-2 button save-button" ng-click="saveEntry()">
                     <img class="button-icon" src="images/icons/ok.svg" />
-                                    <span class="button-text">
-                                        <span class="hide-smallest-width">Save</span>
-                                        <span class="hide-small-width"> Entry</span>
-                                    </span>
-                </a>
-                <a class="button" ng-show="entry._deleted" ng-click="unremoveEntry(entry)">
-                    <span class="button-text">Undo entry delete</span>
+                    <span class="button-text">
+                        <span class="hide-smallest-width">Save</span>
+                        <span class="hide-small-width"> Entry</span>
+                    </span>
                 </a>
             </footer>
         </form>

@@ -335,6 +335,28 @@ a {
   #spinner.active {
     opacity: 1; }
 
+.floating-message {
+  position: fixed;
+  top: 85%;
+  right: 0;
+  left: 0;
+  z-index: 102;
+  text-align: center;
+  padding: 0 1em; }
+  .floating-message .floating-message-contents {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 7px;
+    color: #b8b8b8;
+    display: inline-block;
+    padding: .5em 1em;
+    font-size: 1.2em;
+    line-height: 1.4em; }
+    .floating-message .floating-message-contents img {
+      height: 1em; }
+    .floating-message .floating-message-contents a {
+      color: #00bff3;
+      margin-left: 1em; }
+
 #overlay {
   position: fixed;
   z-index: 100;
