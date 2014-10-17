@@ -60,3 +60,19 @@
     }
   }
 }
+
+#teeth-selection{
+  text-align: center;
+  margin-bottom: 1em;
+
+  svg{
+    max-width: 100%;
+    max-height: 50%;
+    margin-bottom: .5em;
+    outline: none;
+
+    .tooth, .shadow{
+      cursor: pointer;
+    }
+  }
+}

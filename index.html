@@ -24,6 +24,7 @@
     <script src="scripts/directives/self-click.js"></script>
     <script src="scripts/directives/toggle-display.js"></script>
     <script src="scripts/directives/popup/popup.js"></script>
+    <script src="scripts/directives/teeth/teeth.directive.js"></script>
     <script src="scripts/services/eventbus.js"></script>
     <script src="scripts/services/utils.js"></script>
 
@@ -95,6 +96,9 @@
                 </span>
             </div>
             <div>
+                <div id="spinner" toggle-display="showSpinner">
+                    <img src="images/icons/spinner.svg" />
+                </div>
                 <a class="actionbar-button selectable" href="#/" ng-class="{ selected: currentPage == 'diary' }">
                     <img src="images/icons/list.svg" title="Diary" />
                 </a>
@@ -106,9 +110,6 @@
         <div id="contents-wrapper" class="flex-1">
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
-    </div>
-    <div id="spinner" class="flex-1" toggle-display="showSpinner">
-        <img src="images/icons/spinner.svg" />
     </div>
     <popup popup-show="showEditPlayer" title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}">
         <div ng-include="'views/edit_player.html'"></div>

@@ -25,6 +25,30 @@ app.factory("config", ["utils", function(utils){
                 { id: "diapers", text: "Is not using diapers anymore!" },
                 { id: "pacifier", text: "Has been weaned from the pacifier" }
             ]
+        },
+        teeth: {
+            list: [
+                { id: "centralIncisorLowerRight", name: "Lower right central incisor" },
+                { id: "centralIncisorLowerLeft", name: "Lower left central incisor" },
+                { id: "centralIncisorUpperRight", name: "Upper right central incisor" },
+                { id: "centralIncisorUpperLeft", name: "Upper left central incisor" },
+                { id: "lateralIncisorLowerRight", name: "Lower right lateral incisor" },
+                { id: "lateralIncisorLowerLeft", name: "Lower left lateral incisor" },
+                { id: "lateralIncisorUpperRight", name: "Upper right lateral incisor" },
+                { id: "lateralIncisorUpperLeft", name: "Upper left lateral incisor" },
+                { id: "canineLowerRight", name: "Lower right canine" },
+                { id: "canineLowerLeft", name: "Lower left canine" },
+                { id: "canineUpperRight", name: "Upper right canine" },
+                { id: "canineUpperLeft", name: "Upper left canine" },
+                { id: "firstMolarLowerRight", name: "Lower right first molar" },
+                { id: "firstMolarLowerLeft", name: "Lower left first molar" },
+                { id: "firstMolarUpperRight", name: "Upper right first molar" },
+                { id: "firstMolarUpperLeft", name: "Upper left first molar" },
+                { id: "secondMolarLowerRight", name: "Lower right second molar" },
+                { id: "secondMolarLowerLeft", name: "Lower left second molar" },
+                { id: "secondMolarUpperRight", name: "Upper right second molar" },
+                { id: "secondMolarUpperLeft", name: "Upper left second molar" }
+            ]
         }
     };
 
@@ -32,6 +56,7 @@ app.factory("config", ["utils", function(utils){
         syncOfferDeclined;
 
     entries.milestone.typesIndex = utils.arrays.toIndex(entries.milestone.types, "id");
+    entries.teeth.index = utils.arrays.toIndex(entries.teeth.list, "id");
 
     return {
         entries: entries,

@@ -33,3 +33,11 @@
         <textarea ng-model="entry.properties.text" data-auto-focus rows="5"></textarea>
     </label>
 </script>
+<script type="text/ng-template" id="entry_editor_teeth">
+    <div id="teeth-selection">
+        <teeth ng-model="entry.properties.tooth"></teeth>
+        <select ng-model="entry.properties.tooth" ng-options="tooth.id as tooth.name for tooth in config.entries.teeth.list">
+            <option value="">[Click on the diagram or select]</option>
+        </select>
+    </div>
+</script>

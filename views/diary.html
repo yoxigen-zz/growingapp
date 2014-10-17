@@ -80,8 +80,8 @@
                 <a class="flex-2 button save-button" ng-click="saveEntry()">
                     <img class="button-icon" src="images/icons/ok.svg" />
                     <span class="button-text">
-                        <span class="hide-smallest-width">Save</span>
-                        <span class="hide-small-width"> Entry</span>
+                        <span ng-class="{ 'hide-smallest-width': !editedEntryIsNew }">Save</span>
+                        <span ng-class="{ 'hide-small-width': !editedEntryIsNew }"> Entry</span>
                     </span>
                 </a>
             </footer>

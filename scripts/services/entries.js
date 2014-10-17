@@ -54,6 +54,14 @@ app.factory("entries", ["utils", function entriesFactory(utils){
                 else
                     return player.name + ' said <span class="item-value">&quot;' + utils.strings.escapeHtml(entry.properties.words) + '&quot;</span> for the first time!';
             }
+        },
+        {
+            "id": "teeth",
+            "name": "Teeth",
+            "icon": "tooth",
+            html: function(entry, player, config){
+                return player.name + "'s " + config.entries.teeth.index[entry.properties.tooth].name.toLowerCase() + " has come out";
+            }
         }
     ];
 

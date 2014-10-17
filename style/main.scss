@@ -351,7 +351,7 @@ a{ cursor: pointer; }
   }
 }
 
-$spinnerSize: 5em;
+$spinnerSize: 2em;
 @-webkit-keyframes rotate {
   from {
     -webkit-transform: rotate(0deg);
@@ -362,13 +362,6 @@ $spinnerSize: 5em;
 }
 
 #spinner{
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(255,255,255,.6);
-  z-index: 200;
   -webkit-transition: opacity 400ms ease-out;
   -moz-transition: opacity 400ms ease-out;
   -ms-transition: opacity 400ms ease-out;
@@ -378,13 +371,8 @@ $spinnerSize: 5em;
   opacity: 0;
 
   img{
-    position: absolute;
-    top: 50%;
-    left: 50%;
     width: $spinnerSize;
     height: $spinnerSize;
-    margin-top: $spinnerSize / -2;
-    margin-left: $spinnerSize / -2;
     -webkit-animation-name: rotate;
     -webkit-animation-duration: 1.5s;
     -webkit-animation-iteration-count: infinite;
@@ -392,7 +380,7 @@ $spinnerSize: 5em;
   }
 
   &.visible{
-    display: block;
+    display: inline-block;
   }
 
   &.active{

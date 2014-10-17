@@ -160,18 +160,18 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
 
     var isSyncing;
 
-    function sync(){
+    function sync(params){
         if (!cloudEnabled || isSyncing)
             return;
 
         isSyncing = true;
-        eventBus.triggerEvent("loadingStart");
+        eventBus.triggerEvent("loadingStart", params);
 
         Player.getAll().then(function(){
             syncFromCloud().finally(function(){
                 syncToCloud().finally(function(){
                     isSyncing = false;
-                    eventBus.triggerEvent("loadingEnd");
+                    eventBus.triggerEvent("loadingEnd", params);
                 });
             });
         });

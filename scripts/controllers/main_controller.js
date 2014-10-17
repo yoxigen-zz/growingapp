@@ -273,14 +273,16 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     });
 
     var spinnerTimeout;
-    eventBus.subscribe("loadingStart", function(){
+    eventBus.subscribe("loadingStart", function(e){
         $timeout.cancel(spinnerTimeout);
-        spinnerTimeout = $timeout(function(){
-            $scope.showSpinner = true;
-        }, 300);
+        if (!e || !e.isOnLoad) {
+            spinnerTimeout = $timeout(function () {
+                $scope.showSpinner = true;
+            }, 300);
+        }
     });
 
-    eventBus.subscribe("loadingEnd", function(){
+    eventBus.subscribe("loadingEnd", function(e){
         $scope.showSpinner = false;
         $timeout.cancel(spinnerTimeout);
     });
@@ -331,7 +333,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         // This inits the players:
         Player.getAll().then(function(){
-            cloud.sync();
+            cloud.sync({ isOnLoad: true });
         });
     }
 
