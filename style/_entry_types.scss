@@ -63,7 +63,7 @@
 
 #teeth-selection{
   text-align: center;
-  margin-bottom: 1em;
+  position: relative;
 
   svg{
     max-width: 100%;
@@ -74,5 +74,13 @@
     .tooth, .shadow{
       cursor: pointer;
     }
+  }
+
+  .tooth-name{
+    position: absolute;
+    top: 50%;
+    margin-top: -1em;
+    width: 100%;
+    font-size: 1.4em;
   }
 }

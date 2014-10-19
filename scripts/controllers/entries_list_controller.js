@@ -23,8 +23,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $scope.removedEntry = entry;
         $scope.showEditEntry = false;
         setTimeout(function(){
-            document.body.addEventListener("click", onClickAfterRemove);
-            //document.body.addEventListener("scroll", onScrollAfterRemove);
+            document.body.addEventListener("mousedown", onClickAfterRemove);
         }, 50);
     };
 
@@ -82,13 +81,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     function onClickAfterRemove(e){
         if (e.target.id !== "undoEntryRemove") {
             $scope.$apply(hideUnremoveMessage);
-            document.body.removeEventListener("click", onClickAfterRemove);
+            document.body.removeEventListener("mousedown", onClickAfterRemove);
         }
-    }
-
-    function onScrollAfterRemove(){
-        $scope.$apply(hideUnremoveMessage);
-        document.body.removeEventListener("scroll", onScrollAfterRemove);
     }
 
     function hideUnremoveMessage(){

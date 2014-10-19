@@ -791,7 +791,7 @@ select {
 
 #teeth-selection {
   text-align: center;
-  margin-bottom: 1em; }
+  position: relative; }
   #teeth-selection svg {
     max-width: 100%;
     max-height: 50%;
@@ -799,6 +799,12 @@ select {
     outline: none; }
     #teeth-selection svg .tooth, #teeth-selection svg .shadow {
       cursor: pointer; }
+  #teeth-selection .tooth-name {
+    position: absolute;
+    top: 50%;
+    margin-top: -1em;
+    width: 100%;
+    font-size: 1.4em; }
 
 svg.graph {
   margin: 0 auto; }

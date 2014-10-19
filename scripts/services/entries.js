@@ -34,7 +34,7 @@ app.factory("entries", ["utils", function entriesFactory(utils){
                 else
                     text = entry.properties.text;
 
-                return text ? player.name + " " + text.toLowerCase() : "Unknown milestone";
+                return text ? player.name + " " + text.replace(/^\w/g, function(a){ return a.toLowerCase() }) : "Unknown milestone";
             }
         },
         {
@@ -60,7 +60,7 @@ app.factory("entries", ["utils", function entriesFactory(utils){
             "name": "Teeth",
             "icon": "tooth",
             html: function(entry, player, config){
-                return player.name + "'s " + config.entries.teeth.index[entry.properties.tooth].name.toLowerCase() + " has come out";
+                return player.name + "'s <span class='item-measure'>" + config.entries.teeth.index[entry.properties.tooth].name.toLowerCase() + "</span> has come out";
             }
         }
     ];
