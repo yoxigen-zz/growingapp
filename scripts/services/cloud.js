@@ -168,11 +168,17 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         eventBus.triggerEvent("loadingStart", params);
 
         Player.getAll().then(function(){
-            syncFromCloud().finally(function(){
-                syncToCloud().finally(function(){
+            syncFromCloud().then(function(){
+                syncToCloud().then(function(){
                     isSyncing = false;
                     eventBus.triggerEvent("loadingEnd", params);
+                }, function(error){
+                    isSyncing = false;
+                    eventBus.triggerEvent("loadingEnd", angular.extend({ error: "Error syncing to cloud: " + error.message }, params));
                 });
+            }, function(error){
+                isSyncing = false;
+                eventBus.triggerEvent("loadingEnd", angular.extend({ error: "Error syncing from cloud: " + error.message }, params));
             });
         });
     }

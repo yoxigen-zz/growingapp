@@ -285,6 +285,9 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     eventBus.subscribe("loadingEnd", function(e){
         $scope.showSpinner = false;
         $timeout.cancel(spinnerTimeout);
+
+        if (e && e.error)
+            alert(e.error);
     });
 
     eventBus.subscribe("updatePlayers", function(e){
