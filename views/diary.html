@@ -52,16 +52,18 @@
             <a ng-click="unremoveEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
         </div>
     </div>
-    <popup popup-show="showNewEntriesSelection" title="New Entry Type">
+    <popup popup-show="showNewEntriesSelection" popup-title="New Entry Type">
         <ul class="entry-types-list">
             <li ng-repeat="entryType in ::entryTypes"
                 ng-click="showNewEntryForm(entryType)">
-                <img ng-src="images/icons/{{::entryType.icon}}.svg" />
+                <div class="entry-image">
+                    <img ng-src="images/icons/{{::entryType.icon}}.svg" />
+                </div>
                 <span>{{ ::entryType.name }}</span>
             </li>
         </ul>
     </popup>
-    <popup popup-show="showEditEntry" title="{{editedEntryIsNew && 'New' || 'Edit'}} Entry: {{ newEntryType.name }}">
+    <popup popup-show="showEditEntry" popup-title="{{editedEntryIsNew && 'New' || 'Edit'}} Entry: {{ newEntryType.name }}">
         <form>
             <div class="popup-contents">
                 <form>

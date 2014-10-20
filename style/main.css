@@ -774,20 +774,29 @@ select {
   padding: 0; }
   .entry-types-list li {
     cursor: pointer;
-    padding: .5em;
+    padding: 1em 0;
     font-size: 1.2em;
-    margin: .7em;
-    background: #D3E0EB;
-    border-radius: 3px;
-    height: 2em;
+    margin: 0;
+    display: inline-block;
+    height: 6em;
+    text-align: center;
+    width: 33.3%;
+    box-sizing: border-box;
+    vertical-align: top;
     font-size: 1.2em; }
+    @media all and (max-width: 450px) {
+      .entry-types-list li {
+        width: 50%; } }
     .entry-types-list li:hover {
       background-color: rgba(92, 210, 250, 0.18); }
+    .entry-types-list li .entry-image {
+      height: 2em; }
     .entry-types-list li img {
-      max-width: 2em;
-      max-height: 2em;
-      vertical-align: middle;
-      margin-right: .5em; }
+      max-width: 3em;
+      max-height: 2em; }
+    .entry-types-list li span {
+      display: block;
+      margin-top: .3em; }
 
 #teeth-selection {
   text-align: center;

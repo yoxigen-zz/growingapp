@@ -8,7 +8,7 @@ angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
         transclude: true,
         replace: true,
         scope: {
-            title: "@",
+            popupTitle: "@",
             popupShow: "="
         },
         templateUrl: "scripts/directives/popup/popup.template.html",

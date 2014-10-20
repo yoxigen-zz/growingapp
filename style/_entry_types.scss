@@ -39,12 +39,19 @@
 
   li{
     cursor: pointer;
-    padding: .5em;
+    padding: 1em 0;
     font-size: 1.2em;
-    margin: .7em;
-    background: #D3E0EB;
-    border-radius: 3px;
-    height: 2em;
+    margin: 0;
+    display: inline-block;
+    height: 6em;
+    text-align: center;
+    width: 33.3%;
+    box-sizing: border-box;
+    vertical-align: top;
+
+    @media all and (max-width: 450px){
+      width: 50%;
+    }
 
     &:hover{
       background-color: rgba(92, 210, 250, 0.18);
@@ -52,11 +59,17 @@
 
     font-size: 1.2em;
 
+    .entry-image{
+      height: 2em;
+    }
     img{
-      max-width: 2em;
+      max-width: 3em;
       max-height: 2em;
-      vertical-align: middle;
-      margin-right: .5em;
+    }
+
+    span{
+      display: block;
+      margin-top: .3em;
     }
   }
 }

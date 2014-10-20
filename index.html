@@ -111,16 +111,16 @@
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
     </div>
-    <popup popup-show="showEditPlayer" title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}">
+    <popup popup-show="showEditPlayer" popup-title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}">
         <div ng-include="'views/edit_player.html'"></div>
     </popup>
-    <popup popup-show="showLogin" title="Sign In">
+    <popup popup-show="showLogin" popup-title="Sign In">
         <div ng-include="'views/login.html'"></div>
     </popup>
-    <popup popup-show="showSignup" title="Sign Up">
+    <popup popup-show="showSignup" popup-title="Sign Up">
         <div ng-include="'views/signup.html'"></div>
     </popup>
-    <popup popup-show="showSyncOffer" title="It's time to backup!">
+    <popup popup-show="showSyncOffer" popup-title="It's time to backup!">
         <div ng-include="'views/syncOffer.html'"></div>
     </popup>
     <ng-include src="'views/entry_editors.html'"></ng-include>
