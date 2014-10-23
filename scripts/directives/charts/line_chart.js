@@ -15,6 +15,7 @@ angular.module('Charts')
                     line,
                     points,
                     color,
+                    percentileColor,
                     helpersData,
                     drawn;
 
@@ -35,6 +36,8 @@ angular.module('Charts')
 
                 chart.preRender = function(){
                     color = chart.getColorScale();
+                    percentileColor = chart.getColorScale("percentiles");
+
                     chart.legendData = chart.data.map(function(d){
                         return { text: d.name, color: color(d.name) };
                     })
@@ -78,7 +81,7 @@ angular.module('Charts')
                             .attr("d", function(d) {
                                 return line(d.values);
                             }).style("stroke", function(d) {
-                                return color(d.name);
+                                return percentileColor(d.name);
                             }));
                     });
                 }
