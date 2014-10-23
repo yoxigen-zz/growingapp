@@ -72,7 +72,7 @@ a {
   overflow-x: hidden;
   overflow-y: auto; }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 400px) {
   .hide-small-width {
     display: none; } }
 
@@ -854,6 +854,8 @@ svg.graph {
     fill: none;
     stroke: steelblue;
     stroke-width: 1.5px; }
+  .chart .helper {
+    stroke-width: 1px; }
   .chart .point {
     stroke-width: 10px;
     stroke: transparent;

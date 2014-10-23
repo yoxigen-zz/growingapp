@@ -53,7 +53,7 @@ a{ cursor: pointer; }
 }
 
 .hide-small-width{
-  @media all and (max-width: 500px){
+  @media all and (max-width: 400px){
     display: none;
   }
 }

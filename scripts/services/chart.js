@@ -475,6 +475,8 @@
         },
         draw: function(){
             if (this._draw() !== false){
+                this.drawn = true;
+
                 if (this.settings.axes)
                     this.createAxes();
 
@@ -698,7 +700,6 @@
 
             if (this.settings.scales)
                 this.createScales();
-
 
             this.draw();
 

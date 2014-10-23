@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "eventBus", "config", function($scope, Entry, utils, eventBus, config){
+app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "eventBus", "config", "statistics", function($scope, Entry, utils, eventBus, config, statistics){
     var insightId = $scope.currentInsight.id;
 
     eventBus.subscribe("playerSelect", setData);
@@ -13,7 +13,6 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
         dataSeries: "player.playerId",
         x: "age",
         y: "properties." + insightId,
-        //minYValue: $scope.currentInsight.minValue,
         interpolate: "cardinal",
         "axes": {
             "x": {
@@ -43,6 +42,12 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
             setStats(data);
         }).catch(function(error){
             console.error("Can't get entries for " + insightId + " chart: ", error);
+        });
+
+        statistics.getPercentiles(insightId, $scope.player).then(function(percentileData){
+            $scope.percentileData = percentileData;
+        }, function(error){
+            console.error(error);
         });
     }
 

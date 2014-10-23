@@ -14,7 +14,18 @@ angular.module('Charts')
                     chart = new Chart(defaultOptions, draw),
                     line,
                     points,
-                    color;
+                    color,
+                    helpersData,
+                    drawn;
+
+                scope.$watch(attrs.helpers, function(value){
+                    if (!value)
+                        return;
+
+                    helpersData = value;
+                    if (chart.drawn)
+                        drawHelpers();
+                });
 
                 element.css("height", "100%");
 
@@ -41,8 +52,12 @@ angular.module('Charts')
                             return chart.options.circleRadius/4 + chart.scale.x(utils.objects.getObjectByPath(d, chart.settings.x));
                         })
                         .attr("cy", function(d){
-                            return chart.scale.y(utils.objects.getObjectByPath(d, chart.settings.y));
+                            return chart.scale.y(d.value || utils.objects.getObjectByPath(d, chart.settings.y));
                         });
+
+                    chart.elements.helperPaths.forEach(function(path){
+                        path.attr("d", function(d) { return line(d.values); });
+                    });
                 };
 
                 scope.$on("$destroy", function(){
@@ -50,17 +65,44 @@ angular.module('Charts')
                     element.empty();
                 });
 
+                function drawHelpers(){
+                    chart.elements.helpers = chart.elements.helpersContainer.selectAll(".helper")
+                        .data(helpersData)
+                        .enter().append("g")
+                        .attr("class", "helper");
+
+                    chart.elements.helperPaths = [];
+                    chart.elements.helpers.each(function(helper, i){
+                        chart.elements.helperPaths.push(d3.select(chart.elements.helpers[0][i]).append("path")
+                            .attr("class", "line helper")
+                            .attr("d", function(d) {
+                                return line(d.values);
+                            }).style("stroke", function(d) {
+                                return color(d.name);
+                            }));
+                    });
+                }
+
                 function draw(){
+                    if (!this.data || !this.data.length)
+                        return false;
+
                     var self = this,
                         svg = this.dataSvg;
 
                     line = d3.svg.line()
                         .interpolate(chart.settings.interpolate || "linear")
-                        .x(function(d) { return chart.scale.x(utils.objects.getObjectByPath(d, chart.settings.x)); })
-                        .y(function(d) { return chart.scale.y(utils.objects.getObjectByPath(d, chart.settings.y)); });
+                        .x(function(d) {
+                            return chart.scale.x(utils.objects.getObjectByPath(d, chart.settings.x));
+                        })
+                        .y(function(d) {
+                            return chart.scale.y(d.value || utils.objects.getObjectByPath(d, chart.settings.y));
+                        });
 
                     chart.scale.x.domain(getDomain("x"));
                     chart.scale.y.domain(getDomain("y"));
+
+                    chart.elements.helpersContainer = svg.append("g").attr("class", "helpers");
 
                     chart.elements.series = svg.selectAll(".series")
                         .data(self.data)
@@ -90,6 +132,9 @@ angular.module('Charts')
                             .attr("data-selectable", chart.settings.onSelect ? "" : null)
                             .style("fill", function(d){ return color(series.name)})
                     });
+
+                    if (helpersData && !chart.elements.helpers)
+                        drawHelpers();
                 }
 
                 function getDomain(axis, minValue, maxValue){

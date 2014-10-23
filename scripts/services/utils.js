@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("Utils", []).factory("utils", ["$filter", function($filter){
+angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", function($filter, $rootScope, $q){
     var stringParsers = {},
         dayMilliseconds = 1000 * 60 * 60 * 24,
         avgMonthLength = 365 / 12;
@@ -121,6 +121,22 @@ angular.module("Utils", []).factory("utils", ["$filter", function($filter){
                 });
 
                 return unique;
+            }
+        },
+        data: {
+            getCsv: function(url, accessor){
+                var deferred = $q.defer();
+
+                d3.csv(url, accessor, function(error, data){
+                    $rootScope.$apply(function(){
+                        if (error)
+                            deferred.reject(error);
+                        else
+                            deferred.resolve(data);
+                    });
+                });
+
+                return deferred.promise;
             }
         },
         dates: {
