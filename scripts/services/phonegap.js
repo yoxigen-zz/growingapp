@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module("Phonegap", ["EventBus"]).factory("phonegap", ["$q", function($q, eventBus){
+angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
     var defaultCameraOptions,
-        deviceReady;
+        deviceReady,
+        onDeviceReady;
 
     document.addEventListener("deviceready",function(){
         deviceReady = true;
@@ -18,22 +19,33 @@ angular.module("Phonegap", ["EventBus"]).factory("phonegap", ["$q", function($q,
             alert("Can't initialize camera.");
         }
 
-        alert("adding back");
-        document.addEventListener("backbutton", function () {
-            if (confirm("Are you sure you want to back?"))
-                alert("YO");
-
-        }, false);
+        if (onDeviceReady){
+            onDeviceReady.forEach(function(callback){
+                callback();
+            });
+        }
     },false);
 
-    function onBackKey(){
+    function runOnDeviceReady(callback){
+        if (deviceReady)
+            callback();
+        else {
+            if (!onDeviceReady)
+                onDeviceReady = [];
 
+            onDeviceReady.push(callback);
+        }
     }
 
     var methods = {
-        onBackButton: function(){
-            //if (deviceReady)
-
+        onBackButton: {
+            addEventListener: function(eventHandler){
+                runOnDeviceReady(function(){
+                    document.addEventListener("backbutton", function () {
+                        eventHandler();
+                    }, false);
+                });
+            }
         },
         images: {
             browsePhotos: function(options){

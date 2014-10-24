@@ -1,10 +1,5 @@
-app.factory("navigation", ["eventBus", "$route", function(eventBus, $route){
-    document.addEventListener("deviceready",function(){
-        alert("ready");
-        document.addEventListener("backbutton", onBackKeyDown, false);
+app.factory("navigation", ["phonegap", "eventBus", "$route", function(phonegap, eventBus, $route){
+    phonegap.onBackButton.addEventListener(function(){
+        alert("it works");
     });
-
-    function onBackKeyDown(){
-        alert("BACK");
-    }
 }]);
