@@ -3,7 +3,7 @@
 angular.module('Charts')
     .directive('lineChart', ["Chart", "utils", function (Chart, utils) {
         return {
-            template: '<div class="chart multiline"></div>',
+            template: '<div class="chart-wrapper"><div class="chart multiline"></div><ul class="chart-legend"></ul></div>',
             restrict: 'E',
             require: "?ngModel",
             replace: true,
@@ -43,7 +43,7 @@ angular.module('Charts')
                     })
                 };
 
-                chart.init(scope, element, attrs);
+                chart.init(scope, element.children().eq(0), attrs);
 
                 chart.onResize = function(){
                     chart.elements.path.attr("d", function(d) { return line(d.values); });
@@ -84,6 +84,8 @@ angular.module('Charts')
                                 return percentileColor(d.name);
                             }));
                     });
+
+                    createLegend();
                 }
 
                 function draw(){
@@ -137,6 +139,29 @@ angular.module('Charts')
 
                     if (helpersData && !chart.elements.helpers)
                         drawHelpers();
+                    else
+                        createLegend();
+                }
+
+                function createLegend(){
+                    var legendElement = d3.select(element.find(".chart-legend")[0]),
+                        legendData = [];
+
+                    chart.data.forEach(function(series){
+                        legendData.push({ name: series.name, color: color(series.name) });
+                    });
+
+                    if (helpersData){
+                        helpersData.forEach(function(helper){
+                            legendData.push({ name: helper.name, color: percentileColor(helper.name) });
+                        });
+                    }
+
+                    legendElement.selectAll("li").data(legendData)
+                        .enter().append("li")
+                        .html(function(d){
+                            return '<span class="chart-legend-item-color" style="background-color: ' + d.color + '"></span> ' + d.name;
+                        });
                 }
 
                 function setDomain(){

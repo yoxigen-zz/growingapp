@@ -820,9 +820,12 @@ svg.graph {
   svg.graph .legend text {
     fill: #666666; }
 
-.chart {
+.chart-wrapper {
   background: #183e5b;
-  padding: 1em;
+  padding: .5em 1em;
+  box-sizing: border-box; }
+
+.chart {
   box-sizing: border-box; }
   .chart .axis path,
   .chart .axis line {
@@ -855,25 +858,8 @@ svg.graph {
     stroke: steelblue;
     stroke-width: 1.5px; }
   .chart .helper {
-    stroke-width: 1px; }
-  .chart .P5 {
-    stroke: #486fb4; }
-  .chart .P5 {
-    stroke: #486fb4; }
-  .chart .P5 {
-    stroke: steelblue; }
-  .chart .P5 {
-    stroke: #4aa2b4; }
-  .chart .P5 {
-    stroke: #45b4a7; }
-  .chart .P5 {
-    stroke: #3fb482; }
-  .chart .P5 {
-    stroke: #52b472; }
-  .chart .P5 {
-    stroke: #62b463; }
-  .chart .P5 {
-    stroke: #89b463; }
+    stroke-width: 1.5px;
+    opacity: .7; }
   .chart .point {
     stroke-width: 10px;
     stroke: transparent;
@@ -886,7 +872,16 @@ svg.graph {
   font-weight: bold; }
 
 .chart-legend {
-  text-align: right; }
+  text-align: center; }
   .chart-legend li {
     display: inline-block;
-    margin: 0 10px 0 0; }
+    margin: 0 2em 0 0;
+    font-size: .8em;
+    color: Whitel; }
+  .chart-legend .chart-legend-item-color {
+    display: inline-block;
+    height: .8em;
+    width: .8em;
+    border-radius: 50%;
+    margin-right: 0;
+    font-size: .9em; }
