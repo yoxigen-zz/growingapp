@@ -2,4 +2,8 @@ app.factory("navigation", ["phonegap", "eventBus", "$route", function(phonegap, 
     phonegap.onBackButton.addEventListener(function(){
         alert("it works");
     });
+
+    return {
+
+    };
 }]);

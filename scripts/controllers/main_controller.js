@@ -1,4 +1,4 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation){
     $scope.config = config;
 
     $scope.setCurrentPlayer = function(player){
