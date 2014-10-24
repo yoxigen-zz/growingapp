@@ -3,6 +3,7 @@
 angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
     var defaultCameraOptions;
     document.addEventListener("deviceready",function(){
+        alert("ready phonegap.js");
         defaultCameraOptions = {
             quality : 75,
             destinationType : Camera.DestinationType.FILE_URI,
