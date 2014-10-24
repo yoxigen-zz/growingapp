@@ -69,6 +69,13 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         $scope.showMenu = false;
     };
 
+    $scope.$watch("showMenu", function(value){
+        if (value)
+            eventBus.triggerEvent("popup.open", { closePopup: function(){ $scope.showMenu = false; } });
+        else
+            eventBus.triggerEvent("popup.close");
+    });
+
     var currentMenuItem;
     function setCurrentMenuItem(){
         var hash = window.location.hash;

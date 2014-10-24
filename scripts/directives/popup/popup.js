@@ -1,4 +1,4 @@
-angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
+angular.module("Popup", ["EventBus"]).directive("popup", ["$timeout", "eventBus", function($timeout, eventBus){
     var TOGGLE_TIMEOUT = 300,
         TOGGLE_CLASS = "visible",
         TOGGLE_ACTIVE_CLASS = "active";
@@ -39,6 +39,7 @@ angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
                     }, 40);
 
                     window.addEventListener("keydown", onKeyDown);
+                    eventBus.triggerEvent("popup.open", { closePopup: scope.closePopup.bind(this, null) });
                 }
                 else{
                     toggleElement && toggleElement.classList.remove(TOGGLE_ACTIVE_CLASS);
@@ -48,6 +49,7 @@ angular.module("Popup", []).directive("popup", ["$timeout", function($timeout){
                     }, TOGGLE_TIMEOUT);
 
                     window.removeEventListener("keydown", onKeyDown);
+                    eventBus.triggerEvent("popup.close");
                 }
             });
 
