@@ -12,8 +12,11 @@ angular.module("Phonegap", ["EventBus"]).factory("phonegap", ["$q", function($q,
             encodingType: Camera.EncodingType.JPEG
         };
 
+        alert("adding back");
         document.addEventListener("backbutton", function(){
-            alert("back");
+            if (confirm("Are you sure you want to back?"))
+                alert("YO");
+
         }, false);
     },false);
 
