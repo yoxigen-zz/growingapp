@@ -6,14 +6,20 @@ angular.module("Phonegap", ["EventBus"]).factory("phonegap", ["$q", function($q,
 
     document.addEventListener("deviceready",function(){
         deviceReady = true;
-        defaultCameraOptions = {
-            quality : 75,
-            destinationType : Camera.DestinationType.FILE_URI,
-            encodingType: Camera.EncodingType.JPEG
-        };
+
+        try {
+            defaultCameraOptions = {
+                quality: 75,
+                destinationType: Camera.DestinationType.FILE_URI,
+                encodingType: Camera.EncodingType.JPEG
+            };
+        }
+        catch(e) {
+            alert("Can't initialize camera.");
+        }
 
         alert("adding back");
-        document.addEventListener("backbutton", function(){
+        document.addEventListener("backbutton", function () {
             if (confirm("Are you sure you want to back?"))
                 alert("YO");
 
