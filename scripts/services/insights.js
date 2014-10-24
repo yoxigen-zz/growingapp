@@ -1,7 +1,7 @@
 app.factory("insights", [function(){
     var insightsList = [
-            { id: "weight", name: "Weight Chart", minValue: 1.8 },
-            { id: "height", name: "Height Chart", minValue: 40 }
+            { id: "weight", name: "Weight Chart", description: "Age to weight chart, with percentiles" },
+            { id: "height", name: "Height Chart", description: "Age to height chart, with percentiles" }
         ],
         currentInsight;
 
