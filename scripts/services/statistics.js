@@ -22,14 +22,19 @@ app.factory("statistics", ["utils", function(utils){
                      { name: "95%", className: "P95", values: [] }
                  ];
 
-                data.forEach(function(row, week){
-                    var i=0;
+                var ageInWeeks = Math.ceil(player.getAge() / 7);
 
-                    for(var p in row){
+                for(var week= 0, row, i, p; row = data[week]; week++){
+                    i=0;
+
+                    for(p in row){
                         series[i].values.push({ age: week * 7, value: row[p] });
                         i++;
                     }
-                });
+
+                    if (week == ageInWeeks)
+                        break;
+                }
 
                 return series;
             });

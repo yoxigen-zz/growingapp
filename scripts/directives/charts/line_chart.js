@@ -102,8 +102,7 @@ angular.module('Charts')
                             return chart.scale.y(d.value || utils.objects.getObjectByPath(d, chart.settings.y));
                         });
 
-                    chart.scale.x.domain(getDomain("x"));
-                    chart.scale.y.domain(getDomain("y"));
+                    setDomain();
 
                     chart.elements.helpersContainer = svg.append("g").attr("class", "helpers");
 
@@ -140,6 +139,11 @@ angular.module('Charts')
                         drawHelpers();
                 }
 
+                function setDomain(){
+                    chart.scale.x.domain(getDomain("x"));
+                    chart.scale.y.domain(getDomain("y"));
+                }
+
                 function getDomain(axis, minValue, maxValue){
                     var min, max,
                         property = chart.settings[axis];
@@ -158,6 +162,19 @@ angular.module('Charts')
                             }
                         });
                     });
+
+                    if (helpersData){
+                        var minHelperValue = helpersData[0].values[0],
+                            maxHelperValue = helpersData[helpersData.length - 1].values[helpersData[0].values.length - 1];
+
+                        min = utils.objects.getObjectByPath(minHelperValue, property);
+                        if (min === undefined || min === null)
+                            min = minHelperValue.value;
+
+                        max = utils.objects.getObjectByPath(maxHelperValue, property) || maxHelperValue.value;
+                        if (max === undefined || max === null)
+                            max = maxHelperValue.value;
+                    }
 
                     return[min !== undefined ? min : minValue, max !== undefined ? max : maxValue];
                 }

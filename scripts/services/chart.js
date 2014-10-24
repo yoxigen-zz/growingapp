@@ -491,9 +491,9 @@
         },
         getColorScale: function(scaleName){
             if (scaleName === "percentiles")
-                return d3.scale.ordinal().range(["steelblue", "#4aa2b4", "#45b4a7", "#3fb482", "#52b472", "#62b463", "#89b463"]);
+                return d3.scale.ordinal().range(["steelblue", "#4aa2b4", "#45b4a7", "rgb(255, 143, 228)", "#52b472", "#62b463", "#89b463"]);
 
-            return d3.scale.ordinal().range(["#00d8ff", "#ffc000", "#84ff00", "#ff2a00", "#fd62ff", "#ffffff", "#ffadeb", "#bbffad" ]);
+            return d3.scale.ordinal().range(["#ffc000", "#84ff00", "#00d8ff", "#ff2a00", "#fd62ff", "#ffffff", "#ffadeb", "#bbffad" ]);
         },
         getData: function(){
             if (this.graphFilter){
