@@ -10,7 +10,7 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
     });
 
     $scope.chartSettings = {
-        dataSeries: "player.playerId",
+        dataSeries: "player.name",
         x: "age",
         y: "properties." + insightId,
         interpolate: "cardinal",
