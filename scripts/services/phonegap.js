@@ -1,17 +1,31 @@
 'use strict';
 
-angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
-    var defaultCameraOptions;
+angular.module("Phonegap", ["EventBus"]).factory("phonegap", ["$q", function($q, eventBus){
+    var defaultCameraOptions,
+        deviceReady;
+
     document.addEventListener("deviceready",function(){
-        alert("ready phonegap.js");
+        deviceReady = true;
         defaultCameraOptions = {
             quality : 75,
             destinationType : Camera.DestinationType.FILE_URI,
             encodingType: Camera.EncodingType.JPEG
         };
+
+        document.addEventListener("backbutton", function(){
+            alert("back");
+        }, false);
     },false);
 
+    function onBackKey(){
+
+    }
+
     var methods = {
+        onBackButton: function(){
+            //if (deviceReady)
+
+        },
         images: {
             browsePhotos: function(options){
                 var deferred = $q.defer();
