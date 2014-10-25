@@ -144,6 +144,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     };
 
     $scope.savePlayer = function(){
+        if (!$scope.editedPlayer.name){
+            return;
+        }
+
         $scope.editedPlayer.save().then(function(player){
             $scope.toggleEditPlayer(false);
             $scope.editedPlayer = null;
@@ -165,6 +169,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             }
             setPlayersSelection($scope.players);
             eventBus.triggerEvent("editPlayer", player);
+        }, function(error){
+            alert("Error saving: " + error);
         });
     };
 

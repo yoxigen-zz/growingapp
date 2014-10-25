@@ -22,6 +22,15 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
             }
         },
         save: function(isSynced){
+            if (this.validate) {
+                try {
+                    this.validate();
+                }
+                catch(error){
+                    return $q.reject(error);
+                }
+            }
+
             var self = this,
                 objectId = this[this.idProperty];
 

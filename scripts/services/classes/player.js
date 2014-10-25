@@ -18,6 +18,8 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", fu
             if (data.cloudId)
                 this.cloudId = data.cloudId;
         }
+        else
+            this.gender = "f";
 
         this.__defineGetter__("playerId", function () {
             return id;
@@ -78,7 +80,11 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", fu
             return localData;
         },
         get idProperty(){ return "playerId" },
-        objectStore: playersObjectStore
+        objectStore: playersObjectStore,
+        validate: function(){
+            if (!this.name)
+                throw "Can't save, missing name.";
+        }
     };
 
     Player.prototype.__proto__ = new DataObject();

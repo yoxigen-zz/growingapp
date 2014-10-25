@@ -1,7 +1,7 @@
 app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "config", function($q, eventBus, Entry, Player, Storage, users, config){
     eventBus.subscribe("saveEntry", syncEntry);
     eventBus.subscribe("deleteEntry", syncEntry);
-    eventBus.subscribe("savePlayer", syncPlayer);
+    eventBus.subscribe("editPlayer", syncPlayer);
     eventBus.subscribe("deletePlayer", syncPlayer);
     eventBus.subscribe("login", onLogin);
     eventBus.subscribe("logout", function(){
