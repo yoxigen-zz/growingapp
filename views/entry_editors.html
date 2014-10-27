@@ -34,8 +34,8 @@
     </label>
 </script>
 <script type="text/ng-template" id="entry_editor_teeth">
-    <div id="teeth-selection">
-        <teeth ng-model="entry.properties.tooth"></teeth>
+    <div id="teeth-selection" ng-controller="TeethController">
+        <teeth ng-model="entry.properties.tooth" highlighted-teeth="addedTeeth"></teeth>
         <div class="tooth-name">{{config.entries.teeth.index[entry.properties.tooth].name || "Select the tooth" }}</div>
     </div>
 </script>

@@ -269,6 +269,25 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
             });
 
             return deferred.promise;
+        },
+        uploadFile: function(fileUrl){
+            var reader = new FileReader(),
+                deferred = $q.defer();
+
+            reader.onload = function(e) {
+                var dataUrl = reader.result;
+                var file = new Parse.File(fileUrl, { base64: dataUrl });
+                file.save().then(function(){
+                    $rootScope.$apply(function(){
+                        deferred.resolve(file);
+                    }, function(error){
+                        alert("ERROR: " + error);
+                    });
+                });
+            };
+
+            reader.readAsDataURL(fileUrl);
+            return deferred.promise;
         }
     };
 
