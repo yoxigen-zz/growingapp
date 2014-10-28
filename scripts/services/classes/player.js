@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", function getPlayerClassFactory($q, $indexedDB, dbConfig, DataObject, utils) {
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "parse", function getPlayerClassFactory($q, $indexedDB, dbConfig, DataObject, parse) {
     var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
@@ -60,7 +60,8 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", fu
                 name: this.name,
                 gender: this.gender,
                 id: this.cloudId,
-                deleted: !!this._deleted
+                deleted: !!this._deleted,
+                image: this.image
             }
         },
         getLocalData: function(){
@@ -81,6 +82,18 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "utils", fu
         },
         get idProperty(){ return "playerId" },
         objectStore: playersObjectStore,
+        preSave: function(){
+            if (this.imageDataUrl){
+                var self = this;
+
+                return parse.uploadFile(this.imageDataUrl, this.name + ".jpg", "image/jpeg").then(function(file){
+                    self.image = file.url();
+                    delete self.imageDataUrl;
+                });
+            }
+            else
+                return true;
+        },
         validate: function(){
             if (!this.name)
                 throw "Can't save, missing name.";

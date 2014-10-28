@@ -180,8 +180,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             targetWidth: 400,
             targetHeight: 400,
             saveToPhotoAlbum: false
-        }).then(function(fileUrl){
-            $scope.editedPlayer.image = fileUrl;
+        }).then(function(dataUrl){
+            $scope.editedPlayer.imageDataUrl = dataUrl;
         }, function(error){
             alert(error);
             console.error("Error taking picture: ", error);
@@ -194,8 +194,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             targetWidth: 400,
             targetHeight: 400,
             saveToPhotoAlbum: false
-        }).then(function(fileUrl){
-            $scope.editedPlayer.image = fileUrl;
+        }).then(function(dataUrl){
+            $scope.editedPlayer.imageDataUrl = dataUrl;
         }, function(error){
             alert(error);
             console.error("Error taking picture: ", error);

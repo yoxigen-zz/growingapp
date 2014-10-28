@@ -56,6 +56,13 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
             }
 
             function doSave() {
+                if (self.preSave)
+                    return $q.when(self.preSave()).then(saveToLocalDB);
+
+                return saveToLocalDB();
+            }
+
+            function saveToLocalDB(){
                 try {
                     var localData = self.getLocalData();
                     if (!isSynced)
@@ -72,7 +79,7 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
                     });
                 }
                 catch(e){
-                    console.error("Error saving object: ", e);
+                    return $q.reject("Error saving object.");
                 }
             }
         },
