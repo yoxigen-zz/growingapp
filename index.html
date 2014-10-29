@@ -81,7 +81,13 @@
         <div ng-include="'views/syncOffer.html'"></div>
     </popup>
     <ng-include src="'views/entry_editors.html'"></ng-include>
-    <!--
+
+    <script>
+        document.addEventListener("deviceready",function(){
+            alert("Camera? " + window.Camera);
+        });
+    </script>
+
     <script src="components/parse-1.2.18.min.js"></script>
     <script src="components/d3.v3.min.js"></script>
     <script src="components/jquery/jquery-2.0.3.min.js"></script>
@@ -128,18 +134,6 @@
     <script src="scripts/entries/teeth/teeth_controller.js"></script>
 
     <script src="insights/linechart_controller.js"></script>
-    -->
-    <script>
-        document.addEventListener("deviceready",function(){
-            alert("Camera: " + window.Camera);
-            alert("nav: " + navigator.camera);
 
-            if (!window.Camera){
-                setTimeout(function(){
-                    alert("Now camera: " + window.Camera);
-                }, 2000);
-            }
-        });
-    </script>
 </body>
 </html>
