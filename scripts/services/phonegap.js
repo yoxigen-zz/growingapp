@@ -72,15 +72,19 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
             takePhoto: function (options) {
                 var deferred = $q.defer();
                 try {
-                    navigator.camera.getPicture(
-                        function onSuccess(result) {
-                            deferred.resolve(result);
-                        },
-                        function onError(error) {
-                            deferred.reject(error);
-                        },
-                        angular.extend({}, defaultCameraOptions, options, { sourceType : Camera.PictureSourceType.CAMERA })
-                    );
+                    if (!window.Camera)
+                        alert("No window.Camera. navigator.camera = " + navigator.camera);
+                    else if (navigator.camera) {
+                        navigator.camera.getPicture(
+                            function onSuccess(result) {
+                                deferred.resolve(result);
+                            },
+                            function onError(error) {
+                                deferred.reject(error);
+                            },
+                            angular.extend({}, defaultCameraOptions, options, {sourceType: Camera.PictureSourceType.CAMERA})
+                        );
+                    }
                 }
                 catch (error) {
                     deferred.reject(error);
