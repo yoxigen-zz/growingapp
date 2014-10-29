@@ -8,18 +8,16 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
     document.addEventListener("deviceready",function(){
         deviceReady = true;
 
-        setTimeout(function(){
-            try {
-                defaultCameraOptions = {
-                    quality: 75,
-                    destinationType: Camera.DestinationType.DATA_URL, // Also FILE_URI
-                    encodingType: Camera.EncodingType.JPEG
-                };
-            }
-            catch(e) {
-                alert("Can't initialize camera.");
-            }
-        }, 500);
+        try {
+            defaultCameraOptions = {
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL, // Also FILE_URI
+                encodingType: Camera.EncodingType.JPEG
+            };
+        }
+        catch(e) {
+            alert("Can't initialize camera.");
+        }
 
         if (onDeviceReady){
             onDeviceReady.forEach(function(callback){
