@@ -1,117 +1,73 @@
-(function(){
-    var overlay = document.getElementById("overlay"),
-        menuWrapper = document.getElementById("menu-wrapper"),
-        newEntryTypesWrapper = document.getElementById("newEntryTypesWrapper"),
-        newEntryTypes = document.getElementById("newEntryType"),
-        menu = document.getElementById("menu"),
-        menuButton = document.getElementById("menu-button"),
-        isMenuActive,
-        toggleTimeout,
-        toggleNewEntryTypesTimeout,
-        newEntryPopup = document.getElementById("newEntry"),
-        newEntryTypesButton = document.getElementById("newEntryButton"),
-        isNewEntryActive,
-        isNewEntryTypesActive;
-
-    addTapListener(menuButton, toggleMenu);
-    addTapListener(overlay, toggleMenu);
-    addTapListener(newEntryTypesButton, toggleNewEntryTypeSelection);
-    addTapListener(document.getElementById("closeNewEntry"), toggleNewEntry);
-    addTapListener(document.getElementById("cancelNewEntry"), toggleNewEntry);
-    addTapListener(newEntryTypes, function(e){
-        if (e.originalEvent.button === 2)
-            return true;
-
-        toggleNewEntryTypeSelection(e);
-        toggleNewEntry(e);
-    });
-
-    function toggleMenu(e){
-        if (e.originalEvent.button === 2)
-            return true;
-
-        e.preventDefault();
-
-        clearTimeout(toggleTimeout);
-
-        if (isMenuActive){
-            overlay.classList.remove("active");
-            menu.classList.remove("active");
-
-            toggleTimeout = setTimeout(function(){
-                overlay.classList.remove("visible");
-                menuWrapper.classList.remove("visible");
-
-            }, 300);
-        }
-        else{
-            overlay.classList.add("visible");
-            menuWrapper.classList.add("visible");
-
-            toggleTimeout = setTimeout(function(){
-                overlay.classList.add("active");
-                menu.classList.add("active");
-            }, 1);
-        }
-
-        menuButton.classList.toggle("active");
-        isMenuActive = !isMenuActive;
+requirejs.config({
+    baseUrl: 'scripts',
+    paths: {
+        components: '../components',
+        insights: "../insights"
     }
+});
 
-    function toggleNewEntry(e){
-        if (e.originalEvent.button === 2)
-            return true;
+// Start the main app logic.
+requirejs([
+        "components/parse",
+        "components/angular/angular.min"
+    ],
+    function   () {
+        requirejs([
+            "components/angular/angular-touch.min",
+            "components/angular/angular-route.min",
+            "components/indexeddb",
+            "services/phonegap",
+            "services/parse",
+            "services/storage",
+            "services/users",
+            "services/eventbus",
+            "services/utils",
+            "services/chart",
+            "directives/ng-tap",
+            "directives/self-click",
+            "directives/toggle-display",
+            "directives/popup/popup",
+            "directives/ng-tap",
+            "entries/teeth/directive/teeth.directive"
+        ], function(){
+            requirejs([
+                "directives/charts/line_chart",
+                "app"
+                ]
+                ,function(){
+                    requirejs([
+                        "services/config",
+                        "services/classes/data_object",
+                        "services/classes/entry",
+                        "services/classes/player",
+                        "services/entries",
+                        "services/insights",
+                        "services/cloud",
+                        "services/statistics",
+                        "services/navigation",
 
-        e && e.preventDefault();
+                        "entries/teeth/teeth",
+                        "filters/pronoun",
 
-        clearTimeout(toggleTimeout);
+                        "controllers/main_controller",
+                        "controllers/edit_player_controller",
+                        "controllers/insights_controller",
+                        "controllers/entries_list_controller",
+                        "controllers/login_controller",
+                        "controllers/signup_controller",
+                        "entries/teeth/teeth_controller",
+                        "controllers/signup_controller",
+                        "controllers/signup_controller",
 
-        if (isNewEntryActive){
-            newEntryPopup.classList.remove("active");
-
-            toggleTimeout = setTimeout(function(){
-                newEntryPopup.classList.remove("visible");
-            }, 300);
-        }
-        else{
-            newEntryPopup.classList.add("visible");
-
-            toggleTimeout = setTimeout(function(){
-                newEntryPopup.classList.add("active");
-            }, 1);
-        }
-
-        isNewEntryActive = !isNewEntryActive;
+                        "insights/linechart_controller"
+                    ], function(){
+                        angular.bootstrap(document, ["GrowingApp"]);
+                        require(['components/d3'], function(ignore)    {
+                            d3 = require('components/d3');
+                        });
+                    });
+                }
+            );
+        });
     }
-
-    function toggleNewEntryTypeSelection(e){
-        if (e.originalEvent.button === 2)
-            return true;
-
-        e.preventDefault();
-
-        clearTimeout(toggleNewEntryTypesTimeout);
-
-        if (isNewEntryTypesActive){
-            newEntryTypes.classList.remove("active");
-
-            toggleNewEntryTypesTimeout = setTimeout(function(){
-                newEntryTypesWrapper.classList.remove("visible");
-            }, 300);
-        }
-        else{
-            newEntryTypesWrapper.classList.add("visible");
-
-            toggleNewEntryTypesTimeout = setTimeout(function(){
-                newEntryTypes.classList.add("active");
-            }, 1);
-        }
-
-        newEntryTypesButton.classList.toggle("active");
-        isNewEntryTypesActive = !isNewEntryTypesActive;
-    }
-
-    function addTapListener(el, handler){
-        el.addEventListener("tap", handler);
-    }
-})();
+);

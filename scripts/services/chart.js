@@ -78,20 +78,24 @@
                 return week || "Birth";
             },
             time: {
-                days: d3.time.format.multi([
-                    ["%m/%d", function(d){ return d.getFullYear() === new Date().getFullYear(); }],
-                    ["%m/%d/%y", function(){ return true; }]
-                ]),
-                "default": d3.time.format.multi([
-                    [".%L", function(d) { return d.getMilliseconds(); }],
-                    [":%S", function(d) { return d.getSeconds(); }],
-                    ["%H:%M", function(d) { return d.getMinutes(); }],
-                    ["%H:00", function(d) { return d.getHours(); }],
-                    ["%a %d", function(d) { return d.getDay() && d.getDate() != 1; }],
-                    ["%b %d", function(d) { return d.getDate() != 1; }],
-                    ["%B", function(d) { return d.getMonth(); }],
-                    ["%Y", function() { return true; }]
-                ])
+                get days(){
+                    return d3.time.format.multi([
+                        ["%m/%d", function(d){ return d.getFullYear() === new Date().getFullYear(); }],
+                        ["%m/%d/%y", function(){ return true; }]
+                    ]);
+                },
+                get "default"(){
+                    return d3.time.format.multi([
+                        [".%L", function(d) { return d.getMilliseconds(); }],
+                        [":%S", function(d) { return d.getSeconds(); }],
+                        ["%H:%M", function(d) { return d.getMinutes(); }],
+                        ["%H:00", function(d) { return d.getHours(); }],
+                        ["%a %d", function(d) { return d.getDay() && d.getDate() != 1; }],
+                        ["%b %d", function(d) { return d.getDate() != 1; }],
+                        ["%B", function(d) { return d.getMonth(); }],
+                        ["%Y", function() { return true; }]
+                    ]);
+                }
             }
         },
         createScales: function(){
