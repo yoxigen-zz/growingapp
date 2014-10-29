@@ -23,11 +23,9 @@ requirejs([
             "services/eventbus",
             "services/utils",
             "services/chart",
-            "directives/ng-tap",
             "directives/self-click",
             "directives/toggle-display",
             "directives/popup/popup",
-            "directives/ng-tap",
             "entries/teeth/directive/teeth.directive"
         ], function(){
             requirejs([
