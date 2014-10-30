@@ -30,7 +30,6 @@ angular.module("Popup", ["EventBus"]).directive("popup", ["$timeout", "eventBus"
                         toggleElement && toggleElement.classList.add(TOGGLE_ACTIVE_CLASS);
                     }, 1);
 
-                    /*
                     $timeout(function(){
                         var autoFocusElement = toggleElement.querySelector("[data-auto-focus]");
                         if (autoFocusElement) {
@@ -38,7 +37,7 @@ angular.module("Popup", ["EventBus"]).directive("popup", ["$timeout", "eventBus"
                             autoFocusElement.select && autoFocusElement.select();
                         }
                     }, 40);
-                      */
+
                     window.addEventListener("keydown", onKeyDown);
                     eventBus.triggerEvent("popup.open", { closePopup: scope.closePopup.bind(this, null) });
                 }

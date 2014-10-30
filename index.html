@@ -13,6 +13,7 @@
     <div id="menu-wrapper" data-toggle-display="showMenu">
         <div id="menu">
             <header class="actionbar"><span class="app-name">GrowingApp</span></header>
+            <input type="text" placeholder="input something here" />
             <ul id="players-menu">
                 <li ng-repeat="listPlayer in players" class="flex-horizontal"
                     ng-class="{ selected: listPlayer.playerId === player.playerId, 'with-image': listPlayer.image }">
@@ -81,7 +82,8 @@
         <div ng-include="'views/syncOffer.html'"></div>
     </popup>
     <ng-include src="'views/entry_editors.html'"></ng-include>
-
+    <!--
     <script data-main="scripts/main.js" src="components/require.js"></script>
+    -->
 </body>
 </html>
