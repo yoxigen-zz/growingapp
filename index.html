@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width">
     <link rel="icon" type="image/png" href="images/favicon.png"/>
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
-    <script src="phonegap.js"></script>
 </head>
 <body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
     <div id="overlay" data-toggle-display="showMenu" ng-click="showMenu = false"></div>
@@ -82,7 +81,6 @@
         <div ng-include="'views/syncOffer.html'"></div>
     </popup>
     <ng-include src="'views/entry_editors.html'"></ng-include>
-    <!--<script data-main="scripts/main.js" src="components/require.js"></script>-->
-    <script src="components/require.js"></script>
+    <script data-main="scripts/main.js" src="components/require.js"></script>
 </body>
 </html>

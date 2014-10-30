@@ -13,7 +13,6 @@ requirejs([
     ],
     function   () {
         requirejs([
-            "components/angular/angular-touch.min",
             "components/angular/angular-route.min",
             "components/indexeddb",
             "services/phonegap",
@@ -23,7 +22,6 @@ requirejs([
             "services/eventbus",
             "services/utils",
             "services/chart",
-            "directives/self-click",
             "directives/toggle-display",
             "directives/popup/popup",
             "entries/teeth/directive/teeth.directive"
