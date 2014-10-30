@@ -13,7 +13,6 @@
     <div id="menu-wrapper" data-toggle-display="showMenu">
         <div id="menu">
             <header class="actionbar"><span class="app-name">GrowingApp</span></header>
-            <input type="text" placeholder="input something here" />
             <ul id="players-menu">
                 <li ng-repeat="listPlayer in players" class="flex-horizontal"
                     ng-class="{ selected: listPlayer.playerId === player.playerId, 'with-image': listPlayer.image }">
@@ -65,6 +64,8 @@
                 </a>
             </div>
         </header>
+        <input type="text" placeholder="input something here" />
+
         <div id="contents-wrapper" class="flex-1">
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
