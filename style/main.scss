@@ -64,6 +64,12 @@ a{ cursor: pointer; }
   }
 }
 
+.hide-default{
+  display: none;
+
+  &.visible{ display: block; }
+}
+
 .player-edit-image{
   height: 6.9em;
   max-width: 7em;
@@ -72,6 +78,9 @@ a{ cursor: pointer; }
 }
 
 #menu-button{
+  display: none;
+
+  &.render{ display: block;}
   @media all and (min-width: $leftMenuMinWidth){
     display: none;
   }
@@ -79,6 +88,10 @@ a{ cursor: pointer; }
 
 #app-title{
   @media all and (min-width: $leftMenuMinWidth){
+    padding-left: .8em;
+  }
+
+  &.pad-side{
     padding-left: .8em;
   }
 }
@@ -280,6 +293,14 @@ a{ cursor: pointer; }
     opacity: .5;
     font-size: 1.2em;
     font-weight: 300;
+
+    &.contents-empty-message-title{
+      color: $actionbarBackground;
+      opacity: 1;
+      font-weight: 400;
+      text-shadow: -1px 1px 0 White;
+      font-size: 1.3em;
+    }
   }
 }
 

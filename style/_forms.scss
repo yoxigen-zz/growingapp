@@ -148,10 +148,6 @@ select{
 }
 
 .vertical-buttons-bar{
-  .vertical-buttons-text{
-    margin-bottom: .5em;
-    text-align: left;
-  }
   a{
     display: block;
     margin-bottom: .5em;
@@ -160,6 +156,11 @@ select{
       margin-bottom: 0;
     }
   }
+}
+
+.vertical-buttons-text{
+  margin-bottom: .5em;
+  text-align: left;
 }
 
 .cancel-button{

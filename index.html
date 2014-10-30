@@ -10,7 +10,7 @@
 </head>
 <body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
     <div id="overlay" data-toggle-display="showMenu" ng-click="showMenu = false"></div>
-    <div id="menu-wrapper" data-toggle-display="showMenu">
+    <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="showMenu">
         <div id="menu">
             <header class="actionbar"><span class="app-name">GrowingApp</span></header>
             <ul id="players-menu">
@@ -43,8 +43,8 @@
         </div>
     </div>
     <div class="flex-vertical flex-1">
-        <header class="flex-horizontal actionbar" id="app-title">
-            <a id="menu-button" class="actionbar-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu }">
+        <header class="flex-horizontal actionbar" id="app-title" ng-class="{ 'pad-side': showFirstTimeSelection }">
+            <a id="menu-button" class="actionbar-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu, render: !showFirstTimeSelection }">
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
             <div class="flex-1">
@@ -52,7 +52,7 @@
                     {{ player.name || 'GrowingApp' }}
                 </span>
             </div>
-            <div>
+            <div class="hide-default" ng-class="{ visible: !showFirstTimeSelection }">
                 <div id="spinner" toggle-display="showSpinner">
                     <img src="images/icons/spinner.svg" />
                 </div>

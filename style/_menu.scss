@@ -20,10 +20,13 @@
 
   @media all and (min-width: $leftMenuMinWidth){
     position: static;
-    display: block;
     padding-right: 0;
     border-right: solid 1px #C6CCCE;
     background: #e1e8ea;
+
+    &.render{
+      display: block;
+    }
   }
 }
 
