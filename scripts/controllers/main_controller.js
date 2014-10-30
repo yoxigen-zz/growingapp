@@ -295,7 +295,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         $timeout.cancel(spinnerTimeout);
 
         if (e && e.error)
-            alert(e.error);
+            console.error(e.error);
     });
 
     eventBus.subscribe("updatePlayers", function(e){

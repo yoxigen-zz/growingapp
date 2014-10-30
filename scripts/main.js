@@ -58,6 +58,7 @@ requirejs([
 
                         "insights/linechart_controller"
                     ], function(){
+                        alert("bootsrap");
                         angular.bootstrap(document, ["GrowingApp"]);
                         require(['components/d3'], function(ignore)    {
                             d3 = require('components/d3');
