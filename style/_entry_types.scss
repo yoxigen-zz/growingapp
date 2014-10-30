@@ -57,6 +57,9 @@
       background-color: rgba(92, 210, 250, 0.18);
     }
 
+    &:active{
+      background-color: rgba(92, 210, 250, 0.5);
+    }
     font-size: 1.2em;
 
     .entry-image{

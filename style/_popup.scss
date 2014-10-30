@@ -71,6 +71,7 @@ $popupHeaderHeight: 3em;
       font-size: 1.3em;
     }
     .close-button{
+      @extend .header-button;
       float: right;
       display: block;
       height: 2em;
@@ -81,6 +82,7 @@ $popupHeaderHeight: 3em;
 
       img{
         height: 1em;
+        margin-top: 8px;
       }
     }
   }

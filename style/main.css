@@ -91,13 +91,20 @@ a {
   border: solid 1px rgba(0, 0, 0, 0.2);
   margin-right: .5em; }
 
+.header-button:hover, .actionbar .actionbar-button:hover, .popup header .close-button:hover {
+  background-color: #00A8E0; }
+.header-button:active, .actionbar .actionbar-button:active, .popup header .close-button:active {
+  background-color: #00befd; }
+
 #menu-button {
   display: none; }
   #menu-button.render {
     display: block; }
   @media all and (min-width: 1000px) {
     #menu-button {
-      display: none; } }
+      display: none; }
+      #menu-button.render {
+        display: none; } }
 
 @media all and (min-width: 1000px) {
   #app-title {
@@ -160,18 +167,13 @@ a {
       background: rgba(255, 255, 255, 0.3); }
     .actionbar .actionbar-button.selectable {
       opacity: .5;
-      -webkit-transition: all 200ms ease-out;
-      -moz-transition: all 200ms ease-out;
-      -ms-transition: all 200ms ease-out;
-      -o-transition: all 200ms ease-out;
-      transition: all 200ms ease-out;
       transform: scale(0.8);
       -webkit-transform: scale(0.8);
       -ms-transform: scale(0.8); }
     .actionbar .actionbar-button.selected {
-      opacity: 1;
-      -webkit-transform: scale(0.9);
-      -ms-transform: scale(0.9); }
+      opacity: 1; }
+    .actionbar .actionbar-button:active {
+      opacity: 1; }
 
 #contents-wrapper {
   overflow: hidden;
@@ -393,6 +395,10 @@ a {
     padding: 0.8em 0.7em; }
     .items-list li:last-child {
       border-bottom: none; }
+    .items-list li:hover {
+      background-color: rgba(92, 210, 250, 0.18); }
+    .items-list li:active {
+      background-color: rgba(92, 210, 250, 0.5); }
   .items-list .items-list-item-content {
     -webkit-transition: -webkit-transform 200ms ease-out;
     position: relative;
@@ -508,6 +514,8 @@ a {
       border-top: solid 1px rgba(154, 167, 172, 0.2); }
       #menu ul li:hover {
         background-color: #D7E0E2; }
+      #menu ul li:active {
+        background-color: #c1cacc; }
       #menu ul li.selected {
         background: #80cce6; }
   #menu #players-menu {
@@ -646,7 +654,8 @@ a {
       text-align: center;
       line-height: 2em; }
       .popup header .close-button img {
-        height: 1em; }
+        height: 1em;
+        margin-top: 8px; }
   .popup .popup-contents {
     padding: 1em 1em 0; }
   .popup p.popup-text {
@@ -707,6 +716,12 @@ select {
   border-radius: 3px; }
   .button:hover {
     background: #58aef1; }
+  .button:active {
+    -webkit-transform: translateY(2px);
+    -moz-transform: translateY(2px);
+    -ms-transform: translateY(2px);
+    -o-transform: translateY(2px);
+    transform: translateY(2px); }
   .button img {
     height: 1em;
     vertical-align: middle;
@@ -748,7 +763,8 @@ select {
 .text-button {
   background: none;
   color: #333;
-  cursor: pointer; }
+  cursor: pointer;
+  border-radius: 0; }
   .text-button:hover, .text-button.active {
     background: none; }
 
@@ -838,6 +854,8 @@ select {
         width: 50%; } }
     .entry-types-list li:hover {
       background-color: rgba(92, 210, 250, 0.18); }
+    .entry-types-list li:active {
+      background-color: rgba(92, 210, 250, 0.5); }
     .entry-types-list li .entry-image {
       height: 2em; }
     .entry-types-list li img {

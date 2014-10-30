@@ -12,6 +12,14 @@
     &:last-child{
       border-bottom: none;
     }
+
+    &:hover{
+      background-color: rgba(92, 210, 250, 0.18);
+    }
+
+    &:active{
+      background-color: rgba(92, 210, 250, 0.5);
+    }
   }
 
   .items-list-item-content{
