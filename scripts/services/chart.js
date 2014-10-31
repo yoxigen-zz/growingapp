@@ -397,6 +397,7 @@
                 elementBoundingRect;
 
             if (this.getTooltipText){
+                /*
                 this.element.on("mouseover", "[data-tooltip]", function(e){
                     var tooltipData = e.target.__data__,
                         tooltipText = self.getTooltipText(tooltipData, $(e.target).closest("[data-tooltip]").attr("data-tooltip"));
@@ -419,6 +420,7 @@
                 this.element.on("mouseout", "[data-tooltip]", function(e){
                     hideTooltip();
                 });
+                */
             }
 
             function setTooltipText(text) {
@@ -711,6 +713,7 @@
             this.draw();
 
             if (this.settings.onSelect){
+                /*
                 this.element.on("click", "[data-selectable]", function(e){
                     self.scope.$apply(function(){
                         var event = angular.copy(self.settings.onSelect);
@@ -727,6 +730,7 @@
                         });
                     });
                 });
+                */
             }
 
             if (this.settings.brush)
