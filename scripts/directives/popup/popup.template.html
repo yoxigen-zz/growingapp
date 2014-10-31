@@ -1,21 +1,19 @@
-<div class="popup-container">
-    <div class="popup-wrapper popup-background" ng-click="closePopup()"></div>
-    <div class="popup-wrapper">
-        <div class="popup flex-vertical">
-            <div class="flex-vertical">
-                <header>
-                    <a class="close-button"
-                       title="Close"
-                       ng-click="closePopup()">
-                        <img src="images/icons/close.svg" />
-                    </a>
-                    <span class="popup-title">{{popupTitle}}</span>
-                </header>
-                <div class="flex-1 flex-vertical">
-                    <div class="scroll-vertical" ng-transclude>
-                    </div>
-                </div>
-            </div>
+<div class="popup flex-vertical">
+    <header class="flex-horizontal">
+        <a class="popup-header-button"
+           title="Close"
+           ng-click="closePopup()">
+            <img src="images/icons/back.svg" />
+        </a>
+        <span class="flex-1 popup-title">{{popupTitle}}</span>
+        <div ng-show="popupButtons.length">
+            <a ng-repeat="button in popupButtons"
+               class="popup-header-button"
+               title="{{::button.title}}"
+               ng-click="button.onClick()">
+                <img ng-src="images/icons/{{::button.icon}}.svg" />
+            </a>
         </div>
-    </div>
+    </header>
+    <div class="flex-1 scroll-vertical popup-contents" ng-transclude></div>
 </div>

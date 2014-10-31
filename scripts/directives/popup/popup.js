@@ -9,7 +9,8 @@ angular.module("Popup", ["EventBus"]).directive("popup", ["$timeout", "eventBus"
         replace: true,
         scope: {
             popupTitle: "@",
-            popupShow: "="
+            popupShow: "=",
+            popupButtons: "="
         },
         templateUrl: "scripts/directives/popup/popup.template.html",
         link: function postLink(scope, element, attrs) {

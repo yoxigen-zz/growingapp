@@ -27,7 +27,7 @@
         return tickFormatter(tickSettings.tickFormat);
     }
 
-    function getHeight(heightSetting, element){
+    function getHeight(heightSetting){
         if (!heightSetting)
             return "100%";
 
@@ -518,7 +518,7 @@
                     margins: { top: 10, left: 20, right: 20, bottom: 10 }
                 };
 
-            this.element = element;
+            this.element = element[0];
             this.scope = scope;
             this.attrs = attrs;
             this.unwatchers = [];
@@ -530,8 +530,8 @@
                     self.dataSvg = null; // major memory performance improvement.
                 }
 
-                element.off();
-                element.empty();
+                //element.off();
+                element.innerHTML = "";
 
                 self.unwatchers.forEach(function(unwatcher){
                     unwatcher();
@@ -609,20 +609,20 @@
         render: function(){
             var self = this;
 
-            this.element.empty();
-            this.element.off();
-            this.element.addClass("widget-graph");
+            this.element.innerHTML = "";
+            //this.element.off();
+            this.element.classList.add("widget-graph");
 
             if (!this.settings || !this.data || !this._draw)
                 return false;
 
             this.elements = {};
 
-            this.svg = d3.select(this.element[0])
+            this.svg = d3.select(this.element)
                 .append("svg:svg")
                 .attr("class", "graph")
                 .attr("width", "100%")
-                .attr("height", getHeight(this.attrs.height, this.element[0]));
+                .attr("height", getHeight(this.attrs.height));
 
             // The SVG has no height and width if it's hidden, which happens when transitioning widget state due to no data and then data.
             // In this case, wait and try again:
@@ -648,8 +648,8 @@
             if (this.preRender)
                 this.preRender();
 
-            this.width = this.element.width();
-            this.height = this.element.height();
+            this.width = this.element.clientWidth;
+            this.height = this.element.clientHeight;
 
             if (this.settings.legend && this.legendData){
                 this._createLegend();
@@ -748,9 +748,9 @@
         },
         resize: function(){
             var legendWidth = this.elements.legend && this.elements.legend._width;
-            this.svg.attr("height", getHeight(this.attrs.height, this.element[0]));
-            this.width = this.element.width();
-            this.height = this.element.height();
+            this.svg.attr("height", getHeight(this.attrs.height));
+            this.width = this.element.clientWidth;
+            this.height = this.element.clientHeight;
 
             this.width -= this.options.margins.left + this.options.margins.right;
             this.height -= this.options.margins.top + this.options.margins.bottom;

@@ -8,10 +8,13 @@ requirejs.config({
 
 // Start the main app logic.
 requirejs([
+        "components/d3",
         "components/parse",
         "components/angular/angular.min"
     ],
-    function() {
+    function(ignore) {
+        window.d3 = require('components/d3');
+
         requirejs([
             "components/angular/angular-touch.min",
             "components/angular/angular-route.min",
@@ -59,9 +62,6 @@ requirejs([
                         "insights/linechart_controller"
                     ], function(){
                         angular.bootstrap(document, ["GrowingApp"]);
-                        require(['components/d3'], function(ignore)    {
-                            d3 = require('components/d3');
-                        });
                     });
                 }
             );

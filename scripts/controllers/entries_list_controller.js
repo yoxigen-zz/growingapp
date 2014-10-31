@@ -15,7 +15,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     var removedEntryIndex;
 
-    $scope.removeEntry = function(entry){
+    $scope.removeEntry = function(){
+        var entry = $scope.entry;
         removedEntryIndex = $scope.entries.indexOf(utils.arrays.find($scope.entries, function(obj){ return obj.timestamp === entry.timestamp; }));
         entry.remove();
         $scope.entries.splice(removedEntryIndex, 1);
@@ -48,6 +49,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         openEditEntryDialog(entry.type);
         $scope.entry = new Entry(entry);
         $scope.editedEntryIsNew = false;
+        setEntryPopupButtons(true);
     };
 
     $scope.showNewEntryForm = function(entryType){
@@ -55,6 +57,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $scope.entry = new Entry(entryType, $scope.player);
         $scope.editedEntryIsNew = true;
         $scope.showNewEntriesSelection = false;
+        setEntryPopupButtons(false);
     };
 
     $scope.toggleNewEntriesSelection = function(state){
@@ -77,6 +80,17 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             console.error("Couldn't save entry", error);
         });
     };
+
+    function setEntryPopupButtons(isEdit){
+        var buttons = [
+            { icon: "ok", title: "Save entry", onClick: $scope.saveEntry }
+        ];
+
+        if (isEdit)
+            buttons.splice(0, 0, { icon: "trash", title: "Delete entry", onClick: $scope.removeEntry });
+
+        $scope.entryPopupButtons = buttons;
+    }
 
     function onClickAfterRemove(e){
         if (e.target.id !== "undoEntryRemove") {

@@ -37,6 +37,13 @@ a{ cursor: pointer; }
   flex-flow: column;
   flex-direction: column;
 }
+
+.flex{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+
 .flex-1{
   flex: 1;
   -webkit-flex: 1;
@@ -192,14 +199,7 @@ a{ cursor: pointer; }
   overflow: hidden;
   position: relative;
 
-  flex: 1;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-
-  display: -webkit-box;
   -webkit-box-orient: vertical;
-  display: -webkit-flex;
-  display: flex;
   -webkit-flex-flow: column;
   flex-flow: column;
   flex-direction: column;
@@ -264,14 +264,6 @@ a{ cursor: pointer; }
     select.fancy-select{
       color: White;
       border-bottom: none;
-    }
-  }
-
-  .text-button{
-    opacity: .5;
-
-    &:hover{
-      opacity: 1;
     }
   }
 }
