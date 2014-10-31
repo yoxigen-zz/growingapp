@@ -80,7 +80,7 @@ a{ cursor: pointer; }
 
 .header-button{
   &:hover{ background-color: #00A8E0; }
-  &:active{ background-color: #00BEFD }
+  &:active, &.ng-click-active{ background-color: #00BEFD }
 }
 
 #menu-button{
@@ -185,7 +185,7 @@ a{ cursor: pointer; }
       opacity: 1;
     }
 
-    &:active{ opacity: 1}
+    &:active, &.ng-click-active{ opacity: 1}
   }
 }
 #contents-wrapper{

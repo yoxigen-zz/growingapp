@@ -93,7 +93,7 @@ a {
 
 .header-button:hover, .actionbar .actionbar-button:hover, .popup header .close-button:hover {
   background-color: #00A8E0; }
-.header-button:active, .actionbar .actionbar-button:active, .popup header .close-button:active {
+.header-button:active, .actionbar .actionbar-button:active, .popup header .close-button:active, .header-button.ng-click-active, .actionbar .ng-click-active.actionbar-button, .popup header .ng-click-active.close-button {
   background-color: #00befd; }
 
 #menu-button {
@@ -172,7 +172,7 @@ a {
       -ms-transform: scale(0.8); }
     .actionbar .actionbar-button.selected {
       opacity: 1; }
-    .actionbar .actionbar-button:active {
+    .actionbar .actionbar-button:active, .actionbar .actionbar-button.ng-click-active {
       opacity: 1; }
 
 #contents-wrapper {
@@ -397,7 +397,7 @@ a {
       border-bottom: none; }
     .items-list li:hover {
       background-color: rgba(92, 210, 250, 0.18); }
-    .items-list li:active {
+    .items-list li:active, .items-list li.ng-click-active {
       background-color: rgba(92, 210, 250, 0.5); }
   .items-list .items-list-item-content {
     -webkit-transition: -webkit-transform 200ms ease-out;
@@ -514,7 +514,7 @@ a {
       border-top: solid 1px rgba(154, 167, 172, 0.2); }
       #menu ul li:hover {
         background-color: #D7E0E2; }
-      #menu ul li:active {
+      #menu ul li:active, #menu ul li.ng-click-active {
         background-color: #c1cacc; }
       #menu ul li.selected {
         background: #80cce6; }
@@ -716,7 +716,7 @@ select {
   border-radius: 3px; }
   .button:hover {
     background: #58aef1; }
-  .button:active {
+  .button:active, .button.ng-click-active {
     -webkit-transform: translateY(2px);
     -moz-transform: translateY(2px);
     -ms-transform: translateY(2px);
@@ -847,14 +847,13 @@ select {
     text-align: center;
     width: 33.3%;
     box-sizing: border-box;
-    vertical-align: top;
-    font-size: 1.2em; }
+    vertical-align: top; }
     @media all and (max-width: 450px) {
       .entry-types-list li {
         width: 50%; } }
     .entry-types-list li:hover {
       background-color: rgba(92, 210, 250, 0.18); }
-    .entry-types-list li:active {
+    .entry-types-list li:active, .entry-types-list li.ng-click-active {
       background-color: rgba(92, 210, 250, 0.5); }
     .entry-types-list li .entry-image {
       height: 2em; }

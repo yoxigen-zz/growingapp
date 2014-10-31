@@ -78,7 +78,7 @@
         background-color: #D7E0E2;
       }
 
-      &:active{
+      &:active, &.ng-click-active{
         background-color: #c1cacc;
       }
 

@@ -17,7 +17,7 @@
       background-color: rgba(92, 210, 250, 0.18);
     }
 
-    &:active{
+    &:active, &.ng-click-active{
       background-color: rgba(92, 210, 250, 0.5);
     }
   }
