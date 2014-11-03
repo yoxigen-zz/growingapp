@@ -914,7 +914,8 @@ select {
     vertical-align: top; }
     @media all and (max-width: 450px) {
       .entry-types-list li {
-        width: 50%; } }
+        width: 50%;
+        font-size: 1.1em; } }
     .entry-types-list li:hover {
       background-color: rgba(92, 210, 250, 0.18); }
     .entry-types-list li:active, .entry-types-list li.ng-click-active {
