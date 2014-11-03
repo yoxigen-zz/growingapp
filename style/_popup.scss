@@ -14,14 +14,13 @@ $popupHeaderHeight: 3em;
   -moz-transition: all 300ms ease-out;
   -ms-transition: all 300ms ease-out;
   -o-transition: all 300ms ease-out;
-  transition: all 300ms ease-out;
 
   -webkit-transform: translateX(100%);
   -moz-transform: translateX(100%);
   -ms-transform: translateX(100%);
   -o-transform: translateX(100%);
   transform: translateX(100%);
-
+  
   &.visible{
     @extend .flex;
   }

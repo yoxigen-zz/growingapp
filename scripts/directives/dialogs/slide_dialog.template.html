@@ -2,16 +2,16 @@
     <header class="flex-horizontal">
         <a class="popup-header-button"
            title="Close"
-           ng-click="closePopup()">
+           ng-click="closeDialog()">
             <img src="images/icons/back.svg" />
         </a>
-        <span class="flex-1 popup-title">{{popupTitle}}</span>
-        <div ng-show="popupButtons.length">
-            <a ng-repeat="button in popupButtons"
+        <span class="flex-1 popup-title">{{title}}</span>
+        <div ng-show="actions.length">
+            <a ng-repeat="action in actions"
                class="popup-header-button"
-               title="{{::button.title}}"
-               ng-click="button.onClick()">
-                <img ng-src="images/icons/{{::button.icon}}.svg" />
+               title="{{::action.title}}"
+               ng-click="action.onClick()">
+                <img ng-src="images/icons/{{::action.icon}}.svg" />
             </a>
         </div>
     </header>

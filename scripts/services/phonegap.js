@@ -71,7 +71,8 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                 var deferred = $q.defer();
                 try {
                     if (!window.Camera)
-                        alert("No window.Camera. navigator.camera = " + navigator.camera);
+                        alert("Camera unavailable.");
+
                     else if (navigator.camera) {
                         navigator.camera.getPicture(
                             function onSuccess(result) {

@@ -15,7 +15,21 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     var removedEntryIndex;
 
-    $scope.removeEntry = function(){
+    $scope.removeEntry = removeEntry;
+    $scope.unremoveEntry = unremoveEntry;
+    $scope.saveEntry = saveEntry;
+
+    $scope.currentEntriesType = "";
+    $scope.entryTypes = entries.typesArray;
+    $scope.onEntriesTypeChange = setEntries;
+    $scope.entryClick = selectEntry;
+    $scope.showNewEntryForm = showNewEntryForm;
+    $scope.toggleNewEntriesSelection = toggleNewEntriesSelection;
+
+
+    // Scope functions:
+
+    function removeEntry(){
         var entry = $scope.entry;
         removedEntryIndex = $scope.entries.indexOf(utils.arrays.find($scope.entries, function(obj){ return obj.timestamp === entry.timestamp; }));
         entry.remove();
@@ -26,9 +40,9 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         setTimeout(function(){
             document.body.addEventListener("mousedown", onClickAfterRemove);
         }, 50);
-    };
+    }
 
-    $scope.unremoveEntry = function(){
+    function unremoveEntry(){
         if (!$scope.removedEntry)
             return false;
 
@@ -36,35 +50,9 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $scope.entries.splice(removedEntryIndex, 0, parseEntry($scope.removedEntry));
         eventBus.triggerEvent("saveEntry", $scope.removedEntry);
         hideUnremoveMessage();
-    };
+    }
 
-    $scope.currentEntriesType = "";
-    $scope.entryTypes = entries.typesArray;
-
-    $scope.onEntriesTypeChange = function(){
-        setEntries();
-    };
-
-    $scope.entryClick = function(entry){
-        openEditEntryDialog(entry.type);
-        $scope.entry = new Entry(entry);
-        $scope.editedEntryIsNew = false;
-        setEntryPopupButtons(true);
-    };
-
-    $scope.showNewEntryForm = function(entryType){
-        openEditEntryDialog(entryType);
-        $scope.entry = new Entry(entryType, $scope.player);
-        $scope.editedEntryIsNew = true;
-        $scope.showNewEntriesSelection = false;
-        setEntryPopupButtons(false);
-    };
-
-    $scope.toggleNewEntriesSelection = function(state){
-        $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
-    };
-
-    $scope.saveEntry = function(){
+    function saveEntry(){
         $scope.entry.save().then(function(savedEntry){
             $scope.showEditEntry = false;
             $scope.toggleNewEntriesSelection(false);
@@ -79,7 +67,26 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         }, function(error){
             console.error("Couldn't save entry", error);
         });
-    };
+    }
+
+    function selectEntry(entry){
+        openEditEntryDialog(entry.type);
+        $scope.entry = new Entry(entry);
+        $scope.editedEntryIsNew = false;
+        setEntryPopupButtons(true);
+    }
+
+    function showNewEntryForm(entryType){
+        openEditEntryDialog(entryType);
+        $scope.entry = new Entry(entryType, $scope.player);
+        $scope.editedEntryIsNew = true;
+        $scope.showNewEntriesSelection = false;
+        setEntryPopupButtons(false);
+    }
+
+    function toggleNewEntriesSelection(state){
+        $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
+    }
 
     function setEntryPopupButtons(isEdit){
         var buttons = [

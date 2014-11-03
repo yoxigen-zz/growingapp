@@ -20,11 +20,11 @@
             <div class="flex-horizontal">
                 <img ng-src="{{editedPlayer.image}}" ng-show="editedPlayer.image" class="player-edit-image" />
                 <div class="flex-1 vertical-buttons-bar">
-                    <a class="button" ng-click="takePlayerPicture()">
+                    <a class="button" ng-click="editedPlayer.addPhoto('camera')">
                         <img src="images/icons/camera.svg" />
                         <span class="button-text"><span class="large-width-only">From </span>Camera</span>
                     </a>
-                    <a class="button" ng-click="browsePlayerPicture()">
+                    <a class="button" ng-click="editedPlayer.addPhoto('browse')">
                         <img src="images/icons/folders.svg" />
                         <span class="button-text">Browse<span class="large-width-only"> Library</span></span>
                     </a>

@@ -25,46 +25,53 @@ requirejs([
             "services/users",
             "services/eventbus",
             "services/utils",
+            "services/messages",
+            "services/classes/dialog",
             "services/chart",
             "directives/toggle-display",
-            "directives/popup/popup",
             "entries/teeth/directive/teeth.directive"
         ], function(){
             requirejs([
-                "directives/charts/line_chart",
-                "app"
-                ]
-                ,function(){
-                    requirejs([
-                        "services/config",
-                        "services/classes/data_object",
-                        "services/classes/entry",
-                        "services/classes/player",
-                        "services/entries",
-                        "services/insights",
-                        "services/cloud",
-                        "services/statistics",
-                        "services/navigation",
+                "services/images",
+                "directives/dialogs/dialog",
+                "directives/dialogs/slide_dialog"
+            ], function(){
+                requirejs([
+                        "directives/charts/line_chart",
+                        "app"
+                    ]
+                    ,function(){
+                        requirejs([
+                            "services/config",
+                            "services/classes/data_object",
+                            "services/classes/entry",
+                            "services/classes/player",
+                            "services/entries",
+                            "services/insights",
+                            "services/cloud",
+                            "services/statistics",
+                            "services/navigation",
 
-                        "entries/teeth/teeth",
-                        "filters/pronoun",
+                            "entries/teeth/teeth",
+                            "filters/pronoun",
 
-                        "controllers/main_controller",
-                        "controllers/edit_player_controller",
-                        "controllers/insights_controller",
-                        "controllers/entries_list_controller",
-                        "controllers/login_controller",
-                        "controllers/signup_controller",
-                        "entries/teeth/teeth_controller",
-                        "controllers/signup_controller",
-                        "controllers/signup_controller",
+                            "controllers/main_controller",
+                            "controllers/edit_player_controller",
+                            "controllers/insights_controller",
+                            "controllers/entries_list_controller",
+                            "controllers/login_controller",
+                            "controllers/signup_controller",
+                            "entries/teeth/teeth_controller",
+                            "controllers/signup_controller",
+                            "controllers/signup_controller",
 
-                        "insights/linechart_controller"
-                    ], function(){
-                        angular.bootstrap(document, ["GrowingApp"]);
-                    });
-                }
-            );
+                            "insights/linechart_controller"
+                        ], function(){
+                            angular.bootstrap(document, ["GrowingApp"]);
+                        });
+                    }
+                );
+            });
         });
     }
 );

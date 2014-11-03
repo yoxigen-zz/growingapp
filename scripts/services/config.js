@@ -70,6 +70,22 @@ app.factory("config", ["utils", function(utils){
                 selected: "kg"
             }
         },
+        players: {
+            getCurrentPlayerId: function(){
+                var playerId = localStorage.currentPlayer;
+                if (playerId)
+                    return parseInt(playerId);
+
+                return null;
+            },
+            removeCurrentPlayerId: function(){
+                localStorage.removeItem("currentPlayer");
+            },
+            setCurrentPlayerId: function(playerId){
+                localStorage.currentPlayer = String(playerId);
+            },
+            playerImageSize: { width: 400, height: 400 }
+        },
         sync: {
             declineSyncOffer: function(){
                 syncOfferDeclined = true;

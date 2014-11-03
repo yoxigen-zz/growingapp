@@ -1,4 +1,4 @@
-app.controller("LoginController", ["$scope", "users", "eventBus", function($scope, users, eventBus){
+app.controller("LoginController", ["$scope", "users", "eventBus", "messages", function($scope, users, eventBus, messages){
     $scope.confirmPassword = "";
     $scope.loginUser = {};
 
@@ -30,7 +30,7 @@ app.controller("LoginController", ["$scope", "users", "eventBus", function($scop
             onLogin(user);
         }, function(error){
             $scope.loginError = error.message;
-            alert("Can't login: " + error.message);
+            messages.error("Can't login: " + error.message);
         });
     };
 
@@ -38,7 +38,7 @@ app.controller("LoginController", ["$scope", "users", "eventBus", function($scop
         users.facebookLogin().then(function(user){
             onLogin(user);
         }, function(error){
-            alert("Can't login: " + error.message);
+            messages.error("Can't login: " + error.message);
             $scope.loginError = error.message;
         });
     };

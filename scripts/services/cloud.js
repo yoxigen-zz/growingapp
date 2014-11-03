@@ -4,9 +4,8 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
     eventBus.subscribe("editPlayer", syncPlayer);
     eventBus.subscribe("deletePlayer", syncPlayer);
     eventBus.subscribe("login", onLogin);
-    eventBus.subscribe("logout", function(){
-        cloudEnabled = false;
-    });
+    eventBus.subscribe("logout", function(){ cloudEnabled = false; });
+    eventBus.subscribe("sync", sync);
 
     var storage = new Storage().cloud,
         cloudEnabled;

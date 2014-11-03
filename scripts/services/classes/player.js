@@ -1,6 +1,7 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "parse", function getPlayerClassFactory($q, $indexedDB, dbConfig, DataObject, parse) {
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "parse", "images",
+    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, parse, images) {
     var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
@@ -18,9 +19,10 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "parse", fu
             if (data.cloudId)
                 this.cloudId = data.cloudId;
         }
-        else
+        else {
             this.gender = "f";
-
+            this.birthday = new Date();
+        }
         this.__defineGetter__("playerId", function () {
             return id;
         });
@@ -36,6 +38,23 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "parse", fu
     }
 
     Player.prototype = {
+        /**
+         * Uses the images service to take a picture and if successful, add it to the player.
+         * @param method "camera" / "browse". Defaults to "camera" if none.
+         * @returns {*} The promise is called with the new image
+         */
+        addPhoto: function(method){
+            var player = this;
+            return images.getPhoto(method, {
+                allowEdit : true,
+                targetWidth: config.players.playerImageSize.width,
+                targetHeight: config.players.playerImageSize.height,
+                saveToPhotoAlbum: false
+            }).then(function(dataUrl){
+                player.image = player.imageDataUrl = dataUrl;
+                return player.image;
+            });
+        },
         /**
          * Returns the age of this player, in days, for the specified date. If no date is specified, returns the current age.
          * @param date
@@ -103,6 +122,9 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "parse", fu
     Player.prototype.__proto__ = new DataObject();
 
     Player.getAll = function (options) {
+        if (!options && Player.players)
+            return $q.when(Player.players);
+
         options = options || {};
 
         return playersObjectStore.internalObjectStore(dbConfig.objectStores.players, "readonly").then(function(objectStore){
@@ -114,13 +136,16 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "parse", fu
             cursor.onsuccess = function(event) {
                 var cursor = event.target.result;
                 if (!cursor) {
-                    if (!Player.players)
-                        Player.players = {};
+                    if (!Player.playersIndex)
+                        Player.playersIndex = {};
 
                     players.forEach(function(player){
-                        if (!Player.players[player.playerId])
-                            Player.players[player.playerId] = player;
+                        if (!Player.playersIndex[player.playerId])
+                            Player.playersIndex[player.playerId] = player;
                     });
+
+                    if (!options)
+                        Player.players = players;
 
                     deferred.resolve(players);
                     return;
@@ -143,24 +168,38 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "DataObject", "parse", fu
     Player.updatePlayers = function(updatedPlayers){
         if (updatedPlayers && updatedPlayers.length){
             updatedPlayers.forEach(function(player){
-                if (player.deleted && Player.players[player.playerId])
-                    delete Player.players[player.playerId];
+                if (player.deleted && Player.playersIndex[player.playerId])
+                    delete Player.playersIndex[player.playerId];
                 else
-                    Player.players[player.playerId] = player;
+                    Player.playersIndex[player.playerId] = player;
             });
         }
     };
 
     Player.getById = function(playerId){
-        if (!Player.players){
+        if (!Player.playersIndex){
             return Player.getAll().then(function(players){
-                return Player.players[playerId];
+                return Player.playersIndex[playerId];
             }).catch(function(error){
                 return $q.reject("Can't get Player by ID, can't get all players.");
             });
         }
 
-        return Player.players[playerId];
+        return Player.playersIndex[playerId];
+    };
+
+    Player.getCurrentPlayer = function(){
+        var currentPlayerId = config.players.getCurrentPlayerId();
+        if (currentPlayerId)
+            return $q.when(Player.getById(currentPlayerId));
+        else{
+            return Player.getAll().then(function(players) {
+                if (players && players.length)
+                    return players[0];
+
+                return null;
+            });
+        }
     };
 
     return Player;

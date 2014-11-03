@@ -9,7 +9,7 @@
     <script src="phonegap.js"></script>
 </head>
 <body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
-    <div id="overlay" data-toggle-display="showMenu" ng-click="showMenu = false"></div>
+    <div id="overlay" data-toggle-display="showMenu" ng-click="hideMenu()"></div>
     <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="showMenu">
         <div id="menu">
             <header class="actionbar"><span class="app-name">GrowingApp</span></header>
@@ -44,7 +44,7 @@
     </div>
     <div class="flex-vertical flex-1">
         <header class="flex-horizontal actionbar" id="app-title" ng-class="{ 'pad-side': showFirstTimeSelection }">
-            <a id="menu-button" class="actionbar-button" ng-click="showMenu = !showMenu" ng-class="{ active: showMenu, render: !showFirstTimeSelection }">
+            <a id="menu-button" class="actionbar-button" ng-click="toggleMenu()" ng-class="{ active: showMenu, render: !showFirstTimeSelection }">
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
             <div class="flex-1">
@@ -68,18 +68,18 @@
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
     </div>
-    <popup popup-show="showEditPlayer" popup-title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}">
+    <slide-dialog show="showEditPlayer" title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}" on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/edit_player.html'"></div>
-    </popup>
-    <popup popup-show="showLogin" popup-title="Sign In">
+    </slide-dialog>
+    <slide-dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/login.html'"></div>
-    </popup>
-    <popup popup-show="showSignup" popup-title="Sign Up">
+    </slide-dialog>
+    <slide-dialog show="showSignup" title="Sign Up" on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/signup.html'"></div>
-    </popup>
-    <popup popup-show="showSyncOffer" popup-title="It's time to backup!">
+    </slide-dialog>
+    <slide-dialog show="showSyncOffer" title="It's time to backup!" on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/syncOffer.html'"></div>
-    </popup>
+    </slide-dialog>
     <ng-include src="'views/entry_editors.html'"></ng-include>
     <script data-main="scripts/main.js" src="components/require.js"></script>
 </body>

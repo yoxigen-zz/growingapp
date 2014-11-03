@@ -1,0 +1,16 @@
+<div class="dialog-container">
+    <div class="dialog-wrapper dialog-background" ng-click="closeDialog()"></div>
+    <div class="dialog-wrapper">
+        <div class="dialog flex-vertical">
+            <div class="flex-vertical">
+                <header ng-if="title">
+                    <span class="dialog-title">{{title}}</span>
+                </header>
+                <div class="flex-1 flex-vertical">
+                    <div class="scroll-vertical" ng-transclude>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
