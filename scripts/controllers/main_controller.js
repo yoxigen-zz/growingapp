@@ -1,5 +1,6 @@
 app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages",
     function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages){
+
     var currentMenuItem;
 
     $scope.config = config;
@@ -14,6 +15,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
     $scope.onShowDialog = function(e){ eventBus.triggerEvent("popup.open", e); };
     $scope.onHideDialog = function(e){ eventBus.triggerEvent("popup.close", e); };
+    $scope.addNewPlayer = addNewPlayer;
+    $scope.openSignUp = openSignUp;
+    $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
+    $scope.declineSyncOffer = declineSyncOffer;
 
     // TODO: move these to a new EditPlayerController:
     $scope.savePlayer = savePlayer;
@@ -25,6 +30,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     eventBus.subscribe("showLogin", openLogin);
     eventBus.subscribe("hideMenu", hideMenu);
     eventBus.subscribe("login", onLogin);
+    eventBus.subscribe("loadingStart", onLoadingStart);
+    eventBus.subscribe("loadingEnd", onLoadingEnd);
+    eventBus.subscribe("logout", onLogout);
+    eventBus.subscribe("updatePlayers", onUpdatePlayers);
 
     window.addEventListener("online", function(){
         $scope.$apply(function(){
@@ -37,6 +46,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             $scope.offline = true;
         });
     });
+
+    init();
 
     function setCurrentMenuItem(){
         var hash = window.location.hash;
@@ -149,25 +160,22 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         });
     }
 
-    $scope.addNewPlayer = function(){
+    function addNewPlayer(){
         $scope.editedPlayer = new Player();
         $scope.toggleEditPlayer(true);
-    };
+    }
 
-    $scope.openSignUp = function(){
+    function openSignUp(){
         $scope.showLogin = false;
         $scope.showSyncOffer = false;
         $scope.showSignup = true;
-    };
+    }
 
-    $scope.openSyncOffer = function(){
-        $scope.showSyncOffer = true;
-    };
-
-    $scope.declineSyncOffer = function(){
+    function declineSyncOffer(){
         $scope.showSyncOffer = false;
         config.sync.declineSyncOffer();
-    };
+    }
+
 
     function onLogin(e){
         $scope.showLogin = false;
@@ -181,32 +189,30 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         $scope.currentUser = e.user;
     }
 
-    eventBus.subscribe("logout", function(){
+    function onLogout(){
         var signoutItem = getMenuItemById("signOut");
         signoutItem.hide = true;
 
         $scope.currentUser = null;
-    });
+    }
 
     var spinnerTimeout;
-    eventBus.subscribe("loadingStart", function(e){
+    function onLoadingStart(e){
         $timeout.cancel(spinnerTimeout);
         if (!e || !e.isOnLoad) {
             spinnerTimeout = $timeout(function () {
                 $scope.showSpinner = true;
             }, 300);
         }
-    });
-
-    eventBus.subscribe("loadingEnd", function(e){
+    }
+    function onLoadingEnd(e){
         $scope.showSpinner = false;
         $timeout.cancel(spinnerTimeout);
 
         if (e && e.error)
             console.error(e.error);
-    });
-
-    eventBus.subscribe("updatePlayers", function(e){
+    }
+    function onUpdatePlayers(e){
         var deletedCurrentPlayer;
 
         e.players.forEach(function(player){
@@ -243,7 +249,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         if ((!$scope.player && $scope.players.length)|| deletedCurrentPlayer)
             setFirstPlayer();
-    });
+    }
 
     function onRouteChange(){
         $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
@@ -306,6 +312,4 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             cloud.sync({ isOnLoad: true });
         });
     }
-
-    init();
 }]);

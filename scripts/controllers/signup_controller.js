@@ -1,11 +1,12 @@
 app.controller("SignUpController", ["$scope", "$http", "users", "eventBus", function($scope, $http, users, eventBus){
     $scope.newUser = {};
+    $scope.signUp = signUp;
 
     $http.get("data/countries.json").then(function(response){
         $scope.countries = response.data;
     });
 
-    $scope.signUp = function(){
+    function signUp(){
         if (!$scope.newUser.username){
             $scope.signupError = "Please specify your email address";
             $scope.highlight = "username";

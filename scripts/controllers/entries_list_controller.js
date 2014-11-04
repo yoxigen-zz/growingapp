@@ -1,6 +1,8 @@
 'use strict';
 
 app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config){
+    var settingEntries;
+
     eventBus.subscribe("newEntry", addEntry);
     eventBus.subscribe("editPlayer", setEntries);
     eventBus.subscribe("playerSelect", setEntries);
@@ -25,6 +27,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     $scope.entryClick = selectEntry;
     $scope.showNewEntryForm = showNewEntryForm;
     $scope.toggleNewEntriesSelection = toggleNewEntriesSelection;
+
+    setEntries();
 
 
     // Scope functions:
@@ -150,7 +154,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         return newEntry;
     }
 
-    var settingEntries;
     function setEntries(data){
         if ($scope.player && $scope.player.playerId) {
             if (settingEntries)
@@ -211,5 +214,4 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
         sortEntries();
     }
-    setEntries();
 }]);

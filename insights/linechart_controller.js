@@ -5,9 +5,7 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
 
     eventBus.subscribe("playerSelect", setData);
 
-    $scope.$on("$destroy", function(){
-        eventBus.unsubscribe("playerSelect", setData);
-    });
+    $scope.$on("$destroy", function(){ eventBus.unsubscribe("playerSelect", setData); });
 
     $scope.chartSettings = {
         dataSeries: "player.name",
@@ -30,6 +28,9 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
             "y": {}
         }
     };
+
+    setData();
+
 
     function setData() {
         if (!$scope.player || !$scope.player.playerId){
@@ -73,5 +74,4 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
         $scope.stats = stats;
     }
 
-    setData();
 }]);

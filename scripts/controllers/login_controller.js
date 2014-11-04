@@ -1,13 +1,11 @@
 app.controller("LoginController", ["$scope", "users", "eventBus", "messages", function($scope, users, eventBus, messages){
     $scope.confirmPassword = "";
     $scope.loginUser = {};
+    $scope.signIn = signIn;
+    $scope.facebookLogin = facebookLogin;
 
     users.getLastUser().then(function(username){
         $scope.loginUser.username = username;
-    });
-
-    $scope.$on("modalClose", function(){
-        $scope.closeViewer();
     });
 
     $scope.$watch("showLogin", function(value){
@@ -15,7 +13,7 @@ app.controller("LoginController", ["$scope", "users", "eventBus", "messages", fu
             $scope.loginUser.password = null;
     });
 
-    $scope.signIn = function(){
+    function signIn(){
         if (!$scope.loginUser || !$scope.loginUser.username || !$scope.loginUser.password){
             $scope.loginError = "Please enter email adress and password.";
             return;
@@ -32,16 +30,16 @@ app.controller("LoginController", ["$scope", "users", "eventBus", "messages", fu
             $scope.loginError = error.message;
             messages.error("Can't login: " + error.message);
         });
-    };
+    }
 
-    $scope.facebookLogin = function(){
+    function facebookLogin(){
         users.facebookLogin().then(function(user){
             onLogin(user);
         }, function(error){
             messages.error("Can't login: " + error.message);
             $scope.loginError = error.message;
         });
-    };
+    }
 
     function onLogin(user){
         eventBus.triggerEvent("login", { user: user });
