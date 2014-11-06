@@ -8,10 +8,13 @@
     </label>
 </script>
 <script type="text/ng-template" id="entry_editor_height">
-    <div class="flex-horizontal">
-        <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.height" data-auto-focus placeholder="The new height" /></div>
-        <select ng-model="config.localization.height.selected" ng-options="unit for unit in config.localization.height.all"></select>
-    </div>
+    <label>
+        <span class="label-text">The new height</span>
+        <div class="flex-horizontal">
+            <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.height" data-auto-focus placeholder="The new height" /></div>
+            <select ng-model="config.localization.height.selected" ng-options="unit for unit in config.localization.height.all"></select>
+        </div>
+    </label>
 </script>
 <script type="text/ng-template" id="entry_editor_speech">
     <label>
