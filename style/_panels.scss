@@ -1,0 +1,23 @@
+.panel-wrapper{
+  overflow: hidden;
+}
+
+.double-panel{
+  @extend .flex-horizontal;
+
+  width: 200%;
+  height: 100%;
+  -webkit-transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -ms-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+
+  &.panel-shifted{
+    transform: translateX(-50%);
+  }
+
+  .panel{
+    @extend .flex-1;
+  }
+}

@@ -1,4 +1,4 @@
-$popupHeaderHeight: 3em;
+$popupHeaderHeight: $contentsHeaderHeight;
 
 .popup{
   display: none;
@@ -66,20 +66,7 @@ $popupHeaderHeight: 3em;
     }
 
     .popup-header-button{
-      display: inline-block;
-      vertical-align: top;
-      height: $popupHeaderHeight;
-      width: $popupHeaderHeight;
-      text-align: center;
-      line-height: $popupHeaderHeight * 1.2;
-
-      &:hover{ background: rgba(255, 255, 255, .1); }
-      &:active, &.ng-click-active{ background: rgba(255, 255, 255, .25); }
-
-      img{
-        height: 50%;
-        max-width: 60%;
-      }
+      @extend .contents-header-button;
     }
   }
 

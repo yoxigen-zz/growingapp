@@ -11,10 +11,10 @@ $inputBorderRadius: 2px;
 $actionbarBackground: #017fcf;
 $activeColor: #FCC435;
 $actionbarColor: White;
-$headerBackground: #0070B6;;
+$headerBackground: White;
 $darkHeaderBackground: #163852;
 $darkHeaderColor: White;
-$headerColor: White;
+$headerColor: #333;
 $actionbarHeight: 3.5em;
 $contentsHeaderHeight: 3em;
 $saveBackgroundColor: #39b54a;
@@ -23,6 +23,8 @@ $defaultButtonBackgroundColor: #57a3e5;
 $defaultButtonBackgroundColorHover: #58aef1;
 $saveColor: White;
 $leftMenuMinWidth: 1000px;
+$lightHoverColor: rgba(92, 210, 250, 0.18);
+$lightActiveColor: rgba(92, 210, 250, 0.5);
 
 @font-face {
   font-family: 'Roboto';

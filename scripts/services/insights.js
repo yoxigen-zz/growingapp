@@ -1,7 +1,7 @@
-app.factory("insights", [function(){
+app.factory("insights", ["entries", function(entries){
     var insightsList = [
-            { id: "weight", name: "Weight Chart", description: "Age to weight chart, with percentiles" },
-            { id: "height", name: "Height Chart", description: "Age to height chart, with percentiles" }
+            { id: "weight", name: "Weight Chart", description: "Age to weight chart, with percentiles", icon: entries.types.weight.icon },
+            { id: "height", name: "Height Chart", description: "Age to height chart, with percentiles", icon: entries.types.height.icon }
         ],
         currentInsight;
 

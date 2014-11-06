@@ -1,14 +1,36 @@
-<div class="flex-1 scroll-vertical">
-    <header class="contents-header dark">
-        <div class="header-controls">
-            Insights -
-            <select class="fancy-select"
-                    ng-model="currentInsight"
-                    ng-change="onInsightChange(currentInsight)"
-                    ng-options="insight as insight.name for insight in ::insights">
-                <option value="">(Select)</option>
-            </select>
+<div class="flex-1 panel-wrapper flex-vertical">
+    <div class="flex-1 double-panel" ng-class="{ 'panel-shifted': panelShifted }">
+        <div class="panel flex-vertical">
+            <header class="contents-header">
+                Insights
+            </header>
+            <div class="flex-1 scroll-vertical">
+                <ul id="insights-list">
+                    <li ng-repeat="insight in ::insights" ng-click="setCurrentInsight(insight)" class="flex-horizontal">
+                        <div class="insight-icon">
+                            <img class="item-icon" ng-src="images/icons/{{::insight.icon}}.svg" />
+                        </div>
+                        <div class="insight-text flex-1">
+                            <h4>{{::insight.name}}</h4>
+                            <p class="insight-description">{{::insight.description}}</p>
+                        </div>
+                    </li>
+                </ul>
+                <p class="comment">
+                    More charts soon...
+                </p>
+            </div>
         </div>
-    </header>
-    <div ng-include="currentInsightInclude"></div>
+        <div class="panel flex-vertical">
+            <header class="contents-header dark with-buttons">
+                <a class="contents-header-button"
+                   title="Back"
+                   ng-click="backToInsightsList()">
+                    <img src="images/icons/back.svg" />
+                </a>
+                {{currentInsight.name}}
+            </header>
+            <div class="flex-1 scroll-vertical" ng-include="currentInsightInclude"></div>
+        </div>
+    </div>
 </div>

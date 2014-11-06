@@ -1,0 +1,38 @@
+#insights-list{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  margin-bottom: 2em;
+
+  li{
+    @extend .light-hoverable;
+
+    padding: $padding;
+    border-bottom: solid 1px #ddd;
+    cursor: pointer;
+  }
+
+  .insight-icon{
+    width: 3em;
+    text-align: center;
+
+    img{
+      max-width: 2.5em;
+      max-height: 2.5em;
+    }
+  }
+
+  .insight-text{
+    -moz-padding-start: 1em;
+    -webkit-padding-start: 1em;
+  }
+  h4{
+    padding: 0;
+    margin: 0 0 .2em;
+  }
+
+  p{
+    padding: 0;
+    margin: 0;
+  }
+}

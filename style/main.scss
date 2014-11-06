@@ -115,6 +115,8 @@ a{ cursor: pointer; }
   line-height: $actionbarHeight - .1;
   background: $actionbarBackground;
   color: $actionbarColor;
+  box-shadow: 0 3px 4px rgba(0,0,0,.25);
+  z-index: 1;
 
   .edit-button{
     height: .8em;
@@ -245,9 +247,11 @@ a{ cursor: pointer; }
   line-height: $contentsHeaderHeight;
   background: $headerBackground;
   color: $headerColor;
+  font-weight: bold;
   padding-left: $padding;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
+  font-size: 1.2em;
 
   h2{
     font-size: 1.3em;
@@ -266,6 +270,25 @@ a{ cursor: pointer; }
       border-bottom: none;
     }
   }
+
+  &.with-buttons{ padding: 0 }
+}
+
+.contents-header-button{
+    display: inline-block;
+    vertical-align: top;
+    height: $contentsHeaderHeight;
+    width: $contentsHeaderHeight;
+    text-align: center;
+    line-height: $contentsHeaderHeight * 1.2;
+
+    &:hover{ background: rgba(255, 255, 255, .1); }
+    &:active, &.ng-click-active{ background: rgba(255, 255, 255, .25); }
+
+    img{
+      height: 50%;
+      max-width: 60%;
+    }
 }
 
 .contents-scroll{
@@ -299,22 +322,27 @@ a{ cursor: pointer; }
   }
 }
 
-.header-controls{
-  font-weight: 300;
-  font-size: 1.2em;
-
-  text-align: left;
-
-  img{
-    height: 100%
-  }
-}
-
 .centered-buttons-block{
   position: relative;
   top: -1em;
 }
 
+.light-hoverable{
+  &:hover{
+    background-color: rgba(92, 210, 250, 0.18);
+  }
+
+  &:active, &.ng-click-active{
+    background-color: rgba(92, 210, 250, 0.5);
+  }
+}
+
+.comment{
+  font-weight: 300;
+  opacity: .56;
+  text-align: center;
+  padding: 1em;
+}
 #newEntryButton{
   padding: 0;
   width: 3em;
@@ -457,5 +485,7 @@ $spinnerSize: 2em;
 @import "popup";
 @import "dialog";
 @import "forms";
+@import "panels";
 @import "entry_types";
 @import "chart";
+@import "insights";
