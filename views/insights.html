@@ -4,7 +4,7 @@
             <header class="contents-header">
                 Insights
             </header>
-            <div class="flex-1 scroll-vertical">
+            <div class="flex-1 scroll-vertical" ng-hide="firstPanelHidden">
                 <ul id="insights-list">
                     <li ng-repeat="insight in ::insights" ng-click="setCurrentInsight(insight)" class="flex-horizontal">
                         <div class="insight-icon">
@@ -30,7 +30,7 @@
                 </a>
                 {{currentInsight.name}}
             </header>
-            <div class="flex-1 scroll-vertical" ng-include="currentInsightInclude"></div>
+            <div class="flex-1 scroll-vertical"  ng-hide="secondPanelHidden" ng-include="currentInsightInclude"></div>
         </div>
     </div>
 </div>

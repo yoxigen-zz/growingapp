@@ -1,24 +1,41 @@
 app.controller("InsightsController", ["$scope", "insights", "$timeout", function($scope, insights, $timeout){
+    var shiftTimeout;
 
     $scope.insights = insights.insightsList;
     $scope.setCurrentInsight = setCurrentInsight;
-    $scope.backToInsightsList = function(){ $scope.panelShifted = false; };
+    $scope.backToInsightsList = unshiftPanels;
 
     if ($scope.currentInsight = insights.currentInsight)
         setCurrentInsightInclude(insights.currentInsight);
 
     function setCurrentInsight(insight){
         if (!insight) {
-            $scope.panelShifted = false;
+            unshiftPanels();
             return;
         }
 
         setCurrentInsightInclude(insight);
-        insights.currentInsight = insight;
-        $scope.panelShifted = true;
+        $scope.currentInsight = insights.currentInsight = insight;
+        shiftPanels();
     }
 
     function setCurrentInsightInclude(insight){
         $scope.currentInsightInclude = "insights/" + insight.id + "/" + insight.id + ".html";
+    }
+
+    function shiftPanels(){
+        $scope.secondPanelHidden = false;
+        $scope.panelShifted = true;
+        shiftTimeout = $timeout(function(){
+            $scope.firstPanelHidden = true;
+        }, 300);
+    }
+
+    function unshiftPanels(){
+        $scope.firstPanelHidden = false;
+        $scope.panelShifted = false;
+        shiftTimeout = $timeout(function(){
+            $scope.secondPanelHidden = true;
+        }, 300);
     }
 }]);
