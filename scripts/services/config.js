@@ -5,7 +5,7 @@ app.constant("dbConfig", {
     }
 });
 
-app.factory("config", ["utils", function(utils){
+app.factory("config", ["utils", "localization", function(utils, localization){
     var entries = {
         milestone: {
             types: [
@@ -52,24 +52,7 @@ app.factory("config", ["utils", function(utils){
         }
     };
 
-    var localization = {
-        "date": {
-            all: [
-                "MMM DD, YYYY",
-                "MM/DD/YYYY",
-                "DD/MM/YYYY"
-            ],
-            "selected": "MMM DD, YYYY"
-        },
-        height: {
-            all: ["cm", "inches"],
-            selected: "cm"
-        },
-        weight: {
-            all: ["kg", "lb"],
-            selected: "kg"
-        }
-    };
+    var currentLocalization = localization.getLocalizationDefaults();
 
     var localizationSetTime,
         lastSync,
@@ -86,8 +69,8 @@ app.factory("config", ["utils", function(utils){
                 localizationSetTime = new Date(storageLocalization.__updateTime__);
         }
         for(var p in storageLocalization){
-            if (localization[p])
-                localization[p].selected = storageLocalization[p];
+            if (currentLocalization[p])
+                currentLocalization[p].selected = storageLocalization[p];
         }
     }
 
@@ -97,8 +80,8 @@ app.factory("config", ["utils", function(utils){
         entries: entries,
         getCurrentLocalization: function(){
             var values = {};
-            for(var p in localization){
-                values[p] = localization[p].selected;
+            for(var p in currentLocalization){
+                values[p] = currentLocalization[p].selected;
             }
             values.__updateTime__ = localizationSetTime;
             return values;
@@ -107,9 +90,9 @@ app.factory("config", ["utils", function(utils){
             if (!angular.isDate(date))
                 throw new Error("Invalid date: " + date);
 
-            return moment(date).format(localization.date.selected);
+            return moment(date).format(currentLocalization.date.selected);
         },
-        localization: localization,
+        localization: currentLocalization,
         players: {
             getCurrentPlayerId: function(){
                 var playerId = localStorage.currentPlayer;
@@ -131,8 +114,8 @@ app.factory("config", ["utils", function(utils){
                 var changed = false;
 
                 for (var p in localizationState) {
-                    if (localization[p] && localization[p].selected !== localizationState[p]) {
-                        localization[p].selected = localizationState[p];
+                    if (currentLocalization[p] && currentLocalization[p].selected !== localizationState[p]) {
+                        currentLocalization[p].selected = localizationState[p];
                         changed = true;
                     }
                 }

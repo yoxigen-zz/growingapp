@@ -4,7 +4,7 @@
         <div>
         <select ng-model="settings.height"
                 ng-change="onUnitChange('height')"
-                ng-options="unit for unit in config.localization.height.all"></select>
+                ng-options="unit.name as unit.name for unit in config.localization.height.all"></select>
         </div>
     </label>
     <label>
@@ -12,7 +12,7 @@
         <div>
             <select ng-model="settings.weight"
                     ng-change="onUnitChange('weight')"
-                    ng-options="unit for unit in config.localization.weight.all"></select>
+                    ng-options="unit.name as unit.name for unit in config.localization.weight.all"></select>
         </div>
     </label>
     <label>

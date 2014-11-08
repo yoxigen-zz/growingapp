@@ -25,11 +25,7 @@
                     <option value="">All entry types</option>
                 </select>
             </div>
-            <div>
-                <a id="newEntryButton" ng-click="toggleNewEntriesSelection()" class="button text-button" ng-class="{ active: showNewEntriesSelection }" title="New Entry">
-                    <img src="images/icons/plus.svg" />
-                </a>
-            </div>
+            <a id="new-entry-button" class="floating-action-button add-button" title="New entry" ng-click="toggleNewEntriesSelection()"></a>
         </header>
         <div class="flex-1 contents-empty-message" ng-cloak ng-show="entries && !entries.length">
             <div>

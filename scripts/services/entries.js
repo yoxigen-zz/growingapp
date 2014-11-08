@@ -1,28 +1,19 @@
 app.factory("entries", ["utils", "localization", "config", "$filter", function entriesFactory(utils, localization, config, $filter){
+    var unitFilter = $filter("unit");
     var entryTypes = [
         {
             "id": "weight",
             "name": "Weight",
             "icon": "weight",
             "html": function(entry, player) {
-                var unitFilter = $filter("unit"),
-                    htmlArr = [player.name, ' weights <span class="item-measure">'],
+                var htmlArr = [player.name, ' weights <span class="item-measure">'],
                     value = unitFilter(entry.properties.absoluteWeight || entry.properties.weight, "weight");
 
                 htmlArr.push($filter("toFixed")(value, 2));
-                htmlArr.push(config.localization.weight.selected);
+                htmlArr.push(localization.units.weight[config.localization.weight.selected].display);
                 htmlArr.push("</span>");
                 return htmlArr.join("");
             },
-            "properties": [
-                {
-                    type: "number",
-                    name: "weight",
-                    isRequired: true,
-                    min: 0.1,
-                    max: 200
-                }
-            ],
             "prepareForEdit": function(entry){
                 var convertMethod = localization.convertFromUnit;
                 entry.properties.weight = parseFloat(convertMethod("weight", entry.properties.absoluteWeight || entry.properties.weight, config.localization.weight.selected).toFixed(2));
@@ -36,9 +27,21 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             "id": "height",
             "name": "Height",
             "icon": "height",
-            "html": '{{player.name}} is <span class="item-measure">{{data.properties.height}}{{config.localization.height.selected}}</span> tall',
+            "html": function(entry, player) {
+                var htmlArr = [player.name, ' is <span class="item-measure">'],
+                    value = unitFilter(entry.properties.absoluteHeight || entry.properties.height, "height");
+
+                htmlArr.push($filter("toFixed")(value, 2));
+                htmlArr.push(localization.units.height[config.localization.height.selected].display);
+                htmlArr.push("</span> tall");
+                return htmlArr.join("");
+            },
+            "prepareForEdit": function(entry){
+                var convertMethod = localization.convertFromUnit;
+                entry.properties.height = parseFloat(convertMethod("height", entry.properties.absoluteHeight || entry.properties.height, config.localization.height.selected).toFixed(2));
+            },
             "preSave": function(entry){
-                entry.properties.absoluteHeight = localization.convertToUnit("height", entry.properties.height, config.localization.height.selected).toFixed(2);
+                entry.properties.absoluteHeight = localization.convertToUnit("height", entry.properties.height, config.localization.height.selected);
             },
             "localizationDependencies": ["height"]
         },

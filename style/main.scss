@@ -252,6 +252,7 @@ a{ cursor: pointer; }
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
   font-size: 1.2em;
+  position: relative;
 
   h2{
     font-size: 1.3em;
@@ -460,6 +461,33 @@ $spinnerSize: 2em;
     }
   }
 }
+
+$floatingActionButtonDiameter: 2.4em;
+
+.floating-action-button{
+  position: absolute;
+  bottom: 0;
+  margin-bottom: $floatingActionButtonDiameter / -2;
+  height: $floatingActionButtonDiameter;
+  width: $floatingActionButtonDiameter;
+  border-radius: 50%;
+  background-color: #E00E6E;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  background-position: center center;
+  right: $padding;
+  background-size: 33%;
+  background-repeat: no-repeat;
+
+  &:hover{ background-color: #ee0e71; }
+  &:active, &.ng-click-active{
+    background-color: #d10e69;
+    box-shadow: 0 0 4px rgba(0,0,0,.5);
+  }
+  &.add-button{
+    background-image: url(../images/icons/plus.svg);
+  }
+}
+
 #overlay{
   position: fixed;
   z-index: 100;

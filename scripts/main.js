@@ -70,7 +70,9 @@ requirejs([
                             "controllers/signup_controller",
                             "controllers/signup_controller",
 
-                            "insights/linechart_controller"
+                            "insights/linechart_controller",
+
+                            "directives/fixed"
                         ], function(){
                             angular.bootstrap(document, ["GrowingApp"]);
                         });

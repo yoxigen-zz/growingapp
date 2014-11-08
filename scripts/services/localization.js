@@ -1,18 +1,46 @@
 angular.module("Localization", []).factory("localization", function(){
 	var units = {
+		"date": {
+			all: [
+				{ "name": "Dec 24, 2014", "display": "MMM DD, YYYY" },
+				{ "name": "12/24/2014", "display": "MM/DD/YYYY" },
+				{ "name": "24/12/2014", "display": "DD/MM/YYYY" }
+			],
+			"selected": "MMM DD, YYYY"
+		},
 		height: {
-			cm: 1,
-			"inches": 2.54
+			all: [
+				{ "name": "cm", "display": "cm", "multiplier": 1 },
+				{ "name": "inches", "display": "&Prime;", "multiplier": 2.54 }
+			],
+			selected: "cm"
 		},
 		weight: {
-			kg: 1,
-			"lb": 0.453592
+			all: [
+				{ "name": "kg", "display": "kg", "multiplier": 1 },
+				{ "name": "lb", "display": "lbs", "multiplier": 0.453592 }
+			],
+			selected: "kg"
 		}
 	};
 
+	var unitsIndex = {},
+		unitIndex;
+
+	for(var type in units){
+		unitIndex = unitsIndex[type] = {};
+		units[type].all.forEach(function(unit){
+			unitIndex[unit.name] = unit;
+		});
+	}
+
 	return {
 		convertFromUnit: convertFromUnit,
-		convertToUnit: convertToUnit
+		convertToUnit: convertToUnit,
+		getLocalizationDefaults: function(){ return angular.copy(units); },
+		get units(){
+			return unitsIndex;
+		}
 	};
 
 	/**
@@ -23,21 +51,21 @@ angular.module("Localization", []).factory("localization", function(){
 	 * @returns {number}
 	 */
 	function convertToUnit(type, value, targetUnit){
-		var unitType = units[type];
+		var unitType = unitsIndex[type];
 		if (!unitType)
 			throw new Error("Unknown unit type, '" + type + "'.");
 
-		return value * unitType[targetUnit];
+		return value * unitType[targetUnit].multiplier;
 	}
 
 	/**
 	 * The reverse of convertToUnit
 	 */
 	function convertFromUnit(type, value, targetUnit){
-		var unitType = units[type];
+		var unitType = unitsIndex[type];
 		if (!unitType)
 			throw new Error("Unknown unit type, '" + type + "'.");
 
-		return value / unitType[targetUnit];
+		return value / unitType[targetUnit].multiplier;
 	}
 });
