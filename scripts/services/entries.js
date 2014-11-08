@@ -7,7 +7,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             "icon": "weight",
             "html": function(entry, player) {
                 var htmlArr = [player.name, ' weights <span class="item-measure">'],
-                    value = unitFilter(entry.properties.absoluteWeight || entry.properties.weight, "weight");
+                    value = unitFilter(entry.properties.value || entry.properties.weight, "weight");
 
                 htmlArr.push($filter("toFixed")(value, 2));
                 htmlArr.push(localization.units.weight[config.localization.weight.selected].display);
@@ -16,10 +16,10 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             },
             "prepareForEdit": function(entry){
                 var convertMethod = localization.convertFromUnit;
-                entry.properties.weight = parseFloat(convertMethod("weight", entry.properties.absoluteWeight || entry.properties.weight, config.localization.weight.selected).toFixed(2));
+                entry.properties.weight = parseFloat(convertMethod("weight", entry.properties.value || entry.properties.weight, config.localization.weight.selected).toFixed(2));
             },
             "preSave": function(entry){
-                entry.properties.absoluteWeight = localization.convertToUnit("weight", entry.properties.weight, config.localization.weight.selected);
+                entry.properties.value = localization.convertToUnit("weight", entry.properties.weight, config.localization.weight.selected);
             },
             "localizationDependencies": ["weight"]
         },
@@ -29,7 +29,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             "icon": "height",
             "html": function(entry, player) {
                 var htmlArr = [player.name, ' is <span class="item-measure">'],
-                    value = unitFilter(entry.properties.absoluteHeight || entry.properties.height, "height");
+                    value = unitFilter(entry.properties.value || entry.properties.height, "height");
 
                 htmlArr.push($filter("toFixed")(value, 2));
                 htmlArr.push(localization.units.height[config.localization.height.selected].display);
@@ -38,10 +38,10 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             },
             "prepareForEdit": function(entry){
                 var convertMethod = localization.convertFromUnit;
-                entry.properties.height = parseFloat(convertMethod("height", entry.properties.absoluteHeight || entry.properties.height, config.localization.height.selected).toFixed(2));
+                entry.properties.height = parseFloat(convertMethod("height", entry.properties.value || entry.properties.height, config.localization.height.selected).toFixed(2));
             },
             "preSave": function(entry){
-                entry.properties.absoluteHeight = localization.convertToUnit("height", entry.properties.height, config.localization.height.selected);
+                entry.properties.value = localization.convertToUnit("height", entry.properties.height, config.localization.height.selected);
             },
             "localizationDependencies": ["height"]
         },

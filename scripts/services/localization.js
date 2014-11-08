@@ -11,7 +11,7 @@ angular.module("Localization", []).factory("localization", function(){
 		height: {
 			all: [
 				{ "name": "cm", "display": "cm", "multiplier": 1 },
-				{ "name": "inches", "display": "&Prime;", "multiplier": 2.54 }
+				{ "name": "inches", "display": "″", "multiplier": 2.54 }
 			],
 			selected: "cm"
 		},

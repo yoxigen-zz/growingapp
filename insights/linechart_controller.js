@@ -1,7 +1,9 @@
 'use strict';
 
-app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "eventBus", "config", "statistics", function($scope, Entry, utils, eventBus, config, statistics){
-    var insightId = $scope.currentInsight.id;
+app.controller("LineChartInsightController", ["$scope", "$filter", "Entry", "utils", "eventBus", "config", "statistics", "localization", function($scope, $filter, Entry, utils, eventBus, config, statistics, localization){
+    var insightId = $scope.currentInsight.id,
+        unit = localization.units[insightId][config.localization[insightId].selected],
+        unitFilter = $filter("unit");
 
     eventBus.subscribe("playerSelect", setData);
 
@@ -10,7 +12,7 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
     $scope.chartSettings = {
         dataSeries: "player.name",
         x: "age",
-        y: "properties." + insightId,
+        y: "value",
         interpolate: "cardinal",
         "axes": {
             "x": {
@@ -20,7 +22,7 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
             },
             "y": {
                 tickFormat: "d",
-                unit: config.localization[insightId].selected
+                unit: unit.display
             }
         },
         "scales": {
@@ -39,13 +41,18 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
         }
 
         Entry.getEntries({ playerId: $scope.player.playerId, type: insightId }).then(function (data) {
-            $scope.chartData = data;
+            $scope.chartData = data.map(function(item){
+                var itemCopy = angular.copy(item);
+                itemCopy.value = unitFilter(item.properties.value || item.properties[insightId], insightId, item.properties.value);
+                return itemCopy;
+            });
+
             setStats(data);
         }).catch(function(error){
             console.error("Can't get entries for " + insightId + " chart: ", error);
         });
 
-        statistics.getPercentiles(insightId, $scope.player).then(function(percentileData){
+        statistics.getPercentiles(insightId, $scope.player, unit.name).then(function(percentileData){
             $scope.percentileData = percentileData;
         }, function(error){
             console.error(error);
@@ -61,8 +68,8 @@ app.controller("LineChartInsightController", ["$scope", "Entry", "utils", "event
             return;
         }
 
-        data.forEach(function(item){
-            values.push(item.properties[insightId]);
+        values = data.map(function(item){
+            return unitFilter(item.properties.value || item.properties[insightId], insightId, item.properties.value);
         });
 
         stats.push({
