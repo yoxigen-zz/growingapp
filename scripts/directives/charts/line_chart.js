@@ -144,7 +144,7 @@ angular.module('Charts')
                 }
 
                 function createLegend(){
-                    var legendElement = d3.select(element.find(".chart-legend")[0]),
+                    var legendElement = d3.select(element[0].childNodes[1]),
                         legendData = [];
 
                     chart.data.forEach(function(series){
