@@ -1,0 +1,31 @@
+.player-edit{
+  .player-edit-avatar{
+    padding-right: 2em;
+
+    .button .img{
+      height: 1.5em;
+    }
+  }
+
+  .avatar-buttons{
+    text-align: center;
+  }
+
+  .avatar{
+    width: 8em;
+    height: 8em;
+    border-radius: 50%;
+    border: solid .3em White;
+
+    &.avatar-placeholder{
+      background: #01A8CF url(../images/icons/user.svg) no-repeat bottom center;
+      background-size: contain;
+    }
+
+    img{
+      border-radius: 50%;
+      width: 8em;
+      height: 8em;
+    }
+  }
+}

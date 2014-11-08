@@ -1,0 +1,26 @@
+<form>
+    <label>
+        <span class="label-text">Height / length unit</span>
+        <div>
+        <select ng-model="settings.height"
+                ng-change="onUnitChange('height')"
+                ng-options="unit for unit in config.localization.height.all"></select>
+        </div>
+    </label>
+    <label>
+        <span class="label-text">Weight unit</span>
+        <div>
+            <select ng-model="settings.weight"
+                    ng-change="onUnitChange('weight')"
+                    ng-options="unit for unit in config.localization.weight.all"></select>
+        </div>
+    </label>
+    <label>
+        <span class="label-text">Date format</span>
+        <div>
+            <select ng-model="settings.date"
+                    ng-change="onUnitChange('date')"
+                    ng-options="date for date in config.localization.date.all"></select>
+        </div>
+    </label>
+</form>

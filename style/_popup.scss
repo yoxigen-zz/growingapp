@@ -41,6 +41,14 @@ $popupHeaderHeight: $contentsHeaderHeight;
     line-height: $popupHeaderHeight - 0.2;
     font-weight: 300;
 
+    .popup-icon{
+      max-height: 1.3em;
+      max-width: 1.3em;
+      vertical-align: middle;
+      margin-top: -.1em;
+      margin-right: .3em;
+    }
+
     .popup-title{
       font-size: 1.3em;
       overflow: hidden;

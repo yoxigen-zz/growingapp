@@ -94,7 +94,11 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
         getNewId: function(){
             return new Date().valueOf()
         },
-        objectStore: entriesObjectStore
+        objectStore: entriesObjectStore,
+        preSave: function(){
+            if (this.type.preSave)
+                this.type.preSave(this);
+        }
     };
 
     Entry.prototype.__proto__ = new DataObject();

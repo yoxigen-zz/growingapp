@@ -38,10 +38,10 @@
             </div>
         </div>
         <ul class="items-list">
-            <li ng-repeat="entry in entries" ng-click="entryClick(entry)">
+            <li ng-repeat="entry in entries" ng-click="selectEntry(entry)">
                 <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                 <div class="item-text">
-                    <div ng-bind-html="::entry.html"></div>
+                    <div ng-bind-html="entry.html"></div>
                     <p ng-if="entry.description" class='item-description'>{{::entry.description}}</p>
                     <div class="item-details">{{::entry.dateText}}</div>
                 </div>

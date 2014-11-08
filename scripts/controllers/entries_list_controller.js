@@ -1,32 +1,34 @@
 'use strict';
 
 app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config){
-    var settingEntries;
+    var settingEntries,
+        removedEntryIndex;
+
+    $scope.removeEntry = removeEntry;
+    $scope.saveEntry = saveEntry;
+    $scope.unremoveEntry = unremoveEntry;
+
+    $scope.currentEntriesType = "";
+    $scope.entryTypes = entries.typesArray;
+    $scope.onEntriesTypeChange = setEntries;
+    $scope.selectEntry = selectEntry;
+    $scope.showNewEntryForm = showNewEntryForm;
+    $scope.toggleNewEntriesSelection = toggleNewEntriesSelection;
+    $scope.onUnitChange = onUnitChange;
 
     eventBus.subscribe("newEntry", addEntry);
     eventBus.subscribe("editPlayer", setEntries);
     eventBus.subscribe("playerSelect", setEntries);
     eventBus.subscribe("updateEntries", onUpdateEntries);
+    eventBus.subscribe("settingsChange", onSettingsChange);
 
     $scope.$on("$destroy", function(){
         eventBus.unsubscribe("newEntry", addEntry);
         eventBus.unsubscribe("editPlayer", setEntries);
         eventBus.unsubscribe("playerSelect", setEntries);
         eventBus.unsubscribe("updateEntries", onUpdateEntries);
+        eventBus.unsubscribe("settingsChange", onSettingsChange);
     });
-
-    var removedEntryIndex;
-
-    $scope.removeEntry = removeEntry;
-    $scope.unremoveEntry = unremoveEntry;
-    $scope.saveEntry = saveEntry;
-
-    $scope.currentEntriesType = "";
-    $scope.entryTypes = entries.typesArray;
-    $scope.onEntriesTypeChange = setEntries;
-    $scope.entryClick = selectEntry;
-    $scope.showNewEntryForm = showNewEntryForm;
-    $scope.toggleNewEntriesSelection = toggleNewEntriesSelection;
 
     setEntries();
 
@@ -76,6 +78,9 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     function selectEntry(entry){
         openEditEntryDialog(entry.type);
         $scope.entry = new Entry(entry);
+        if (entry.type.prepareForEdit)
+            entry.type.prepareForEdit($scope.entry);
+
         $scope.editedEntryIsNew = false;
         setEntryPopupButtons(true);
     }
@@ -108,6 +113,19 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             $scope.$apply(hideUnremoveMessage);
             document.body.removeEventListener("mousedown", onClickAfterRemove);
         }
+    }
+
+    function onUnitChange(unitType){
+        eventBus.triggerEvent("configChange", { unitType: unitType });
+        updateEntriesAfterUnitChange(unitType);
+        config.saveLocalization();
+    }
+
+    function updateEntriesAfterUnitChange(unitType){
+        $scope.entries.forEach(function(entry){
+            if (entry.type.localizationDependencies && ~entry.type.localizationDependencies.indexOf(unitType))
+                parseEntry(entry);
+        });
     }
 
     function hideUnremoveMessage(){
@@ -150,11 +168,11 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             newEntry.html = $sce.trustAsHtml("<span class='item-error'>Error parsing entry HTML!</span>");
         }
 
-        newEntry.dateText = newEntry.date.toLocaleDateString() + " (" + utils.dates.dateDiff(newEntry.date, $scope.player.birthday) + ")";
+        newEntry.dateText = config.getLocalizedDate(newEntry.date) + " (" + utils.dates.dateDiff(newEntry.date, $scope.player.birthday) + ")";
         return newEntry;
     }
 
-    function setEntries(data){
+    function setEntries(){
         if ($scope.player && $scope.player.playerId) {
             if (settingEntries)
                 return;
@@ -213,5 +231,10 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         }
 
         sortEntries();
+    }
+
+    function onSettingsChange(){
+        $scope.entries = angular.copy($scope.entries).map(parseEntry);
+
     }
 }]);

@@ -1,7 +1,10 @@
 app.factory("navigation", ["phonegap", "eventBus", "$route", "$rootScope", "users", function(phonegap, eventBus, $route, $rootScope, users){
-    var openPopup,
+    var openPopups = [],
         mainMenuItems = [
-            //{ text: "Settings", href: "#/settings", icon: "images/icons/settings.svg" },
+            { text: "Settings", icon: "images/icons/settings.svg", onClick: function(e){
+                e.preventDefault();
+                eventBus.triggerEvent("showSettings");
+            } },
             //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
             //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },
             { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", className: "disable-offline", onClick: function(e){
@@ -23,13 +26,17 @@ app.factory("navigation", ["phonegap", "eventBus", "$route", "$rootScope", "user
         ];
 
     phonegap.onBackButton.addEventListener(onBackButton);
-    eventBus.subscribe("popup.open", function(popup){ openPopup = popup; });
-    eventBus.subscribe("popup.close", function(){ openPopup = null; });
+    eventBus.subscribe("popup.open", function(popup){
+        openPopups.push(popup);
+    });
+    eventBus.subscribe("popup.close", function(popup){
+        openPopups.pop();
+    });
 
     function onBackButton(){
         $rootScope.safeApply(function(){
-            if (openPopup)
-                openPopup.closeDialog();
+            if (openPopups.length)
+                openPopups[openPopups.length - 1].closeDialog();
             else
                 navigateUp();
         });

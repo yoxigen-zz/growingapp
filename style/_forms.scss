@@ -25,6 +25,19 @@ form{
   }
 }
 
+.input-unit{
+  line-height: 2em;
+  padding: 0 .5em;
+
+  a{
+    color: #017fcf;
+    text-decoration: underline;
+
+    &.ng-click-active{
+      color: #019bff;
+    }
+  }
+}
 select{
   padding: .5em;
   border: solid 1px #b9cfd6;

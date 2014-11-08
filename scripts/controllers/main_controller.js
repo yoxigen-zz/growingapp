@@ -19,6 +19,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.openSignUp = openSignUp;
     $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
     $scope.declineSyncOffer = declineSyncOffer;
+    $scope.openSettings = openSettings;
+    $scope.settingsActions = [{ icon: "ok", title: "Save settings", onClick: saveSettings }];
 
     // TODO: move these to a new EditPlayerController:
     $scope.savePlayer = savePlayer;
@@ -28,6 +30,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.$on("$routeChangeSuccess", onRouteChange);
 
     eventBus.subscribe("showLogin", openLogin);
+    eventBus.subscribe("showSettings", openSettings);
     eventBus.subscribe("hideMenu", hideMenu);
     eventBus.subscribe("login", onLogin);
     eventBus.subscribe("loadingStart", onLoadingStart);
@@ -80,6 +83,19 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         $scope.showLogin = true;
     }
 
+    function openSettings(){
+        $scope.showSettings = true;
+        $scope.settings = config.getCurrentLocalization();
+        delete $scope.settings.__updateTime__;
+    }
+    function saveSettings(){
+        if (config.saveLocalization($scope.settings))
+            eventBus.triggerEvent("settingsChange");
+
+        $scope.showSettings = false;
+        delete $scope.settings;
+    }
+
     function setFirstPlayer(){
         $scope.setCurrentPlayer($scope.players && $scope.players.length ? $scope.players[0] : null);
     }
@@ -94,8 +110,20 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         }
     }
 
+    function setEditPlayerActions(isNewPlayer){
+        var actions = [
+            { icon: "ok", title: "Save child", onClick: savePlayer }
+        ];
+
+        if(!isNewPlayer)
+            actions.splice(0, 0, { icon: "trash", title: "Delete child", onClick: removePlayer });
+
+        $scope.editedPlayerActions = actions;
+    }
+
     function editPlayer(player){
         if (player instanceof Player) {
+            $scope.editPlayerActions = setEditPlayerActions();
             $scope.editedPlayer = angular.copy(player);
             $scope.toggleEditPlayer(true);
         }
@@ -161,6 +189,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     function addNewPlayer(){
+        setEditPlayerActions(true);
         $scope.editedPlayer = new Player();
         $scope.toggleEditPlayer(true);
     }
@@ -282,8 +311,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     function hideMenu(){
-        eventBus.triggerEvent("popup.close");
-        $scope.showMenu = false;
+        if ($scope.showMenu) {
+            eventBus.triggerEvent("popup.close");
+            $scope.showMenu = false;
+        }
     }
 
     function toggleMenu(){

@@ -1,4 +1,9 @@
-app = angular.module("GrowingApp", ["ngRoute", "ngTouch", "ToggleDisplay", "EventBus", "Utils", "xc.indexedDB", "Charts", "Phonegap", "Parse", "Storage", "Users", "Teeth", "Images", "Messages", "Dialogs"])
+app = angular.module("GrowingApp", [
+    "ngRoute", "ngTouch",
+    "xc.indexedDB",
+    "Phonegap", "Parse",
+    "app.filters",
+    "ToggleDisplay", "EventBus", "Utils", , "Charts", "Storage", "Users", "Teeth", "Images", "Messages", "Dialogs", "Localization"])
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "dbConfig", function ($routeProvider, $locationProvider, $indexedDBProvider, dbConfig) {
         $indexedDBProvider
             .connection('diaryDB')

@@ -632,6 +632,12 @@ a {
     height: 3em;
     line-height: 2.8em;
     font-weight: 300; }
+    .popup header .popup-icon {
+      max-height: 1.3em;
+      max-width: 1.3em;
+      vertical-align: middle;
+      margin-top: -.1em;
+      margin-right: .3em; }
     .popup header .popup-title {
       font-size: 1.3em;
       overflow: hidden;
@@ -756,6 +762,15 @@ form label {
   display: block; }
   form label.no-margin {
     margin-bottom: 0; }
+
+.input-unit {
+  line-height: 2em;
+  padding: 0 .5em; }
+  .input-unit a {
+    color: #017fcf;
+    text-decoration: underline; }
+    .input-unit a.ng-click-active {
+      color: #019bff; }
 
 select {
   padding: .5em;
@@ -1073,3 +1088,22 @@ svg.graph {
   #insights-list p {
     padding: 0;
     margin: 0; }
+
+.player-edit .player-edit-avatar {
+  padding-right: 2em; }
+  .player-edit .player-edit-avatar .button .img {
+    height: 1.5em; }
+.player-edit .avatar-buttons {
+  text-align: center; }
+.player-edit .avatar {
+  width: 8em;
+  height: 8em;
+  border-radius: 50%;
+  border: solid .3em White; }
+  .player-edit .avatar.avatar-placeholder {
+    background: #01a8cf url(../images/icons/user.svg) no-repeat bottom center;
+    background-size: contain; }
+  .player-edit .avatar img {
+    border-radius: 50%;
+    width: 8em;
+    height: 8em; }

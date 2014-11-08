@@ -52,24 +52,64 @@ app.factory("config", ["utils", function(utils){
         }
     };
 
-    var lastSync,
+    var localization = {
+        "date": {
+            all: [
+                "MMM DD, YYYY",
+                "MM/DD/YYYY",
+                "DD/MM/YYYY"
+            ],
+            "selected": "MMM DD, YYYY"
+        },
+        height: {
+            all: ["cm", "inches"],
+            selected: "cm"
+        },
+        weight: {
+            all: ["kg", "lb"],
+            selected: "kg"
+        }
+    };
+
+    var localizationSetTime,
+        lastSync,
         syncOfferDeclined;
 
     entries.milestone.typesIndex = utils.arrays.toIndex(entries.milestone.types, "id");
     entries.teeth.index = utils.arrays.toIndex(entries.teeth.list, "id");
 
+    function getLocalization(){
+        var storageLocalization = localStorage.app_localization;
+        if (storageLocalization) {
+            storageLocalization = JSON.parse(storageLocalization);
+            if (storageLocalization.__updateTime__)
+                localizationSetTime = new Date(storageLocalization.__updateTime__);
+        }
+        for(var p in storageLocalization){
+            if (localization[p])
+                localization[p].selected = storageLocalization[p];
+        }
+    }
+
+    getLocalization();
+
     return {
         entries: entries,
-        localization: {
-            height: {
-                all: ["cm", "inches"],
-                selected: "cm"
-            },
-            weight: {
-                all: ["kg", "lb"],
-                selected: "kg"
+        getCurrentLocalization: function(){
+            var values = {};
+            for(var p in localization){
+                values[p] = localization[p].selected;
             }
+            values.__updateTime__ = localizationSetTime;
+            return values;
         },
+        getLocalizedDate: function(date){
+            if (!angular.isDate(date))
+                throw new Error("Invalid date: " + date);
+
+            return moment(date).format(localization.date.selected);
+        },
+        localization: localization,
         players: {
             getCurrentPlayerId: function(){
                 var playerId = localStorage.currentPlayer;
@@ -85,6 +125,26 @@ app.factory("config", ["utils", function(utils){
                 localStorage.currentPlayer = String(playerId);
             },
             playerImageSize: { width: 400, height: 400 }
+        },
+        saveLocalization: function(localizationState){
+            if (!localizationSetTime || !localizationState.__updateTime__ || localizationState.__updateTime__ > localizationSetTime) {
+                var changed = false;
+
+                for (var p in localizationState) {
+                    if (localization[p] && localization[p].selected !== localizationState[p]) {
+                        localization[p].selected = localizationState[p];
+                        changed = true;
+                    }
+                }
+
+                if (changed) {
+                    localizationState.__updateTime__ = new Date().valueOf();
+                    localStorage.setItem("app_localization", JSON.stringify(localizationState));
+                    return true;
+                }
+            }
+
+            return false;
         },
         sync: {
             declineSyncOffer: function(){

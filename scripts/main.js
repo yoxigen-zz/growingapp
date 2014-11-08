@@ -10,6 +10,7 @@ requirejs.config({
 requirejs([
         "components/d3",
         "components/parse",
+        "components/moment",
         "components/angular/angular.min"
     ],
     function(ignore) {
@@ -19,12 +20,14 @@ requirejs([
             "components/angular/angular-touch.min",
             "components/angular/angular-route.min",
             "components/indexeddb",
+            "filters/filters.module",
             "services/phonegap",
             "services/parse",
             "services/storage",
             "services/users",
             "services/eventbus",
             "services/utils",
+            "services/localization",
             "services/messages",
             "services/classes/dialog",
             "services/chart",
@@ -54,6 +57,8 @@ requirejs([
 
                             "entries/teeth/teeth",
                             "filters/pronoun",
+                            "filters/unit",
+                            "filters/tofixed",
 
                             "controllers/main_controller",
                             "controllers/edit_player_controller",

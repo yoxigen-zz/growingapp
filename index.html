@@ -68,7 +68,10 @@
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
     </div>
-    <slide-dialog show="showEditPlayer" title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}" on-show="onShowDialog($event)" on-hide="onHideDialog()">
+    <slide-dialog show="showEditPlayer"
+                  title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}"
+                  actions="editedPlayerActions"
+                  on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/edit_player.html'"></div>
     </slide-dialog>
     <slide-dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()">
@@ -80,6 +83,15 @@
     <slide-dialog show="showSyncOffer" title="It's time to backup!" on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/syncOffer.html'"></div>
     </slide-dialog>
+    <slide-dialog show="showSettings"
+                  title="Settings"
+                  icon="settings_white"
+                  on-show="onShowDialog($event)"
+                  on-hide="onHideDialog()"
+                  actions="settingsActions">
+        <div ng-include="'views/settings.html'"></div>
+    </slide-dialog>
+
     <ng-include src="'views/entry_editors.html'"></ng-include>
     <script data-main="scripts/main.js" src="components/require.js"></script>
 </body>

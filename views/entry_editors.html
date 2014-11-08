@@ -3,7 +3,9 @@
         <span class="label-text">The new weight</span>
         <div class="flex-horizontal">
             <div class="flex-1"><input type="number" min=0 step="0.01" ng-model="entry.properties.weight" placeholder="The new weight" data-auto-focus required /></div>
-            <select ng-model="config.localization.weight.selected" ng-options="unit for unit in config.localization.weight.all"></select>
+            <div class="input-unit">
+                <a ng-click="openSettings()">{{config.localization.weight.selected}}</a>
+            </div>
         </div>
     </label>
 </script>
@@ -12,7 +14,9 @@
         <span class="label-text">The new height</span>
         <div class="flex-horizontal">
             <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.height" data-auto-focus placeholder="The new height" /></div>
-            <select ng-model="config.localization.height.selected" ng-options="unit for unit in config.localization.height.all"></select>
+            <div class="input-unit">
+                <a ng-click="openSettings()">{{config.localization.height.selected}}</a>
+            </div>
         </div>
     </label>
 </script>

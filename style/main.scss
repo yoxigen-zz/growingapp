@@ -337,6 +337,7 @@ a{ cursor: pointer; }
   }
 }
 
+
 .comment{
   font-weight: 300;
   opacity: .56;
@@ -489,3 +490,4 @@ $spinnerSize: 2em;
 @import "entry_types";
 @import "chart";
 @import "insights";
+@import "player_edit";

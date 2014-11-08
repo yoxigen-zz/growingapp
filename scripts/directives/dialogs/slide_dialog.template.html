@@ -5,7 +5,10 @@
            ng-click="closeDialog()">
             <img src="images/icons/back.svg" />
         </a>
-        <span class="flex-1 popup-title">{{title}}</span>
+        <span class="flex-1 popup-title">
+            <img ng-if="icon" class="popup-icon" ng-src="images/icons/{{icon}}.svg" />
+            {{title}}
+        </span>
         <div ng-show="actions.length">
             <a ng-repeat="action in actions"
                class="popup-header-button"

@@ -1,4 +1,9 @@
 app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "config", function($q, eventBus, Entry, Player, Storage, users, config){
+
+    var storage = new Storage().cloud,
+        cloudEnabled,
+        isSyncing;
+
     eventBus.subscribe("saveEntry", syncEntry);
     eventBus.subscribe("deleteEntry", syncEntry);
     eventBus.subscribe("editPlayer", syncPlayer);
@@ -6,14 +11,16 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
     eventBus.subscribe("login", onLogin);
     eventBus.subscribe("logout", function(){ cloudEnabled = false; });
     eventBus.subscribe("sync", sync);
-
-    var storage = new Storage().cloud,
-        cloudEnabled;
+    eventBus.subscribe("settingsChange", syncSettings);
 
     window.addEventListener("online", setCloudEnabled);
     window.addEventListener("offline", setCloudEnabled);
 
     setCloudEnabled();
+
+    return {
+        sync: sync
+    };
 
     function onLogin(){
         if (cloudEnabled = window.navigator.onLine)
@@ -48,6 +55,21 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         }, function(error){
             console.error("ERROR syncing players: ", error);
         });
+    }
+
+    function syncSettings(e){
+        if (!cloudEnabled || (e && e.fromCloud))
+            return;
+
+        var currentUser = users.getCurrentUser();
+        if (!currentUser)
+            return;
+
+        currentUser.attributes.settings = config.getCurrentLocalization();
+        if (!currentUser.attributes.settings.__updateTime__)
+            currentUser.attributes.settings.__updateTime__ = new Date();
+
+        currentUser.save();
     }
 
     function syncObjects(className){
@@ -101,6 +123,12 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
     function syncFromCloud(){
         if (!cloudEnabled)
             return;
+
+        var userSettings = users.getCurrentUser().attributes.settings;
+        if (userSettings){
+            if (config.saveLocalization(userSettings))
+                eventBus.triggerEvent("settingsChange", { fromCloud: true });
+        }
 
         return syncObjects("Player").then(function(players){
             Player.updatePlayers(players);
@@ -157,8 +185,6 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         return $q.all(promises);
     }
 
-    var isSyncing;
-
     function sync(params){
         if (!cloudEnabled || isSyncing)
             return;
@@ -180,9 +206,5 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                 eventBus.triggerEvent("loadingEnd", angular.extend({ error: "Error syncing from cloud: " + error.message }, params));
             });
         });
-    }
-
-    return {
-        sync: sync
     }
 }]);

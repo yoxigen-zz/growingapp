@@ -10,6 +10,7 @@
 			this.replace = true;
 			this.scope = {
 				title: "@",
+				icon: "@",
 				show: "=",
 				actions: "=",
 				onShow: "&",
@@ -21,13 +22,17 @@
 		Dialog.prototype = {
 			link: function postLink(scope, element, attrs) {
 				var toggleTimeout,
-					toggleElement = element[0];
+					toggleElement = element[0],
+					dialogIsOpen = false;
 
 				scope.$watch("$destroy", function(){
 					window.removeEventListener("keydown", onKeyDown);
 				});
 
 				scope.$watch("show", function(isVisible){
+					if (!!isVisible == dialogIsOpen)
+						return;
+
 					$timeout.cancel(toggleTimeout);
 
 					if (isVisible){
@@ -46,7 +51,8 @@
 						}, 40);
 
 						window.addEventListener("keydown", onKeyDown);
-						scope.onShow && scope.onShow({ $event: { closeDialog: scope.closeDialog.bind(this, null) }});
+						scope.onShow && scope.onShow({ $event: { closeDialog: scope.closeDialog.bind(this, null), toggleId: attrs.show }});
+						dialogIsOpen = true;
 					}
 					else{
 						toggleElement && toggleElement.classList.remove(TOGGLE_ACTIVE_CLASS);
@@ -56,7 +62,8 @@
 						}, TOGGLE_TIMEOUT);
 
 						window.removeEventListener("keydown", onKeyDown);
-						scope.onHide && scope.onHide();
+						scope.onHide && scope.onHide({ toggleId: attrs.show });
+						dialogIsOpen = false;
 					}
 				});
 
