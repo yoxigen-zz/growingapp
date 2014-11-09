@@ -20,7 +20,7 @@
         <div>
             <select ng-model="settings.date"
                     ng-change="onUnitChange('date')"
-                    ng-options="date for date in config.localization.date.all"></select>
+                    ng-options="date.name as date.display for date in config.localization.date.all"></select>
         </div>
     </label>
 </form>

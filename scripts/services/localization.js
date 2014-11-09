@@ -2,9 +2,9 @@ angular.module("Localization", []).factory("localization", function(){
 	var units = {
 		"date": {
 			all: [
-				{ "name": "Dec 24, 2014", "display": "MMM DD, YYYY" },
-				{ "name": "12/24/2014", "display": "MM/DD/YYYY" },
-				{ "name": "24/12/2014", "display": "DD/MM/YYYY" }
+				{ "display": "Dec 24, 2014", "name": "MMM DD, YYYY" },
+				{ "display": "12/24/2014", "name": "MM/DD/YYYY" },
+				{ "display": "24/12/2014", "name": "DD/MM/YYYY" }
 			],
 			"selected": "MMM DD, YYYY"
 		},
