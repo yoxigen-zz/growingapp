@@ -5,6 +5,12 @@
     .button .img{
       height: 1.5em;
     }
+
+    @media all and (max-width: 500px){
+      .button{
+        display: block;
+      }
+    }
   }
 
   .avatar-buttons{
@@ -17,12 +23,22 @@
     border-radius: 50%;
     border: solid .3em White;
 
+    @media all and (max-width: 500px){
+      width: 5em;
+      height: 5em;
+    }
+
     &.avatar-placeholder{
       background: #01A8CF url(../images/icons/user.svg) no-repeat bottom center;
       background-size: contain;
     }
 
     img{
+      @media all and (max-width: 500px){
+        width: 5em;
+        height: 5em;
+      }
+
       border-radius: 50%;
       width: 8em;
       height: 8em;

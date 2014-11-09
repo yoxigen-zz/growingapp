@@ -1115,6 +1115,9 @@ svg.graph {
   padding-right: 2em; }
   .player-edit .player-edit-avatar .button .img {
     height: 1.5em; }
+  @media all and (max-width: 500px) {
+    .player-edit .player-edit-avatar .button {
+      display: block; } }
 .player-edit .avatar-buttons {
   text-align: center; }
 .player-edit .avatar {
@@ -1122,6 +1125,10 @@ svg.graph {
   height: 8em;
   border-radius: 50%;
   border: solid .3em White; }
+  @media all and (max-width: 500px) {
+    .player-edit .avatar {
+      width: 5em;
+      height: 5em; } }
   .player-edit .avatar.avatar-placeholder {
     background: #01a8cf url(../images/icons/user.svg) no-repeat bottom center;
     background-size: contain; }
@@ -1129,3 +1136,7 @@ svg.graph {
     border-radius: 50%;
     width: 8em;
     height: 8em; }
+    @media all and (max-width: 500px) {
+      .player-edit .avatar img {
+        width: 5em;
+        height: 5em; } }
