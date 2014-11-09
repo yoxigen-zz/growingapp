@@ -51,9 +51,9 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
                 targetHeight: config.players.playerImageSize.height,
                 saveToPhotoAlbum: false
             }).then(function(dataUrl){
-                alert(dataUrl);
+                player.imageDataUrl = dataUrl;
+                player.image = "data:image/jpg;base64," + dataUrl;
 
-                player.image = player.imageDataUrl = dataUrl;
                 return player.image;
             });
         },
