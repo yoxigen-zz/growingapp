@@ -1,6 +1,4 @@
-<div class="flex-1 panel-wrapper flex-vertical">
-    <div class="flex-1 double-panel" ng-class="{ 'panel-shifted': panelShifted }">
-        <div class="panel flex-vertical">
+<div class="flex-1 flex-vertical">
             <header class="contents-header">
                 Insights
             </header>
@@ -20,17 +18,12 @@
                     More charts soon...
                 </p>
             </div>
-        </div>
-        <div class="panel flex-vertical">
-            <header class="contents-header dark with-buttons">
-                <a class="contents-header-button"
-                   title="Back"
-                   ng-click="backToInsightsList()">
-                    <img src="images/icons/back.svg" />
-                </a>
-                {{currentInsight.name}}
-            </header>
-            <div class="flex-1 scroll-vertical"  ng-hide="secondPanelHidden" ng-include="currentInsightInclude"></div>
-        </div>
-    </div>
+    <slide-dialog show="currentInsight"
+                  title="{{currentInsight.name}}"
+                  on-show="onShowDialog($event)"
+                  background="{{currentInsight.backgroundColor}}"
+                  class="no-padding {{currentInsight.className}}"
+                  on-hide="onCloseInsight()">
+        <div ng-include="currentInsightInclude"></div>
+    </slide-dialog>
 </div>

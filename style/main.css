@@ -689,6 +689,10 @@ a {
       color: #243033; }
   .popup footer {
     padding: 1em; }
+  .popup.no-padding .popup-contents {
+    padding: 0; }
+  .popup.dark {
+    background: #183e5b; }
 
 .dialog-container {
   display: none;

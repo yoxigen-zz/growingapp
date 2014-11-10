@@ -42,13 +42,10 @@ app.factory("navigation", ["phonegap", "eventBus", "$route", "$rootScope", "user
         });
     }
 
-    window.backup = onBackButton;
-
     function navigateUp(){
         var currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
         if (currentPage === "diary"){
-            if (confirm("Close GrowingApp?"))
-                navigator.app.exitApp();
+            navigator.app.exitApp();
         }
         else if (currentPage === "insights"){
             window.location.hash = "/";

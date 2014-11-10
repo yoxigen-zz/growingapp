@@ -10,11 +10,13 @@
 			this.replace = true;
 			this.scope = {
 				title: "@",
+				background: "@",
 				icon: "@",
 				show: "=",
 				actions: "=",
 				onShow: "&",
-				onHide: "&"
+				onHide: "&",
+				"class": "@"
 			};
 			this.templateUrl = templateUrl;
 		}

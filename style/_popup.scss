@@ -96,4 +96,12 @@ $popupHeaderHeight: $contentsHeaderHeight;
   footer{
     padding: 1em;
   }
+
+  &.no-padding{
+    .popup-contents{ padding: 0 }
+  }
+
+  &.dark{
+    background: #183e5b;
+  }
 }
