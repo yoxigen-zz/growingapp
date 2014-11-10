@@ -271,7 +271,9 @@ a {
   .contents-empty-message p {
     opacity: .5;
     font-size: 1.2em;
-    font-weight: 300; }
+    font-weight: 300;
+    padding-top: 0;
+    margin-top: 0; }
     .contents-empty-message p.contents-empty-message-title {
       color: #017fcf;
       opacity: 1;
@@ -386,22 +388,19 @@ a {
       margin-left: 1em; }
 
 .floating-action-button {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: -1.2em;
-  height: 2.4em;
-  width: 2.4em;
+  height: 46px;
+  width: 46px;
   border-radius: 50%;
   background-color: #E00E6E;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   background-position: center center;
-  right: 0.8em;
   background-size: 33%;
-  background-repeat: no-repeat; }
+  background-repeat: no-repeat;
+  display: inline-block; }
   .floating-action-button:hover {
     background-color: #ee0e71; }
   .floating-action-button:active, .floating-action-button.ng-click-active {
-    background-color: #d10e69;
+    background-color: #019bff;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }
   .floating-action-button.add-button {
     background-image: url(../images/icons/plus.svg); }
@@ -425,6 +424,12 @@ a {
   @media all and (min-width: 1000px) {
     #overlay {
       display: none; } }
+
+.entries .contents-header .floating-action-button {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: -23px;
+  right: 0.8em; }
 
 .items-list {
   list-style: none;
@@ -688,7 +693,7 @@ a {
     .popup p.popup-text strong {
       color: #243033; }
   .popup footer {
-    padding: 1em; }
+    padding: 1em 0; }
   .popup.no-padding .popup-contents {
     padding: 0; }
   .popup.dark {

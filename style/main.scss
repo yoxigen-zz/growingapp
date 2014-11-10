@@ -312,6 +312,8 @@ a{ cursor: pointer; }
     opacity: .5;
     font-size: 1.2em;
     font-weight: 300;
+    padding-top: 0;
+    margin-top: 0;
 
     &.contents-empty-message-title{
       color: $actionbarBackground;
@@ -462,25 +464,22 @@ $spinnerSize: 2em;
   }
 }
 
-$floatingActionButtonDiameter: 2.4em;
+$floatingActionButtonDiameter: 46px;
 
 .floating-action-button{
-  position: absolute;
-  bottom: 0;
-  margin-bottom: $floatingActionButtonDiameter / -2;
   height: $floatingActionButtonDiameter;
   width: $floatingActionButtonDiameter;
   border-radius: 50%;
   background-color: #E00E6E;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   background-position: center center;
-  right: $padding;
   background-size: 33%;
   background-repeat: no-repeat;
+  display: inline-block;
 
   &:hover{ background-color: #ee0e71; }
   &:active, &.ng-click-active{
-    background-color: #d10e69;
+    background-color: #019bff;
     box-shadow: 0 0 4px rgba(0,0,0,.5);
   }
   &.add-button{
