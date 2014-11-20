@@ -10,6 +10,15 @@
                     <div class="scroll-vertical" ng-transclude>
                     </div>
                 </div>
+                <div ng-show="actions.length" class="dialog-actions">
+                    <a ng-repeat="action in actions"
+                       class="dialog-button"
+                       title="{{::action.title}}"
+                       ng-click="action.onClick()">
+                        <img ng-show="::action.icon" ng-src="images/icons/{{::action.icon}}.svg" />
+                        {{::action.text}}
+                    </a>
+                </div>
             </div>
         </div>
     </div>

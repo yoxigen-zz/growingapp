@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="phonegap.js"></script>
 </head>
-<body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
+<body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }" ng-style="{ visibility: appVisibility}">
     <div id="overlay" data-toggle-display="showMenu" ng-click="hideMenu()"></div>
     <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="showMenu">
         <div id="menu">
@@ -74,15 +74,15 @@
                   on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/edit_player.html'"></div>
     </slide-dialog>
-    <slide-dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()">
+    <dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="signInActions">
         <div ng-include="'views/login.html'"></div>
-    </slide-dialog>
+    </dialog>
     <slide-dialog show="showSignup" title="Sign Up" on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/signup.html'"></div>
     </slide-dialog>
-    <slide-dialog show="showSyncOffer" title="It's time to backup!" on-show="onShowDialog($event)" on-hide="onHideDialog()">
+    <dialog show="showSyncOffer" title="It's time to backup!" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="syncOfferActions">
         <div ng-include="'views/syncOffer.html'"></div>
-    </slide-dialog>
+    </dialog>
     <slide-dialog show="showSettings"
                   title="Settings"
                   icon="settings_white"

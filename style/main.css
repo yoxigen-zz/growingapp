@@ -105,6 +105,30 @@ a {
 .header-button:active, .actionbar .actionbar-button:active, .popup header .close-button:active, .dialog header .close-button:active, .header-button.ng-click-active, .actionbar .ng-click-active.actionbar-button, .popup header .ng-click-active.close-button, .dialog header .ng-click-active.close-button {
   background-color: #00befd; }
 
+#splashscreen {
+  background: #43124c url(../images/growingapp_logo.svg) no-repeat center bottom;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  text-align: center;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 300;
+  line-height: 15rem;
+  -webkit-transition: all 500ms ease-out;
+  -moz-transition: all 500ms ease-out;
+  -ms-transition: all 500ms ease-out;
+  -o-transition: all 500ms ease-out;
+  transition: all 500ms ease-out; }
+  #splashscreen.hide {
+    opacity: 0; }
+  #splashscreen.kill {
+    display: none; }
+
 #menu-button {
   display: none; }
   #menu-button.render {
@@ -769,7 +793,9 @@ a {
         height: 1rem;
         margin-top: 8px; }
   .dialog .dialog-contents {
-    padding: 1rem 1rem 0; }
+    padding: 1rem 1.5rem 0; }
+    .dialog .dialog-contents p:first-child {
+      margin-top: 0; }
   .dialog p.dialog-text {
     margin-top: 0;
     line-height: 1.5rem;
@@ -777,6 +803,14 @@ a {
     color: #555; }
     .dialog p.dialog-text strong {
       color: #243033; }
+  .dialog .dialog-actions {
+    text-align: right; }
+    .dialog .dialog-actions .dialog-button {
+      display: inline-block;
+      text-transform: uppercase;
+      font-size: 1.2rem;
+      padding: 1rem 1.5rem;
+      color: #2778B6; }
   .dialog footer {
     padding: 1rem; }
 

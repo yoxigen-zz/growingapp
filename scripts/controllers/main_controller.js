@@ -21,7 +21,15 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.declineSyncOffer = declineSyncOffer;
     $scope.openSettings = openSettings;
     $scope.settingsActions = [{ icon: "ok", title: "Save settings", onClick: saveSettings }];
+    $scope.signInActions = [
+        { text: "New user?", onClick: openSignUp },
+        { text: "Login", onClick: function(){ eventBus.triggerEvent("doLogin"); }}
+    ];
 
+    $scope.syncOfferActions = [
+        { text: "Don't backup", onClick: declineSyncOffer },
+        { text: "Backup now", onClick: openSignUp }
+    ];
     // TODO: move these to a new EditPlayerController:
     $scope.savePlayer = savePlayer;
     $scope.removePlayer = removePlayer;
@@ -327,6 +335,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     function init(){
+
         var user = users.getCurrentUser();
         if (user)
             eventBus.triggerEvent("login", { user: user });

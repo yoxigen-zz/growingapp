@@ -67,7 +67,7 @@ app = angular.module("GrowingApp", [
 
         $locationProvider.html5Mode(false);
     }])
-    .run(["$rootScope", function($rootScope) {
+    .run(["$rootScope", "$timeout", function($rootScope, $timeout) {
         if (!$rootScope.safeApply) {
             $rootScope.safeApply = function (fn) {
                 var phase = $rootScope.$$phase;

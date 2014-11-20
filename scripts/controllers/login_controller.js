@@ -13,6 +13,8 @@ app.controller("LoginController", ["$scope", "users", "eventBus", "messages", fu
             $scope.loginUser.password = null;
     });
 
+    eventBus.subscribe("doLogin", signIn);
+
     function signIn(){
         if (!$scope.loginUser || !$scope.loginUser.username || !$scope.loginUser.password){
             $scope.loginError = "Please enter email adress and password.";

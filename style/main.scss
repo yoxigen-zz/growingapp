@@ -95,6 +95,36 @@ a{ cursor: pointer; }
   &:active, &.ng-click-active{ background-color: #00BEFD }
 }
 
+#splashscreen{
+  background: #43124c url(../images/growingapp_logo.svg) no-repeat center bottom;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99999;
+  text-align: center;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 300;
+  line-height: 15rem;
+
+  -webkit-transition: all 500ms ease-out;
+  -moz-transition: all 500ms ease-out;
+  -ms-transition: all 500ms ease-out;
+  -o-transition: all 500ms ease-out;
+  transition: all 500ms ease-out;
+
+  &.hide{
+    opacity: 0;
+  }
+
+  &.kill{
+    display: none;
+  }
+}
+
 #menu-button{
   display: none;
 
