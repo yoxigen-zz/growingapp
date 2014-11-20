@@ -1,9 +1,9 @@
 .player-edit{
   .player-edit-avatar{
-    padding-right: 2em;
+    padding-right: 2rem;
 
     .button .img{
-      height: 1.5em;
+      height: 1.5rem;
     }
 
     @media all and (max-width: 500px){
@@ -18,14 +18,14 @@
   }
 
   .avatar{
-    width: 8em;
-    height: 8em;
+    width: 8rem;
+    height: 8rem;
     border-radius: 50%;
-    border: solid .3em White;
+    border: solid .3rem White;
 
     @media all and (max-width: 500px){
-      width: 5em;
-      height: 5em;
+      width: 5rem;
+      height: 5rem;
     }
 
     &.avatar-placeholder{
@@ -35,13 +35,13 @@
 
     img{
       @media all and (max-width: 500px){
-        width: 5em;
-        height: 5em;
+        width: 5rem;
+        height: 5rem;
       }
 
       border-radius: 50%;
-      width: 8em;
-      height: 8em;
+      width: 8rem;
+      height: 8rem;
     }
   }
 }

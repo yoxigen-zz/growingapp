@@ -9,7 +9,7 @@ body{
 a{ color: White; text-decoration: none }
 #logo{
   font-family: Roboto Condensed, Roboto, Sans-Serif;
-  padding-bottom: 2em;
+  padding-bottom: 2rem;
   box-sizing: border-box;
 
   img{
@@ -20,7 +20,7 @@ a{ color: White; text-decoration: none }
 
   h1 {
     font-weight: normal;
-    font-size: 2.3em;
+    font-size: 2.3rem;
 
   }
 }
@@ -38,7 +38,7 @@ a{ color: White; text-decoration: none }
       display: block;
       height: $inputHeight;
       border-radius: $inputBorderRadius;
-      margin-bottom: 1em;
+      margin-bottom: 1rem;
       background: $secondaryColor;
 
       .input-image{
@@ -49,9 +49,9 @@ a{ color: White; text-decoration: none }
         line-height: $inputHeight;
       }
       img{
-        width: 1.5em;
-        height: 1.5em;
-        margin-top: .5em;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-top: .5rem;
       }
     }
 
@@ -60,11 +60,11 @@ a{ color: White; text-decoration: none }
       height: 100%;
 
       &.submit-input-wrapper{
-        margin: 2em 0 1em;
+        margin: 2rem 0 1rem;
         height: $inputHeight;
 
         &.submit-input-external{
-          margin-top: 1em;
+          margin-top: 1rem;
         }
       }
     }
@@ -86,7 +86,7 @@ a{ color: White; text-decoration: none }
       width: 100%;
 
       -webkit-transition: all 300ms ease-out;
-      font-size: 1.1em;
+      font-size: 1.1rem;
 
       &:focus{
         background: lighten($secondaryColor, 50%);
@@ -105,7 +105,7 @@ a{ color: White; text-decoration: none }
       border-radius: $inputBorderRadius;
       cursor: pointer;
       outline: none;
-      font-size: 1.3em;
+      font-size: 1.3rem;
       text-shadow: 0 1px 1px rgba(0,0,0,.5);
       padding: 0;
 
@@ -117,7 +117,7 @@ a{ color: White; text-decoration: none }
         background: #31353d;
         display: block;
 
-        span{ font-size: .8em }
+        span{ font-size: .8rem }
       }
     }
   }
@@ -128,14 +128,14 @@ a{ color: White; text-decoration: none }
 }
 .facebook-logo{
   background: -webkit-linear-gradient(top, #5074b0, #405786);
-  height: 1.9em;
-  width: 1.9em;
+  height: 1.9rem;
+  width: 1.9rem;
   text-align: center;
   border: solid 1px #394a6a;
   border-radius: 2px;
   display: inline-block;
   float: left;
-  margin: 0.2em;
+  margin: 0.2rem;
   padding: 3px;
   box-sizing: border-box;
 
@@ -146,8 +146,8 @@ a{ color: White; text-decoration: none }
 
 .create-user-button{
   display: block;
-  padding: 1em;
+  padding: 1rem;
   text-align: center;
-  font-size: 1.3em;
-  margin-top: 1em;
+  font-size: 1.3rem;
+  margin-top: 1rem;
 }

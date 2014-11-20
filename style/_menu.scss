@@ -6,7 +6,7 @@
   left: 0;
   overflow: hidden;
   display: none;
-  padding-right: 1em;
+  padding-right: 1rem;
   z-index: 101;
 
   &.visible{ display: block; }
@@ -32,11 +32,11 @@
 
 #menu{
   max-width: 100%;
-  min-width: 16em;
+  min-width: 16rem;
   height: 100%;
   background: #e1e8ea;
   box-shadow: 2px 2px 15px rgba(0,0,0,.6);
-  padding-bottom: .5em;
+  padding-bottom: .5rem;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
@@ -46,7 +46,7 @@
   -webkit-transition: all 300ms ease-out;
 
   @media all and (min-width: $leftMenuMinWidth){
-    width: 18em;
+    width: 18rem;
     -webkit-transform: none;
     transform: none;
     -webkit-transition: none;
@@ -64,7 +64,7 @@
   }
 
   .app-name{
-    font-size: 1.2em;
+    font-size: 1.2rem;
   }
   ul{
     list-style: none;
@@ -90,13 +90,13 @@
 
   #players-menu{
     background: #eff5f7;
-    padding-bottom: 2em;
+    padding-bottom: 2rem;
 
     li{
       padding: 0;
 
       &.players-menu-add{
-        padding: .5em;
+        padding: .5rem;
         &:hover{
           background: none;
         }
@@ -104,25 +104,25 @@
         a {
           color: White;
           display: block;
-          padding: .5em 1em;
+          padding: .5rem 1rem;
           border-radius: 3px;
         }
       }
 
       a{
-        padding: 1em;
+        padding: 1rem;
       }
 
       &.with-image{
-        a.flex-1{ padding: .5em; }
+        a.flex-1{ padding: .5rem; }
       }
     }
 
     .player-image{
-      height: 2.5em;
+      height: 2.5rem;
       vertical-align: middle;
       border-radius: 50%;
-      margin-right: .3em;
+      margin-right: .3rem;
       margin-top: -1px;
     }
 
@@ -136,22 +136,22 @@
     }
 
     .child-menu-edit{
-      height: 1.2em;
+      height: 1.2rem;
       opacity: .4;
       position: relative;
       top: 2px;
     }
     .child-menu-add{
-      height: 1.2em;
-      margin-right: .3em;
+      height: 1.2rem;
+      margin-right: .3rem;
       vertical-align: middle;
     }
 
     .child-menu-icon{
-      height: 2.5em;
+      height: 2.5rem;
       vertical-align: middle;
       border: solid 1px #4e5355;
-      margin-right: .5em;
+      margin-right: .5rem;
     }
     .child-menu-name{
       font-weight: bold;
@@ -162,26 +162,26 @@
   a{
     text-decoration: none;
     color: #333;
-    padding: 1em 1.5em 1em 1em;
+    padding: 1rem 1.5rem 1rem 1rem;
     display: block;
   }
   .menu-icon{
     display: block;
     float: left;
-    width: 1.5em;
-    height: 1.3em;
+    width: 1.5rem;
+    height: 1.3rem;
     text-align: center;
     opacity: .4;
 
     img{
-      height: 1.3em;
+      height: 1.3rem;
     }
   }
 
   .menu-title{
     display: block;
-    margin-left: 2.5em;
-    font-size: 1em;
+    margin-left: 2.5rem;
+    font-size: 1rem;
   }
 }
 

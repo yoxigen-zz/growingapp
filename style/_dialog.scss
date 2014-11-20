@@ -1,5 +1,5 @@
 $dialogBorderRadius: 2px;
-$dialogHeaderHeight: 3em;
+$dialogHeaderHeight: 3rem;
 
 .dialog-container{
   display: none;
@@ -29,7 +29,7 @@ $dialogHeaderHeight: 3em;
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 2.5em;
+  padding: 2.5rem;
   box-sizing: border-box;
   display: -webkit-box;
   display: -webkit-flex;
@@ -59,36 +59,36 @@ $dialogHeaderHeight: 3em;
 
   header{
     font-weight: bold;
-    font-size: 1em;
-    padding: 1em 1.5em;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
 
     .dialog-title{
-      font-size: 1.3em;
+      font-size: 1.3rem;
     }
     .close-button{
       @extend .header-button;
       float: right;
       display: block;
-      height: 2em;
-      padding: .5em;
-      width: 2em;
+      height: 2rem;
+      padding: .5rem;
+      width: 2rem;
       text-align: center;
-      line-height: 2em;
+      line-height: 2rem;
 
       img{
-        height: 1em;
+        height: 1rem;
         margin-top: 8px;
       }
     }
   }
 
   .dialog-contents{
-    padding: 1em 1em 0;
+    padding: 1rem 1rem 0;
   }
 
   p.dialog-text{
     margin-top: 0;
-    line-height: 1.5em;
+    line-height: 1.5rem;
     text-align: justify;
     color: #555;
 
@@ -97,6 +97,6 @@ $dialogHeaderHeight: 3em;
     }
   }
   footer{
-    padding: 1em;
+    padding: 1rem;
   }
 }

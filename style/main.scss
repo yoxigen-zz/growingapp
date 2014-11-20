@@ -1,7 +1,11 @@
 @import "vars";
 
-$tabsHeight: 2.5em;
-$padding: .8em;
+$tabsHeight: 2.5rem;
+$padding: .8rem;
+
+html{
+  font-size: 16px;
+}
 
 body{
   background: $contentBackgroundColor;
@@ -9,6 +13,7 @@ body{
   padding: 0;
   margin: 0;
 
+  font-size: 16px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   display: -webkit-flex;
@@ -79,10 +84,10 @@ a{ cursor: pointer; }
 }
 
 .player-edit-image{
-  height: 6.9em;
-  max-width: 7em;
+  height: 6.9rem;
+  max-width: 7rem;
   border: solid 1px rgba(0, 0, 0, 0.2);
-  margin-right: .5em;
+  margin-right: .5rem;
 }
 
 .header-button{
@@ -103,11 +108,11 @@ a{ cursor: pointer; }
 
 #app-title{
   @media all and (min-width: $leftMenuMinWidth){
-    padding-left: .8em;
+    padding-left: .8rem;
   }
 
   &.pad-side{
-    padding-left: .8em;
+    padding-left: .8rem;
   }
 }
 .actionbar{
@@ -119,7 +124,7 @@ a{ cursor: pointer; }
   z-index: 1;
 
   .edit-button{
-    height: .8em;
+    height: .8rem;
   }
   #back-button{
     float: left;
@@ -146,20 +151,20 @@ a{ cursor: pointer; }
 
   #actionbar-name{
     display: block;
-    padding-right: .5em;
+    padding-right: .5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 1.5em;
+    font-size: 1.5rem;
     font-weight: 300;
   }
 
   #actionbar-image{
     display: block;
-    height: 3em;
-    width: 3em;
-    margin-right: .5em;
-    margin-top: .2em;
+    height: 3rem;
+    width: 3rem;
+    margin-right: .5rem;
+    margin-top: .2rem;
     border: solid 1px rgba(255,255,255,.2);
     background-position: 20% center;
     background-size: cover;
@@ -170,9 +175,9 @@ a{ cursor: pointer; }
     @extend .header-button;
     display: inline-block;
     height: 100%;
-    width: 2em;
+    width: 2rem;
     text-align: center;
-    padding: 0 .5em;
+    padding: 0 .5rem;
 
     img{
       height: $actionbarHeight / 2;
@@ -251,11 +256,11 @@ a{ cursor: pointer; }
   padding-left: $padding;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   position: relative;
 
   h2{
-    font-size: 1.3em;
+    font-size: 1.3rem;
     margin: 0;
     padding: 0;
     font-weight: 300;
@@ -310,7 +315,7 @@ a{ cursor: pointer; }
 
   p{
     opacity: .5;
-    font-size: 1.2em;
+    font-size: 1.2rem;
     font-weight: 300;
     padding-top: 0;
     margin-top: 0;
@@ -320,14 +325,14 @@ a{ cursor: pointer; }
       opacity: 1;
       font-weight: 400;
       text-shadow: -1px 1px 0 White;
-      font-size: 1.3em;
+      font-size: 1.3rem;
     }
   }
 }
 
 .centered-buttons-block{
   position: relative;
-  top: -1em;
+  top: -1rem;
 }
 
 .light-hoverable{
@@ -345,11 +350,11 @@ a{ cursor: pointer; }
   font-weight: 300;
   opacity: .56;
   text-align: center;
-  padding: 1em;
+  padding: 1rem;
 }
 #newEntryButton{
   padding: 0;
-  width: 3em;
+  width: 3rem;
   text-align: center;
 }
 
@@ -394,12 +399,12 @@ a{ cursor: pointer; }
       text-align: center;
       width: 100%;
       font-weight: 300;
-      font-size: 1.2em;
+      font-size: 1.2rem;
     }
   }
 }
 
-$spinnerSize: 2em;
+$spinnerSize: 2rem;
 @-webkit-keyframes rotate {
   from {
     -webkit-transform: rotate(0deg);
@@ -443,23 +448,23 @@ $spinnerSize: 2em;
   left: 0;
   z-index: 102;
   text-align: center;
-  padding: 0 1em;
+  padding: 0 1rem;
 
   .floating-message-contents{
     background: rgba(0,0,0,.8);
     border-radius: 7px;
     color: #b8b8b8;
     display: inline-block;
-    padding: .5em 1em;
-    font-size: 1.2em;
-    line-height: 1.4em;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    line-height: 1.4rem;
 
     img{
-      height: 1em;
+      height: 1rem;
     }
     a{
       color: rgb( 0, 191, 243 );
-      margin-left: 1em;
+      margin-left: 1rem;
     }
   }
 }

@@ -3,20 +3,20 @@ form{
     border: solid 1px #b9cfd6;
     border-radius: 2px;
     background: White;
-    padding: .5em;
+    padding: .5rem;
     width: 100%;
     box-sizing: border-box;
     font-family: Roboto, sans-serif;
-    font-size: 1em;
+    font-size: 1rem;
     font-weight: 300;
 
     &.input-small{
-      width: 10em;
+      width: 10rem;
     }
   }
 
   label{
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
     display: block;
 
     &.no-margin{
@@ -26,8 +26,8 @@ form{
 }
 
 .input-unit{
-  line-height: 2em;
-  padding: 0 .5em;
+  line-height: 2rem;
+  padding: 0 .5rem;
 
   a{
     color: #017fcf;
@@ -39,9 +39,9 @@ form{
   }
 }
 select{
-  padding: .5em;
+  padding: .5rem;
   border: solid 1px #b9cfd6;
-  font-size: 1em;
+  font-size: 1rem;
 
   &.fancy-select{
     background: url(../images/icons/triangle.svg) no-repeat bottom right;
@@ -49,7 +49,7 @@ select{
     outline: none;
     -webkit-appearance: none;
     border-bottom: solid 2px #BEC9CC;
-    padding: .2em 1em .1em 0;
+    padding: .2rem 1rem .1rem 0;
     font-family: Roboto;
     font-weight: 300;
     color: inherit;
@@ -58,11 +58,11 @@ select{
 
 .button{
   display: inline-block;
-  padding: .8em;
+  padding: .8rem;
   text-align: center;
   text-decoration: none;
   box-sizing: border-box;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   white-space: nowrap;
   font-weight: 300;
   background: $defaultButtonBackgroundColor;
@@ -81,11 +81,11 @@ select{
     transform: translateY(2px);
   }
   img{
-    height: 1em;
+    height: 1rem;
     vertical-align: middle;
-    margin-right: .2em;
+    margin-right: .2rem;
     position: relative;
-    top: -.1em;
+    top: -.1rem;
   }
 
   .button-text{
@@ -126,7 +126,7 @@ select{
 
 .form-error{
   background: #AD0000;
-  padding: 1em;
+  padding: 1rem;
   color: white;
   text-align: center;
 }
@@ -160,7 +160,7 @@ select{
   @extend .flex-horizontal;
 
   a{
-    margin-right: .5em;
+    margin-right: .5rem;
 
     &:last-child{
       margin-right: 0;
@@ -171,7 +171,7 @@ select{
 .vertical-buttons-bar{
   a{
     display: block;
-    margin-bottom: .5em;
+    margin-bottom: .5rem;
 
     &:last-child{
       margin-bottom: 0;
@@ -180,7 +180,7 @@ select{
 }
 
 .vertical-buttons-text{
-  margin-bottom: .5em;
+  margin-bottom: .5rem;
   text-align: left;
 }
 
@@ -197,8 +197,8 @@ select{
 .label-text{
   color: #7B8B91;
   text-transform: uppercase;
-  font-size: .8em;
+  font-size: .8rem;
   font-weight: bold;
   display: block;
-  margin-bottom: .3em;
+  margin-bottom: .3rem;
 }

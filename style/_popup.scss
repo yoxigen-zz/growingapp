@@ -42,32 +42,32 @@ $popupHeaderHeight: $contentsHeaderHeight;
     font-weight: 300;
 
     .popup-icon{
-      max-height: 1.3em;
-      max-width: 1.3em;
+      max-height: 1.3rem;
+      max-width: 1.3rem;
       vertical-align: middle;
-      margin-top: -.1em;
-      margin-right: .3em;
+      margin-top: -.1rem;
+      margin-right: .3rem;
     }
 
     .popup-title{
-      font-size: 1.3em;
+      font-size: 1.3rem;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      padding-left: .5em;
+      padding-left: .5rem;
     }
 
     .close-button{
       @extend .header-button;
       display: block;
-      height: 2em;
-      padding: .5em;
-      width: 2em;
+      height: 2rem;
+      padding: .5rem;
+      width: 2rem;
       text-align: center;
-      line-height: 2em;
+      line-height: 2rem;
 
       img{
-        height: 1.3em;
+        height: 1.3rem;
         margin-top: 4px;
         margin-left: -2px;
       }
@@ -80,12 +80,12 @@ $popupHeaderHeight: $contentsHeaderHeight;
 
   .popup-contents{
     height: 100%;
-    padding: 1em 1em 0;
+    padding: 1rem 1rem 0;
   }
 
   p.popup-text{
     margin-top: 0;
-    line-height: 1.5em;
+    line-height: 1.5rem;
     text-align: justify;
     color: #555;
 
@@ -94,7 +94,7 @@ $popupHeaderHeight: $contentsHeaderHeight;
     }
   }
   footer{
-    padding: 1em 0;
+    padding: 1rem 0;
   }
 
   &.no-padding{

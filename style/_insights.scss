@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   list-style: none;
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
 
   li{
     @extend .light-hoverable;
@@ -13,22 +13,22 @@
   }
 
   .insight-icon{
-    width: 3em;
+    width: 3rem;
     text-align: center;
 
     img{
-      max-width: 2.5em;
-      max-height: 2.5em;
+      max-width: 2.5rem;
+      max-height: 2.5rem;
     }
   }
 
   .insight-text{
-    -moz-padding-start: 1em;
-    -webkit-padding-start: 1em;
+    -moz-padding-start: 1rem;
+    -webkit-padding-start: 1rem;
   }
   h4{
     padding: 0;
-    margin: 0 0 .2em;
+    margin: 0 0 .2rem;
   }
 
   p{
