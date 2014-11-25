@@ -48,9 +48,7 @@
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
             <div class="flex-1">
-                <span id="actionbar-name">
-                    {{ player.name || 'GrowingApp' }}
-                </span>
+                <span id="actionbar-name" ng-bind="player.name || 'GrowingApp'"></span>
             </div>
             <div class="hide-default" ng-class="{ visible: !showFirstTimeSelection }">
                 <div id="spinner" toggle-display="showSpinner">
