@@ -70,7 +70,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                 }, function(error){
                     alert("upload FAILED: " + JSON.stringify(error));
                     deferred.reject(error);
-                });
+                }, ftOptions);
 
                 return deferred.promise;
             }
