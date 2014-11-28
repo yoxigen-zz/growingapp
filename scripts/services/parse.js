@@ -1,4 +1,9 @@
-angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $rootScope){
+angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$http", "phonegap", function($q, $rootScope, $http, phonegap){
+    var parseConfig = {
+        appId: "5WepL2v5DjXU0RgKukUSlW3BeAuEOGqDOSgJtKeE",
+        javascriptKey:"Pk4mymaX6wXccyywaQeMeuvvJLWeyqRpYLpzWdoX"
+    };
+
     Parse.Object.prototype.getData = function(){
         var data = angular.copy(this.attributes);
         delete data.user;
@@ -136,6 +141,9 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
 
             return parseUser;
         },
+        init: function(){
+            Parse.initialize(parseConfig.appId, parseConfig.javascriptKey);
+        },
         login: function(username, password){
             var deferred = $q.defer();
 
@@ -270,9 +278,22 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
 
             return deferred.promise;
         },
-        uploadFile: function(dataUrl, filename, type){
+        uploadBase64ToFile: function(dataUrl, filename, type){
             var file = new Parse.File(filename, { base64: dataUrl }, type);
             return $q.when(file.save());
+        },
+        uploadFile: function(fileUrl, filename, type){
+            var headers = {
+                "X-Parse-Application-Id": parseConfig.appId,
+                "X-Parse-REST-API-Key": parseConfig.javascriptKey,
+                "Content-Type": type
+            };
+
+            return phonegap.files.upload(fileUrl, "https://api.parse.com/1/files/" + filename, {
+                headers: headers,
+                fileName: filename,
+                mimeType: type
+            });
         }
     };
 

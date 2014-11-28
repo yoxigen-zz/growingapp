@@ -50,10 +50,8 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
                 targetWidth: config.players.playerImageSize.width,
                 targetHeight: config.players.playerImageSize.height,
                 saveToPhotoAlbum: false
-            }).then(function(dataUrl){
-                player.imageDataUrl = dataUrl;
-                player.image = ["data:image/jpg;base64,", dataUrl].join("");
-
+            }).then(function(imageUrl){
+                player.imageUrl = player.image = imageUrl;
                 return player.image;
             });
         },
@@ -104,12 +102,14 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
         get idProperty(){ return "playerId" },
         objectStore: playersObjectStore,
         preSave: function(){
-            if (this.imageDataUrl){
+            if (this.imageUrl){
                 var self = this;
 
-                return parse.uploadFile(this.imageDataUrl, this.name + ".jpg", "image/jpeg").then(function(file){
-                    self.image = file.url();
-                    delete self.imageDataUrl;
+                return parse.uploadFile(this.imageUrl, this.name + ".jpg", "image/jpeg").then(function(file){
+                    self.image = file.url;
+                    delete self.imageUrl;
+                }, function(error){
+                    alert("Can't upload image file: " + error);
                 });
             }
             else

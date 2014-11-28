@@ -67,7 +67,7 @@ app = angular.module("GrowingApp", [
 
         $locationProvider.html5Mode(false);
     }])
-    .run(["$rootScope", "$timeout", function($rootScope, $timeout) {
+    .run(["$rootScope", "$timeout", "parse", function($rootScope, $timeout, parse) {
         if (!$rootScope.safeApply) {
             $rootScope.safeApply = function (fn) {
                 var phase = $rootScope.$$phase;
@@ -81,12 +81,7 @@ app = angular.module("GrowingApp", [
             };
         }
 
-        var parseConfig = {
-                appId: "5WepL2v5DjXU0RgKukUSlW3BeAuEOGqDOSgJtKeE",
-                javascriptKey:"Pk4mymaX6wXccyywaQeMeuvvJLWeyqRpYLpzWdoX"
-            };
-
-        Parse.initialize(parseConfig.appId, parseConfig.javascriptKey);
+        parse.init();
     }]);
 
 

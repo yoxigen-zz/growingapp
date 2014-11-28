@@ -11,11 +11,9 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
         try {
             defaultCameraOptions = {
                 quality: 75,
-                destinationType: Camera.DestinationType.DATA_URL, // Also FILE_URI
+                destinationType: Camera.DestinationType.FILE_URI, // Also FILE_URI
                 encodingType: Camera.EncodingType.JPEG
             };
-
-            alert("file transfer: " + !!FileTransfer + ", options: " + !!FileUploadOptions);
         }
         catch(e) {
             alert("Can't initialize camera.");
@@ -47,6 +45,31 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                         eventHandler();
                     }, false);
                 });
+            }
+        },
+        files: {
+            upload: function(fileUrl, serverUrl, options){
+                var ft = new FileTransfer(),
+                    ftOptions = new FileUploadOptions(),
+                    deferred = $q.defer();
+
+                ftOptions.fileKey = "file";
+                ftOptions.fileName = options.fileName;
+                ftOptions.mimeType = options.mimeType;
+                if (options.headers)
+                    ftOptions.headers = options.headers;
+
+                ftOptions.chunkedMode = false;
+
+                ft.upload(fileUrl, serverUrl, function(e){
+                    alert("upload success: " + JSON.stringify(e));
+                    deferred.resolve(e);
+                }, function(error){
+                    alert("upload FAILED: " + JSON.stringify(error));
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
             }
         },
         images: {
