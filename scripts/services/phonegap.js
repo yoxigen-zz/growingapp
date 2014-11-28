@@ -64,7 +64,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
 
                 ftOptions.chunkedMode = false;
 
-                ft.upload(fileUrl, serverUrl, function(e){
+                ft.upload(fileUrl, encodeURI(serverUrl), function(e){
                     alert("upload success: " + JSON.stringify(e));
                     deferred.resolve(e);
                 }, function(error){
