@@ -299,13 +299,14 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
                 "Content-Type": type
             };
 
-            //var params = getHttpParams();
-            //params._ContentType = type;
+            var params = getHttpParams();
+            params._ContentType = type;
 
             return phonegap.files.upload(fileUrl, "https://api.parse.com/1/files/" + filename, {
                 headers: headers,
                 fileName: filename,
-                mimeType: type
+                mimeType: type,
+                params: params
             });
         }
     };
