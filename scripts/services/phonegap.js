@@ -69,6 +69,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                     deferred.resolve(e);
                 }, function(error){
                     alert("upload FAILED: " + JSON.stringify(error));
+                    document.write(error.body);
                     deferred.reject(error);
                 }, ftOptions);
 
