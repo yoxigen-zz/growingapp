@@ -57,6 +57,16 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
         return objs;
     }
 
+    function getHttpParams(){
+        return {
+            _ApplicationId: parseConfig.appId,
+            _ClientVersion: Parse.VERSION,
+            _InstallationId: Parse._installationId,
+            _JavaScriptKey: parseConfig.javascriptKey,
+            _SessionToken: Parse.User.current()._sessionToken
+        }
+    }
+
     var methods = {
         facebookLogin: function(){
             var deferred = $q.defer();
@@ -289,10 +299,14 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
                 "Content-Type": type
             };
 
+            var params = getHttpParams();
+            params._ContentType = type;
+
             return phonegap.files.upload(fileUrl, "https://api.parse.com/1/files/" + filename, {
                 headers: headers,
                 fileName: filename,
-                mimeType: type
+                mimeType: type,
+                params: params
             });
         }
     };
