@@ -14,6 +14,8 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                 destinationType: Camera.DestinationType.DATA_URL, // Also FILE_URI
                 encodingType: Camera.EncodingType.JPEG
             };
+
+            alert("file transfer: " + !!FileTransfer + ", options: " + !!FileUploadOptions);
         }
         catch(e) {
             alert("Can't initialize camera.");
