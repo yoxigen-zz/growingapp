@@ -59,45 +59,14 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                 var deferred = $q.defer();
 
                 window.resolveLocalFileSystemURL(fileUrl, function(entry){
-                    alert("Entry FILE: " + !!entry.file);
-
                     entry.file(function(file){
-                        alert("YES file " + JSON.stringify(file));
                         deferred.resolve(file);
                     }, function(error){
                         deferred.reject(error);
                     });
                 }, function(error){
-                    alert("Can't get entry: " + JSON.stringify(error));
                     deferred.reject(error);
                 });
-
-                return deferred.promise;
-            },
-            upload: function(fileUrl, serverUrl, options){
-                var ft = new FileTransfer(),
-                    ftOptions = new FileUploadOptions(),
-                    deferred = $q.defer();
-
-                ftOptions.fileKey = "file";
-                ftOptions.fileName = options.fileName;
-                ftOptions.mimeType = options.mimeType;
-                if (options.headers)
-                    ftOptions.headers = options.headers;
-
-                if (options.params)
-                    ftOptions.params = options.params;
-
-                ftOptions.chunkedMode = false;
-                alert("uploading " + fileUrl);
-                ft.upload(fileUrl, encodeURI(serverUrl), function(e){
-                    alert("upload success: " + JSON.stringify(e));
-                    deferred.resolve(e);
-                }, function(error){
-                    alert("upload FAILED: " + JSON.stringify(error));
-                    document.write(error.body);
-                    deferred.reject(error);
-                }, ftOptions);
 
                 return deferred.promise;
             }
