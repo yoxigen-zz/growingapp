@@ -48,6 +48,23 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
             }
         },
         files: {
+            getFileByUrl: function(fileUrl){
+                var deferred = $q.defer();
+
+                window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs){
+                    fs.root.getFile(fileUrl, {}, function(fileEntry){
+                        deferred.resolve(fileEntry.file);
+                    }, function(error){
+                        alert("Can't get file: " + JSON.stringify(error));
+                        deferred.reject(error);
+                    });
+                }, function(error){
+                    alert("Can't get file system: " + JSON.stringify(error));
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            },
             upload: function(fileUrl, serverUrl, options){
                 var ft = new FileTransfer(),
                     ftOptions = new FileUploadOptions(),
@@ -63,7 +80,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                     ftOptions.params = options.params;
 
                 ftOptions.chunkedMode = false;
-
+                alert("uploading " + fileUrl);
                 ft.upload(fileUrl, encodeURI(serverUrl), function(e){
                     alert("upload success: " + JSON.stringify(e));
                     deferred.resolve(e);
