@@ -1,8 +1,26 @@
 "use strict";
 
-app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactory($q, $indexedDB) {
+app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDataObjectClassFactory($q, $indexedDB, images, parse) {
     function DataObject(){}
+
     DataObject.prototype = {
+        /**
+         * Uses the images service to take a picture and if successful, add it to the player.
+         * @param method "camera" / "browse". Defaults to "camera" if none.
+         * @returns {*} The promise is called with the new image
+         */
+        addPhoto: function(method){
+            var dataObj = this;
+            return images.getPhoto(method, {
+                allowEdit : true,
+                targetWidth: this.imagesConfig.width,
+                targetHeight: this.imagesConfig.height,
+                saveToPhotoAlbum: false
+            }).then(function(imageUrl){
+                dataObj.localImageUrl = dataObj.image = imageUrl;
+                return imageUrl;
+            });
+        },
         remove: function (absoluteDelete) {
             var self = this;
 
@@ -56,10 +74,12 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
             }
 
             function doSave() {
-                if (self.preSave)
-                    return $q.when(self.preSave()).then(saveToLocalDB);
+                return saveImage().then(function(){
+                    if (self.preSave)
+                        return $q.when(self.preSave()).then(saveToLocalDB);
 
-                return saveToLocalDB();
+                    return saveToLocalDB();
+                });
             }
 
             function saveToLocalDB(){
@@ -81,6 +101,20 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
                 catch(e){
                     return $q.reject("Error saving object.");
                 }
+            }
+
+            function saveImage(){
+                if (self.localImageUrl){
+                    return parse.uploadFile(self.localImageUrl, this.name + ".jpg", "image/jpeg").then(function(file){
+                        self.image = self.localImageUrl;
+                        self.imageUrl = file.url();
+                        delete self.localImageUrl;
+                    }, function(error){
+                        alert("Can't upload image file: " + error);
+                    });
+                }
+                else
+                    return $q.when();
             }
         },
         unremove: function(){

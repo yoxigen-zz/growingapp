@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", function getEntryClassFactory($q, $indexedDB, entries, Player, DataObject) {
+app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "config", function getEntryClassFactory($q, $indexedDB, entries, Player, DataObject, config) {
     var OBJECT_STORE_NAME = "entries",
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
@@ -61,6 +61,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
             return {
                 playerId: this.player.playerId,
                 age: this.player.getAge(this.date),
+                image: this.imageUrl,
                 timestamp: this.timestamp,
                 date: this.date,
                 properties: this.properties,
@@ -78,7 +79,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
             if (!this.player)
                 throw new Error("Can't get local data - entry has no player.");
 
-            return {
+            var localData = {
                 date: this.date,
                 age: this.player.getAge(this.date),
                 properties: this.properties,
@@ -89,11 +90,20 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
                 description: this.description,
                 updatedAt: new Date()
             };
+
+            if (this.image)
+                localData.image = this.image;
+
+            if (this.imageUrl)
+                localData.imageUrl = this.imageUrl;
+
+            return localData;
         },
         get idProperty(){ return "timestamp" },
         getNewId: function(){
             return new Date().valueOf()
         },
+        imagesConfig: config.entries.images,
         objectStore: entriesObjectStore,
         preSave: function(){
             if (this.type.preSave)

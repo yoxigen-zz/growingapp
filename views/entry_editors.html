@@ -46,3 +46,16 @@
         <div class="tooth-name">{{config.entries.teeth.index[entry.properties.tooth].name || "Select the tooth" }}</div>
     </div>
 </script>
+<script type="text/ng-template" id="entry_editor_photo">
+    <div id="entry_photo_edit">
+        <img ng-src="{{ entry.properties.url }}" />
+        <div class="avatar-buttons">
+            <a class="button text-button" ng-click="editedPlayer.addPhoto('camera')">
+                <img src="images/icons/camera.svg" />
+            </a>
+            <a class="button text-button" ng-click="editedPlayer.addPhoto('browse')">
+                <img src="images/icons/folders.svg" />
+            </a>
+        </div>
+    </div>
+</script>

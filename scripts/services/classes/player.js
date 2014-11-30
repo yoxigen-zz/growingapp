@@ -1,7 +1,7 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "parse", "images",
-    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, parse, images) {
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
+    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject) {
     var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
@@ -38,23 +38,6 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
     }
 
     Player.prototype = {
-        /**
-         * Uses the images service to take a picture and if successful, add it to the player.
-         * @param method "camera" / "browse". Defaults to "camera" if none.
-         * @returns {*} The promise is called with the new image
-         */
-        addPhoto: function(method){
-            var player = this;
-            return images.getPhoto(method, {
-                allowEdit : true,
-                targetWidth: config.players.playerImageSize.width,
-                targetHeight: config.players.playerImageSize.height,
-                saveToPhotoAlbum: false
-            }).then(function(imageUrl){
-                player.localImageUrl = player.image = imageUrl;
-                return player.image;
-            });
-        },
         /**
          * Returns the age of this player, in days, for the specified date. If no date is specified, returns the current age.
          * @param date
@@ -103,22 +86,8 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
             return localData;
         },
         get idProperty(){ return "playerId" },
+        imagesConfig: config.players.playerImageSize,
         objectStore: playersObjectStore,
-        preSave: function(){
-            if (this.localImageUrl){
-                var self = this;
-
-                return parse.uploadFile(this.localImageUrl, this.name + ".jpg", "image/jpeg").then(function(file){
-                    self.image = self.localImageUrl;
-                    self.imageUrl = file.url();
-                    delete self.localImageUrl;
-                }, function(error){
-                    alert("Can't upload image file: " + error);
-                });
-            }
-            else
-                return true;
-        },
         validate: function(){
             if (!this.name)
                 throw "Can't save, missing name.";

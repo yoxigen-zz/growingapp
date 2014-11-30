@@ -2,6 +2,19 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
     var unitFilter = $filter("unit");
     var entryTypes = [
         {
+            "id": "photo",
+            "name": "Photo",
+            "icon": "photo",
+            "html": "<img src='{{data.properties.url}}' />"
+        },
+        {
+            "id": "note",
+            "name": "Note",
+            "icon": "note",
+            "html": "{{data.properties.text}}",
+            allowDescription: false
+        },
+        {
             "id": "weight",
             "name": "Weight",
             "icon": "weight",
@@ -62,13 +75,6 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             }
         },
         {
-            "id": "note",
-            "name": "Note",
-            "icon": "note",
-            "html": "{{data.properties.text}}",
-            allowDescription: false
-        },
-        {
             "id": "speech",
             "name": "Speech",
             "icon": "word",
@@ -81,7 +87,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
         },
         {
             "id": "teeth",
-            "name": "Teeth",
+            "name": "Tooth",
             "icon": "tooth",
             html: function(entry, player, config){
                 return player.name + "'s <span class='item-measure'>" + config.entries.teeth.index[entry.properties.tooth].name.toLowerCase() + "</span> has come out";
