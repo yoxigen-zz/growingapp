@@ -302,8 +302,9 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
             var params = getHttpParams();
             params._ContentType = type;
 
-            return phonegap.files.getFileByUrl(fileUrl).then(function(fileEntry){
-                var file = new Parse.File(filename, fileEntry.file(), type);
+            return phonegap.files.getFileByUrl(fileUrl).then(function(_file){
+                var file = new Parse.File(filename, _file, type);
+
                 return $q.when(file.save());
             });
 
