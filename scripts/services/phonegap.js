@@ -59,8 +59,8 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                 var deferred = $q.defer();
 
                 window.resolveLocalFileSystemURL(fileUrl, function(entry){
-                    alert("FILE: " + entry.file())
-                    deferred.resolve(entry.file());
+                    alert("FILE: " + JSON.stringify(entry));
+                    deferred.resolve(entry);
                 }, function(error){
                     alert("Can't get entry: " + JSON.stringify(error));
                     deferred.reject(error);
