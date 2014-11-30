@@ -3,7 +3,8 @@
 angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
     var defaultCameraOptions,
         deviceReady,
-        onDeviceReady;
+        onDeviceReady,
+        fileSystem;
 
     document.addEventListener("deviceready",function(){
         deviceReady = true;
@@ -18,6 +19,12 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
         catch(e) {
             alert("Can't initialize camera.");
         }
+
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs){
+            fileSystem = fs;
+        }, function(error){
+            alert("Can't get file system: " + JSON.stringify(error));
+        });
 
         if (onDeviceReady){
             onDeviceReady.forEach(function(callback){
@@ -50,16 +57,12 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
         files: {
             getFileByUrl: function(fileUrl){
                 var deferred = $q.defer();
+                alert("getting file for url " + fileUrl);
 
-                window.requestFileSystem(window.TEMPORARY, 1024*1024, function(fs){
-                    fs.root.getFile(fileUrl, {}, function(fileEntry){
-                        deferred.resolve(fileEntry.file);
-                    }, function(error){
-                        alert("Can't get file: " + JSON.stringify(error));
-                        deferred.reject(error);
-                    });
+                fileSystem.root.getFile(fileUrl, {}, function(fileEntry){
+                    deferred.resolve(fileEntry.file);
                 }, function(error){
-                    alert("Can't get file system: " + JSON.stringify(error));
+                    alert("Can't get file: " + JSON.stringify(error));
                     deferred.reject(error);
                 });
 
