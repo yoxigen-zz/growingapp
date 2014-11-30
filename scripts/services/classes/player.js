@@ -115,7 +115,8 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
                 var self = this;
 
                 return parse.uploadFile(this.imageUrl, this.name + ".jpg", "image/jpeg").then(function(file){
-                    self.image = file.url;
+                    alert("uploaded file: " + file);
+                    self.image = file.url();
                     delete self.imageUrl;
                 }, function(error){
                     alert("Can't upload image file: " + error);
