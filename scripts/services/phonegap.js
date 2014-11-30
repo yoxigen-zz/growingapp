@@ -60,7 +60,6 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                 alert("getting file for url " + fileUrl);
 
                 window.resolveLocalFileSystemURL(fileUrl, function(entry){
-                    alert("ENTRY! " + entry);
                     deferred.resolve(entry);
                 }, function(error){
                     alert("Can't get entry: " + JSON.stringify(error));
