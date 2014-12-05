@@ -1,7 +1,8 @@
 app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages",
     function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages){
 
-    var currentMenuItem;
+    var currentMenuItem,
+        spinnerTimeout;
 
     $scope.config = config;
     $scope.setCurrentPlayer = setCurrentPlayer;
@@ -58,7 +59,9 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         });
     });
 
-    init();
+    // Returning here just to make sure that after this there are only function definitions, to organize code:
+    return init();
+
 
     function setCurrentMenuItem(){
         var hash = window.location.hash;
@@ -233,7 +236,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         $scope.currentUser = null;
     }
 
-    var spinnerTimeout;
     function onLoadingStart(e){
         $timeout.cancel(spinnerTimeout);
         if (!e || !e.isOnLoad) {
@@ -335,7 +337,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     function init(){
-
         var user = users.getCurrentUser();
         if (user)
             eventBus.triggerEvent("login", { user: user });

@@ -105,7 +105,7 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
 
             function saveImage(){
                 if (self.localImageUrl){
-                    return parse.uploadFile(self.localImageUrl, this.name + ".jpg", "image/jpeg").then(function(file){
+                    return parse.uploadFile(self.localImageUrl, self.name + ".jpg", "image/jpeg").then(function(file){
                         self.image = self.localImageUrl;
                         self.imageUrl = file.url();
                         delete self.localImageUrl;
