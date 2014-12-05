@@ -81,14 +81,14 @@
     <dialog show="showSyncOffer" title="It's time to backup!" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="syncOfferActions">
         <div ng-include="'views/syncOffer.html'"></div>
     </dialog>
-    <slide-dialog show="showSettings"
+    <dialog show="showSettings"
                   title="Settings"
                   icon="settings_white"
                   on-show="onShowDialog($event)"
                   on-hide="onHideDialog()"
                   actions="settingsActions">
         <div ng-include="'views/settings.html'"></div>
-    </slide-dialog>
+    </dialog>
 
     <ng-include src="'views/entry_editors.html'"></ng-include>
     <script data-main="scripts/main.js" src="components/require.js"></script>

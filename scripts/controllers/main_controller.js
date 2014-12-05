@@ -20,7 +20,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
     $scope.declineSyncOffer = declineSyncOffer;
     $scope.openSettings = openSettings;
-    $scope.settingsActions = [{ icon: "ok", title: "Save settings", onClick: saveSettings }];
+    $scope.settingsActions = [{ icon: "ok-blue", title: "Save settings", onClick: saveSettings, text: "Save" }];
     $scope.signInActions = [
         { text: "New user?", onClick: openSignUp },
         { text: "Login", onClick: function(){ eventBus.triggerEvent("doLogin"); }}
