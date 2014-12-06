@@ -1,6 +1,11 @@
 "use strict";
 
 app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDataObjectClassFactory($q, $indexedDB, images, parse) {
+    /**
+     * Base class for data objects - those that should be saved to local DB (and potentially synced to cloud)
+     * Includes methods for saving, deleting and any common functionality (like adding an image to the object)
+     * @constructor
+     */
     function DataObject(){}
 
     DataObject.prototype = {
@@ -39,6 +44,11 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
                 return $q.when(this)
             }
         },
+        /**
+         * Saves the data object locally, to IndexedDB, or updates the item if exists.
+         * @param isSynced If true, the object is considered synced, otherwise it'll have unsynced = true after save (meaning that it should be synced to cloud when possible).
+         * @returns {*}
+         */
         save: function(isSynced){
             if (this.validate) {
                 try {
@@ -74,12 +84,10 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
             }
 
             function doSave() {
-                return saveImage().then(function(){
-                    if (self.preSave)
-                        return $q.when(self.preSave()).then(saveToLocalDB);
+                if (self.preSave)
+                    return $q.when(self.preSave()).then(saveToLocalDB);
 
-                    return saveToLocalDB();
-                });
+                return saveToLocalDB();
             }
 
             function saveToLocalDB(){
@@ -101,20 +109,6 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
                 catch(e){
                     return $q.reject("Error saving object.");
                 }
-            }
-
-            function saveImage(){
-                if (self.localImageUrl){
-                    return parse.uploadFile(self.localImageUrl, self.name + ".jpg", "image/jpeg").then(function(file){
-                        self.image = self.localImageUrl;
-                        self.imageUrl = file.url();
-                        delete self.localImageUrl;
-                    }, function(error){
-                        alert("Can't upload image file: " + error);
-                    });
-                }
-                else
-                    return $q.when();
             }
         },
         unremove: function(){

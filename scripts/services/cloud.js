@@ -56,12 +56,27 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         currentUser.save();
     }
 
+    function syncImage(dataObject){
+        if (dataObject.localImageUrl){
+            return storage.uploadFile(dataObject.localImageUrl, dataObject.cloudId + ".jpg", "image/jpeg").then(function(file){
+                dataObject.image = dataObject.localImageUrl;
+                dataObject.imageUrl = file.url;
+                delete dataObject.localImageUrl;
+                return true;
+            }, function(error){
+                alert("Can't upload image file: " + error);
+            });
+        }
+
+        return $q.when(false);
+    }
+
     function syncObjects(className){
         return storage.query(className, config.sync.lastSyncTimestamp ? { greaterThan: ["updatedAt", config.sync.lastSyncTimestamp] } : null).then(function(results){
             if (!results || !results.length)
                 return;
 
-            var objs = [],
+            var dataObjects = [],
                 promises = [],
                 objectClass = className === "Entry" ? Entry : Player;
 
@@ -73,12 +88,16 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                     return true;
 
                 try{
-                    var obj = new objectClass(objectData);
-                    obj.cloudId = cloudObject.id;
+                    var dataObject = new objectClass(objectData);
+                    dataObject.cloudId = cloudObject.id;
 
-                    promises.push(obj.save(true).then(function(){
-                        objs.push(obj);
+                    promises.push(dataObject.save(true).then(function(){
+                        dataObjects.push(dataObject);
                     }));
+
+                    syncImage(dataObject).then(function(uploaded){
+                        dataObject.save();
+                    });
                 }
                 catch(e){
                     console.error("Can't create or save object: ", e);
@@ -86,10 +105,10 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
             });
 
             return $q.all(promises).then(function(){
-                if (objs.length)
-                    eventBus.triggerEvent("updateObjects", { type: className, objects: objs});
+                if (dataObjects.length)
+                    eventBus.triggerEvent("updateObjects", { type: className, objects: dataObjects});
 
-                return objs;
+                return dataObjects;
             });
         }, function(error){
             console.error("Can't fetch " + className + " data from cloud. Error: ", error);
