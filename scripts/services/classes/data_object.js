@@ -22,7 +22,7 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
                 targetHeight: this.imagesConfig.height,
                 saveToPhotoAlbum: false
             }).then(function(imageUrl){
-                dataObj.localImageUrl = dataObj.image = imageUrl;
+                dataObj.localImageUrl = imageUrl;
                 return imageUrl;
             });
         },

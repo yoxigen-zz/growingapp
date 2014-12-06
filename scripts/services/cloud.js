@@ -138,6 +138,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
 
         var promises = [Entry, Player].map(function(dataObjectClass){
             return dataObjectClass.getAll({ unsynced: true, includeDeleted: true}).then(function(unsyncedDataObjects){
+                alert("unsycned: " + unsyncedDataObjects.length);
                 if (unsyncedDataObjects.length){
                     var dataObjectsToSave = [];
                     unsyncedDataObjects.forEach(function(dataObject){
@@ -150,6 +151,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                             dataObject.cloudId = dataObjectCloudData.id;
                             dataObject.save(true);
 
+                            alert("sync image? " + dataObject.localImageUrl);
                             syncImage(dataObject).then(function(uploaded){
                                 dataObject.save();
                             });

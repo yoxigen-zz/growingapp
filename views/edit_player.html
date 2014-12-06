@@ -2,8 +2,8 @@
     <div class="player-edit-avatar">
         <div class="avatar avatar-placeholder" ng-show="!editedPlayer.image">
         </div>
-        <div class="avatar" ng-show="editedPlayer.image">
-            <img class="avatar-image" ng-src="{{editedPlayer.image}}" class="player-edit-image" />
+        <div class="avatar" ng-show="editedPlayer.image || editedPlayer.localImageUrl">
+            <img class="avatar-image" ng-src="{{editedPlayer.localImageUrl || editedPlayer.image}}" class="player-edit-image" />
         </div>
         <div class="avatar-buttons">
             <a class="button text-button" ng-click="editedPlayer.addPhoto('camera')">
