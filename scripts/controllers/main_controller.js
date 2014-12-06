@@ -45,7 +45,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     eventBus.subscribe("loadingStart", onLoadingStart);
     eventBus.subscribe("loadingEnd", onLoadingEnd);
     eventBus.subscribe("logout", onLogout);
-    eventBus.subscribe("updatePlayers", onUpdatePlayers);
+    eventBus.subscribe("updateObjects", onUpdateObjects);
 
     window.addEventListener("online", function(){
         $scope.$apply(function(){
@@ -251,10 +251,16 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         if (e && e.error)
             console.error(e.error);
     }
-    function onUpdatePlayers(e){
+
+    function onUpdateObjects(e){
+        if (e.type === "Player")
+            onUpdatePlayers(e.objects);
+    }
+
+    function onUpdatePlayers(players){
         var deletedCurrentPlayer;
 
-        e.players.forEach(function(player){
+        players.forEach(function(player){
             if (player.isNew){
                 if (!player.deleted)
                     $scope.players.push(player);

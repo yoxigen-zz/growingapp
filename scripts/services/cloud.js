@@ -4,10 +4,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         cloudEnabled,
         isSyncing;
 
-    eventBus.subscribe("saveEntry", syncEntry);
-    eventBus.subscribe("deleteEntry", syncEntry);
-    eventBus.subscribe("editPlayer", syncPlayer);
-    eventBus.subscribe("deletePlayer", syncPlayer);
+    eventBus.subscribe(["saveEntry", "deleteEntry", "editPlayer", "deletePlayer"], syncDataObject);
     eventBus.subscribe("login", onLogin);
     eventBus.subscribe("logout", function(){ cloudEnabled = false; });
     eventBus.subscribe("sync", sync);
@@ -31,29 +28,16 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         cloudEnabled = users.getCurrentUser() && window.navigator.onLine;
     }
 
-    function syncEntry(entry){
+    function syncDataObject(dataObject){
         if (!cloudEnabled)
             return;
 
-        storage.setItem("Entry", entry.getCloudData()).then(function(savedData){
-            entry.cloudId = savedData.id;
-            entry.save(true);
-            eventBus.triggerEvent("updateEntries", { entries: [entry] });
+        storage.setItem(dataObject.constructor.name, dataObject.getCloudData()).then(function(savedData){
+            dataObject.cloudId = savedData.id;
+            dataObject.save(true);
+            eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
         }, function(error){
-            console.error("ERROR syncing entries: ", error);
-        });
-    }
-
-    function syncPlayer(player){
-        if (!cloudEnabled)
-            return;
-
-        storage.setItem("Player", player.getCloudData()).then(function(savedData){
-            player.cloudId = savedData.id;
-            player.save(true);
-            eventBus.triggerEvent("updatePlayers", { players: [player] });
-        }, function(error){
-            console.error("ERROR syncing players: ", error);
+            console.error("ERROR syncing " + dataObject.constructor.name + " object: ", error);
         });
     }
 
@@ -102,12 +86,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
             });
 
             return $q.all(promises).then(function(){
-                if (objs.length) {
-                    if (className === "Entry")
-                        eventBus.triggerEvent("updateEntries", { entries: objs });
-                    else if (className === "Player")
-                        eventBus.triggerEvent("updatePlayers", { players: objs });
-                }
+                if (objs.length)
+                    eventBus.triggerEvent("updateObjects", { type: className, objects: objs});
+
                 return objs;
             });
         }, function(error){
@@ -140,47 +121,28 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         if (!cloudEnabled)
             return;
 
-        var promises = [];
-
-        promises.push(Entry.getUnsyncedEntries().then(function(unsyncedEntries){
-            if (unsyncedEntries.length){
-                var entriesToSave = [];
-                unsyncedEntries.forEach(function(entry){
-                    entriesToSave.push(entry.getCloudData());
-                });
-
-                storage.setItems("Entry", entriesToSave).then(function(savedData){
-                    savedData.forEach(function(entryCloudData, i){
-                        var entry = unsyncedEntries[i];
-                        entry.cloudId = entryCloudData.id;
-                        entry.save(true);
+        var promises = [Entry, Player].map(function(dataObjectClass){
+            return dataObjectClass.getAll({ unsynced: true, includeDeleted: true}).then(function(unsyncedDataObjects){
+                if (unsyncedDataObjects.length){
+                    var dataObjectsToSave = [];
+                    unsyncedDataObjects.forEach(function(dataObject){
+                        dataObjectsToSave.push(dataObject.getCloudData());
                     });
 
-                    eventBus.triggerEvent("updateEntries", { entries: unsyncedEntries });
-                }, function(error){
-                    console.error("ERROR syncing entries: ", error);
-                });
-            }
-        }));
+                    storage.setItems(dataObjectClass.name, dataObjectsToSave).then(function(savedData){
+                        savedData.forEach(function(dataObjectCloudData, i){
+                            var dataObject = unsyncedDataObjects[i];
+                            dataObject.cloudId = dataObjectCloudData.id;
+                            dataObject.save(true);
+                        });
 
-        promises.push(Player.getAll({ unsynced: true}).then(function(unsyncedPlayers){
-            if (unsyncedPlayers.length){
-                var syncData = [];
-                unsyncedPlayers.forEach(function(player){
-                    syncData.push(player.getCloudData());
-                });
-
-                storage.setItems("Player", syncData).then(function(savedData){
-                    savedData.forEach(function(playerCloudData, i){
-                        var player = unsyncedPlayers[i];
-                        player.cloudId = playerCloudData.id;
-                        player.save(true);
+                        eventBus.triggerEvent("updateObjects", { type: dataObjectClass.name, objects: unsyncedDataObjects });
+                    }, function(error){
+                        console.error("ERROR syncing " + dataObjectClass.name + " objects: ", error);
                     });
-                }, function(error){
-                    console.error("ERROR syncing players: ", error);
-                });
-            }
-        }));
+                }
+            })
+        });
 
         return $q.all(promises);
     }

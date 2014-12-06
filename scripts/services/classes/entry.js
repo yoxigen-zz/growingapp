@@ -6,7 +6,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "co
 
     function Entry(type, player) {
         var timestamp;
-
+        this.constructor = Entry;
         if (type instanceof Entry || (type.timestamp && type.playerId && type.properties))
         {
             var entryData = type;
@@ -156,6 +156,11 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "co
         }, function(){
             return $q.when([]);
         });
+    };
+
+    Entry.getAll = function(options){
+        options = options || {};
+        return Entry.getEntries(options);
     };
 
     Entry.getUnsyncedEntries = function(){

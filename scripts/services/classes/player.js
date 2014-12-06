@@ -7,6 +7,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
 
     function Player(data) {
         var id;
+        this.constructor = Player;
 
         if (data && data.playerId && data.name)
         {
