@@ -32,12 +32,14 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         if (!cloudEnabled)
             return;
 
-        storage.setItem(dataObject.constructor.name, dataObject.getCloudData()).then(function(savedData){
-            dataObject.cloudId = savedData.id;
-            dataObject.save(true);
-            eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
-        }, function(error){
-            console.error("ERROR syncing " + dataObject.constructor.name + " object: ", error);
+        syncImage(dataObject).then(function(uploaded){
+            storage.setItem(dataObject.constructor.name, dataObject.getCloudData()).then(function(savedData){
+                dataObject.cloudId = savedData.id;
+                dataObject.save(true);
+                eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
+            }, function(error){
+                console.error("ERROR syncing " + dataObject.constructor.name + " object: ", error);
+            });
         });
     }
 
@@ -138,7 +140,6 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
 
         var promises = [Entry, Player].map(function(dataObjectClass){
             return dataObjectClass.getAll({ unsynced: true, includeDeleted: true}).then(function(unsyncedDataObjects){
-                alert("unsycned: " + unsyncedDataObjects.length);
                 if (unsyncedDataObjects.length){
                     var dataObjectsToSave = [];
                     unsyncedDataObjects.forEach(function(dataObject){
@@ -151,7 +152,6 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                             dataObject.cloudId = dataObjectCloudData.id;
                             dataObject.save(true);
 
-                            alert("sync image? " + dataObject.localImageUrl);
                             syncImage(dataObject).then(function(uploaded){
                                 dataObject.save();
                             });
