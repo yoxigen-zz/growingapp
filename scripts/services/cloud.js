@@ -94,10 +94,6 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                     promises.push(dataObject.save(true).then(function(){
                         dataObjects.push(dataObject);
                     }));
-
-                    syncImage(dataObject).then(function(uploaded){
-                        dataObject.save();
-                    });
                 }
                 catch(e){
                     console.error("Can't create or save object: ", e);
@@ -153,6 +149,10 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                             var dataObject = unsyncedDataObjects[i];
                             dataObject.cloudId = dataObjectCloudData.id;
                             dataObject.save(true);
+
+                            syncImage(dataObject).then(function(uploaded){
+                                dataObject.save();
+                            });
                         });
 
                         eventBus.triggerEvent("updateObjects", { type: dataObjectClass.name, objects: unsyncedDataObjects });
