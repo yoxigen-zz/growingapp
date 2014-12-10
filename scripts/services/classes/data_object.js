@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDataObjectClassFactory($q, $indexedDB, images, parse) {
+app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", "ImageData", function getDataObjectClassFactory($q, $indexedDB, images, parse, ImageData) {
     /**
      * Base class for data objects - those that should be saved to local DB (and potentially synced to cloud)
      * Includes methods for saving, deleting and any common functionality (like adding an image to the object)
@@ -22,9 +22,24 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
                 targetHeight: this.imagesConfig.height,
                 saveToPhotoAlbum: false
             }).then(function(imageUrl){
-                dataObj.localImageUrl = imageUrl;
-                return imageUrl;
+                if (!dataObj.image)
+                    dataObj.image = new ImageData;
+
+                dataObj.image.setLocalUrl(imageUrl);
+                dataObj.unsynced = 1;
+                return dataObj.image;
             });
+        },
+        /**
+         * To be used by child classes when the instance is created
+         * @param data
+         */
+        init: function(data){
+            if (data){
+                if (data.image){
+                    this.image = new ImageData(data.image);
+                }
+            }
         },
         remove: function (absoluteDelete) {
             var self = this;
@@ -37,6 +52,8 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
                     console.error("Can't delete " + self.constructor.name + ": ", error);
                     return $q.reject("Can't delete " + self.constructor.name);
                 });
+
+                // TODO: Delete image if exists
             }
             else {
                 this._deleted = true;
@@ -98,6 +115,9 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", function getDa
 
                     if (self._deleted)
                         localData.unsynced = localData.deleted = 1;
+
+                    if (self.image)
+                        localData.image = self.image.getLocalData();
 
                     return self.objectStore.upsert(localData).then(function (id) {
                         self[self.idProperty] = id;

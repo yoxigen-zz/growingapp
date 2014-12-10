@@ -47,6 +47,7 @@ requirejs([
                         requirejs([
                             "services/config",
                             "services/classes/data_object",
+                            "services/classes/image_data",
                             "services/classes/entry",
                             "services/classes/player",
                             "services/entries",

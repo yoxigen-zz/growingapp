@@ -24,6 +24,9 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
             this.gender = "f";
             this.birthday = new Date();
         }
+
+        this.init(data);
+
         this.__defineGetter__("playerId", function () {
             return id;
         });
@@ -64,7 +67,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
                 gender: this.gender,
                 id: this.cloudId,
                 deleted: !!this._deleted,
-                image: this.imageUrl
+                image: this.image && this.image.cloudUrl
             }
         },
         getLocalData: function(){
@@ -77,12 +80,6 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
 
             if (this.playerId)
                 localData.playerId = this.playerId;
-
-            if (this.image)
-                localData.image = this.image;
-
-            if (this.imageUrl)
-                localData.imageUrl = this.imageUrl;
 
             return localData;
         },

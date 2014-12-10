@@ -38,6 +38,8 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "co
             this.isNew = true;
         }
 
+        this.init(type);
+
         this.__defineGetter__("timestamp", function () {
             return timestamp;
         });
@@ -61,14 +63,14 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "co
             return {
                 playerId: this.player.playerId,
                 age: this.player.getAge(this.date),
-                image: this.imageUrl,
                 timestamp: this.timestamp,
                 date: this.date,
                 properties: this.properties,
                 type: this.type.id,
                 id: this.cloudId,
                 deleted: !!this._deleted,
-                description: this.description
+                description: this.description,
+                image: this.image && this.image.cloudUrl
             }
         },
         /**
@@ -90,12 +92,6 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "co
                 description: this.description,
                 updatedAt: new Date()
             };
-
-            if (this.image)
-                localData.image = this.image;
-
-            if (this.imageUrl)
-                localData.imageUrl = this.imageUrl;
 
             return localData;
         },

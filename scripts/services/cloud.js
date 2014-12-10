@@ -32,7 +32,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         if (!cloudEnabled)
             return;
 
-        syncImage(dataObject).then(function(uploaded){
+        syncImageToCloud(dataObject).then(function(uploaded){
             storage.setItem(dataObject.constructor.name, dataObject.getCloudData()).then(function(savedData){
                 dataObject.cloudId = savedData.id;
                 dataObject.save(true);
@@ -58,12 +58,16 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         currentUser.save();
     }
 
-    function syncImage(dataObject){
-        if (dataObject.localImageUrl){
-            return storage.uploadFile(dataObject.localImageUrl, dataObject.cloudId + ".jpg", "image/jpeg").then(function(file){
-                dataObject.image = dataObject.localImageUrl;
-                dataObject.imageUrl = file.url;
-                delete dataObject.localImageUrl;
+    /**
+     * If the specified dataObject has an unsynced image, the image will be uploaded to cloud and the cloudUrl will be saved, otherwise does nothing.
+     * @param dataObject
+     * @returns {*}
+     */
+    function syncImageToCloud(dataObject){
+        if (dataObject.image && dataObject.image.unsynced){
+            return storage.uploadFile(dataObject.image.localUrl, dataObject.cloudId + ".jpg", "image/jpeg").then(function(file){
+                dataObject.image.cloudUrl = file.url;
+                delete image.unsynced;
                 return true;
             }, function(error){
                 alert("Can't upload image file: " + error);
@@ -73,7 +77,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         return $q.when(false);
     }
 
-    function syncObjects(className){
+    function syncObjectsFromCloud(className){
         return storage.query(className, config.sync.lastSyncTimestamp ? { greaterThan: ["updatedAt", config.sync.lastSyncTimestamp] } : null).then(function(results){
             if (!results || !results.length)
                 return;
@@ -128,9 +132,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                 eventBus.triggerEvent("settingsChange", { fromCloud: true });
         }
 
-        return syncObjects("Player").then(function(players){
+        return syncObjectsFromCloud("Player").then(function(players){
             Player.updatePlayers(players);
-            return syncObjects("Entry").then(setLastUpdateTime);
+            return syncObjectsFromCloud("Entry").then(setLastUpdateTime);
         });
     }
 
@@ -152,7 +156,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                             dataObject.cloudId = dataObjectCloudData.id;
                             dataObject.save(true);
 
-                            syncImage(dataObject).then(function(uploaded){
+                            syncImageToCloud(dataObject).then(function(uploaded){
                                 dataObject.save();
                             });
                         });
