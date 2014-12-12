@@ -1,13 +1,12 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
-    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject) {
-    var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images",
+    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, images) {
+    var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players.name),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
     function Player(data) {
         var id;
-        this.constructor = Player;
 
         if (data && data.playerId && data.name)
         {
@@ -25,8 +24,6 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
             this.birthday = new Date();
         }
 
-        this.init(data);
-
         this.__defineGetter__("playerId", function () {
             return id;
         });
@@ -41,58 +38,62 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
         });
     }
 
-    Player.prototype = {
         /**
-         * Returns the age of this player, in days, for the specified date. If no date is specified, returns the current age.
-         * @param date
-         * @returns {*}
-         */
-        getAge: function(date){
-            if (!date)
-                date = new Date();
+     * Returns the age of this player, in days, for the specified date. If no date is specified, returns the current age.
+     * @param date
+     * @returns {*}
+     */
+    Player.prototype.getAge = function(date){
+        if (!date)
+            date = new Date();
 
-            if (!angular.isDate(date))
-                throw new Error("Invalid date: ", date);
+        if (!angular.isDate(date))
+            throw new Error("Invalid date: ", date);
 
-            if (!this.birthday || date < this.birthday)
-                return null;
+        if (!this.birthday || date < this.birthday)
+            return null;
 
-            return Math.floor((date - this.birthday) / dayMilliseconds);
-        },
-        getCloudData: function(){
-            return {
-                playerId: this.playerId,
-                birthday: this.birthday,
-                name: this.name,
-                gender: this.gender,
-                id: this.cloudId,
-                deleted: !!this._deleted,
-                image: this.image && this.image.cloudUrl
-            }
-        },
-        getLocalData: function(){
-            var localData = {
-                name: this.name,
-                birthday: this.birthday,
-                gender: this.gender,
-                cloudId: this.cloudId
-            };
+        return Math.floor((date - this.birthday) / dayMilliseconds);
+    };
 
-            if (this.playerId)
-                localData.playerId = this.playerId;
+    Player.prototype.getCloudData = function(){
+        return angular.extend(this.__proto__.getCloudData(), {
+            playerId: this.playerId,
+            birthday: this.birthday,
+            name: this.name,
+            gender: this.gender,
+            id: this.cloudId
+        });
+    };
 
-            return localData;
-        },
-        get idProperty(){ return "playerId" },
-        imagesConfig: config.players.playerImageSize,
-        objectStore: playersObjectStore,
-        validate: function(){
-            if (!this.name)
-                throw "Can't save, missing name.";
-        }
+    Player.prototype.getLocalData = function(){
+        var localData = {
+            name: this.name,
+            birthday: this.birthday,
+            gender: this.gender,
+            cloudId: this.cloudId
+        };
+
+        if (this.playerId)
+            localData.playerId = this.playerId;
+
+        return localData;
+    };
+
+    Player.prototype.__defineGetter__("idProperty", function(){
+        return "playerId";
+    });
+
+    Player.prototype.objectStore = playersObjectStore;
+    Player.prototype.validate = function(){
+        if (!this.name)
+            throw "Can't save, missing name.";
     };
 
     Player.prototype.__proto__ = new DataObject();
+    Player.prototype.addPhoto = function(method){
+        return images.addPhotoToDataObject(config.players.playerImageSize, this, method);
+    };
 
     Player.getAll = function (options) {
         if (!options && Player.players)
@@ -100,7 +101,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject",
 
         options = options || {};
 
-        return playersObjectStore.internalObjectStore(dbConfig.objectStores.players, "readonly").then(function(objectStore){
+        return playersObjectStore.internalObjectStore(dbConfig.objectStores.players.name, "readonly").then(function(objectStore){
             var idx = objectStore.index(options.unsynced ? "unsync_idx" : "name_idx");
             var players = [],
                 deferred = $q.defer(),

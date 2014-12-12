@@ -1,12 +1,12 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "config", function getEntryClassFactory($q, $indexedDB, entries, Player, DataObject, config) {
-    var OBJECT_STORE_NAME = "entries",
+app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "dbConfig", "config", "images",
+    function getEntryClassFactory($q, $indexedDB, entries, Player, DataObject, dbConfig, config, images) {
+    var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
     function Entry(type, player) {
         var timestamp;
-        this.constructor = Entry;
         if (type instanceof Entry || (type.timestamp && type.playerId && type.properties))
         {
             var entryData = type;
@@ -38,8 +38,6 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "co
             this.isNew = true;
         }
 
-        this.init(type);
-
         this.__defineGetter__("timestamp", function () {
             return timestamp;
         });
@@ -58,53 +56,58 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "co
         });
     }
 
-    Entry.prototype = {
-        getCloudData: function(){
-            return {
-                playerId: this.player.playerId,
-                age: this.player.getAge(this.date),
-                timestamp: this.timestamp,
-                date: this.date,
-                properties: this.properties,
-                type: this.type.id,
-                id: this.cloudId,
-                deleted: !!this._deleted,
-                description: this.description,
-                image: this.image && this.image.cloudUrl
-            }
-        },
-        /**
-         * Gets the entry's data, for saving in the offline database.
-         * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
-         */
-        getLocalData: function(){
-            if (!this.player)
-                throw new Error("Can't get local data - entry has no player.");
+    Entry.prototype.getCloudData = function(){
+        return angular.extend(this.__proto__.getCloudData(), {
+            playerId: this.player.playerId,
+            age: this.player.getAge(this.date),
+            timestamp: this.timestamp,
+            date: this.date,
+            properties: this.properties,
+            type: this.type.id,
+            id: this.cloudId,
+            description: this.description
+        });
+    };
 
-            var localData = {
-                date: this.date,
-                age: this.player.getAge(this.date),
-                properties: this.properties,
-                type: this.type.id,
-                timestamp: this.timestamp,
-                playerId: this.player.playerId,
-                cloudId: this.cloudId,
-                description: this.description,
-                updatedAt: new Date()
-            };
+    /**
+     * Gets the entry's data, for saving in the offline database.
+     * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
+     */
+    Entry.prototype.getLocalData = function(){
+        if (!this.player)
+            throw new Error("Can't get local data - entry has no player.");
 
-            return localData;
-        },
-        get idProperty(){ return "timestamp" },
-        getNewId: function(){
-            return new Date().valueOf()
-        },
-        imagesConfig: config.entries.images,
-        objectStore: entriesObjectStore,
-        preSave: function(){
-            if (this.type.preSave)
-                this.type.preSave(this);
-        }
+        var localData = {
+            date: this.date,
+            age: this.player.getAge(this.date),
+            properties: this.properties,
+            type: this.type.id,
+            timestamp: this.timestamp,
+            playerId: this.player.playerId,
+            cloudId: this.cloudId,
+            description: this.description,
+            updatedAt: new Date()
+        };
+
+        return localData;
+    };
+
+    Entry.prototype.__defineGetter__("idProperty", function(){
+        return "timestamp";
+    });
+
+    Entry.prototype.getNewId = function(){
+        return new Date().valueOf()
+    };
+
+    Entry.prototype.objectStore = entriesObjectStore;
+    Entry.prototype.preSave = function(){
+        if (this.type.preSave)
+            this.type.preSave(this);
+    };
+
+    Entry.prototype.addPhoto = function(method){
+        return images.addPhotoToDataObject(config.entries.images, this, method);
     };
 
     Entry.prototype.__proto__ = new DataObject();

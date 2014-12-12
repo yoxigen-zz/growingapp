@@ -13,7 +13,7 @@ requirejs([
         "components/moment",
         "components/angular/angular.min"
     ],
-    function(ignore) {
+    function (ignore) {
         window.d3 = require('components/d3');
 
         requirejs([
@@ -32,53 +32,56 @@ requirejs([
             "services/classes/dialog",
             "services/chart",
             "directives/toggle-display",
-            "entries/teeth/directive/teeth.directive"
-        ], function(){
+            "entries/teeth/directive/teeth.directive",
+            "services/dbconfig"
+        ], function () {
             requirejs([
-                "services/images",
-                "directives/dialogs/dialog",
-                "directives/dialogs/slide_dialog"
-            ], function(){
+                "services/classes/data_object",
+                "services/classes/file_data"
+            ], function () {
                 requirejs([
-                        "directives/charts/line_chart",
-                        "app"
-                    ]
-                    ,function(){
-                        requirejs([
-                            "services/config",
-                            "services/classes/data_object",
-                            "services/classes/image_data",
-                            "services/classes/entry",
-                            "services/classes/player",
-                            "services/entries",
-                            "services/insights",
-                            "services/cloud",
-                            "services/statistics",
-                            "services/navigation",
+                    "services/images",
+                    "directives/dialogs/dialog",
+                    "directives/dialogs/slide_dialog"
+                ], function () {
+                    requirejs([
+                            "directives/charts/line_chart",
+                            "app"
+                        ], function () {
+                            requirejs([
+                                "services/config",
+                                "services/classes/entry",
+                                "services/classes/player",
+                                "services/entries",
+                                "services/insights",
+                                "services/cloud",
+                                "services/statistics",
+                                "services/navigation",
 
-                            "entries/teeth/teeth",
-                            "filters/pronoun",
-                            "filters/unit",
-                            "filters/tofixed",
+                                "entries/teeth/teeth",
+                                "filters/pronoun",
+                                "filters/unit",
+                                "filters/tofixed",
 
-                            "controllers/main_controller",
-                            "controllers/edit_player_controller",
-                            "controllers/insights_controller",
-                            "controllers/entries_list_controller",
-                            "controllers/login_controller",
-                            "controllers/signup_controller",
-                            "entries/teeth/teeth_controller",
-                            "controllers/signup_controller",
-                            "controllers/signup_controller",
+                                "controllers/main_controller",
+                                "controllers/edit_player_controller",
+                                "controllers/insights_controller",
+                                "controllers/entries_list_controller",
+                                "controllers/login_controller",
+                                "controllers/signup_controller",
+                                "entries/teeth/teeth_controller",
+                                "controllers/signup_controller",
+                                "controllers/signup_controller",
 
-                            "insights/linechart_controller",
+                                "insights/linechart_controller",
 
-                            "directives/fixed"
-                        ], function(){
-                            angular.bootstrap(document, ["GrowingApp"]);
-                        });
-                    }
-                );
+                                "directives/fixed"
+                            ], function () {
+                                angular.bootstrap(document, ["GrowingApp"]);
+                            });
+                        }
+                    );
+                });
             });
         });
     }

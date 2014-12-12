@@ -77,14 +77,14 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         return $q.when(false);
     }
 
-    function syncObjectsFromCloud(className){
+    function syncObjectsFromCloud(objectClass){
+        var className = objectClass.name;
         return storage.query(className, config.sync.lastSyncTimestamp ? { greaterThan: ["updatedAt", config.sync.lastSyncTimestamp] } : null).then(function(results){
             if (!results || !results.length)
                 return;
 
             var dataObjects = [],
-                promises = [],
-                objectClass = className === "Entry" ? Entry : Player;
+                promises = [];
 
             results.forEach(function(cloudObject){
                 var objectData = cloudObject.getData();
@@ -132,9 +132,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
                 eventBus.triggerEvent("settingsChange", { fromCloud: true });
         }
 
-        return syncObjectsFromCloud("Player").then(function(players){
+        return syncObjectsFromCloud(Player).then(function(players){
             Player.updatePlayers(players);
-            return syncObjectsFromCloud("Entry").then(setLastUpdateTime);
+            return syncObjectsFromCloud(Entry).then(setLastUpdateTime);
         });
     }
 

@@ -1,34 +1,19 @@
 "use strict";
 
-app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", "ImageData", function getDataObjectClassFactory($q, $indexedDB, images, parse, ImageData) {
+angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["$q", function getDataObjectClassFactory($q) {
     /**
      * Base class for data objects - those that should be saved to local DB (and potentially synced to cloud)
-     * Includes methods for saving, deleting and any common functionality (like adding an image to the object)
+     * Includes methods for saving, deleting and initializing
      * @constructor
      */
     function DataObject(){}
 
     DataObject.prototype = {
-        /**
-         * Uses the images service to take a picture and if successful, add it to the player.
-         * @param method "camera" / "browse". Defaults to "camera" if none.
-         * @returns {*} The promise is called with the new image
-         */
-        addPhoto: function(method){
-            var dataObj = this;
-            return images.getPhoto(method, {
-                allowEdit : true,
-                targetWidth: this.imagesConfig.width,
-                targetHeight: this.imagesConfig.height,
-                saveToPhotoAlbum: false
-            }).then(function(imageUrl){
-                if (!dataObj.image)
-                    dataObj.image = new ImageData;
-
-                dataObj.image.setLocalUrl(imageUrl);
-                dataObj.unsynced = 1;
-                return dataObj.image;
-            });
+        getCloudData: function(){
+            return {
+                deleted: !!this._deleted,
+                image: this.image.id
+            };
         },
         /**
          * To be used by child classes when the instance is created
@@ -37,7 +22,10 @@ app.factory("DataObject", ["$q", "$indexedDB", "images", "parse", "ImageData", f
         init: function(data){
             if (data){
                 if (data.image){
-                    this.image = new ImageData(data.image);
+                    if (Object(data.image) === data.image)
+                        this.image = new FileData(data.image);
+                    else
+                        this.image = data.image;
                 }
             }
         },

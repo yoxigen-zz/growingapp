@@ -1,10 +1,3 @@
-app.constant("dbConfig", {
-    objectStores: {
-        entries: "entries",
-        players: "players"
-    }
-});
-
 app.factory("config", ["utils", "localization", function(utils, localization){
     var entries = {
         images: { width: 600, height: 600 },
