@@ -57,7 +57,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
     };
 
     Player.prototype.getCloudData = function(){
-        return angular.extend(this.__proto__.getCloudData(), {
+        return angular.extend(this.getBaseCloudData(), {
             playerId: this.playerId,
             birthday: this.birthday,
             name: this.name,
@@ -77,7 +77,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
         if (this.playerId)
             localData.playerId = this.playerId;
 
-        return localData;
+        return angular.extend(this.getBaseLocalData(), localData);
     };
 
     Player.prototype.__defineGetter__("idProperty", function(){

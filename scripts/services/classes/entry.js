@@ -57,7 +57,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
     }
 
     Entry.prototype.getCloudData = function(){
-        return angular.extend(this.__proto__.getCloudData(), {
+        return angular.extend(this.getBaseCloudData(), {
             playerId: this.player.playerId,
             age: this.player.getAge(this.date),
             timestamp: this.timestamp,
@@ -77,7 +77,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
         if (!this.player)
             throw new Error("Can't get local data - entry has no player.");
 
-        var localData = {
+        return angular.extend(this.getBaseLocalData(), {
             date: this.date,
             age: this.player.getAge(this.date),
             properties: this.properties,
@@ -87,9 +87,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
             cloudId: this.cloudId,
             description: this.description,
             updatedAt: new Date()
-        };
-
-        return localData;
+        });
     };
 
     Entry.prototype.__defineGetter__("idProperty", function(){

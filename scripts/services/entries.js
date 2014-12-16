@@ -1,14 +1,12 @@
 app.factory("entries", ["utils", "localization", "config", "$filter", function entriesFactory(utils, localization, config, $filter){
     var unitFilter = $filter("unit");
     var entryTypes = [
-        /*
         {
             "id": "photo",
             "name": "Photo",
             "icon": "photo",
             "html": "<img src='{{data.properties.url}}' />"
         },
-        */
         {
             "id": "note",
             "name": "Note",

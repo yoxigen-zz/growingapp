@@ -12,7 +12,7 @@ angular.module("FileData", ["Config", "DataObject"]).factory("FileData", ["dbCon
         }
 
         if (!this.id)
-            this.id = "IMG_" + new Date().valueOf();
+            id = "IMG_" + new Date().valueOf();
 
         this.__defineSetter__("id", function(value){
             if (value) {

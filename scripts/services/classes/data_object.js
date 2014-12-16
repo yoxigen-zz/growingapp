@@ -9,10 +9,15 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
     function DataObject(){}
 
     DataObject.prototype = {
-        getCloudData: function(){
+        getBaseCloudData: function(){
             return {
                 deleted: !!this._deleted,
-                image: this.image.id
+                imageId: this.image && this.image.id
+            };
+        },
+        getBaseLocalData: function(){
+            return {
+                imageId: this.image && this.image.id
             };
         },
         /**
@@ -90,9 +95,15 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
 
             function doSave() {
                 if (self.preSave)
-                    return $q.when(self.preSave()).then(saveToLocalDB);
+                    return $q.when(self.preSave()).then(saveImage);
 
-                return saveToLocalDB();
+                return saveImage();
+            }
+
+            function saveImage(){
+                if (self.image && self.image.unsaved){
+                    return self.image.save().then(saveToLocalDB);
+                }
             }
 
             function saveToLocalDB(){
@@ -103,9 +114,6 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
 
                     if (self._deleted)
                         localData.unsynced = localData.deleted = 1;
-
-                    if (self.image)
-                        localData.image = self.image.getLocalData();
 
                     return self.objectStore.upsert(localData).then(function (id) {
                         self[self.idProperty] = id;
