@@ -5,12 +5,14 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
     var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
-    function Entry(type, player) {
-        var timestamp;
-        if (type instanceof Entry || (type.timestamp && type.playerId && type.properties))
+    function Entry(config, player) {
+        var timestamp,
+            entryType;
+
+        if (config instanceof Entry || (config.timestamp && config.playerId && config.properties))
         {
-            var entryData = type;
-            type = type instanceof Entry ? type.type : entries.types[entryData.type];
+            var entryData = config;
+            entryType = config instanceof Entry ? config.type : entries.types[entryData.type];
 
             timestamp = entryData.timestamp;
             this.date = entryData.date;
@@ -31,6 +33,19 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
             this.isNew = false;
         }
         else{
+            if (typeof(config) !== "string")
+                throw new TypeError("Invalid config for Entry, must be either an Entry object or a string representing an entry type.");
+
+            if (!entries.types[config])
+                throw new Error("Invalid entry type, '" + config + "'.");
+
+            if (!player)
+                throw new Error("Can't create Entry object without player.");
+
+            if (!(player instanceof Player))
+                throw new TypeError("Can't create Entry, invalid player, must be an instance of Player.");
+
+            entryType = config;
             this.date = new Date();
             this.properties = {};
             this.player = player;
@@ -52,7 +67,7 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
         });
 
         this.__defineGetter__("type", function () {
-            return type;
+            return entryType;
         });
     }
 
