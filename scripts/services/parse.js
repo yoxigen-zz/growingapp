@@ -48,7 +48,7 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
 
             for(var p in item){
                 if (item.hasOwnProperty(p))
-                    obj.set(p, item[p]);
+                    obj.set(p, parseItemValue(item[p]));
             }
 
             objs.push(obj);
@@ -57,6 +57,12 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
         return objs;
     }
 
+    function parseItemValue(value){
+        if (value instanceof File)
+            return new Parse.File(value.name, value, value.type);
+
+        return value;
+    }
     function getHttpParams(){
         return {
             _ApplicationId: parseConfig.appId,

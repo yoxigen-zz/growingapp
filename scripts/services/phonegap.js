@@ -56,9 +56,15 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
         },
         files: {
             getFileByUrl: function(fileUrl){
+                var resolveUrl = window.resolveLocalFileSystemURL;
+
+                if (!resolveUrl){
+                    return $q.reject("Can't get file, window.resolveLocalFileSystemURL is unavailable");
+                }
+
                 var deferred = $q.defer();
 
-                window.resolveLocalFileSystemURL(fileUrl, function(entry){
+                resolveUrl(fileUrl, function(entry){
                     entry.file(function(file){
                         deferred.resolve(file);
                     }, function(error){

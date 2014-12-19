@@ -1,4 +1,4 @@
-app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "config", function($q, eventBus, Entry, Player, Storage, users, config){
+app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage", "users", "config", function($q, eventBus, Entry, Player, FileData, Storage, users, config){
 
     var storage = new Storage().cloud,
         cloudEnabled,
@@ -33,12 +33,16 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
             return;
 
         syncImageToCloud(dataObject).then(function(uploaded){
-            storage.setItem(dataObject.constructor.name, dataObject.getCloudData()).then(function(savedData){
-                dataObject.cloudId = savedData.id;
-                dataObject.save(true);
-                eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
+            $q.when(dataObject.getCloudData()).then(function(cloudData){
+                storage.setItem(dataObject.constructor.name, cloudData).then(function(savedData){
+                    dataObject.cloudId = savedData.id;
+                    dataObject.save(true);
+                    eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
+                }, function(error){
+                    console.error("ERROR syncing " + dataObject.constructor.name + " object: ", error);
+                });
             }, function(error){
-                console.error("ERROR syncing " + dataObject.constructor.name + " object: ", error);
+                console.error("Error syncing DataObject to cloud: ", error);
             });
         });
     }
@@ -134,36 +138,48 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
 
         return syncObjectsFromCloud(Player).then(function(players){
             Player.updatePlayers(players);
-            return syncObjectsFromCloud(Entry).then(setLastUpdateTime);
+            return $q.all([syncObjectsFromCloud(Entry), syncObjectsFromCloud(FileData)]).then(setLastUpdateTime);
         });
     }
 
+    /**
+     * Saves all the unsynced local objects (those that have been saved to the local DB) to the cloud
+     * This includes all DataObject types: Entries, Players, Files
+     *
+     * For each DataObject type does the following:
+     * 1. Get all objects with unsycned == true
+     * 2. Prepares an array of cloudData with all the unsynced objects
+     * 3. Saves to the cloud (or fails) - uses the DataObject class name as cloud class name
+     * 4. Add cloudId to all objects that are new to the cloud and save them.
+     * 5. Triggers the 'updateObjects' event with the DataObject type and the saved objects.
+     *
+     * @returns {*}
+     */
     function syncToCloud(){
         if (!cloudEnabled)
             return;
 
-        var promises = [Entry, Player].map(function(dataObjectClass){
+        var promises = [Entry, Player, FileData].map(function(dataObjectClass){
             return dataObjectClass.getAll({ unsynced: true, includeDeleted: true}).then(function(unsyncedDataObjects){
                 if (unsyncedDataObjects.length){
-                    var dataObjectsToSave = [];
-                    unsyncedDataObjects.forEach(function(dataObject){
-                        dataObjectsToSave.push(dataObject.getCloudData());
+                    var dataObjectsToSavePromises = unsyncedDataObjects.map(function(dataObject){
+                        return $q.when(dataObject.getCloudData());
                     });
 
-                    storage.setItems(dataObjectClass.name, dataObjectsToSave).then(function(savedData){
-                        savedData.forEach(function(dataObjectCloudData, i){
-                            var dataObject = unsyncedDataObjects[i];
-                            dataObject.cloudId = dataObjectCloudData.id;
-                            dataObject.save(true);
-
-                            syncImageToCloud(dataObject).then(function(uploaded){
-                                dataObject.save();
+                    $q.all(dataObjectsToSavePromises).then(function(dataObjectsToSave){
+                        storage.setItems(dataObjectClass.name, dataObjectsToSave).then(function(savedData){
+                            savedData.forEach(function(dataObjectCloudData, i){
+                                var dataObject = unsyncedDataObjects[i];
+                                if (dataObject.cloudId !== dataObjectCloudData.id)
+                                    dataObject.save(true);
                             });
-                        });
 
-                        eventBus.triggerEvent("updateObjects", { type: dataObjectClass.name, objects: unsyncedDataObjects });
+                            eventBus.triggerEvent("updateObjects", { type: dataObjectClass.name, objects: unsyncedDataObjects });
+                        }, function(error){
+                            console.error("ERROR syncing " + dataObjectClass.name + " objects: ", error);
+                        });
                     }, function(error){
-                        console.error("ERROR syncing " + dataObjectClass.name + " objects: ", error);
+                        console.error("Can't get objects to sync: ", error);
                     });
                 }
             })
@@ -172,6 +188,10 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "Storage", "users", "
         return $q.all(promises);
     }
 
+    /**
+     * General sync - saves from cloud to local, then from local to cloud.
+     * @param params
+     */
     function sync(params){
         if (!cloudEnabled || isSyncing)
             return;

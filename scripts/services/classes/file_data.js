@@ -1,17 +1,21 @@
 'use strict';
 
-angular.module("FileData", ["Config", "DataObject"]).factory("FileData", ["dbConfig", "DataObject", function(dbConfig, DataObject){
+angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileData", ["$q", "dbConfig", "DataObject", "$indexedDB", "phonegap", function($q, dbConfig, DataObject, $indexedDB, phonegap){
+    var objectStore = $indexedDB.objectStore(dbConfig.objectStores.files.name);
+
     function FileData(imageData){
         var id;
 
         if (imageData){
             for(var p in imageData){
-                if (imageData.hasOwnProperty(p))
+                if (p === "id")
+                    id = imageData[p];
+                else if (imageData.hasOwnProperty(p))
                     this[p] = imageData[p];
             }
         }
 
-        if (!this.id)
+        if (!id)
             id = "IMG_" + new Date().valueOf();
 
         this.__defineSetter__("id", function(value){
@@ -37,6 +41,7 @@ angular.module("FileData", ["Config", "DataObject"]).factory("FileData", ["dbCon
     };
 
     FileData.prototype.__proto__ = new DataObject();
+    FileData.prototype.objectStore = objectStore;
 
     FileData.prototype.__defineGetter__("url", function(){
         return this.localUrl || this.cloudUrl;
@@ -60,14 +65,32 @@ angular.module("FileData", ["Config", "DataObject"]).factory("FileData", ["dbCon
         if (!this.id)
             throw new Error("Can't get cloud data for image, since it has no ID.");
 
-        return {
-            id: this.id,
-            cloudUrl: this.cloudUrl
+        if (!this.mimeType)
+            throw new Error("Can't get FileData cloudData, mimeType is missing.");
+
+        var cloudData = {
+            fileId: this.id,
+            mimeType: this.mimeType,
+            id: this.cloudId
+        };
+
+        if (this.localUrl) {
+            return phonegap.files.getFileByUrl(this.localUrl).then(function (file) {
+                cloudData.file = file;
+                return cloudData;
+            });
         }
+
+        return cloudData;
     };
 
     FileData.prototype.getLocalData = function(){
-        var localData = {};
+        var localData = {
+            id: this.id
+        };
+
+        if (!this.mimeType)
+            throw new Error("Can't save FileData locally, mimeType is missing.");
 
         localData.mimeType = this.mimeType;
 
@@ -86,6 +109,48 @@ angular.module("FileData", ["Config", "DataObject"]).factory("FileData", ["dbCon
             localData.requireDownload = 1;
 
         return localData;
+    };
+
+    FileData.getAll = function (options) {
+        options = options || {};
+        var DataObjectType = FileData;
+
+        return objectStore.internalObjectStore(dbConfig.objectStores.files.name, "readonly").then(function(objectStore){
+            var idx = objectStore.index(options.unsynced ? "unsync_idx" : "id_idx");
+            var items = [],
+                count = options.count || null,
+                currentRecord = 0,
+                deferred = $q.defer(),
+                cursor = idx.openCursor(null);
+
+            cursor.onsuccess = function(event) {
+                var cursor = event.target.result;
+                if (!cursor || count && currentRecord === count) {
+                    deferred.resolve(items);
+                    return;
+                }
+
+                if (options.offset && currentRecord < options.offset) {
+                    currentRecord = options.offset;
+                    cursor.advance(options.offset);
+                }
+                else {
+                    if(!cursor.value.deleted || options.includeDeleted) {
+                        items.push(new DataObjectType(cursor.value));
+                        currentRecord++;
+                    }
+                    cursor.continue();
+                }
+            };
+
+            cursor.onerror = function(event){
+                deferred.reject(event);
+            };
+
+            return deferred.promise;
+        }, function(){
+            return $q.when([]);
+        });
     };
 
     return FileData;

@@ -14,9 +14,10 @@ angular.module("Config", []).constant("dbConfig", {
         },
         files: {
             name: "files",
-            version: 16,
+            version: 17,
             params: { keyPath: "id" },
             indexes: [
+                { name: "id_idx", fields: "id", params: { unique: true }},
                 { name: "mimetype_idx", fields: "mimeType", params: { unique: false }},
                 { name: "unsync_idx", fields: "unsynced", params: { unique: false }},
                 { name: "download_idx", fields: "requireDownload", params: { unique: false }}

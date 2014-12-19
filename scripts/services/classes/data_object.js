@@ -101,9 +101,10 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
             }
 
             function saveImage(){
-                if (self.image && self.image.unsaved){
+                if (self.image && self.image.unsaved)
                     return self.image.save().then(saveToLocalDB);
-                }
+                else
+                    return saveToLocalDB();
             }
 
             function saveToLocalDB(){
@@ -115,6 +116,9 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
                     if (self._deleted)
                         localData.unsynced = localData.deleted = 1;
 
+                    if (!self.objectStore)
+                        throw new Error("Objectstore for DataObject of type " + self.constructor.name + " not defined.");
+
                     return self.objectStore.upsert(localData).then(function (id) {
                         self[self.idProperty] = id;
                         return self;
@@ -123,7 +127,7 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
                     });
                 }
                 catch(e){
-                    return $q.reject("Error saving object.");
+                    return $q.reject("Error saving object: " + e.message);
                 }
             }
         },

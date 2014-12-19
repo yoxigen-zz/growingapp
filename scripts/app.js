@@ -8,7 +8,7 @@ app = angular.module("GrowingApp", [
     "Config",
     "ToggleDisplay", "EventBus", "Utils", "Charts", "Storage", "Users", "Teeth", "Images", "Messages", "Dialogs", "Localization"])
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "dbConfig", function ($routeProvider, $locationProvider, $indexedDBProvider, dbConfig) {
-        var currentDbVersion = 16;
+        var currentDbVersion = 17;
 
         $indexedDBProvider
             .connection('diaryDB')
