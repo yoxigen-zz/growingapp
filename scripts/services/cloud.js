@@ -4,11 +4,11 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
         cloudEnabled,
         isSyncing;
 
-    eventBus.subscribe(["saveEntry", "deleteEntry", "editPlayer", "deletePlayer"], syncDataObject);
+    eventBus.subscribe(["saveEntry", "deleteEntry", "editPlayer", "deletePlayer"], syncDataObjectToCloud);
     eventBus.subscribe("login", onLogin);
     eventBus.subscribe("logout", function(){ cloudEnabled = false; });
     eventBus.subscribe("sync", sync);
-    eventBus.subscribe("settingsChange", syncSettings);
+    eventBus.subscribe("settingsChange", syncSettingsToCloud);
 
     window.addEventListener("online", setCloudEnabled);
     window.addEventListener("offline", setCloudEnabled);
@@ -28,15 +28,23 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
         cloudEnabled = users.getCurrentUser() && window.navigator.onLine;
     }
 
-    function syncDataObject(dataObject){
+    /**
+     * Saves changes to a single dataObject to cloud - create, update or delete.
+     * @param dataObject
+     */
+    function syncDataObjectToCloud(dataObject){
         if (!cloudEnabled)
             return;
 
         syncImageToCloud(dataObject).then(function(uploaded){
             $q.when(dataObject.getCloudData()).then(function(cloudData){
                 storage.setItem(dataObject.constructor.name, cloudData).then(function(savedData){
-                    dataObject.cloudId = savedData.id;
-                    dataObject.save(true);
+                    // If it's a newly created object, save the cloudId locally:
+                    if (dataObject.cloudId !== savedData.id) {
+                        dataObject.cloudId = savedData.id;
+                        dataObject.save(true);
+                    }
+
                     eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
                 }, function(error){
                     console.error("ERROR syncing " + dataObject.constructor.name + " object: ", error);
@@ -47,7 +55,11 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
         });
     }
 
-    function syncSettings(e){
+    /**
+     * Saves local user settings to cloud.
+     * @param e
+     */
+    function syncSettingsToCloud(e){
         if (!cloudEnabled || (e && e.fromCloud))
             return;
 
@@ -81,6 +93,12 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
         return $q.when(false);
     }
 
+    /**
+     * For the specified DataObject class, gets all the new or updated objects from cloud, then adds cloudIds where required and saves the changes locally.
+     * When all objects have been saved, triggers an 'updateObjects' event, with the dataObject type and the updated objects.
+     * @param objectClass The constructor for the required DataObject type (Entry, Player, FileData...)
+     * @returns {*}
+     */
     function syncObjectsFromCloud(objectClass){
         var className = objectClass.name;
         return storage.query(className, config.sync.lastSyncTimestamp ? { greaterThan: ["updatedAt", config.sync.lastSyncTimestamp] } : null).then(function(results){
@@ -98,8 +116,11 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                     return true;
 
                 try{
+                    objectData.cloudId = cloudObject.id;
+                    delete cloudObject.id;
+
                     var dataObject = new objectClass(objectData);
-                    dataObject.cloudId = cloudObject.id;
+                    dataObject.cloudId = objectData.cloudId;
 
                     promises.push(dataObject.save(true).then(function(){
                         dataObjects.push(dataObject);
@@ -130,17 +151,25 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
         if (!cloudEnabled)
             return;
 
-        var userSettings = users.getCurrentUser().attributes.settings;
-        if (userSettings){
-            if (config.saveLocalization(userSettings))
-                eventBus.triggerEvent("settingsChange", { fromCloud: true });
-        }
+        syncUserSettings();
 
         return syncObjectsFromCloud(Player).then(function(players){
             Player.updatePlayers(players);
             return $q.all([syncObjectsFromCloud(Entry), syncObjectsFromCloud(FileData)]).then(setLastUpdateTime);
         });
     }
+
+    /**
+     * If the current logged-in user's settings are different than the local user settings, updates the local user settings and trigger a 'settingsChange' event.
+     */
+    function syncUserSettings(){
+        var userSettings = users.getCurrentUser().attributes.settings;
+        if (userSettings){
+            if (config.saveLocalization(userSettings))
+                eventBus.triggerEvent("settingsChange", { fromCloud: true });
+        }
+    }
+
 
     /**
      * Saves all the unsynced local objects (those that have been saved to the local DB) to the cloud

@@ -70,8 +70,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
         var localData = {
             name: this.name,
             birthday: this.birthday,
-            gender: this.gender,
-            cloudId: this.cloudId
+            gender: this.gender
         };
 
         if (this.playerId)

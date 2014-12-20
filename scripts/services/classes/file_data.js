@@ -3,15 +3,19 @@
 angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileData", ["$q", "dbConfig", "DataObject", "$indexedDB", "phonegap", function($q, dbConfig, DataObject, $indexedDB, phonegap){
     var objectStore = $indexedDB.objectStore(dbConfig.objectStores.files.name);
 
-    function FileData(imageData){
+    function FileData(fileConfig){
         var id;
 
-        if (imageData){
-            for(var p in imageData){
-                if (p === "id")
-                    id = imageData[p];
-                else if (imageData.hasOwnProperty(p))
-                    this[p] = imageData[p];
+        if (fileConfig){
+            for(var p in fileConfig){
+                if (p === "id" || p === "fileId")
+                    id = fileConfig[p];
+                else if (p === "file"){
+                    this.cloudUrl = fileConfig[p].url();
+                    this.requireDownload = true;
+                }
+                else if (fileConfig.hasOwnProperty(p))
+                    this[p] = fileConfig[p];
             }
         }
 

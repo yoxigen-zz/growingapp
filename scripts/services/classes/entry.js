@@ -30,6 +30,9 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
             if (entryData.cloudId)
                 this.cloudId = entryData.cloudId;
 
+            if (entryData.imageId)
+                this.imageId = entryData.imageId;
+
             this.isNew = false;
         }
         else{
@@ -99,7 +102,6 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
             type: this.type.id,
             timestamp: this.timestamp,
             playerId: this.player.playerId,
-            cloudId: this.cloudId,
             description: this.description,
             updatedAt: new Date()
         });
