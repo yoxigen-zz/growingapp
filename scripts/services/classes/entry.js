@@ -1,7 +1,7 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "dbConfig", "config", "images",
-    function getEntryClassFactory($q, $indexedDB, entries, Player, DataObject, dbConfig, config, images) {
+app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "DataObject", "dbConfig", "config", "images", "utils",
+    function getEntryClassFactory($q, $sce, $indexedDB, entries, Player, DataObject, dbConfig, config, images, utils) {
     var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
@@ -87,6 +87,28 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
         });
     };
 
+    Entry.prototype.__defineGetter__("html", function(){
+        if (!this._html) {
+            var htmlStr;
+
+            if (typeof(this.type.html) === "function")
+                htmlStr = this.type.html(this, this.player, config);
+            else
+                htmlStr = utils.strings.parse(this.type.html, this);
+
+            this._html = $sce.trustAsHtml(htmlStr);
+        }
+
+        return this._html;
+    });
+
+    Entry.prototype.__defineGetter__("dateText", function(){
+        if (!this._dateText)
+            this._dateText = config.getLocalizedDate(this.date) + " (" + utils.dates.dateDiff(this.date, this.player.birthday) + ")";
+
+        return this._dateText;
+    });
+
     /**
      * Gets the entry's data, for saving in the offline database.
      * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
@@ -117,8 +139,18 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", "db
 
     Entry.prototype.objectStore = entriesObjectStore;
     Entry.prototype.preSave = function(){
+        this.clearParsedValues();
+
         if (this.type.preSave)
             this.type.preSave(this);
+    };
+
+    /**
+     * Clears values that are returned from getters. Used for when app-level settings are changed, which could affect parsed values.
+     */
+    Entry.prototype.clearParsedValues = function(){
+        delete this._html;
+        delete this._dateText;
     };
 
     Entry.prototype.addPhoto = function(method){

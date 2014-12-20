@@ -50,7 +50,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             return false;
 
         $scope.removedEntry.unremove();
-        $scope.entries.splice(removedEntryIndex, 0, parseEntry($scope.removedEntry));
+        $scope.entries.splice(removedEntryIndex, 0, $scope.removedEntry);
         eventBus.triggerEvent("saveEntry", $scope.removedEntry);
         hideUnremoveMessage();
     }
@@ -121,7 +121,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     function updateEntriesAfterUnitChange(unitType){
         $scope.entries.forEach(function(entry){
             if (entry.type.localizationDependencies && ~entry.type.localizationDependencies.indexOf(unitType))
-                parseEntry(entry);
+                entry.clearParsedValues();
         });
     }
 
@@ -144,29 +144,14 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     }
 
     function addEntry(newEntry){
-        $scope.entries.splice(0, 0, parseEntry(newEntry));
+        $scope.entries.splice(0, 0, newEntry);
         sortEntries();
         if (!config.sync.lastSyncTimestamp && !config.sync.synOfferDeclined && $scope.entries.length >= config.sync.syncOfferEntryCount)
             $scope.openSyncOffer();
     }
 
     function updateEntry(entry){
-        parseEntry(entry);
         sortEntries();
-    }
-
-    function parseEntry(newEntry){
-        try {
-            newEntry.html = $sce.trustAsHtml(angular.isFunction(newEntry.type.html)
-                ? newEntry.type.html(newEntry, $scope.player, $scope.config)
-                : utils.strings.parse(newEntry.type.html, newEntry, $scope));
-        }
-        catch(e){
-            newEntry.html = $sce.trustAsHtml("<span class='item-error'>Error parsing entry HTML!</span>");
-        }
-
-        newEntry.dateText = config.getLocalizedDate(newEntry.date) + " (" + utils.dates.dateDiff(newEntry.date, $scope.player.birthday) + ")";
-        return newEntry;
     }
 
     function setEntries(){
@@ -178,7 +163,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
             Entry.getEntries({ type: $scope.currentEntriesType, playerId: $scope.player.playerId, reverse: true }).then(function (entryValues) {
                 if (settingEntries)
-                    $scope.entries = entryValues.map(parseEntry);
+                    $scope.entries = entryValues;
             }).finally(function(){
                 settingEntries = false;
             }).catch(function(error){
@@ -206,9 +191,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
                 return true;
 
             if (entry.isNew) {
-                var parsedEntry = parseEntry(entry);
-                if (!~$scope.entries.indexOf(parsedEntry))
-                    $scope.entries.push(parsedEntry);
+                if (!~$scope.entries.indexOf(entry))
+                    $scope.entries.push(entry);
 
                 handled++;
             }
@@ -224,7 +208,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
                     if (indexEntry._deleted)
                         $scope.entries.splice(i, 1);
                     else
-                        $scope.entries[i] = parseEntry(indexEntry);
+                        $scope.entries[i] = indexEntry;
                 }
                 handled++;
                 if (handled === entries.length)
@@ -236,7 +220,10 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     }
 
     function onSettingsChange(){
-        $scope.entries = angular.copy($scope.entries).map(parseEntry);
+        $scope.entries = angular.copy($scope.entries).map(function(entry){
+            entry.clearParsedValues();
+            return entry;
+        });
 
     }
 }]);
