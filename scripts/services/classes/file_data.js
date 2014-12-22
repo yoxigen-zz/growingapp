@@ -35,19 +35,27 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
         function setData(fileData){
             if (Object(fileData) === fileData) {
                 for (var p in fileData) {
-                    if (p === "id" || p === "fileId") {
-                        if (id && fileData[p] !== id)
-                            throw new Error("Can't change ID for a FileData object.");
+                    if (fileData.hasOwnProperty(p)){
+                        switch(p){
+                            case "id":
+                            case "fileId":
+                                if (id && fileData[p] !== id)
+                                    throw new Error("Can't change ID for a FileData object.");
 
-                        id = fileData[p];
+                                id = fileData[p];
+                                continue;
+                            case "file":
+                                this.cloudUrl = fileData[p].url();
+                                this.requireDownload = true;
+                                continue;
+                            default:
+                                this[p] = fileData[p];
+                        }
                     }
-                    else if (p === "file") {
-                        this.cloudUrl = fileData[p].url();
-                        this.requireDownload = true;
-                    }
-                    else if (fileData.hasOwnProperty(p))
-                        this[p] = fileData[p];
                 }
+
+                if (this.localUrl === undefined)
+                    this.localUrl = null;
             }
             else if (typeof(fileData) === "string")
                 id = fileData;
@@ -78,13 +86,16 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
     };
 
     FileData.prototype.__defineGetter__("url", function(){
+        // If the FileData is already loading its data, return the loading promise. This is good both for dirty checking (since it's the same promise) and to avoid double loading.
         if (this.__loading__)
             return this.__loading__;
 
+        // If the FileData has no ID, it can't have a URL
         if (!this.id)
             return null;
 
-        if (this.id && !this.localUrl){
+
+        if (this.id && this.localUrl === undefined){
             var self = this;
             var promise = this.fillData().then(function(){
                 return self.localUrl || self.cloudUrl;

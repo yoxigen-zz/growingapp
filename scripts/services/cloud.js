@@ -81,13 +81,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
      */
     function syncImageToCloud(dataObject){
         if (dataObject.image && dataObject.image.unsynced){
-            return storage.uploadFile(dataObject.image.localUrl, dataObject.cloudId + ".jpg", "image/jpeg").then(function(file){
-                dataObject.image.cloudUrl = file.url;
-                delete image.unsynced;
-                return true;
-            }, function(error){
-                alert("Can't upload image file: " + error);
-            });
+            return syncDataObjectToCloud(dataObject.image);
         }
 
         return $q.when(false);
