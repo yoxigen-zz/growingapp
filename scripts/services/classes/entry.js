@@ -1,7 +1,7 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "DataObject", "dbConfig", "config", "images", "utils",
-    function getEntryClassFactory($q, $sce, $indexedDB, entries, Player, DataObject, dbConfig, config, images, utils) {
+app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils",
+    function getEntryClassFactory($q, $sce, $indexedDB, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
     var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
@@ -30,8 +30,10 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "DataObje
             if (entryData.cloudId)
                 this.cloudId = entryData.cloudId;
 
-            if (entryData.imageId)
+            if (entryData.imageId) {
                 this.imageId = entryData.imageId;
+                this.image = new FileData(entryData.imageId);
+            }
 
             this.isNew = false;
         }

@@ -64,7 +64,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
                 eventBus.triggerEvent("saveEntry", savedEntry);
             }
             else {
-                updateEntry($scope.entry);
+                sortEntries();
                 eventBus.triggerEvent("saveEntry", editedEntry);
             }
         }, function(error){
@@ -148,10 +148,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         sortEntries();
         if (!config.sync.lastSyncTimestamp && !config.sync.synOfferDeclined && $scope.entries.length >= config.sync.syncOfferEntryCount)
             $scope.openSyncOffer();
-    }
-
-    function updateEntry(entry){
-        sortEntries();
     }
 
     function setEntries(){

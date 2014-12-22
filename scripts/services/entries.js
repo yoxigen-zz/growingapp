@@ -4,8 +4,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
         {
             "id": "photo",
             "name": "Photo",
-            "icon": "photo",
-            "html": "<img src='{{data.properties.url}}' />"
+            "icon": "photo"
         },
         {
             "id": "note",
