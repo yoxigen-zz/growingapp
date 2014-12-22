@@ -1,4 +1,4 @@
-app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage", "users", "config", function($q, eventBus, Entry, Player, FileData, Storage, users, config){
+app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage", "users", "config", "messages", function($q, eventBus, Entry, Player, FileData, Storage, users, config, messages){
 
     var storage = new Storage().cloud,
         cloudEnabled,
@@ -47,10 +47,10 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
 
                     eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
                 }, function(error){
-                    console.error("ERROR syncing " + dataObject.constructor.name + " object: ", error);
+                    messages.error("ERROR syncing " + dataObject.constructor.name + ". Error: " + JSON.stringify(error));
                 });
             }, function(error){
-                console.error("Error syncing DataObject to cloud: ", error);
+                messages.error("Error syncing DataObject to cloud: " + JSON.stringify(error));
             });
         });
     }

@@ -48,7 +48,7 @@
 </script>
 <script type="text/ng-template" id="entry_editor_photo">
     <div id="entry_photo_edit">
-        <img ng-src="{{ entry.properties.url }}" />
+        <img id="entry_photo_edit_image" ng-if="entry.image.url" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
         <div class="avatar-buttons">
             <a class="button text-button" ng-click="entry.addPhoto('camera')">
                 <img src="images/icons/camera.svg" />

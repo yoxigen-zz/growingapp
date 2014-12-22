@@ -10,5 +10,6 @@ angular.module("Messages", []).factory("messages", ["$q", function($q){
 
 	function error(message){
 		alert(message);
+        console.error(message);
 	}
 }]);
