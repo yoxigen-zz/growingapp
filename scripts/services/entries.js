@@ -108,6 +108,14 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
         },
         getEntryDateText: function(date, birthDate){
             return date.toLocaleDateString() + " | " + utils.dates.getAge(date, birthDate);
+        },
+        /**
+         * Checks whether a given entry type is valid - meaning, exists in the entry types array.
+         * @param entryType
+         * @returns {boolean}
+         */
+        isValidEntryType: function(entryType){
+            return !!~entryTypes.indexOf(entryType);
         }
     }
 }]);

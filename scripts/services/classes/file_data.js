@@ -15,8 +15,8 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
             if (value) {
                 if (!id)
                     id = value;
-                else
-                    throw new Error("Can't set ID twice to an image.");
+                else if (value !== id)
+                    throw new Error("Can't set change a FileData's ID once it's set.");
             }
         });
 

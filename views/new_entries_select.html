@@ -2,7 +2,7 @@
     <div id="newEntryType" class="entry-types-dialog" >
         <ul class="entry-types-list">
             <li ng-repeat="entryType in entryTypes"
-                ng-click="showNewEntryForm(entryType)"
+                ng-click="showNewEntryForm(entryType.id)"
                 ng-style="{ 'background-image': 'url(images/icons/' + entryType.icon + '.svg)' }">
                 <span>{{ entryType.name }}</span>
             </li>

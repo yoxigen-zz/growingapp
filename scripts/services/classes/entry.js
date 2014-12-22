@@ -38,11 +38,8 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
             this.isNew = false;
         }
         else{
-            if (typeof(config) !== "string")
-                throw new TypeError("Invalid config for Entry, must be either an Entry object or a string representing an entry type.");
-
-            if (!entries.types[config])
-                throw new Error("Invalid entry type, '" + config + "'.");
+            if (!entries.isValidEntryType(config))
+                throw new TypeError("Invalid config for Entry, must be either an Entry object or an entry type config object.");
 
             if (!player)
                 throw new Error("Can't create Entry object without player.");
