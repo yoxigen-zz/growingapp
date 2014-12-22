@@ -11,9 +11,6 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
         if (fileConfig)
             this.setData(fileConfig);
 
-        if (!id)
-            id = "IMG_" + new Date().valueOf();
-
         this.__defineSetter__("id", function(value){
             if (value) {
                 if (!id)
@@ -74,6 +71,14 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
 
     FileData.prototype.__proto__ = new DataObject();
     FileData.prototype.objectStore = objectStore;
+    FileData.prototype.idProperty = "id";
+
+    /**
+     * Generates an ID for the FileData. If it already has one, an error is thrown.
+     */
+    FileData.prototype.getNewId = function(){
+        return "IMG_" + new Date().valueOf();
+    };
 
     FileData.prototype.fillData = function(){
         if (!this.id)
