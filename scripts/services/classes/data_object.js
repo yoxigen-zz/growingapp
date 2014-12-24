@@ -17,7 +17,7 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
         },
         getBaseLocalData: function(){
             return {
-                imageId: this.imageId,
+                imageId: this.image && this.image.id,
                 cloudId: this.cloudId
             };
         },
@@ -26,13 +26,12 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
          * @param data
          */
         init: function(data){
-            if (data){
-                if (data.image){
-                    if (Object(data.image) === data.image)
-                        this.image = new FileData(data.image);
-                    else
-                        this.image = data.image;
-                }
+            if (!data || !angular.isObject(data))
+                return;
+
+            if (data.imageId) {
+                this.image = new FileData(data.imageId);
+                this.image.fillData();
             }
         },
         remove: function (absoluteDelete) {

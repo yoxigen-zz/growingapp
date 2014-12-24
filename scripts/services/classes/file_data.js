@@ -90,27 +90,6 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
     };
 
     FileData.prototype.__defineGetter__("url", function(){
-        // If the FileData is already loading its data, return the loading promise. This is good both for dirty checking (since it's the same promise) and to avoid double loading.
-        if (this.__loading__)
-            return this.__loading__;
-
-        // If the FileData has no ID, it can't have a URL
-        if (!this.id)
-            return null;
-
-
-        if (this.id && this.localUrl === undefined){
-            var self = this;
-            var promise = this.fillData().then(function(){
-                return self.localUrl || self.cloudUrl;
-            }).finally(function(){
-                delete this.__loading__;
-            });
-
-            this.__loading__ = promise;
-            return promise;
-        }
-
         return this.localUrl || this.cloudUrl;
     });
 
