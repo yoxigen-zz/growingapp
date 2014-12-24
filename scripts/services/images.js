@@ -31,15 +31,6 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
      * @returns {*} The promise is called with the new image
      */
      function addPhotoToDataObject(imagesConfig, dataObject, method) {
-        /*
-        dataObject.image = new FileData({ mimeType: FileData.mimeTypes.image.JPEG });
-
-        dataObject.image.setLocalUrl("./test.jpg");
-        dataObject.unsynced = 1;
-        dataObject.image.unsaved = true;
-
-        return $q.when(dataObject.image);
-*/
         return getPhoto(method, {
             allowEdit: true,
             targetWidth: imagesConfig.width,

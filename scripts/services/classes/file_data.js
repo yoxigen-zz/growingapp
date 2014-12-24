@@ -53,8 +53,10 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
                 if (this.localUrl === undefined)
                     this.localUrl = null;
             }
-            else if (typeof(fileData) === "string")
+            else if (typeof(fileData) === "string"){
                 id = fileData;
+                this.fillData();
+            }
             else
                 throw new Error("Invalid data for FileData, must be either object or string representing the FileData's ID.");
         }
@@ -85,7 +87,8 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
 
         var self = this;
         return FileData.getById(this.id).then(function(fileDataObj){
-             self.setData(fileDataObj);
+            if (fileDataObj)
+                self.setData(fileDataObj);
         });
     };
 
@@ -201,7 +204,10 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
 
     FileData.getById = function(fileId){
         return objectStore.find(fileId).then(function(objData){
-             return new FileData(objData);
+            if (objData)
+                return new FileData(objData);
+
+            return null;
         });
     };
 

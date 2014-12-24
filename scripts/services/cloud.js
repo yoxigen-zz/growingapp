@@ -153,9 +153,15 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
 
         syncUserSettings();
 
-        return syncObjectsFromCloud(Player).then(function(players){
-            Player.updatePlayers(players);
-            return $q.all([syncObjectsFromCloud(Entry), syncObjectsFromCloud(FileData)]).then(setLastUpdateTime);
+
+        // Both Player and Entry objects need updates to files, so FileData comes first.
+        // Entry needs updates to Players (entry for a new player, for example), so Player comes second and Entry last, it has no dependencies.
+        return syncObjectsFromCloud(FileData).then(function(){
+            return syncObjectsFromCloud(Player).then(function(players){
+                Player.updatePlayers(players);
+
+                return syncObjectsFromCloud(Entry).then(setLastUpdateTime);
+            });
         });
     }
 
