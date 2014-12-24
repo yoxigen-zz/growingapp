@@ -12,7 +12,7 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
         getBaseCloudData: function(){
             return {
                 deleted: !!this._deleted,
-                imageId: this.imageId
+                imageId: this.image && this.image.id
             };
         },
         getBaseLocalData: function(){

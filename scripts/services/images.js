@@ -46,12 +46,13 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
             targetHeight: imagesConfig.height,
             saveToPhotoAlbum: false
         }).then(function (imageUrl) {
-            if (!dataObject.image)
-                dataObject.image = new FileData({ mimeType: FileData.mimeTypes.image.JPEG });
+            dataObject.image = new FileData({
+                localUrl: imageUrl,
+                mimeType: FileData.mimeTypes.image.JPEG,
+                unsaved: true,
+                unsynced: true
+            });
 
-            dataObject.image.setLocalUrl(imageUrl);
-            dataObject.unsynced = 1;
-            dataObject.image.unsaved = true;
             return dataObject.image;
         });
     }
