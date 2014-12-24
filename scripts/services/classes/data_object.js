@@ -29,10 +29,7 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
             if (!data || !angular.isObject(data))
                 return;
 
-            if (data.imageId) {
-                this.image = new FileData(data.imageId);
-                this.image.fillData();
-            }
+
         },
         remove: function (absoluteDelete) {
             var self = this;

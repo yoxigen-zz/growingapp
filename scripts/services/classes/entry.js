@@ -30,6 +30,11 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
             if (entryData.cloudId)
                 this.cloudId = entryData.cloudId;
 
+            if (entryData.imageId) {
+                this.image = new FileData(entryData.imageId);
+                this.image.fillData();
+            }
+
             this.isNew = false;
         }
         else{
@@ -49,8 +54,6 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
             this.age = player.getAge(this.date);
             this.isNew = true;
         }
-
-        this.init(config);
 
         this.__defineGetter__("timestamp", function () {
             return timestamp;
