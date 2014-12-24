@@ -55,7 +55,7 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
             }
             else if (typeof(fileData) === "string"){
                 id = fileData;
-                this.fillData();
+                this.fillData(id);
             }
             else
                 throw new Error("Invalid data for FileData, must be either object or string representing the FileData's ID.");
@@ -81,12 +81,15 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
         return "file_" + new Date().valueOf();
     };
 
-    FileData.prototype.fillData = function(){
-        if (!this.id)
+    FileData.prototype.fillData = function(id){
+        if (!id)
+            id = this.id;
+
+        if (!id)
             throw new Error("Can't fill FileData object's data, it has no ID.");
 
         var self = this;
-        return FileData.getById(this.id).then(function(fileDataObj){
+        return FileData.getById(id).then(function(fileDataObj){
             if (fileDataObj)
                 self.setData(fileDataObj);
         });
