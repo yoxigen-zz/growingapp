@@ -58,9 +58,10 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
     }
 
     function parseItemValue(value){
-        if (value instanceof File)
+        if (value instanceof File) {
+            alert("new parse file: " + value.name + ", " + value.type);
             return new Parse.File(value.name, value, value.type);
-
+        }
         return value;
     }
     function getHttpParams(){

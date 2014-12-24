@@ -5,7 +5,6 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
 
     function FileData(fileConfig){
         var id;
-
         this.setData = setData;
 
         if (fileConfig)
@@ -40,11 +39,11 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
                                     throw new Error("Can't change ID for a FileData object.");
 
                                 id = fileData[p];
-                                continue;
+                                break;
                             case "file":
                                 this.cloudUrl = fileData[p].url();
                                 this.requireDownload = true;
-                                continue;
+                                break;
                             default:
                                 this[p] = fileData[p];
                         }
@@ -57,7 +56,7 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
             else if (typeof(fileData) === "string")
                 id = fileData;
             else
-                throw new Error("Invalid data for FileData, must be either object or string.");
+                throw new Error("Invalid data for FileData, must be either object or string representing the FileData's ID.");
         }
     }
 
@@ -77,7 +76,7 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
      * Generates an ID for the FileData. If it already has one, an error is thrown.
      */
     FileData.prototype.getNewId = function(){
-        return "IMG_" + new Date().valueOf();
+        return "file_" + new Date().valueOf();
     };
 
     FileData.prototype.fillData = function(){
