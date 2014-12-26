@@ -9,7 +9,8 @@ angular.module("Messages", []).factory("messages", ["$q", function($q){
 	}
 
 	function error(message, error){
-		alert(typeof(message) === "object" ? JSON.stringify(message) : message);
+        if (window.cordova)
+		    alert(typeof(message) === "object" ? JSON.stringify(message) : message);
 
         if (error)
             console.error(message, error);
