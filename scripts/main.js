@@ -37,7 +37,8 @@ requirejs([
         ], function () {
             requirejs([
                 "services/classes/data_object",
-                "services/classes/file_data"
+                "services/classes/file_data",
+                "services/files"
             ], function () {
                 requirejs([
                     "services/images",

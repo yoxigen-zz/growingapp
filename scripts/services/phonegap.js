@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
+angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function($q, $rootScope){
     var defaultCameraOptions,
         deviceReady,
         onDeviceReady,
@@ -55,6 +55,40 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
             }
         },
         files: {
+            /**
+             * Downloads a file, given an URL and the local path to save it to.
+             * @param url The URL of the file to download. Should NOT be encoded with encodeURI.
+             * @param localPath The full path to save the file into.
+             * @returns {promise|dd.g.promise} The promise resolves with a FileEntry object.
+             */
+            download: function(url, folder, filename){
+                if (!FileTransfer)
+                    throw new Error("Can't download file, FileTransfer is not available.");
+
+                var fileTransfer = new FileTransfer(),
+                    deferred = $q.defer();
+
+                var rootDir = fileSystem.root; // to get root path of directory
+                rootDir.getDirectory(folder, { create: true, exclusive: false }, function(){
+                    var downloadPath = [rootdir.fullPath, folder, filename].join("/");
+                    fileTransfer.download(encodeURI(url), downloadPath,
+                        function (entry) {
+                            $rootScope.$apply(function() {
+                                deferred.resolve(entry);
+                            });
+                        },
+                        function (error) {
+                            $rootScope.$apply(function() {
+                                deferred.reject(error);
+                            });
+                        }
+                    );
+                }, function(error){
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            },
             getFileByUrl: function(fileUrl){
                 var resolveUrl = window.resolveLocalFileSystemURL;
 

@@ -8,8 +8,12 @@ angular.module("Messages", []).factory("messages", ["$q", function($q){
 		return $q.when(window.confirm(message));
 	}
 
-	function error(message){
-		alert(message);
-        console.error(message);
+	function error(message, error){
+		alert(typeof(message) === "object" ? JSON.stringify(message) : message);
+
+        if (error)
+            console.error(message, error);
+        else
+            console.error(message);
 	}
 }]);

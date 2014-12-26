@@ -1,4 +1,5 @@
-app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage", "users", "config", "messages", function($q, eventBus, Entry, Player, FileData, Storage, users, config, messages){
+app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage", "users", "config", "messages", "files",
+    function($q, eventBus, Entry, Player, FileData, Storage, users, config, messages, files){
 
     var storage = new Storage().cloud,
         cloudEnabled,
@@ -125,22 +126,39 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                 }
             });
 
-
-            // TODO: Iterate through dataObjects and download files with requireDownload = true.
-            // Do this in the background, possibly in a web worker.
-            // Give this low priority, so if another sync operation comes in, do it first.
-
-
             return $q.all(promises).then(function(){
                 if (dataObjects.length)
                     eventBus.triggerEvent("updateObjects", { type: className, objects: dataObjects});
 
+                if (objectClass.syncFiles)
+                    dataObjects.forEach(downloadFile);
+
                 return dataObjects;
             });
         }, function(error){
-            console.error("Can't fetch " + className + " data from cloud. Error: ", error);
+            messages.error("Can't fetch " + className + " data from cloud. Error: ", error);
             return $q.reject(error);
         });
+    }
+
+    function downloadFile(dataObject){
+        if (dataObject.requireDownload){
+            if (!dataObject.cloudUrl) {
+                delete dataObject.requireDownload;
+                dataObject.save(true);
+                return null;
+            }
+            else {
+                return files.download(dataObject.cloudUrl, dataObject.constructor.name, dataObject.id).then(function(fileEntry){
+                    dataObject.setLocalUrl(fileEntry.fullPath);
+                    dataObject.save(true);
+                    eventBus.triggerEvent("updateFile", { dataObject: dataObject });
+                    return dataObject;
+                }, function(error){
+                    messages.error(error);
+                });
+            }
+        }
     }
 
     function setLastUpdateTime(){

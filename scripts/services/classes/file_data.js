@@ -101,16 +101,7 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
 
     FileData.prototype.setLocalUrl = function(value){
         this.localUrl = value;
-        this.localUrlDate = new Date();
         delete this.requireDownload;
-    };
-
-    FileData.prototype.setCloudUrl = function(cloudUrl, cloudUrlUpdateDate){
-        if (this.localUrl && this.localUrlDate > cloudUrlUpdateDate)
-            return false;
-
-        this.cloudUrl = cloudUrl;
-        this.requireDownload = true;
     };
 
     FileData.prototype.getCloudData = function(){
@@ -213,6 +204,8 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
             return null;
         });
     };
+
+    FileData.syncFiles = true;
 
     return FileData;
 }]);
