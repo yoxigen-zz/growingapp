@@ -63,7 +63,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
              */
             download: function(url, folder, filename){
                 if (!FileTransfer)
-                    throw new Error("Can't download file, FileTransfer is not available.");
+                    return $q.reject("Can't download file, FileTransfer not available.");
 
                 var fileTransfer = new FileTransfer(),
                     deferred = $q.defer();
