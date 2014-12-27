@@ -128,6 +128,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                 }
             });
 
+            alert("$q.all for " + className);
             return $q.all(promises).then(function(){
                 alert("updated all " + className);
                 if (dataObjects.length)
