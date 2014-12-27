@@ -59,7 +59,6 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
 
     function parseItemValue(value){
         if (value instanceof File) {
-            alert("new parse file: " + value.name + ", " + value.type);
             return new Parse.File(value.name, value, value.type);
         }
         return value;
@@ -175,9 +174,11 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
             var ObjType = Parse.Object.extend(className),
                 query = new Parse.Query(ObjType);
 
-            if (options.forCurrentUser !== false){
+            if (options.forCurrentUser !== false)
                 query.equalTo("user", Parse.User.current());
-            }
+
+            if (options.limit)
+                query.limit(options.limit);
 
             if (constrains) {
                 if (angular.isArray(constrains)) {

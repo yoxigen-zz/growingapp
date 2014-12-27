@@ -96,7 +96,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
      */
     function syncObjectsFromCloud(objectClass){
         var className = objectClass.name;
-        return storage.query(className, config.sync.lastSyncTimestamp ? { greaterThan: ["updatedAt", config.sync.lastSyncTimestamp] } : null).then(function(results){
+        return storage.query(className, config.sync.lastSyncTimestamp ? { greaterThan: ["updatedAt", config.sync.lastSyncTimestamp] } : null, { limit: 1000 }).then(function(results){
             if (!results || !results.length)
                 return;
 

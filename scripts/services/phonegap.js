@@ -31,6 +31,8 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                 callback();
             });
         }
+
+        alert("CORDOVA: " + window.cordova);
     },false);
 
     function runOnDeviceReady(callback){
@@ -62,7 +64,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
              * @returns {promise|dd.g.promise} The promise resolves with a FileEntry object.
              */
             download: function(url, folder, filename){
-                if (!FileTransfer)
+                if (typeof(FileTransfer) === "undefined")
                     return $q.reject("Can't download file, FileTransfer not available.");
 
                 var fileTransfer = new FileTransfer(),
