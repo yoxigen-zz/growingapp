@@ -1,8 +1,36 @@
 "use strict";
 
-app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactory($q, $indexedDB) {
+angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["$q", function getDataObjectClassFactory($q) {
+    /**
+     * Base class for data objects - those that should be saved to local DB (and potentially synced to cloud)
+     * Includes methods for saving, deleting and initializing
+     * @constructor
+     */
     function DataObject(){}
+
     DataObject.prototype = {
+        getBaseCloudData: function(){
+            return {
+                deleted: !!this._deleted,
+                imageId: this.image && this.image.id
+            };
+        },
+        getBaseLocalData: function(){
+            return {
+                imageId: this.image && this.image.id,
+                cloudId: this.cloudId
+            };
+        },
+        /**
+         * To be used by child classes when the instance is created
+         * @param data
+         */
+        init: function(data){
+            if (!data || !angular.isObject(data))
+                return;
+
+
+        },
         remove: function (absoluteDelete) {
             var self = this;
 
@@ -14,6 +42,8 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
                     console.error("Can't delete " + self.constructor.name + ": ", error);
                     return $q.reject("Can't delete " + self.constructor.name);
                 });
+
+                // TODO: Delete image if exists
             }
             else {
                 this._deleted = true;
@@ -21,6 +51,11 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
                 return $q.when(this)
             }
         },
+        /**
+         * Saves the data object locally, to IndexedDB, or updates the item if exists.
+         * @param isSynced If true, the object is considered synced, otherwise it'll have unsynced = true after save (meaning that it should be synced to cloud when possible).
+         * @returns {*}
+         */
         save: function(isSynced){
             if (this.validate) {
                 try {
@@ -57,9 +92,16 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
 
             function doSave() {
                 if (self.preSave)
-                    return $q.when(self.preSave()).then(saveToLocalDB);
+                    return $q.when(self.preSave()).then(saveImage);
 
-                return saveToLocalDB();
+                return saveImage();
+            }
+
+            function saveImage(){
+                if (self.image && self.image.unsaved)
+                    return self.image.save().then(saveToLocalDB);
+                else
+                    return saveToLocalDB();
             }
 
             function saveToLocalDB(){
@@ -71,6 +113,9 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
                     if (self._deleted)
                         localData.unsynced = localData.deleted = 1;
 
+                    if (!self.objectStore)
+                        throw new Error("Objectstore for DataObject of type " + self.constructor.name + " not defined.");
+
                     return self.objectStore.upsert(localData).then(function (id) {
                         self[self.idProperty] = id;
                         return self;
@@ -79,7 +124,7 @@ app.factory("DataObject", ["$q", "$indexedDB", function getDataObjectClassFactor
                     });
                 }
                 catch(e){
-                    return $q.reject("Error saving object.");
+                    return $q.reject("Error saving object: " + e.message);
                 }
             }
         },

@@ -1,8 +1,8 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "parse", "images",
-    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, parse, images) {
-    var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players),
+app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images",
+    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, images) {
+    var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players.name),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
     function Player(data) {
@@ -23,6 +23,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
             this.gender = "f";
             this.birthday = new Date();
         }
+
         this.__defineGetter__("playerId", function () {
             return id;
         });
@@ -37,91 +38,61 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
         });
     }
 
-    Player.prototype = {
         /**
-         * Uses the images service to take a picture and if successful, add it to the player.
-         * @param method "camera" / "browse". Defaults to "camera" if none.
-         * @returns {*} The promise is called with the new image
-         */
-        addPhoto: function(method){
-            var player = this;
-            return images.getPhoto(method, {
-                allowEdit : true,
-                targetWidth: config.players.playerImageSize.width,
-                targetHeight: config.players.playerImageSize.height,
-                saveToPhotoAlbum: false
-            }).then(function(dataUrl){
-                player.imageDataUrl = dataUrl;
-                player.image = ["data:image/jpg;base64,", dataUrl].join("");
+     * Returns the age of this player, in days, for the specified date. If no date is specified, returns the current age.
+     * @param date
+     * @returns {*}
+     */
+    Player.prototype.getAge = function(date){
+        if (!date)
+            date = new Date();
 
-                return player.image;
-            });
-        },
-        /**
-         * Returns the age of this player, in days, for the specified date. If no date is specified, returns the current age.
-         * @param date
-         * @returns {*}
-         */
-        getAge: function(date){
-            if (!date)
-                date = new Date();
+        if (!angular.isDate(date))
+            throw new Error("Invalid date: ", date);
 
-            if (!angular.isDate(date))
-                throw new Error("Invalid date: ", date);
+        if (!this.birthday || date < this.birthday)
+            return null;
 
-            if (!this.birthday || date < this.birthday)
-                return null;
+        return Math.floor((date - this.birthday) / dayMilliseconds);
+    };
 
-            return Math.floor((date - this.birthday) / dayMilliseconds);
-        },
-        getCloudData: function(){
-            return {
-                playerId: this.playerId,
-                birthday: this.birthday,
-                name: this.name,
-                gender: this.gender,
-                id: this.cloudId,
-                deleted: !!this._deleted,
-                image: this.image
-            }
-        },
-        getLocalData: function(){
-            var localData = {
-                name: this.name,
-                birthday: this.birthday,
-                gender: this.gender,
-                cloudId: this.cloudId
-            };
+    Player.prototype.getCloudData = function(){
+        return angular.extend(this.getBaseCloudData(), {
+            playerId: this.playerId,
+            birthday: this.birthday,
+            name: this.name,
+            gender: this.gender,
+            id: this.cloudId
+        });
+    };
 
-            if (this.playerId)
-                localData.playerId = this.playerId;
+    Player.prototype.getLocalData = function(){
+        var localData = {
+            name: this.name,
+            birthday: this.birthday,
+            gender: this.gender
+        };
 
-            if (this.image)
-                localData.image = this.image;
+        if (this.playerId)
+            localData.playerId = this.playerId;
 
-            return localData;
-        },
-        get idProperty(){ return "playerId" },
-        objectStore: playersObjectStore,
-        preSave: function(){
-            if (this.imageDataUrl){
-                var self = this;
+        return angular.extend(this.getBaseLocalData(), localData);
+    };
 
-                return parse.uploadFile(this.imageDataUrl, this.name + ".jpg", "image/jpeg").then(function(file){
-                    self.image = file.url();
-                    delete self.imageDataUrl;
-                });
-            }
-            else
-                return true;
-        },
-        validate: function(){
-            if (!this.name)
-                throw "Can't save, missing name.";
-        }
+    Player.prototype.__defineGetter__("idProperty", function(){
+        return "playerId";
+    });
+
+    Player.prototype.objectStore = playersObjectStore;
+    Player.prototype.validate = function(){
+        if (!this.name)
+            throw "Can't save, missing name.";
     };
 
     Player.prototype.__proto__ = new DataObject();
+    Player.prototype.addPhoto = function(method){
+        return images.addPhotoToDataObject(config.players.playerImageSize, this, method);
+    };
 
     Player.getAll = function (options) {
         if (!options && Player.players)
@@ -129,7 +100,7 @@ app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "
 
         options = options || {};
 
-        return playersObjectStore.internalObjectStore(dbConfig.objectStores.players, "readonly").then(function(objectStore){
+        return playersObjectStore.internalObjectStore(dbConfig.objectStores.players.name, "readonly").then(function(objectStore){
             var idx = objectStore.index(options.unsynced ? "unsync_idx" : "name_idx");
             var players = [],
                 deferred = $q.defer(),

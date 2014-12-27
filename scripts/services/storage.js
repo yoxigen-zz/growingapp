@@ -123,6 +123,13 @@
             },
             setItems: function(key, data, options){
                 return parse.saveAll(this.getParseClassName(key), data, options);
+            },
+            uploadFile: function(fileUrl, filename, mimeType){
+                return parse.uploadFile(fileUrl, filename, mimeType).then(function(file){
+                    return {
+                        url: file.url()
+                    }
+                });
             }
         };
 

@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
+angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function($q, $rootScope){
     var defaultCameraOptions,
         deviceReady,
-        onDeviceReady;
+        onDeviceReady,
+        fileSystem;
 
     document.addEventListener("deviceready",function(){
         deviceReady = true;
@@ -11,13 +12,19 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
         try {
             defaultCameraOptions = {
                 quality: 75,
-                destinationType: Camera.DestinationType.DATA_URL, // Also FILE_URI
+                destinationType: Camera.DestinationType.FILE_URI, // Also FILE_URI
                 encodingType: Camera.EncodingType.JPEG
             };
         }
         catch(e) {
             alert("Can't initialize camera.");
         }
+
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs){
+            fileSystem = fs;
+        }, function(error){
+            alert("Can't get file system: " + JSON.stringify(error));
+        });
 
         if (onDeviceReady){
             onDeviceReady.forEach(function(callback){
@@ -45,6 +52,63 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", function($q){
                         eventHandler();
                     }, false);
                 });
+            }
+        },
+        files: {
+            /**
+             * Downloads a file, given an URL and the local path to save it to.
+             * @param url The URL of the file to download. Should NOT be encoded with encodeURI.
+             * @param localPath The full path to save the file into.
+             * @returns {promise|dd.g.promise} The promise resolves with a FileEntry object.
+             */
+            download: function(url, folder, filename){
+                if (typeof(FileTransfer) === "undefined")
+                    return $q.reject("Can't download file, FileTransfer not available.");
+
+                var fileTransfer = new FileTransfer(),
+                    deferred = $q.defer();
+
+                var rootDir = fileSystem.root; // to get root path of directory
+                rootDir.getDirectory(folder, { create: true, exclusive: false }, function(){
+                    var downloadPath = [rootdir.fullPath, folder, filename].join("/");
+                    fileTransfer.download(encodeURI(url), downloadPath,
+                        function (entry) {
+                            $rootScope.$apply(function() {
+                                deferred.resolve(entry);
+                            });
+                        },
+                        function (error) {
+                            $rootScope.$apply(function() {
+                                deferred.reject(error);
+                            });
+                        }
+                    );
+                }, function(error){
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
+            },
+            getFileByUrl: function(fileUrl){
+                var resolveUrl = window.resolveLocalFileSystemURL;
+
+                if (!resolveUrl){
+                    return $q.reject("Can't get file, window.resolveLocalFileSystemURL is unavailable");
+                }
+
+                var deferred = $q.defer();
+
+                resolveUrl(fileUrl, function(entry){
+                    entry.file(function(file){
+                        deferred.resolve(file);
+                    }, function(error){
+                        deferred.reject(error);
+                    });
+                }, function(error){
+                    deferred.reject(error);
+                });
+
+                return deferred.promise;
             }
         },
         images: {

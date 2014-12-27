@@ -1,16 +1,18 @@
 "use strict";
 
-app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", function getEntryClassFactory($q, $indexedDB, entries, Player, DataObject) {
-    var OBJECT_STORE_NAME = "entries",
+app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils",
+    function getEntryClassFactory($q, $sce, $indexedDB, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
+    var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
         entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
-    function Entry(type, player) {
-        var timestamp;
+    function Entry(config, player) {
+        var timestamp,
+            entryType;
 
-        if (type instanceof Entry || (type.timestamp && type.playerId && type.properties))
+        if (config instanceof Entry || (config.timestamp && config.playerId && config.properties))
         {
-            var entryData = type;
-            type = type instanceof Entry ? type.type : entries.types[entryData.type];
+            var entryData = config;
+            entryType = config instanceof Entry ? config.type : entries.types[entryData.type];
 
             timestamp = entryData.timestamp;
             this.date = entryData.date;
@@ -28,9 +30,22 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
             if (entryData.cloudId)
                 this.cloudId = entryData.cloudId;
 
+            if (entryData.imageId)
+                this.image = new FileData(entryData.imageId);
+
             this.isNew = false;
         }
         else{
+            if (!entries.isValidEntryType(config))
+                throw new TypeError("Invalid config for Entry, must be either an Entry object or an entry type config object.");
+
+            if (!player)
+                throw new Error("Can't create Entry object without player.");
+
+            if (!(player instanceof Player))
+                throw new TypeError("Can't create Entry, invalid player, must be an instance of Player.");
+
+            entryType = config;
             this.date = new Date();
             this.properties = {};
             this.player = player;
@@ -52,53 +67,91 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
         });
 
         this.__defineGetter__("type", function () {
-            return type;
+            return entryType;
         });
     }
 
-    Entry.prototype = {
-        getCloudData: function(){
-            return {
-                playerId: this.player.playerId,
-                age: this.player.getAge(this.date),
-                timestamp: this.timestamp,
-                date: this.date,
-                properties: this.properties,
-                type: this.type.id,
-                id: this.cloudId,
-                deleted: !!this._deleted,
-                description: this.description
-            }
-        },
-        /**
-         * Gets the entry's data, for saving in the offline database.
-         * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
-         */
-        getLocalData: function(){
-            if (!this.player)
-                throw new Error("Can't get local data - entry has no player.");
+    Entry.prototype.getCloudData = function(){
+        return angular.extend(this.getBaseCloudData(), {
+            playerId: this.player.playerId,
+            age: this.player.getAge(this.date),
+            timestamp: this.timestamp,
+            date: this.date,
+            properties: this.properties,
+            type: this.type.id,
+            id: this.cloudId,
+            description: this.description
+        });
+    };
 
-            return {
-                date: this.date,
-                age: this.player.getAge(this.date),
-                properties: this.properties,
-                type: this.type.id,
-                timestamp: this.timestamp,
-                playerId: this.player.playerId,
-                cloudId: this.cloudId,
-                description: this.description,
-                updatedAt: new Date()
-            };
-        },
-        get idProperty(){ return "timestamp" },
-        getNewId: function(){
-            return new Date().valueOf()
-        },
-        objectStore: entriesObjectStore,
-        preSave: function(){
-            if (this.type.preSave)
-                this.type.preSave(this);
+    Entry.prototype.__defineGetter__("html", function(){
+        if (!this._html) {
+            var htmlStr;
+
+            if (typeof(this.type.html) === "function")
+                htmlStr = this.type.html(this, this.player, config);
+            else
+                htmlStr = utils.strings.parse(this.type.html, this);
+
+            this._html = $sce.trustAsHtml(htmlStr);
         }
+
+        return this._html;
+    });
+
+    Entry.prototype.__defineGetter__("dateText", function(){
+        if (!this._dateText)
+            this._dateText = config.getLocalizedDate(this.date) + " (" + utils.dates.dateDiff(this.date, this.player.birthday) + ")";
+
+        return this._dateText;
+    });
+
+    /**
+     * Gets the entry's data, for saving in the offline database.
+     * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
+     */
+    Entry.prototype.getLocalData = function(){
+        if (!this.player)
+            throw new Error("Can't get local data - entry has no player.");
+
+        return angular.extend(this.getBaseLocalData(), {
+            date: this.date,
+            age: this.player.getAge(this.date),
+            properties: this.properties,
+            type: this.type.id,
+            timestamp: this.timestamp,
+            playerId: this.player.playerId,
+            description: this.description,
+            updatedAt: new Date()
+        });
+    };
+
+    Entry.prototype.__defineGetter__("idProperty", function(){
+        return "timestamp";
+    });
+
+    Entry.prototype.getNewId = function(){
+        return new Date().valueOf()
+    };
+
+    Entry.prototype.objectStore = entriesObjectStore;
+    Entry.prototype.preSave = function(){
+        this.clearParsedValues();
+
+        if (this.type.preSave)
+            this.type.preSave(this);
+    };
+
+    /**
+     * Clears values that are returned from getters. Used for when app-level settings are changed, which could affect parsed values.
+     */
+    Entry.prototype.clearParsedValues = function(){
+        delete this._html;
+        delete this._dateText;
+    };
+
+    Entry.prototype.addPhoto = function(method){
+        return images.addPhotoToDataObject(config.entries.images, this, method);
     };
 
     Entry.prototype.__proto__ = new DataObject();
@@ -146,6 +199,11 @@ app.factory("Entry", ["$q", "$indexedDB", "entries", "Player", "DataObject", fun
         }, function(){
             return $q.when([]);
         });
+    };
+
+    Entry.getAll = function(options){
+        options = options || {};
+        return Entry.getEntries(options);
     };
 
     Entry.getUnsyncedEntries = function(){

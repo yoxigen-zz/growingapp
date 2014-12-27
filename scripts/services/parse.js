@@ -1,4 +1,9 @@
-angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $rootScope){
+angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$http", "phonegap", function($q, $rootScope, $http, phonegap){
+    var parseConfig = {
+        appId: "5WepL2v5DjXU0RgKukUSlW3BeAuEOGqDOSgJtKeE",
+        javascriptKey:"Pk4mymaX6wXccyywaQeMeuvvJLWeyqRpYLpzWdoX"
+    };
+
     Parse.Object.prototype.getData = function(){
         var data = angular.copy(this.attributes);
         delete data.user;
@@ -43,13 +48,29 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
 
             for(var p in item){
                 if (item.hasOwnProperty(p))
-                    obj.set(p, item[p]);
+                    obj.set(p, parseItemValue(item[p]));
             }
 
             objs.push(obj);
         });
 
         return objs;
+    }
+
+    function parseItemValue(value){
+        if (value instanceof File) {
+            return new Parse.File(value.name, value, value.type);
+        }
+        return value;
+    }
+    function getHttpParams(){
+        return {
+            _ApplicationId: parseConfig.appId,
+            _ClientVersion: Parse.VERSION,
+            _InstallationId: Parse._installationId,
+            _JavaScriptKey: parseConfig.javascriptKey,
+            _SessionToken: Parse.User.current()._sessionToken
+        }
     }
 
     var methods = {
@@ -136,6 +157,9 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
 
             return parseUser;
         },
+        init: function(){
+            Parse.initialize(parseConfig.appId, parseConfig.javascriptKey);
+        },
         login: function(username, password){
             var deferred = $q.defer();
 
@@ -150,9 +174,11 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
             var ObjType = Parse.Object.extend(className),
                 query = new Parse.Query(ObjType);
 
-            if (options.forCurrentUser !== false){
+            if (options.forCurrentUser !== false)
                 query.equalTo("user", Parse.User.current());
-            }
+
+            if (options.limit)
+                query.limit(options.limit);
 
             if (constrains) {
                 if (angular.isArray(constrains)) {
@@ -270,9 +296,16 @@ angular.module("Parse", []).factory("parse", ["$q", "$rootScope", function($q, $
 
             return deferred.promise;
         },
-        uploadFile: function(dataUrl, filename, type){
+        uploadBase64ToFile: function(dataUrl, filename, type){
             var file = new Parse.File(filename, { base64: dataUrl }, type);
             return $q.when(file.save());
+        },
+        uploadFile: function(fileUrl, filename, type){
+            return phonegap.files.getFileByUrl(fileUrl).then(function(_file){
+                var file = new Parse.File(filename, _file, type);
+
+                return $q.when(file.save());
+            });
         }
     };
 

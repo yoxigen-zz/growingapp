@@ -37,6 +37,7 @@
             <li ng-repeat="entry in entries" ng-click="selectEntry(entry)">
                 <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                 <div class="item-text">
+                    <img ng-if="entry.image.url" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
                     <div ng-bind-html="entry.html"></div>
                     <p ng-if="entry.description" class='item-description'>{{::entry.description}}</p>
                     <div class="item-details">{{::entry.dateText}}</div>

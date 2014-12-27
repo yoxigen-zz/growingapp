@@ -15,8 +15,8 @@
             <header class="actionbar"><span class="app-name">GrowingApp</span></header>
             <ul id="players-menu">
                 <li ng-repeat="listPlayer in players" class="flex-horizontal"
-                    ng-class="{ selected: listPlayer.playerId === player.playerId, 'with-image': listPlayer.image }">
-                    <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1"><img class="player-image" ng-if="listPlayer.image" ng-src="{{listPlayer.image}}" />
+                    ng-class="{ selected: listPlayer.playerId === player.playerId, 'with-image': listPlayer.image.url }">
+                    <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1"><img class="player-image" ng-if="listPlayer.image.url" ng-src="{{listPlayer.image.url}}" />
                         {{::listPlayer.name}}
                     </a>
                     <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
