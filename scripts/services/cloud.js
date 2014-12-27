@@ -103,7 +103,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
             var dataObjects = [],
                 promises = [];
 
-            alert("got " + results.length + " " + className);
+            messages.error("got " + results.length + " " + className);
 
             results.forEach(function(cloudObject){
                 var objectData = cloudObject.getData();
@@ -128,9 +128,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                 }
             });
 
-            alert("$q.all for " + className);
+            messages.error("$q.all for " + className);
             return $q.all(promises).then(function(){
-                alert("updated all " + className);
+                messages.error("updated all " + className);
                 if (dataObjects.length)
                     eventBus.triggerEvent("updateObjects", { type: className, objects: dataObjects});
 
@@ -138,6 +138,8 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                     dataObjects.forEach(downloadFile);
 
                 return dataObjects;
+            }, function(error){
+                messages.error(error);
             });
         }, function(error){
             messages.error("Can't fetch " + className + " data from cloud. Error: ", error);
