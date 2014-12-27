@@ -31,8 +31,6 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                 callback();
             });
         }
-
-        alert("CORDOVA: " + window.cordova);
     },false);
 
     function runOnDeviceReady(callback){

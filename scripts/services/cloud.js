@@ -103,6 +103,8 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
             var dataObjects = [],
                 promises = [];
 
+            alert("got " + results.length + " " + className);
+
             results.forEach(function(cloudObject){
                 var objectData = cloudObject.getData();
 
@@ -122,11 +124,12 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                     }));
                 }
                 catch(e){
-                    console.error("Can't create or save object: ", e);
+                    messages.error("Can't create or save object: ", e);
                 }
             });
 
             return $q.all(promises).then(function(){
+                alert("updated all " + className);
                 if (dataObjects.length)
                     eventBus.triggerEvent("updateObjects", { type: className, objects: dataObjects});
 
@@ -161,7 +164,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
         }
     }
 
-    function setLastUpdateTime(){
+    function setLastUpdateTime(){alert("synclastupdate time");
         config.sync.lastSyncTimestamp = new Date();
     }
 
@@ -175,7 +178,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
         // Both Player and Entry objects need updates to files, so FileData comes first.
         // Entry needs updates to Players (entry for a new player, for example), so Player comes second and Entry last, it has no dependencies.
         return syncObjectsFromCloud(FileData).then(function(){
+            alert("synced FileData");
             return syncObjectsFromCloud(Player).then(function(players){
+                alert("synced players")
                 Player.updatePlayers(players);
 
                 return syncObjectsFromCloud(Entry).then(setLastUpdateTime);
