@@ -2,7 +2,7 @@ angular.module("Config", []).constant("dbConfig", {
     objectStores: {
         entries: {
             name: "entries",
-            version: 0,
+            version: 1,
             params: { keyPath: "timestamp" },
             indexes: [
                 { name: 'type_idx', fields: ['playerId', 'type', 'date'], params: {unique: false} },
@@ -25,7 +25,7 @@ angular.module("Config", []).constant("dbConfig", {
         },
         players: {
             name: "players",
-            version: 0,
+            version: 1,
             params: { keyPath: "playerId", autoIncrement: true },
             indexes: [
                 { name: 'name_idx', fields: ['name'], params: {unique: true} },

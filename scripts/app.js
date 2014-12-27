@@ -14,7 +14,6 @@ app = angular.module("GrowingApp", [
             .connection('diaryDB')
             .upgradeDatabase(currentDbVersion, function(event, db, tx){
                 if (event.newVersion > event.oldVersion) {
-                    alert("oldVersion = " + event.oldVersion);
                     var objectStoreConfig,
                         objectStore;
 
