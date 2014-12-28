@@ -30,7 +30,9 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
             if (entryData.cloudId)
                 this.cloudId = entryData.cloudId;
 
-            if (entryData.imageId)
+            if (entryData.image)
+                this.image = entryData.image;
+            else if (entryData.imageId)
                 this.image = new FileData(entryData.imageId);
 
             this.isNew = false;
