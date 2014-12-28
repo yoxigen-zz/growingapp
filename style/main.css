@@ -499,6 +499,8 @@ a {
     max-height: 2.5rem; }
   .items-list .item-text {
     margin-left: 3rem; }
+  .items-list .item-image {
+    max-width: 100%; }
   .items-list .item-details {
     color: #919191;
     font-size: .8rem;
