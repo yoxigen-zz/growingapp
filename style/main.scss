@@ -278,22 +278,19 @@ a{ cursor: pointer; }
   position: relative;
 }
 .contents-header{
-  height: $contentsHeaderHeight;
-  line-height: $contentsHeaderHeight;
   background: $headerBackground;
   color: $headerColor;
   font-weight: bold;
-  padding-left: $padding;
+  padding: .5rem $padding;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
   font-size: 1.2rem;
   position: relative;
 
   h2{
-    font-size: 1.3rem;
+    font-size: 1rem;
     margin: 0;
     padding: 0;
-    font-weight: 300;
   }
 
   &.dark{
@@ -553,3 +550,4 @@ $floatingActionButtonDiameter: 46px;
 @import "chart";
 @import "insights";
 @import "player_edit";
+@import "cards";

@@ -244,21 +244,18 @@ a {
   position: relative; }
 
 .contents-header {
-  height: 3rem;
-  line-height: 3rem;
   background: white;
   color: #333333;
   font-weight: bold;
-  padding-left: 0.8rem;
+  padding: 0.5rem 0.8rem;
   border-bottom: solid 1px #d2d2d2;
   box-sizing: border-box;
   font-size: 1.2rem;
   position: relative; }
   .contents-header h2 {
-    font-size: 1.3rem;
+    font-size: 1rem;
     margin: 0;
-    padding: 0;
-    font-weight: 300; }
+    padding: 0; }
   .contents-header.dark {
     background: #163852;
     color: white;
@@ -512,18 +509,22 @@ a {
   .items-list .item-description {
     color: #666;
     font-size: .9rem; }
-  .items-list .item-value, .items-list blockquote {
-    color: #669900; }
-  .items-list .item-measure {
-    color: #477db8; }
-  .items-list .item-error {
-    color: #c00; }
-  .items-list blockquote {
-    font-style: italic; }
-    .items-list blockquote:before {
-      content: open-quote; }
-    .items-list blockquote:after {
-      content: close-quote; }
+
+.item-value, blockquote {
+  color: #669900; }
+
+.item-measure {
+  color: #477db8; }
+
+.item-error {
+  color: #c00; }
+
+blockquote {
+  font-style: italic; }
+  blockquote:before {
+    content: open-quote; }
+  blockquote:after {
+    content: close-quote; }
 
 #menu-wrapper {
   position: fixed;
@@ -858,11 +859,10 @@ select {
     border: none;
     outline: none;
     -webkit-appearance: none;
-    border-bottom: solid 2px #BEC9CC;
-    padding: .2rem 1rem .1rem 0;
+    padding: 0 .5rem .1rem 0;
     font-family: Roboto;
-    font-weight: 300;
-    color: inherit; }
+    color: #33b5e5;
+    font-size: .85rem; }
 
 .button {
   display: inline-block;
@@ -1203,3 +1203,33 @@ svg.graph {
       .player-edit .avatar img {
         width: 5rem;
         height: 5rem; } }
+
+.cards {
+  list-style: none;
+  margin: 0;
+  background: #ebebeb;
+  padding: .5rem; }
+  .cards .card {
+    background: White;
+    border-radius: 2px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+    margin-bottom: .5rem; }
+    .cards .card:active, .cards .card.ng-click-active {
+      background-color: rgba(92, 210, 250, 0.09); }
+  .cards .card-media .card-image {
+    width: 100%;
+    border-radius: 2px 2px 0 0; }
+  .cards .card-contents {
+    padding: .5rem; }
+  .cards .card-text {
+    padding: .5rem .5rem 1.5rem; }
+  .cards .card-info {
+    border-top: solid 1px #e2e2e2;
+    padding: .75rem;
+    font-size: .9em; }
+    .cards .card-info .card-icon {
+      float: left;
+      margin-right: .5rem;
+      width: 2rem; }
+  .cards .card-sub-details {
+    color: #979797; }

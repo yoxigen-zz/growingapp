@@ -1,0 +1,52 @@
+$cardBorderRadius: 2px;
+
+
+.cards{
+  list-style: none;
+  margin: 0;
+  background: #ebebeb;
+  padding: .5rem;
+
+  .card{
+    &:active, &.ng-click-active{
+      background-color: rgba(92, 210, 250, 0.09);
+    }
+
+    background: White;
+    border-radius: $cardBorderRadius;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.5);
+    margin-bottom: .5rem;
+  }
+
+  .card-media{
+
+    .card-image{
+      width: 100%;
+      border-radius: $cardBorderRadius $cardBorderRadius 0 0;
+    }
+  }
+
+  .card-contents{
+    padding: .5rem;
+  }
+
+  .card-text{
+    padding: .5rem .5rem 1.5rem;
+  }
+
+  .card-info{
+    border-top: solid 1px #e2e2e2;
+    padding: .75rem;
+    font-size: .9em;
+
+    .card-icon{
+      float: left;
+      margin-right: .5rem;
+      width: 2rem;
+    }
+  }
+
+  .card-sub-details{
+    color: $secondaryTextColor;
+  }
+}

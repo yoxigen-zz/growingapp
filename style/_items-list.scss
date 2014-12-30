@@ -87,28 +87,28 @@
     color: #666;
     font-size: .9rem;
   }
+}
 
-  .item-value{
-    color: #669900;
+.item-value{
+  color: #669900;
+}
+
+.item-measure{
+  color: rgb(71, 125, 184);
+}
+
+.item-error{
+  color: #c00;
+}
+blockquote{
+  @extend .item-value;
+  font-style: italic;
+
+  &:before{
+    content: open-quote;
   }
 
-  .item-measure{
-    color: rgb(71, 125, 184);
-  }
-
-  .item-error{
-    color: #c00;
-  }
-  blockquote{
-    @extend .item-value;
-    font-style: italic;
-
-    &:before{
-      content: open-quote;
-    }
-
-    &:after{
-      content: close-quote;
-    }
+  &:after{
+    content: close-quote;
   }
 }

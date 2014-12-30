@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" baseProfile="full"
-     width="16px" height="16px" viewBox="0 0 16 16"
+     width="6px" height="7px" viewBox="0 0 6 7"
  xmlns="http://www.w3.org/2000/svg"
  xmlns:xlink="http://www.w3.org/1999/xlink"
  xmlns:ev="http://www.w3.org/2001/xml-events" >
-<path fill-rule="evenodd"  fill-opacity="1" fill="#BEC9CC"
- d="M21.000,0.009 C21.000,0.009 21.000,21.000 21.000,21.000 C21.000,21.000 0.009,21.000 0.009,21.000 C0.009,21.000 21.000,0.009 21.000,0.009 Z"/>
+<path fill-rule="evenodd"  fill="rgb( 0, 182, 232 )"
+ d="M6.000,0.002 C6.000,0.002 6.000,7.000 6.000,7.000 C6.000,7.000 0.002,7.000 0.002,7.000 C0.002,7.000 6.000,0.002 6.000,0.002 Z"/>
 </svg>

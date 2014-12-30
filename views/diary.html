@@ -17,7 +17,7 @@
     <div class="contents-scroll flex-1" ng-class="{ 'flex-vertical': entries && !entries.length }" ng-show="player && !showFirstTimeSelection">
         <header class="contents-header flex-horizontal" ng-show="player && !showFirstTimeSelection">
             <div class="header-controls flex-1">
-                Diary -
+                <h2>Recent Activities</h2>
                 <select class="fancy-select"
                         ng-model="currentEntriesType"
                         ng-change="onEntriesTypeChange()"
@@ -33,14 +33,19 @@
                 <a class="floating-action-button add-button" ng-click="toggleNewEntriesSelection()"></a>
             </div>
         </div>
-        <ul class="items-list">
-            <li ng-repeat="entry in entries" ng-click="selectEntry(entry)">
-                <img class="item-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
-                <div class="item-text">
-                    <img class="item-image" ng-if="entry.image.url" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
-                    <div ng-bind-html="entry.html"></div>
-                    <p ng-if="entry.description" class='item-description'>{{::entry.description}}</p>
-                    <div class="item-details">{{::entry.dateText}}</div>
+        <ul class="cards">
+            <li ng-repeat="entry in entries" class="card" ng-click="selectEntry(entry)">
+                <div class="card-media" ng-if="entry.image.url"><img class="card-image" ng-if="entry.image.url" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" /></div>
+                <div ng-if="entry.html" class="card-contents" ng-bind-html="entry.html"></div>
+                <div ng-if="entry.description" class="card-text">
+                    {{entry.description}}
+                </div>
+                <div class="card-info">
+                    <img class="card-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
+                    <div class="card-details">
+                        {{::entry.dateText}}
+                        <div class="card-sub-details">{{::entry.ageText}}</div>
+                    </div>
                 </div>
             </li>
         </ul>

@@ -103,9 +103,16 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
 
     Entry.prototype.__defineGetter__("dateText", function(){
         if (!this._dateText)
-            this._dateText = config.getLocalizedDate(this.date) + " (" + utils.dates.dateDiff(this.date, this.player.birthday) + ")";
+            this._dateText = config.getLocalizedDate(this.date);
 
         return this._dateText;
+    });
+
+    Entry.prototype.__defineGetter__("ageText", function(){
+        if (!this._ageText)
+            this._ageText = utils.dates.dateDiff(this.date, this.player.birthday);
+
+        return this._ageText;
     });
 
     /**
@@ -150,6 +157,7 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
     Entry.prototype.clearParsedValues = function(){
         delete this._html;
         delete this._dateText;
+        delete this._ageText;
     };
 
     Entry.prototype.addPhoto = function(method){
