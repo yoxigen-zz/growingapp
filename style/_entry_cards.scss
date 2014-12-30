@@ -1,0 +1,42 @@
+.entry-measure-icon{
+  width: 6rem;
+}
+
+.entry-milestone-text{
+  background: url(../images/icons/star.svg) no-repeat center top;
+  padding-top: 3rem;
+  text-align: center;
+}
+
+.entry-milestone-contents{
+  background-color: #017fcf;
+  color: White;
+}
+
+.card-contents-with-image{
+  box-shadow: 0 0 10000px black inset;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+.item-unit{
+  opacity: .6;
+  font-size: .7em;
+}
+.cards {
+  .card-contents {
+    &.entry-with-value {
+      text-align: center;
+      padding-bottom: 1rem;
+
+      .item-measure {
+        color: White;
+        font-size: 1.2em;
+      }
+
+      img {
+        margin: 1rem 0 .2rem;
+      }
+    }
+  }
+}

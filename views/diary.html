@@ -35,13 +35,11 @@
         </div>
         <ul class="cards">
             <li ng-repeat="entry in entries" class="card" ng-click="selectEntry(entry)">
-                <div class="card-media" ng-if="entry.image.url"><img class="card-image" ng-if="entry.image.url" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" /></div>
-                <div ng-if="entry.html" class="card-contents" ng-bind-html="entry.html"></div>
+                <div ng-include="'entry-' + entry.type.id"></div>
                 <div ng-if="entry.description" class="card-text">
                     {{entry.description}}
                 </div>
                 <div class="card-info">
-                    <img class="card-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
                     <div class="card-details">
                         {{::entry.dateText}}
                         <div class="card-sub-details">{{::entry.ageText}}</div>

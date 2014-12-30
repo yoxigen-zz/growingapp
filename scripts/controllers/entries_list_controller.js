@@ -1,10 +1,12 @@
 'use strict';
 
-app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config){
+app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", "localization",
+    function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config, localization){
     var settingEntries,
         removedEntryIndex,
         editedEntry;
 
+    $scope.localizationUnits = localization.units;
     $scope.removeEntry = removeEntry;
     $scope.saveEntry = saveEntry;
     $scope.unremoveEntry = unremoveEntry;
@@ -30,7 +32,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     });
 
     return setEntries();
-
 
     function removeEntry(){
         var entry = $scope.entry;

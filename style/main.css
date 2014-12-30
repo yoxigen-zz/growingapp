@@ -413,15 +413,16 @@ a {
       margin-left: 1rem; }
 
 .floating-action-button {
-  height: 46px;
-  width: 46px;
+  height: 3.5rem;
+  width: 3.5rem;
   border-radius: 50%;
   background-color: #E00E6E;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
   background-position: center center;
-  background-size: 33%;
+  background-size: 1rem;
   background-repeat: no-repeat;
-  display: inline-block; }
+  display: inline-block;
+  font-size: 0.8em; }
   .floating-action-button:hover {
     background-color: #ee0e71; }
   .floating-action-button:active, .floating-action-button.ng-click-active {
@@ -451,10 +452,9 @@ a {
       display: none; } }
 
 .entries .contents-header .floating-action-button {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: -23px;
-  right: 0.8rem; }
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem; }
 
 .items-list {
   list-style: none;
@@ -1078,6 +1078,37 @@ select {
   max-height: 15rem;
   border: solid 1px #999; }
 
+.entry-measure-icon {
+  width: 6rem; }
+
+.entry-milestone-text {
+  background: url(../images/icons/star.svg) no-repeat center top;
+  padding-top: 3rem;
+  text-align: center; }
+
+.entry-milestone-contents {
+  background-color: #017fcf;
+  color: White; }
+
+.card-contents-with-image {
+  box-shadow: 0 0 10000px black inset;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat; }
+
+.item-unit {
+  opacity: .6;
+  font-size: .7em; }
+
+.cards .card-contents.entry-with-value {
+  text-align: center;
+  padding-bottom: 1rem; }
+  .cards .card-contents.entry-with-value .item-measure {
+    color: White;
+    font-size: 1.2em; }
+  .cards .card-contents.entry-with-value img {
+    margin: 1rem 0 .2rem; }
+
 svg.graph {
   margin: 0 auto; }
   svg.graph .legend text {
@@ -1210,17 +1241,41 @@ svg.graph {
   background: #ebebeb;
   padding: .5rem; }
   .cards .card {
+    max-width: 640px;
     background: White;
     border-radius: 2px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     margin-bottom: .5rem; }
     .cards .card:active, .cards .card.ng-click-active {
       background-color: rgba(92, 210, 250, 0.09); }
-  .cards .card-media .card-image {
+  .cards .card-side {
+    width: 3rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 2rem 2rem;
+    padding: .5rem 0;
+    min-height: 2rem;
+    border-radius: 2px 0 0 0; }
+  .cards .card-image {
+    display: block;
     width: 100%;
+    max-width: 640px;
     border-radius: 2px 2px 0 0; }
   .cards .card-contents {
+    padding: .5rem;
+    border-radius: 2px 2px 0 0; }
+  .cards .card-min-height {
+    min-height: 10rem;
     padding: .5rem; }
+  .cards .card-center-contents {
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-justify-content: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex; }
+  .cards .card-contents-light {
+    background-color: #ebebeb; }
   .cards .card-text {
     padding: .5rem .5rem 1.5rem; }
   .cards .card-info {

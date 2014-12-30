@@ -1,0 +1,40 @@
+<script id="entry-photo" type="text/ng-template">
+    <img class="card-image" ng-if="entry.image.url" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
+</script>
+
+<script id="entry-note" type="text/ng-template">
+    <div class="flex-horizontal">
+        <div class="card-side" ng-style="{ 'background-color': entry.type.color, 'background-image': 'url(images/icons/note.svg)' }"></div>
+        <div class="card-contents flex-1 card-contents-light">{{::entry.properties.text}}</div>
+    </div>
+</script>
+
+<script id="entry-teeth" type="text/ng-template">
+    <div class="flex-horizontal">
+        <div class="card-side" ng-style="{ 'background-color': entry.type.color, 'background-image': 'url(images/icons/tooth.svg)' }"></div>
+        <div class="card-contents flex-1 card-contents-light">
+            {{entry.player.name}}'s
+            <span class='item-measure'>{{config.entries.teeth.index[entry.properties.tooth].name.toLowerCase()}}</span> has come out
+        </div>
+    </div>
+</script>
+
+<script id="entry-weight" type="text/ng-template">
+    <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
+        <img class="entry-measure-icon" src="images/icons/weight.svg" />
+        <div class="item-measure">{{entry.properties.value | unit:'weight'}}<span class="item-unit">{{localizationUnits.weight[config.localization.weight.selected].display}}</span></div>
+    </div>
+</script>
+
+<script id="entry-height" type="text/ng-template">
+    <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
+        <img class="entry-measure-icon" src="images/icons/height.svg" />
+        <div class="item-measure">{{entry.properties.value | unit:'height'}}<span class="item-unit">{{localizationUnits.height[config.localization.height.selected].display}}</span></div>
+    </div>
+</script>
+
+<script id="entry-milestone" type="text/ng-template">
+    <div class="card-contents card-min-height card-center-contents entry-milestone-contents" ng-class="{ 'card-contents-with-image': entry.image.url }" background-image="entry.image.url">
+        <div class="entry-milestone-text">{{entry.player.name}} {{config.entries.milestone.typesIndex[entry.properties.type].text || entry.properties.text}}</div>
+    </div>
+</script>

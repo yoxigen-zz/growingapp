@@ -1,5 +1,5 @@
 $cardBorderRadius: 2px;
-
+$maxCardWidth: 640px;
 
 .cards{
   list-style: none;
@@ -8,26 +8,55 @@ $cardBorderRadius: 2px;
   padding: .5rem;
 
   .card{
-    &:active, &.ng-click-active{
-      background-color: rgba(92, 210, 250, 0.09);
-    }
-
+    max-width: $maxCardWidth;
     background: White;
     border-radius: $cardBorderRadius;
     box-shadow: 1px 1px 5px rgba(0,0,0,.5);
     margin-bottom: .5rem;
+
+    &:active, &.ng-click-active{
+      background-color: rgba(92, 210, 250, 0.09);
+    }
   }
 
-  .card-media{
+  .card-side{
+    width: 3rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 2rem 2rem;
+    padding: .5rem 0;
+    min-height: 2rem;
+    border-radius: $cardBorderRadius 0 0 0;
+  }
 
-    .card-image{
-      width: 100%;
-      border-radius: $cardBorderRadius $cardBorderRadius 0 0;
-    }
+  .card-image{
+    display: block;
+    width: 100%;
+    max-width: $maxCardWidth;
+    border-radius: $cardBorderRadius $cardBorderRadius 0 0;
   }
 
   .card-contents{
     padding: .5rem;
+    border-radius: $cardBorderRadius $cardBorderRadius 0 0;
+  }
+
+  .card-min-height{
+    min-height: 10rem;
+    padding: .5rem;
+  }
+
+  .card-center-contents{
+    display: flex;
+    -webkit-align-items: center;
+    -webkit-justify-content: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+
+  }
+  .card-contents-light{
+    background-color: #ebebeb;
   }
 
   .card-text{

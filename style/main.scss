@@ -496,18 +496,19 @@ $spinnerSize: 2rem;
   }
 }
 
-$floatingActionButtonDiameter: 46px;
+$floatingActionButtonDiameter: 3.5rem;
 
 .floating-action-button{
   height: $floatingActionButtonDiameter;
   width: $floatingActionButtonDiameter;
   border-radius: 50%;
   background-color: #E00E6E;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
   background-position: center center;
-  background-size: 33%;
+  background-size: 1rem;
   background-repeat: no-repeat;
   display: inline-block;
+  font-size: 0.8em;
 
   &:hover{ background-color: #ee0e71; }
   &:active, &.ng-click-active{
@@ -547,6 +548,7 @@ $floatingActionButtonDiameter: 46px;
 @import "forms";
 @import "panels";
 @import "entry_types";
+@import "entry_cards";
 @import "chart";
 @import "insights";
 @import "player_edit";

@@ -10,22 +10,14 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             "id": "note",
             "name": "Note",
             "icon": "note",
-            "html": "{{data.properties.text}}",
+            color: "#4e7dbc",
             allowDescription: false
         },
         {
             "id": "weight",
             "name": "Weight",
             "icon": "weight",
-            "html": function(entry, player) {
-                var htmlArr = [player.name, ' weights <span class="item-measure">'],
-                    value = unitFilter(entry.properties.value || entry.properties.weight, "weight");
-
-                htmlArr.push($filter("toFixed")(value, 2));
-                htmlArr.push(localization.units.weight[config.localization.weight.selected].display);
-                htmlArr.push("</span>");
-                return htmlArr.join("");
-            },
+            color: "#397a42",
             "prepareForEdit": function(entry){
                 var convertMethod = localization.convertFromUnit;
                 entry.properties.weight = parseFloat(convertMethod("weight", entry.properties.value || entry.properties.weight, config.localization.weight.selected).toFixed(2));
@@ -39,15 +31,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             "id": "height",
             "name": "Height",
             "icon": "height",
-            "html": function(entry, player) {
-                var htmlArr = [player.name, ' is <span class="item-measure">'],
-                    value = unitFilter(entry.properties.value || entry.properties.height, "height");
-
-                htmlArr.push($filter("toFixed")(value, 2));
-                htmlArr.push(localization.units.height[config.localization.height.selected].display);
-                htmlArr.push("</span> tall");
-                return htmlArr.join("");
-            },
+            color: "#139798",
             "prepareForEdit": function(entry){
                 var convertMethod = localization.convertFromUnit;
                 entry.properties.height = parseFloat(convertMethod("height", entry.properties.value || entry.properties.height, config.localization.height.selected).toFixed(2));
@@ -60,18 +44,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
         {
             "id": "milestone",
             "name": "Milestone",
-            "icon": "star",
-            "html": function(entry, player, config){
-                var type = config.entries.milestone.typesIndex[entry.properties.type],
-                    text;
-
-                if (type)
-                    text = type.text;
-                else
-                    text = entry.properties.text;
-
-                return text ? player.name + " " + text.replace(/^\w/g, function(a){ return a.toLowerCase() }) : "Unknown milestone";
-            }
+            "icon": "star"
         },
         {
             "id": "speech",
@@ -88,6 +61,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", function e
             "id": "teeth",
             "name": "Tooth",
             "icon": "tooth",
+            color: "rgb(165, 98, 199)",
             html: function(entry, player, config){
                 return player.name + "'s <span class='item-measure'>" + config.entries.teeth.index[entry.properties.tooth].name.toLowerCase() + "</span> has come out";
             }

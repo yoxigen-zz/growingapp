@@ -76,7 +76,8 @@ requirejs([
 
                                 "insights/linechart_controller",
 
-                                "directives/fixed"
+                                "directives/fixed",
+                                "directives/background-image"
                             ], function () {
                                 angular.bootstrap(document, ["GrowingApp"]);
                             });

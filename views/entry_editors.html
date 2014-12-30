@@ -33,6 +33,17 @@
             <select ng-model="entry.properties.type" data-auto-focus ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types"></select>
         </div>
     </label>
+    <div id="entry_photo_edit">
+        <img id="entry_photo_edit_image" ng-if="entry.image.localUrl || entry.image.cloudUrl" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
+        <div class="avatar-buttons">
+            <a class="button text-button" ng-click="entry.addPhoto('camera')">
+                <img src="images/icons/camera.svg" />
+            </a>
+            <a class="button text-button" ng-click="entry.addPhoto('browse')">
+                <img src="images/icons/folders.svg" />
+            </a>
+        </div>
+    </div>
 </script>
 <script type="text/ng-template" id="entry_editor_note">
     <label>

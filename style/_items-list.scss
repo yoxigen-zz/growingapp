@@ -1,10 +1,9 @@
 .entries{
   .contents-header {
     .floating-action-button {
-      position: absolute;
-      bottom: 0;
-      margin-bottom: $floatingActionButtonDiameter / -2;
-      right: $padding;
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
     }
   }
 }
