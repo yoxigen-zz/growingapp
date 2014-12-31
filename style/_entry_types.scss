@@ -35,7 +35,7 @@
 .entry-types-list{
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 1rem 1rem;
 
   li{
     cursor: pointer;
@@ -45,13 +45,24 @@
     display: inline-block;
     height: 7rem;
     text-align: center;
-    width: 33.3%;
+    width: 25%;
     box-sizing: border-box;
     vertical-align: top;
+    border: solid .2rem #fafafa;
+    color: White;
+
+    @media all and (max-width: 560px){
+      width: 33.3%;
+      font-size: 1.1rem;
+    }
 
     @media all and (max-width: 450px){
       width: 50%;
       font-size: 1.1rem;
+    }
+
+    @media all and (max-width: 400px){
+      height: 6rem;
     }
 
     &:hover{
@@ -72,7 +83,6 @@
 
     span{
       display: block;
-      margin-top: .3rem;
     }
   }
 

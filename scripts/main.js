@@ -53,6 +53,7 @@ requirejs([
                                 "services/config",
                                 "services/classes/entry",
                                 "services/classes/player",
+                                "services/classes/entry_type",
                                 "services/entries",
                                 "services/insights",
                                 "services/cloud",

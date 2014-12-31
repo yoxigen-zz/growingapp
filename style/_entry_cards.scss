@@ -3,7 +3,7 @@
 }
 
 .entry-milestone-text{
-  background: url(../images/icons/star.svg) no-repeat center top;
+  background: url(../images/icons/star_yellow.svg) no-repeat center top;
   padding-top: 3rem;
   text-align: center;
 }
@@ -11,14 +11,35 @@
 .entry-milestone-contents{
   background-color: #017fcf;
   color: White;
+  min-height: 8rem;
+}
+
+.entry-teeth-contents{
+  text-align: center;
+
+  svg {
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+    display: block;
+    max-height: 240px;
+    margin-bottom: 1rem;
+  }
 }
 
 .card-contents-with-image{
-  box-shadow: 0 0 10000px black inset;
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
+  position: relative;
+
+  .card-contents{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.5);
+  }
 }
+
 .item-unit{
   opacity: .6;
   font-size: .7em;

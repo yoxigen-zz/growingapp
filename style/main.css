@@ -44,6 +44,9 @@ body {
 a {
   cursor: pointer; }
 
+.relative {
+  position: relative; }
+
 .flex-horizontal, .buttons-bar, .double-panel {
   display: -webkit-box;
   -webkit-box-orient: horizontal;
@@ -454,7 +457,8 @@ a {
 .entries .contents-header .floating-action-button {
   position: fixed;
   bottom: 1rem;
-  right: 1rem; }
+  right: 1rem;
+  z-index: 10; }
 
 .items-list {
   list-style: none;
@@ -782,7 +786,7 @@ blockquote {
   .dialog header {
     font-weight: bold;
     font-size: 1rem;
-    padding: 1rem 1.5rem; }
+    padding: 1rem; }
     .dialog header .dialog-title {
       font-size: 1.3rem; }
     .dialog header .close-button {
@@ -1022,7 +1026,7 @@ select {
 .entry-types-list {
   list-style: none;
   margin: 0;
-  padding: 0; }
+  padding: 0 1rem 1rem; }
   .entry-types-list li {
     cursor: pointer;
     padding: 1rem 0;
@@ -1031,13 +1035,22 @@ select {
     display: inline-block;
     height: 7rem;
     text-align: center;
-    width: 33.3%;
+    width: 25%;
     box-sizing: border-box;
-    vertical-align: top; }
+    vertical-align: top;
+    border: solid .2rem #fafafa;
+    color: White; }
+    @media all and (max-width: 560px) {
+      .entry-types-list li {
+        width: 33.3%;
+        font-size: 1.1rem; } }
     @media all and (max-width: 450px) {
       .entry-types-list li {
         width: 50%;
         font-size: 1.1rem; } }
+    @media all and (max-width: 400px) {
+      .entry-types-list li {
+        height: 6rem; } }
     .entry-types-list li:hover {
       background-color: rgba(92, 210, 250, 0.18); }
     .entry-types-list li:active, .entry-types-list li.ng-click-active {
@@ -1048,8 +1061,7 @@ select {
       max-width: 4rem;
       max-height: 3rem; }
     .entry-types-list li span {
-      display: block;
-      margin-top: .3rem; }
+      display: block; }
   .entry-types-list .entry-type-name {
     font-size: .9rem; }
 
@@ -1082,19 +1094,34 @@ select {
   width: 6rem; }
 
 .entry-milestone-text {
-  background: url(../images/icons/star.svg) no-repeat center top;
+  background: url(../images/icons/star_yellow.svg) no-repeat center top;
   padding-top: 3rem;
   text-align: center; }
 
 .entry-milestone-contents {
   background-color: #017fcf;
-  color: White; }
+  color: White;
+  min-height: 8rem; }
+
+.entry-teeth-contents {
+  text-align: center; }
+  .entry-teeth-contents svg {
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+    display: block;
+    max-height: 240px;
+    margin-bottom: 1rem; }
 
 .card-contents-with-image {
-  box-shadow: 0 0 10000px black inset;
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat; }
+  position: relative; }
+  .card-contents-with-image .card-contents {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); }
 
 .item-unit {
   opacity: .6;
@@ -1276,6 +1303,8 @@ svg.graph {
     display: flex; }
   .cards .card-contents-light {
     background-color: #ebebeb; }
+  .cards .card-contents-lighter {
+    background-color: #f4f4f4; }
   .cards .card-text {
     padding: .5rem .5rem 1.5rem; }
   .cards .card-info {

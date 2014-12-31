@@ -35,7 +35,7 @@
         </div>
         <ul class="cards">
             <li ng-repeat="entry in entries" class="card" ng-click="selectEntry(entry)">
-                <div ng-include="'entry-' + entry.type.id"></div>
+                <div ng-include="'entry-' + entry.type.templateName"></div>
                 <div ng-if="entry.description" class="card-text">
                     {{entry.description}}
                 </div>
@@ -57,6 +57,7 @@
     <dialog show="showNewEntriesSelection" title="New Entry Type" on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <ul class="entry-types-list">
             <li ng-repeat="entryType in ::entryTypes"
+                ng-style="{ 'background-color': entryType.color }"
                 ng-click="showNewEntryForm(entryType)">
                 <div class="entry-image">
                     <img ng-src="images/icons/{{::entryType.icon}}.svg" />
