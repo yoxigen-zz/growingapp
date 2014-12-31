@@ -28,10 +28,16 @@
 </script>
 <script type="text/ng-template" id="entry_editor_milestone">
     <label>
-        <span class="label-text">The Milestone</span>
+        <span class="label-text">Select the milestone:</span>
         <div class="flex-horizontal">
-            <select ng-model="entry.properties.type" data-auto-focus ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types"></select>
+            <select ng-model="entry.properties.type" data-auto-focus ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types">
+                <option value="">(Select the milestone)</option>
+            </select>
         </div>
+    </label>
+    <label>
+        <span class="label-text">Or enter new milestone:</span>
+        <textarea rows="3" ng-model="entry.properties.text"></textarea>
     </label>
     <div id="entry_photo_edit">
         <img id="entry_photo_edit_image" ng-if="entry.image.localUrl || entry.image.cloudUrl" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
