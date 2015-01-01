@@ -3,7 +3,7 @@
 </script>
 
 <script id="entry-note" type="text/ng-template">
-    <div class="flex-horizontal" is-rtl="entry.rtl">
+    <div class="flex-horizontal" is-rtl="::entry.rtl">
         <div class="card-side" ng-style="{ 'background-color': entry.type.color, 'background-image': 'url(images/icons/note.svg)' }"></div>
         <div class="card-contents flex-1 card-contents-lighter">{{::entry.properties.text}}</div>
     </div>
@@ -27,7 +27,7 @@
 </script>
 
 <script id="entry-speech" type="text/ng-template">
-    <div class="card-contents entry-speech-contents flex-horizontal" is-rtl="entry.rtl" ng-style="{ 'background-color': entry.type.color }">
+    <div class="card-contents entry-speech-contents flex-horizontal" is-rtl="::entry.rtl" ng-style="{ 'background-color': entry.type.color }">
         <img class="entry-icon" ng-src="images/icons/word.svg" />
         <div class="flex-1">
             <blockquote>{{entry.properties.words}}</blockquote>

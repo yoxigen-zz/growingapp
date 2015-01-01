@@ -8,8 +8,10 @@ app.directive("isRtl", [function(){
             var el = element[0];
 
             scope.$watch("isRtl", function(value){
-                el.style.direction = value ? "rtl" : "ltr";
-                el.style.textAlign = value ? "right" : null;
+                if (value)
+                    el.classList.add("rtl");
+                else
+                    el.classList.remove("rtl");
             });
         }
     }

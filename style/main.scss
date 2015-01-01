@@ -25,6 +25,11 @@ body{
 
 a{ cursor: pointer; }
 .relative{ position: relative; }
+.rtl{
+  direction: rtl;
+  text-align: right;
+}
+
 .flex-horizontal{
   display: -webkit-box;
   -webkit-box-orient: horizontal;

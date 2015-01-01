@@ -4,7 +4,7 @@ $maxCardWidth: 640px;
 .cards{
   list-style: none;
   margin: 0;
-  background: #ebebeb;
+  background: #e2e2e2;
   padding: .5rem;
 
   .card{
@@ -12,7 +12,7 @@ $maxCardWidth: 640px;
     background: White;
     border-radius: $cardBorderRadius;
     box-shadow: 1px 1px 5px rgba(0,0,0,.5);
-    margin-bottom: .5rem;
+    margin-bottom: 1rem;
   }
 
   .card-side{
@@ -23,6 +23,10 @@ $maxCardWidth: 640px;
     padding: .5rem 0;
     min-height: 2rem;
     border-radius: $cardBorderRadius 0 0 0;
+  }
+
+  .rtl .card-side{
+    border-radius: 0 $cardBorderRadius 0 0
   }
 
   .card-image{
