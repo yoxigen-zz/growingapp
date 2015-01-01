@@ -1282,8 +1282,6 @@ svg.graph {
     border-radius: 2px;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     margin-bottom: .5rem; }
-    .cards .card:active, .cards .card.ng-click-active {
-      background-color: rgba(92, 210, 250, 0.09); }
   .cards .card-side {
     width: 3rem;
     background-repeat: no-repeat;

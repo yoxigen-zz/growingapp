@@ -13,10 +13,6 @@ $maxCardWidth: 640px;
     border-radius: $cardBorderRadius;
     box-shadow: 1px 1px 5px rgba(0,0,0,.5);
     margin-bottom: .5rem;
-
-    &:active, &.ng-click-active{
-      background-color: rgba(92, 210, 250, 0.09);
-    }
   }
 
   .card-side{
