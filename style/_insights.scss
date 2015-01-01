@@ -15,16 +15,15 @@
   .insight-icon{
     width: 3rem;
     text-align: center;
-
-    img{
-      max-width: 2.5rem;
-      max-height: 2.5rem;
-    }
+    border-radius: 50%;
+    background-size: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
   }
 
   .insight-text{
-    -moz-padding-start: 1rem;
-    -webkit-padding-start: 1rem;
+    -moz-padding-start: $padding;
+    -webkit-padding-start: $padding;
   }
   h4{
     padding: 0;

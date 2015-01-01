@@ -101,6 +101,20 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
         return this._html;
     });
 
+    Entry.prototype.__defineGetter__("rtl", function(){
+        if (this._rtl === undefined)
+            this._rtl = utils.strings.isRtl(this.properties.text || this.properties.words);
+
+        return this._rtl;
+    });
+
+    Entry.prototype.__defineGetter__("rtlDescription", function(){
+        if (this._rtlDescription === undefined)
+            this._rtlDescription = utils.strings.isRtl(this.description);
+
+        return this._rtlDescription;
+    });
+
     Entry.prototype.__defineGetter__("dateText", function(){
         if (!this._dateText)
             this._dateText = config.getLocalizedDate(this.date);
@@ -158,6 +172,8 @@ app.factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData
         delete this._html;
         delete this._dateText;
         delete this._ageText;
+        delete this._rtl;
+        delete this._rtlDescription;
     };
 
     Entry.prototype.addPhoto = function(method){

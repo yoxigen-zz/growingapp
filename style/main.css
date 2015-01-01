@@ -514,7 +514,7 @@ a {
     color: #666;
     font-size: .9rem; }
 
-.item-value, blockquote {
+.item-value {
   color: #669900; }
 
 .item-measure {
@@ -524,7 +524,8 @@ a {
   color: #c00; }
 
 blockquote {
-  font-style: italic; }
+  font-style: italic;
+  margin: 0; }
   blockquote:before {
     content: open-quote; }
   blockquote:after {
@@ -1115,6 +1116,11 @@ select {
     max-height: 240px;
     margin-bottom: 1rem; }
 
+.entry-speech-contents {
+  color: White; }
+  .entry-speech-contents blockquote {
+    padding: .5rem 1rem; }
+
 .card-contents-with-image {
   position: relative; }
   .card-contents-with-image .card-contents {
@@ -1220,13 +1226,14 @@ svg.graph {
     cursor: pointer; }
   #insights-list .insight-icon {
     width: 3rem;
-    text-align: center; }
-    #insights-list .insight-icon img {
-      max-width: 2.5rem;
-      max-height: 2.5rem; }
+    text-align: center;
+    border-radius: 50%;
+    background-size: 50%;
+    background-position: center center;
+    background-repeat: no-repeat; }
   #insights-list .insight-text {
-    -moz-padding-start: 1rem;
-    -webkit-padding-start: 1rem; }
+    -moz-padding-start: 0.8rem;
+    -webkit-padding-start: 0.8rem; }
   #insights-list h4 {
     padding: 0;
     margin: 0 0 .2rem; }

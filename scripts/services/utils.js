@@ -5,6 +5,8 @@ angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", fun
         dayMilliseconds = 1000 * 60 * 60 * 24,
         avgMonthLength = 365 / 12;
 
+    var rtlRegExp = /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/;
+
     function getValueVariable(val, data, scope){
         var pathProperties = val.split("."),
             isData = pathProperties[0] === "data" && pathProperties.shift(),
@@ -258,6 +260,12 @@ angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", fun
         strings: {
             escapeHtml: function(str){
                 return str.replace(/\&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            },
+            isRtl: function(str){
+                if (!str)
+                    return false;
+
+                return rtlRegExp.test(str);
             },
             parse: function(expression, data, scope){
                 if (!expression)

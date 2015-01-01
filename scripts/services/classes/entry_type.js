@@ -14,5 +14,12 @@ angular.module("EntryType", []).factory("EntryType", function(){
         return this.template || this.id;
     });
 
+    EntryType.prototype.__defineGetter__("iconCssUrl", function(){
+        if (!this._iconCssUrl)
+            this._iconCssUrl = "url(images/icons/" + this.icon + ".svg)";
+
+        return this._iconCssUrl;
+    });
+
     return EntryType;
 });

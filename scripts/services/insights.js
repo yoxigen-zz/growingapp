@@ -1,7 +1,7 @@
 app.factory("insights", ["entries", function(entries){
     var insightsList = [
-            { id: "weight", name: "Weight Chart", description: "Age to weight chart, with percentiles", icon: entries.types.weight.icon, backgroundColor: "rgb( 102, 153, 0 )", className: "dark" },
-            { id: "height", name: "Height Chart", description: "Age to height chart, with percentiles", icon: entries.types.height.icon, backgroundColor: "rgb( 0, 153, 204 )", className: "dark" }
+            { id: "weight", name: "Weight Chart", description: "Age to weight chart, with percentiles", entryType: entries.types.weight, backgroundColor: "rgb( 102, 153, 0 )", className: "dark" },
+            { id: "height", name: "Height Chart", description: "Age to height chart, with percentiles", entryType: entries.types.height, backgroundColor: "rgb( 0, 153, 204 )", className: "dark" }
         ],
         currentInsight;
 

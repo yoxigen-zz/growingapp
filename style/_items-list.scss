@@ -101,8 +101,8 @@
   color: #c00;
 }
 blockquote{
-  @extend .item-value;
   font-style: italic;
+  margin: 0;
 
   &:before{
     content: open-quote;

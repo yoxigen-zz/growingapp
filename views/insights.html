@@ -5,9 +5,7 @@
             <div class="flex-1 scroll-vertical" ng-hide="firstPanelHidden">
                 <ul id="insights-list">
                     <li ng-repeat="insight in ::insights" ng-click="setCurrentInsight(insight)" class="flex-horizontal">
-                        <div class="insight-icon">
-                            <img class="item-icon" ng-src="images/icons/{{::insight.icon}}.svg" />
-                        </div>
+                        <div class="insight-icon" ng-style="::{ 'background-color': insight.entryType.color, 'background-image': insight.entryType.iconCssUrl }"></div>
                         <div class="insight-text flex-1">
                             <h4>{{::insight.name}}</h4>
                             <p class="insight-description">{{::insight.description}}</p>
