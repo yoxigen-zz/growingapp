@@ -43,3 +43,11 @@
         </div>
     </div>
 </script>
+<script id="entry-vaccine" type="text/ng-template">
+    <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
+        <img class="entry-measure-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
+        <div class="item-measure">{{::config.entries.vaccines.index[entry.properties.vaccineId].name}}
+            <div class="item-measure-subtitle">({{::config.entries.vaccines.index[entry.properties.vaccineId].disease}})</div>
+        </div>
+    </div>
+</script>

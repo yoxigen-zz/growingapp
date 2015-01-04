@@ -76,3 +76,11 @@
         </div>
     </div>
 </script>
+<script type="text/ng-template" id="entry_editor_vaccine">
+    <label>
+        <span class="label-text">The vaccine</span>
+        <select ng-model="entry.properties.vaccineId" ng-options="vaccine.id as vaccine.name for vaccine in config.entries.vaccines.list">
+            <option value="">(Select the vaccine)</option>
+        </select>
+    </label>
+</script>

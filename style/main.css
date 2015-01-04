@@ -1146,6 +1146,8 @@ select {
   .cards .card-contents.entry-with-value .item-measure {
     color: White;
     font-size: 1.2em; }
+  .cards .card-contents.entry-with-value .item-measure-subtitle {
+    font-size: .9em; }
   .cards .card-contents.entry-with-value img {
     margin: 1rem 0 .2rem; }
 

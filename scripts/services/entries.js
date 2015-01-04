@@ -5,7 +5,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", "EntryType
             "id": "photo",
             "name": "Photo",
             "icon": "photo",
-            color: "rgb(62, 192, 18)"
+            color: "rgb(249, 131, 44)"
         },
         {
             "id": "note",
@@ -54,19 +54,20 @@ app.factory("entries", ["utils", "localization", "config", "$filter", "EntryType
             "id": "speech",
             "name": "Speech",
             "icon": "word",
-            color: "rgb( 255, 68, 68 )",
-            html: function(entry, player, config){
-                if (/[\s\.\,\!\?]/.test(entry.properties.words))
-                    return player.name + ' said: <blockquote>' + utils.strings.escapeHtml(entry.properties.words) + '</blockquote>';
-                else
-                    return player.name + ' said <span class="item-value">&quot;' + utils.strings.escapeHtml(entry.properties.words) + '&quot;</span> for the first time!';
-            }
+            color: "rgb( 255, 68, 68 )"
         },
         {
             "id": "teeth",
             "name": "Tooth",
             "icon": "tooth",
             color: "rgb(165, 98, 199)"
+        },
+        {
+            "id": "vaccine",
+            "name": "Vaccine",
+            "icon": "mail",
+            "color": "rgb(81, 202, 24)"
+
         }
     ];
 

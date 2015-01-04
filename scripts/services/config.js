@@ -43,6 +43,22 @@ app.factory("config", ["utils", "localization", function(utils, localization){
                 { id: "secondMolarUpperRight", name: "Upper right second molar" },
                 { id: "secondMolarUpperLeft", name: "Upper left second molar" }
             ]
+        },
+        vaccines: {
+            list: [
+                { "id": "hep_b", "name": "HepB", "disease": "Hepatitis B" },
+                { "id": "rv", "name": "RV", "disease": "Rotavirus" },
+                { "id": "dtap", "name": "DTaP", "disease": "Diphtheria, Tetanus and Pertussis" },
+                { "id": "hib", "name": "Hib", "disease": "Hib (Haemophilus Influenzae Type B)" },
+                { "id": "pcv", "name": "PCV", "disease": "Pneumococcus" },
+                { "id": "ipv", "name": "IPV", "disease": "Polio" },
+                { "id": "flu_1", "name": "Influenza (1)", "disease": "Influenza" },
+                { "id": "flu_2", "name": "Influenza (2)", "disease": "Influenza" },
+                { "id": "mmr", "name": "MMR", "disease": "Measles, Mumps and Rubella" },
+                { "id": "varicella", "name": "Varicella", "disease": "Chickenpox" },
+                { "id": "hep_a_1", "name": "HepA (1)", "disease": "Hepatitis A" },
+                { "id": "hep_a_2", "name": "HepA (2)", "disease": "Hepatitis A" }
+            ]
         }
     };
 
@@ -53,6 +69,7 @@ app.factory("config", ["utils", "localization", function(utils, localization){
         syncOfferDeclined;
 
     entries.milestone.typesIndex = utils.arrays.toIndex(entries.milestone.types, "id");
+    entries.vaccines.index = utils.arrays.toIndex(entries.vaccines.list, "id");
     entries.teeth.index = utils.arrays.toIndex(entries.teeth.list, "id");
 
     function getLocalization(){
