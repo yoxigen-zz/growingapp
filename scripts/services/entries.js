@@ -65,7 +65,7 @@ app.factory("entries", ["utils", "localization", "config", "$filter", "EntryType
         {
             "id": "vaccine",
             "name": "Vaccine",
-            "icon": "mail",
+            "icon": "syringe",
             "color": "rgb(81, 202, 24)"
 
         }
