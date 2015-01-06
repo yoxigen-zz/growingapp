@@ -33,58 +33,64 @@ requirejs([
             "services/chart",
             "directives/toggle-display",
             "entries/teeth/directive/teeth.directive",
+            "services/classes/entry_type",
             "services/dbconfig"
         ], function () {
             requirejs([
                 "services/classes/data_object",
                 "services/classes/file_data",
-                "services/files"
+                "services/config",
+                "services/files",
+                "services/players"
             ], function () {
                 requirejs([
                     "services/images",
+                    "services/entries",
                     "directives/dialogs/dialog",
-                    "directives/dialogs/slide_dialog"
+                    "directives/dialogs/slide_dialog",
+                    "insights/vaccines/vaccines"
                 ], function () {
                     requirejs([
-                            "directives/charts/line_chart",
-                            "app"
-                        ], function () {
-                            requirejs([
-                                "services/config",
-                                "services/classes/entry",
-                                "services/classes/player",
-                                "services/classes/entry_type",
-                                "services/entries",
-                                "services/insights",
-                                "services/cloud",
-                                "services/statistics",
-                                "services/navigation",
-
-                                "entries/teeth/teeth",
-                                "filters/pronoun",
-                                "filters/unit",
-                                "filters/tofixed",
-
-                                "controllers/main_controller",
-                                "controllers/edit_player_controller",
-                                "controllers/insights_controller",
-                                "controllers/entries_list_controller",
-                                "controllers/login_controller",
-                                "controllers/signup_controller",
-                                "entries/teeth/teeth_controller",
-                                "controllers/signup_controller",
-                                "controllers/signup_controller",
-
-                                "insights/linechart_controller",
-
-                                "directives/fixed",
-                                "directives/background-image",
-                                "directives/is-rtl"
+                        "services/insights",
+                        "directives/charts/line_chart"
+                    ], function () {
+                        requirejs([
+                                "app"
                             ], function () {
-                                angular.bootstrap(document, ["GrowingApp"]);
-                            });
-                        }
-                    );
+                                requirejs([
+                                    "services/classes/entry",
+                                    "services/classes/player",
+                                    "services/cloud",
+                                    "services/statistics",
+                                    "services/navigation",
+
+                                    "entries/teeth/teeth",
+                                    "filters/pronoun",
+                                    "filters/unit",
+                                    "filters/tofixed",
+
+                                    "controllers/main_controller",
+                                    "controllers/edit_player_controller",
+                                    "controllers/insights_controller",
+                                    "controllers/entries_list_controller",
+                                    "controllers/login_controller",
+                                    "controllers/signup_controller",
+                                    "entries/teeth/teeth_controller",
+                                    "controllers/signup_controller",
+                                    "controllers/signup_controller",
+
+                                    "insights/linechart_controller",
+                                    "insights/vaccines/vaccines_controller",
+
+                                    "directives/fixed",
+                                    "directives/background-image",
+                                    "directives/is-rtl"
+                                ], function () {
+                                    angular.bootstrap(document, ["GrowingApp"]);
+                                });
+                            }
+                        );
+                    });
                 });
             });
         });

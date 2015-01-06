@@ -1,4 +1,4 @@
-angular.module("Config", []).constant("dbConfig", {
+angular.module("DBConfig", []).constant("dbConfig", {
     objectStores: {
         entries: {
             name: "entries",

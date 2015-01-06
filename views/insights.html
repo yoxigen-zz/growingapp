@@ -6,7 +6,7 @@
                 <ul id="insights-list">
                     <li ng-repeat="insight in ::insights" ng-click="setCurrentInsight(insight)" class="flex-horizontal">
                         <div class="insight-icon" ng-style="::{ 'background-color': insight.entryType.color, 'background-image': insight.entryType.iconCssUrl }"></div>
-                        <div class="insight-text flex-1">
+                        <div class="insight-text flex-1" ng-class="{ center: !insight.description }">
                             <h4>{{::insight.name}}</h4>
                             <p class="insight-description">{{::insight.description}}</p>
                         </div>
@@ -19,7 +19,7 @@
     <slide-dialog show="currentInsight"
                   title="{{currentInsight.name}}"
                   on-show="onShowDialog($event)"
-                  background="{{currentInsight.backgroundColor}}"
+                  background="{{currentInsight.entryType.color}}"
                   class="no-padding {{currentInsight.className}}"
                   on-hide="onCloseInsight()">
         <div ng-include="currentInsightInclude"></div>

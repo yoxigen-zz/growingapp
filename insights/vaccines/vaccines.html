@@ -1,0 +1,18 @@
+<div class="flex-1 scroll-vertical data-table" ng-controller="VaccinesController as vaccines">
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Vaccine Name</th>
+                <th>Immunes Against</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="vaccineEntry in ::vaccines">
+                <td>{{vaccineEntry.date}}</td>
+                <td>{{vaccineEntry.name}}</td>
+                <td>{{vaccineEntry.disease}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

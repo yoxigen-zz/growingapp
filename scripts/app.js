@@ -5,8 +5,13 @@ app = angular.module("GrowingApp", [
     "app.filters",
     "DataObject",
     "FileData",
+    "DBConfig",
     "Config",
+    "Players",
+    "Entries",
     "EntryType",
+    "Vaccines",
+    "Insights",
     "ToggleDisplay", "EventBus", "Utils", "Charts", "Storage", "Users", "Teeth", "Images", "Messages", "Dialogs", "Localization", "Files"])
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "dbConfig", function ($routeProvider, $locationProvider, $indexedDBProvider, dbConfig) {
         var currentDbVersion = 17;

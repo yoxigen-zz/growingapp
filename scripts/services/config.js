@@ -1,4 +1,4 @@
-app.factory("config", ["utils", "localization", function(utils, localization){
+angular.module("Config", ["Utils", "Localization"]).factory("config", ["utils", "localization", function(utils, localization){
     var entries = {
         images: { width: 600, height: 600 },
         milestone: {

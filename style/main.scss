@@ -7,17 +7,20 @@ html{
   font-size: 16px;
 }
 
+.flex{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
 body{
+  @extend .flex;
   background: $contentBackgroundColor;
   color: $contentTextColor;
   padding: 0;
   margin: 0;
 
   font-size: 16px;
-  display: -webkit-box;
   -webkit-box-orient: vertical;
-  display: -webkit-flex;
-  display: flex;
   -webkit-flex-flow: column;
   flex-flow: column;
   flex-direction: column;
@@ -31,28 +34,20 @@ a{ cursor: pointer; }
 }
 
 .flex-horizontal{
-  display: -webkit-box;
+  @extend .flex;
+
   -webkit-box-orient: horizontal;
-  display: -webkit-flex;
-  display: flex;
   -webkit-flex-flow: row;
   flex-flow: row;
   flex-direction: row;
 }
 .flex-vertical{
-  display: -webkit-box;
+  @extend .flex;
+
   -webkit-box-orient: vertical;
-  display: -webkit-flex;
-  display: flex;
   -webkit-flex-flow: column;
   flex-flow: column;
   flex-direction: column;
-}
-
-.flex{
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
 }
 
 .flex-1{

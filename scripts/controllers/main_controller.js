@@ -1,5 +1,5 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages",
-    function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages", "players",
+    function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players){
 
     var currentMenuItem,
         spinnerTimeout;
@@ -257,10 +257,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             onUpdatePlayers(e.objects);
     }
 
-    function onUpdatePlayers(players){
+    function onUpdatePlayers(_players){
         var deletedCurrentPlayer;
 
-        players.forEach(function(player){
+        _players.forEach(function(player){
             if (player.isNew){
                 if (!player.deleted)
                     $scope.players.push(player);
@@ -347,13 +347,15 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         if (user)
             eventBus.triggerEvent("login", { user: user });
 
-        Player.getAll().then(function(players){
-            $scope.players = players;
-            setPlayersSelection(players);
+        Player.getAll().then(function(allPlayers){
+            $scope.players = allPlayers;
+            setPlayersSelection(allPlayers);
 
             Player.getCurrentPlayer().then(function(currentPlayer){
-                if (currentPlayer)
+                if (currentPlayer) {
                     $scope.setCurrentPlayer(currentPlayer);
+                    players.setCurrentPlayer(currentPlayer);
+                }
             });
 
             cloud.sync({ isOnLoad: true });

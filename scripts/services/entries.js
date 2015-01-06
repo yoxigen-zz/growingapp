@@ -1,4 +1,6 @@
-app.factory("entries", ["utils", "localization", "config", "$filter", "EntryType", function entriesFactory(utils, localization, config, $filter, EntryType){
+
+angular.module("Entries", ["Utils", "Localization", "Config", "EntryType"]).factory("entries", ["utils", "localization", "config", "$filter", "EntryType",
+    function entriesFactory(utils, localization, config, $filter, EntryType){
     var unitFilter = $filter("unit");
     var entryTypes = [
         {
