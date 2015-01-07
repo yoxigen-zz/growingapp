@@ -1,6 +1,6 @@
 'use strict';
 
-app.factory("teeth", ["$q", "Entry", "eventBus", function($q, Entry, eventBus){
+app.factory("teeth", ["$q", "Entry", "eventBus", function($q, entries, eventBus){
 	var addedTeeth;
 
 	eventBus.subscribe("saveEntry", function(entry){

@@ -1328,3 +1328,20 @@ svg.graph {
       width: 2rem; }
   .cards .card-sub-details {
     color: #979797; }
+
+.data-table {
+  background: White;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  max-width: 800px;
+  margin: 0 auto; }
+  .data-table th {
+    background: #163852;
+    color: white;
+    text-align: left; }
+  .data-table th, .data-table td {
+    padding: 1rem .5rem;
+    border: none; }
+  .data-table tr:nth-child(2n) {
+    background-color: #f1f7f9; }

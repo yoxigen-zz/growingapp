@@ -178,19 +178,37 @@ angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", fun
                 return { days: date2Days - date1Days - offset, months: monthsCount };
             },
             dateDiff: function(d1, d2){
-                var year1 = d1.getFullYear(), year2 = d2.getFullYear(),
-                    years = Math.abs(year1 - year2),
-                    daysAndMonths = this.daysOffset(d1, d2),
+                var duration = moment.duration(Math.abs(d1 - d2));
+
+                var years = duration.years(),
+                    months = duration.months(),
+                    days = duration.days(),
                     str = [];
 
-                if (years)
-                    str.push(years + " year" + (years > 1 ? "s" : ""));
+                var val;
+                if (years) {
+                    val = years + " year";
+                    if (years > 1)
+                        val += "s";
 
-                if (daysAndMonths.months)
-                    str.push(daysAndMonths.months + " month" + (daysAndMonths.months > 1 ? "s" : ""));
+                    str.push(val);
+                }
 
-                if (daysAndMonths.days)
-                    str.push(daysAndMonths.days + " day" + (daysAndMonths.days > 1 ? "s" : ""));
+                if (months) {
+                    val = months + " month";
+                    if (months > 1)
+                        val += "s";
+
+                    str.push(val);
+                }
+
+                if (days) {
+                    val = days + " day";
+                    if (days > 1)
+                        val += "s";
+
+                    str.push(val);
+                }
 
                 return str.length ? methods.arrays.toSentence(str) + " old" : "Birthday!";
             },

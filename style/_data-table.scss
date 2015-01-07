@@ -1,0 +1,22 @@
+.data-table{
+  background: White;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  max-width: 800px;
+  margin: 0 auto;
+
+  th{
+    background: $darkHeaderBackground;
+    color: $darkHeaderColor;
+    text-align: left;
+  }
+  th, td{
+    padding: 1rem .5rem;
+    border: none;
+  }
+
+  tr:nth-child(2n){
+    background-color: $rowDifferentColor;
+  }
+}

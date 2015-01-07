@@ -1,7 +1,8 @@
 
-angular.module("Entries", ["Utils", "Localization", "Config", "EntryType"]).factory("entries", ["utils", "localization", "config", "$filter", "EntryType",
-    function entriesFactory(utils, localization, config, $filter, EntryType){
-    var unitFilter = $filter("unit");
+angular.module("Entries")
+    .factory("entries", ["utils", "localization", "config", "dbConfig", "EntryType",
+    function entriesFactory(utils, localization, config, dbConfig, EntryType){
+
     var entryTypes = [
         {
             "id": "photo",
@@ -100,7 +101,5 @@ angular.module("Entries", ["Utils", "Localization", "Config", "EntryType"]).fact
         isValidEntryType: function(entryType){
             return !!~entryTypes.indexOf(entryType);
         }
-    }
-
-
+    };
 }]);

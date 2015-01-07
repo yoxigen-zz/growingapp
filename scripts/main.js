@@ -41,7 +41,8 @@ requirejs([
                 "services/classes/file_data",
                 "services/config",
                 "services/files",
-                "services/players"
+                "services/players",
+                "services/classes/entry"
             ], function () {
                 requirejs([
                     "services/images",
@@ -58,7 +59,6 @@ requirejs([
                                 "app"
                             ], function () {
                                 requirejs([
-                                    "services/classes/entry",
                                     "services/classes/player",
                                     "services/cloud",
                                     "services/statistics",

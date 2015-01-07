@@ -1,3 +1,6 @@
 angular.module("Vaccines").controller("VaccinesController", ["vaccines", function(vaccines){
-    vaccines.getVaccines();
+    var vm = this;
+    vaccines.getVaccines().then(function(vaccineEntries){
+        vm.entries = vaccineEntries;
+    });
 }]);
