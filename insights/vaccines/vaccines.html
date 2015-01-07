@@ -3,15 +3,15 @@
         <thead>
             <tr>
                 <th>Date</th>
-                <th>Vaccine Name</th>
+                <th>Vaccine</th>
                 <th>Immunes Against</th>
             </tr>
         </thead>
         <tbody>
             <tr ng-repeat="vaccineEntry in ::vaccines.entries">
-                <td>{{vaccineEntry.dateText}}</td>
-                <td>{{vaccineEntry.vaccine.name}}</td>
-                <td>{{vaccineEntry.vaccine.disease}}</td>
+                <td>{{::vaccineEntry.dateText}}</td>
+                <td>{{::vaccineEntry.vaccine.name}}</td>
+                <td>{{::vaccineEntry.vaccine.disease}}</td>
             </tr>
         </tbody>
     </table>
