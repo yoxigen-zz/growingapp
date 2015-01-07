@@ -46,18 +46,24 @@ angular.module("Config", ["Utils", "Localization"]).factory("config", ["utils", 
         },
         vaccines: {
             list: [
-                { "id": "hep_b", "name": "HepB", "disease": "Hepatitis B" },
+                { "id": "hep_b", "name": "HBV", "disease": "Hepatitis B" },
                 { "id": "rv", "name": "RV", "disease": "Rotavirus" },
                 { "id": "dtap", "name": "DTaP", "disease": "Diphtheria, Tetanus and Pertussis" },
-                { "id": "hib", "name": "Hib", "disease": "Hib (Haemophilus Influenzae Type B)" },
+                { "id": "dtap-ipv-hib", "name": "DTaP-IPV-HIb", "disease": "Diphtheria, Tetanus, Pertussis, Polio and HIb" },
+                { "id": "hib", "name": "HIb", "disease": "Hib (Haemophilus Influenzae Type B)" },
                 { "id": "pcv", "name": "PCV", "disease": "Pneumococcus" },
                 { "id": "ipv", "name": "IPV", "disease": "Polio" },
                 { "id": "flu_1", "name": "Flu (1)", "disease": "Influenza" },
                 { "id": "flu_2", "name": "Flu (2)", "disease": "Influenza" },
                 { "id": "mmr", "name": "MMR", "disease": "Measles, Mumps and Rubella" },
+                { "id": "mmrv", "name": "MMRV", "disease": "Measles, Mumps, Rubella and Chickenpox" },
                 { "id": "varicella", "name": "Varicella", "disease": "Chickenpox" },
-                { "id": "hep_a_1", "name": "HepA (1)", "disease": "Hepatitis A" },
-                { "id": "hep_a_2", "name": "HepA (2)", "disease": "Hepatitis A" }
+                { "id": "hep_a", "name": "HAV", "disease": "Hepatitis A" },
+                { "id": "hpv", "name": "HPV", "disease": "Human Papilloma virus" },
+                { "id": "bcg", "name": "BCG", "disease": "Tuberculosis" },
+                { "id": "mantoux", "name": "Tuberculin Test", "disease": "Tuberculosis screening" },
+                { "id": "opv", "name": "OPV", "disease": "Polio" },
+                { "id": "hep_a", "name": "HAV", "disease": "Hepatitis A" }
             ]
         }
     };
