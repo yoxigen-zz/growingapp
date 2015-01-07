@@ -1,6 +1,6 @@
 "use strict";
 
-app.factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images",
+angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "DataObject", "Images"]).factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images",
     function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, images) {
     var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players.name),
         dayMilliseconds = 1000 * 60 * 60 * 24;

@@ -1,4 +1,4 @@
-angular.module("Vaccines", ["Players", "Config", "Entries"]).factory("vaccines", ["config", "players", "Entry", function(config, players, Entry){
+angular.module("Vaccines", ["Player", "Config", "Entries"]).factory("vaccines", ["config", "Player", "Entry", function(config, Player, Entry){
     return {
         getVaccines: getVaccines
     };
@@ -7,13 +7,14 @@ angular.module("Vaccines", ["Players", "Config", "Entries"]).factory("vaccines",
      * Gets all the vaccines for the current player
      */
     function getVaccines(){
-        var player = players.getCurrentPlayer();
-        return Entry.getEntries({ type: "vaccine", player: player }).then(function(vaccineEntries){
-            vaccineEntries.forEach(function(entry){
-                entry.vaccine = config.entries.vaccines.index[entry.properties.vaccineId];
-            });
+        return Player.getCurrentPlayer().then(function(player){
+            return Entry.getEntries({ type: "vaccine", player: player }).then(function(vaccineEntries){
+                vaccineEntries.forEach(function(entry){
+                    entry.vaccine = config.entries.vaccines.index[entry.properties.vaccineId];
+                });
 
-            return vaccineEntries;
+                return vaccineEntries;
+            });
         });
     }
 }]);
