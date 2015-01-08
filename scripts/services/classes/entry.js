@@ -2,11 +2,10 @@
     "use strict";
 
     angular.module("Entries", ["Players", "FileData", "DataObject", "DBConfig", "Config", "Images", "Utils", "xc.indexedDB", "Localization", "EntryType"])
-        .factory("Entry", ["$q", "$sce", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils", EntryClass]);
+        .factory("Entry", ["$q", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils", EntryClass]);
 
     /**
      * Creates the Entry class
-     * @param $sce
      * @param $indexedDB
      * @param entries
      * @param Player
@@ -19,7 +18,7 @@
      * @returns {Entry}
      * @constructor
      */
-    function EntryClass($q, $sce, $indexedDB, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
+    function EntryClass($q, $indexedDB, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
         var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
             entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
@@ -102,21 +101,6 @@
                 description: this.description
             });
         };
-
-        Entry.prototype.__defineGetter__("html", function () {
-            if (!this._html) {
-                var htmlStr;
-
-                if (typeof(this.type.html) === "function")
-                    htmlStr = this.type.html(this, this.player, config);
-                else
-                    htmlStr = utils.strings.parse(this.type.html, this);
-
-                this._html = $sce.trustAsHtml(htmlStr);
-            }
-
-            return this._html;
-        });
 
         Entry.prototype.__defineGetter__("rtl", function () {
             if (this._rtl === undefined)
