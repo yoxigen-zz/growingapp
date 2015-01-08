@@ -1,7 +1,7 @@
 "use strict";
 
-angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "DataObject", "Images"]).factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images",
-    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, images) {
+angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "DataObject", "Images", "FileData"]).factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images", "FileData",
+    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, images, FileData) {
     var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players.name),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
@@ -13,11 +13,9 @@ angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "DataObject", "I
             angular.extend(this, data);
             id = data.playerId;
 
-            if (data.deleted)
-                this._deleted = data.deleted;
-
-            if (data.cloudId)
-                this.cloudId = data.cloudId;
+            this.init(data);
+            if (!data.image && data.imageId)
+                this.image = new FileData(data.imageId);
         }
         else {
             this.gender = "f";

@@ -29,7 +29,14 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
             if (!data || !angular.isObject(data))
                 return;
 
+            if (data.deleted)
+                this._deleted = data.deleted;
 
+            if (data.cloudId)
+                this.cloudId = data.cloudId;
+
+            if (data.image)
+                this.image = data.image;
         },
         remove: function (absoluteDelete) {
             var self = this;

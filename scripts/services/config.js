@@ -123,7 +123,7 @@ angular.module("Config", ["Utils", "Localization"]).factory("config", ["utils", 
             setCurrentPlayerId: function(playerId){
                 localStorage.currentPlayer = String(playerId);
             },
-            playerImageSize: { width: 400, height: 400 }
+            playerImageSize: { width: 400, height: 400, allowEdit : true }
         },
         saveLocalization: function(localizationState){
             if (!localizationSetTime || !localizationState.__updateTime__ || localizationState.__updateTime__ > localizationSetTime) {

@@ -40,15 +40,8 @@
 
                 this.description = entryData.description;
 
-                if (entryData.deleted)
-                    this._deleted = entryData.deleted;
-
-                if (entryData.cloudId)
-                    this.cloudId = entryData.cloudId;
-
-                if (entryData.image)
-                    this.image = entryData.image;
-                else if (entryData.imageId)
+                this.init(entryData);
+                if (!entryData.image && entryData.imageId)
                     this.image = new FileData(entryData.imageId);
 
                 this.isNew = false;
