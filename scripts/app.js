@@ -12,6 +12,7 @@ app = angular.module("GrowingApp", [
     "EntryType",
     "Vaccines",
     "Insights",
+    "OnScrollToBottom",
     "ToggleDisplay", "EventBus", "Utils", "Charts", "Storage", "Users", "Teeth", "Images", "Messages", "Dialogs", "Localization", "Files"])
     .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "dbConfig", function ($routeProvider, $locationProvider, $indexedDBProvider, dbConfig) {
         var currentDbVersion = 17;

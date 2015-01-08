@@ -4,7 +4,9 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config, localization){
     var settingEntries,
         removedEntryIndex,
-        editedEntry;
+        editedEntry,
+        PAGE_SIZE = 10,
+        currentPage = 0;
 
     $scope.localizationUnits = localization.units;
     $scope.removeEntry = removeEntry;
@@ -18,6 +20,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     $scope.showNewEntryForm = showNewEntryForm;
     $scope.toggleNewEntriesSelection = toggleNewEntriesSelection;
     $scope.onUnitChange = onUnitChange;
+    $scope.loadMoreEntries = loadMoreEntries;
 
     eventBus.subscribe("newEntry", addEntry);
     eventBus.subscribe(["editPlayer", "playerSelect"], setEntries);
@@ -151,27 +154,55 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             $scope.openSyncOffer();
     }
 
+    function loadMoreEntries(){
+        currentPage++;
+        getEntries();
+    }
+
     function setEntries(){
         if ($scope.player && $scope.player.playerId) {
-            if (settingEntries)
-                return;
-
-            settingEntries = true;
-
-            Entry.getEntries({ type: $scope.currentEntriesType, playerId: $scope.player.playerId, reverse: true }).then(function (entryValues) {
-                if (settingEntries)
-                    $scope.entries = entryValues;
-            }).finally(function(){
-                settingEntries = false;
-            }).catch(function(error){
-                $scope.entries = [];
-                console.error("Error getting entries: ", error);
-            });
+            $scope.allEntriesAdded = false;
+            currentPage = 0;
+            $scope.entries = [];
+            getEntries();
         }
         else {
             settingEntries = false;
             $scope.entries = [];
         }
+    }
+
+    function getEntries(){
+        if (settingEntries)
+            return;
+
+        settingEntries = true;
+        var getOptions = {
+            count: PAGE_SIZE,
+            offset: currentPage * PAGE_SIZE,
+            type: $scope.currentEntriesType,
+            playerId: $scope.player.playerId,
+            reverse: true
+        };
+
+        Entry.getEntries(getOptions).then(function (entryValues) {
+            if (settingEntries) {
+                if (!$scope.entries)
+                    $scope.entries = [];
+
+                entryValues.forEach(function(entry){
+                    $scope.entries.push(entry);
+                });
+
+                if (entryValues.length < PAGE_SIZE)
+                    $scope.allEntriesAdded = true;
+            }
+        }).finally(function(){
+            settingEntries = false;
+        }).catch(function(error){
+            $scope.entries = [];
+            console.error("Error getting entries: ", error);
+        });
     }
 
     function onUpdateObjects(e){

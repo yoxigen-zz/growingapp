@@ -14,7 +14,7 @@
             </a>
         </div>
     </div>
-    <div class="contents-scroll flex-1" ng-class="{ 'flex-vertical': entries && !entries.length }" ng-show="player && !showFirstTimeSelection">
+    <div class="contents-scroll flex-1" on-scroll-to-bottom="loadMoreEntries()" done-scrolling="allEntriesAdded" ng-class="{ 'flex-vertical': entries && !entries.length }" ng-show="player && !showFirstTimeSelection">
         <header class="contents-header flex-horizontal" ng-show="player && !showFirstTimeSelection">
             <div class="header-controls flex-1">
                 <h2>Recent Activities</h2>

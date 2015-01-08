@@ -209,6 +209,8 @@
             return entriesObjectStore.internalObjectStore(OBJECT_STORE_NAME, "readonly").then(function(objectStore){
                 var idx = objectStore.index(options.unsynced ? "unsync_idx" : options.type ? "type_idx" : "date_idx");
                 var count = options.count || null,
+                    offset = options.offset || 0,
+                    lastIndex = count + offset,
                     entries = [],
                     currentRecord = 0,
                     deferred = $q.defer(),
@@ -220,14 +222,14 @@
 
                 cursor.onsuccess = function(event) {
                     var cursor = event.target.result;
-                    if (!cursor || count && currentRecord === count) {
-                        deferred.resolve(entries);
-                        return;
-                    }
 
                     if (options.offset && currentRecord < options.offset) {
                         currentRecord = options.offset;
                         cursor.advance(options.offset);
+                    }
+                    else if (!cursor || count && currentRecord === lastIndex) {
+                        deferred.resolve(entries);
+                        return;
                     }
                     else {
                         if(!cursor.value.deleted || options.includeDeleted) {

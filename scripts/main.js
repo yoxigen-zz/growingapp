@@ -32,6 +32,7 @@ requirejs([
             "services/classes/dialog",
             "services/chart",
             "directives/toggle-display",
+            "directives/on-scroll-to-bottom",
             "entries/teeth/directive/teeth.directive",
             "services/classes/entry_type",
             "services/dbconfig"
