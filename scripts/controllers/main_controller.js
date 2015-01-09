@@ -21,11 +21,11 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
     $scope.declineSyncOffer = declineSyncOffer;
     $scope.openSettings = openSettings;
-    $scope.settingsActions = [{ icon: "ok-blue", title: "Save settings", onClick: saveSettings, text: "Save" }];
+    $scope.settingsSubmitAction = { icon: "ok-blue", onSubmit: saveSettings, text: "Save" };
     $scope.signInActions = [
-        { text: "New user?", onClick: openSignUp },
-        { text: "Login", onClick: function(){ eventBus.triggerEvent("doLogin"); }}
+        { text: "New user?", onClick: openSignUp }
     ];
+    $scope.signInSubmitAction = { text: "Sign In", onSubmit: function(){ eventBus.triggerEvent("doLogin") } };
 
     $scope.syncOfferActions = [
         { text: "Don't backup", onClick: declineSyncOffer },

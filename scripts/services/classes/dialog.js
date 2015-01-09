@@ -14,6 +14,7 @@
 				icon: "@",
 				show: "=",
 				actions: "=",
+                submitAction: "=",
 				onShow: "&",
 				onHide: "&",
 				"class": "@"

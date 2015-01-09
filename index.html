@@ -72,7 +72,7 @@
                   on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/edit_player.html'"></div>
     </slide-dialog>
-    <dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="signInActions">
+    <dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="signInActions" submit-action="signInSubmitAction">
         <div ng-include="'views/login.html'"></div>
     </dialog>
     <slide-dialog show="showSignup" title="Sign Up" on-show="onShowDialog($event)" on-hide="onHideDialog()">
@@ -86,7 +86,7 @@
                   icon="settings_white"
                   on-show="onShowDialog($event)"
                   on-hide="onHideDialog()"
-                  actions="settingsActions">
+                  submit-action="settingsSubmitAction">
         <div ng-include="'views/settings.html'"></div>
     </dialog>
 

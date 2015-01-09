@@ -101,7 +101,7 @@ a {
 .header-button:hover, .actionbar .actionbar-button:hover, .popup header .close-button:hover, .dialog header .close-button:hover {
   background-color: #00A8E0; }
 .header-button:active, .actionbar .actionbar-button:active, .popup header .close-button:active, .dialog header .close-button:active, .header-button.ng-click-active, .actionbar .ng-click-active.actionbar-button, .popup header .ng-click-active.close-button, .dialog header .ng-click-active.close-button {
-  background-color: #00befd; }
+  background-color: #00BEFD; }
 
 #splashscreen {
   background: #43124c url(../images/growingapp_logo.svg) no-repeat center bottom;
@@ -301,7 +301,7 @@ a {
       color: #017fcf;
       opacity: 1;
       font-weight: 400;
-      text-shadow: -1px 1px 0 White;
+      text-shadow: -1px 1px 0 white;
       font-size: 1.3rem; }
 
 .centered-buttons-block {
@@ -444,7 +444,7 @@ a {
   #overlay.visible {
     display: block; }
   #overlay.active {
-    opacity: 0.4; }
+    opacity: .4; }
   @media all and (min-width: 1000px) {
     #overlay {
       display: none; } }
@@ -694,7 +694,7 @@ blockquote {
       max-height: 1.3rem;
       max-width: 1.3rem;
       vertical-align: middle;
-      margin-top: -.1rem;
+      margin-top: -0.1rem;
       margin-right: .3rem; }
     .popup header .popup-title {
       font-size: 1.3rem;
@@ -815,12 +815,15 @@ blockquote {
       font-size: 1rem;
       padding: 1rem 1.5rem;
       color: #2778B6;
-      font-weight: bold; }
+      font-weight: bold;
+      background: none;
+      border: none;
+      -webkit-appearance: none; }
     .dialog .dialog-actions .dialog-button-image {
       vertical-align: middle;
       height: 1.2rem;
-      margin-top: -.3rem;
-      margin: -.3rem .1rem 0; }
+      margin-top: -0.3rem;
+      margin: -0.3rem 0.1rem 0; }
   .dialog footer {
     padding: 1rem; }
 
@@ -893,7 +896,7 @@ select {
     vertical-align: middle;
     margin-right: .2rem;
     position: relative;
-    top: -.1rem; }
+    top: -0.1rem; }
   @media all and (max-width: 320px) {
     .button .button-text {
       display: none; } }
