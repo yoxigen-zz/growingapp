@@ -3,9 +3,18 @@
 </script>
 
 <script id="entry-note" type="text/ng-template">
-    <div class="flex-horizontal" is-rtl="::entry.rtl">
-        <div class="card-side" ng-style="{ 'background-color': entry.type.color, 'background-image': 'url(images/icons/note.svg)' }"></div>
-        <div class="card-contents flex-1 card-contents-lighter">{{::entry.properties.text}}</div>
+    <div class="card-contents entry-simple-contents flex-horizontal" is-rtl="::entry.rtl" ng-style="{ 'background-color': entry.type.color }">
+        <img class="entry-icon" ng-src="images/icons/note.svg" />
+        <div class="flex-1 entry-simple-contents-text">{{entry.properties.text}}</div>
+    </div>
+</script>
+
+<script id="entry-speech" type="text/ng-template">
+    <div class="card-contents entry-simple-contents flex-horizontal" is-rtl="::entry.rtl" ng-style="{ 'background-color': entry.type.color }">
+        <img class="entry-icon" ng-src="images/icons/word.svg" />
+        <div class="flex-1 entry-simple-contents-text">
+            <blockquote>{{entry.properties.words}}</blockquote>
+        </div>
     </div>
 </script>
 
@@ -23,15 +32,6 @@
     <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
         <img class="entry-measure-icon" ng-src="images/icons/{{entry.type.icon}}.svg" />
         <div class="item-measure">{{entry.properties.value | unit: entry.type.id}}<span class="item-unit">{{localizationUnits[entry.type.id][config.localization[entry.type.id].selected].display}}</span></div>
-    </div>
-</script>
-
-<script id="entry-speech" type="text/ng-template">
-    <div class="card-contents entry-speech-contents flex-horizontal" is-rtl="::entry.rtl" ng-style="{ 'background-color': entry.type.color }">
-        <img class="entry-icon" ng-src="images/icons/word.svg" />
-        <div class="flex-1">
-            <blockquote>{{entry.properties.words}}</blockquote>
-        </div>
     </div>
 </script>
 

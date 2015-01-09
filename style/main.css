@@ -1115,9 +1115,9 @@ select {
     max-height: 240px;
     margin-bottom: 1rem; }
 
-.entry-speech-contents {
+.entry-simple-contents {
   color: White; }
-  .entry-speech-contents blockquote {
+  .entry-simple-contents .entry-simple-contents-text {
     padding: .5rem 1rem; }
 
 .card-contents-with-image {

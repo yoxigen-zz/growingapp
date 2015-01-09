@@ -27,12 +27,10 @@
   }
 }
 
-.entry-speech-contents{
+.entry-simple-contents{
   color: White;
 
-  blockquote{
-    padding: .5rem 1rem;
-  }
+  .entry-simple-contents-text{ padding: .5rem 1rem; }
 }
 
 .card-contents-with-image{
