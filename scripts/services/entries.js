@@ -22,6 +22,7 @@ angular.module("Entries")
             "name": "Weight",
             template: "value",
             "icon": "weight",
+            insight: "weight",
             color: "#397a42",
             "prepareForEdit": function(entry){
                 var convertMethod = localization.convertFromUnit;
@@ -35,6 +36,7 @@ angular.module("Entries")
         {
             "id": "height",
             "name": "Height",
+            insight: "height",
             template: "value",
             "icon": "height",
             color: "#139798",
@@ -67,6 +69,7 @@ angular.module("Entries")
         },
         {
             "id": "vaccine",
+            insight: "vaccines",
             "name": "Vaccine",
             "icon": "syringe",
             "color": "rgb(81, 202, 24)"

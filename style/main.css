@@ -879,7 +879,10 @@ select {
   font-size: 1.1rem;
   white-space: nowrap;
   font-weight: 300;
-  background: #57a3e5;
+  background-color: #57a3e5;
+  background-repeat: no-repeat;
+  background-position: .5rem center;
+  background-size: 1rem;
   color: White;
   cursor: pointer;
   border-radius: 3px; }
@@ -1321,9 +1324,16 @@ svg.graph {
     background-color: #f4f4f4; }
   .cards .card-text {
     padding: .5rem .5rem 1.5rem; }
+  .cards .card-edit-button {
+    float: right;
+    opacity: .4;
+    height: 2.5rem;
+    width: 2.5rem;
+    background: white url(../images/icons/edit.svg) no-repeat center center;
+    background-size: 40%; }
   .cards .card-info {
     border-top: solid 1px #e2e2e2;
-    padding: .75rem;
+    padding: .75rem 0 .75rem .75rem;
     font-size: .9em; }
     .cards .card-info .card-icon {
       float: left;

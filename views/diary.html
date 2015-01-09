@@ -34,12 +34,13 @@
             </div>
         </div>
         <ul class="cards">
-            <li ng-repeat="entry in entries" class="card" ng-click="selectEntry(entry)">
+            <li ng-repeat="entry in entries" class="card" ng-click="openInsight(entry)">
                 <div ng-include="'entry-' + entry.type.templateName"></div>
                 <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">
                     {{entry.description}}
                 </div>
                 <div class="card-info">
+                    <a class="button card-edit-button" ng-click="selectEntry(entry)"></a>
                     <div class="card-details">
                         {{::entry.dateText}}
                         <div class="card-sub-details">{{::entry.ageText}}</div>

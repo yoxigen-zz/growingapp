@@ -1,5 +1,5 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages", "players",
-    function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages", "players", "insights",
+    function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights){
 
     var currentMenuItem,
         spinnerTimeout;
@@ -25,6 +25,9 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.signInActions = [
         { text: "New user?", onClick: openSignUp }
     ];
+
+    $scope.insights = insights;
+
     $scope.signInSubmitAction = { text: "Sign In", onSubmit: function(){ eventBus.triggerEvent("doLogin") } };
 
     $scope.syncOfferActions = [

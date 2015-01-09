@@ -1,7 +1,8 @@
 'use strict';
 
-app.controller("LineChartInsightController", ["$scope", "$filter", "Entry", "utils", "eventBus", "config", "statistics", "localization", function($scope, $filter, Entry, utils, eventBus, config, statistics, localization){
-    var insightId = $scope.currentInsight.id,
+app.controller("LineChartInsightController", ["$scope", "$filter", "Entry", "utils", "eventBus", "config", "statistics", "localization", "insights",
+    function($scope, $filter, Entry, utils, eventBus, config, statistics, localization, insights){
+    var insightId = insights.currentInsight.id,
         unit = localization.units[insightId][config.localization[insightId].selected],
         unitFilter = $filter("unit");
 

@@ -58,6 +58,7 @@ requirejs([
                         "directives/charts/line_chart"
                     ], function () {
                         requirejs([
+                                "services/classes/insight",
                                 "app"
                             ], function () {
                                 requirejs([
@@ -72,7 +73,6 @@ requirejs([
 
                                     "controllers/main_controller",
                                     "controllers/edit_player_controller",
-                                    "controllers/insights_controller",
                                     "controllers/entries_list_controller",
                                     "controllers/login_controller",
                                     "controllers/signup_controller",

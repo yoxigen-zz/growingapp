@@ -56,12 +56,6 @@ app = angular.module("GrowingApp", [
         $routeProvider
             .when("/insights", {
                 templateUrl: "views/insights.html",
-                controller: "InsightsController",
-                currentPage: "insights"
-            })
-            .when("/insights/:insightId", {
-                templateUrl: "views/insights.html",
-                controller: "InsightsController",
                 currentPage: "insights"
             })
             .when("/", {

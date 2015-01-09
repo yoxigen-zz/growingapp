@@ -89,7 +89,14 @@
                   submit-action="settingsSubmitAction">
         <div ng-include="'views/settings.html'"></div>
     </dialog>
-
+    <slide-dialog show="insights.currentInsight"
+                  title="{{insights.currentInsight.name}}"
+                  on-show="onShowDialog($event)"
+                  background="{{insights.currentInsight.entryType.color}}"
+                  class="no-padding {{insights.currentInsight.className}}"
+                  on-hide="onHideDialog()">
+        <div ng-include="insights.currentInsight.templateUrl"></div>
+    </slide-dialog>
     <ng-include src="'views/entry_templates.html'"></ng-include>
     <ng-include src="'views/entry_editors.html'"></ng-include>
     <script data-main="scripts/main.js" src="components/require.js"></script>

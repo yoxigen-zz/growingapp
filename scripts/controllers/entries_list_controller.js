@@ -1,7 +1,7 @@
 'use strict';
 
-app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", "localization",
-    function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config, localization){
+app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", "localization", "insights",
+    function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config, localization, insights){
     var settingEntries,
         removedEntryIndex,
         editedEntry,
@@ -21,6 +21,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     $scope.toggleNewEntriesSelection = toggleNewEntriesSelection;
     $scope.onUnitChange = onUnitChange;
     $scope.loadMoreEntries = loadMoreEntries;
+    $scope.openInsight = openInsight;
 
     eventBus.subscribe("newEntry", addEntry);
     eventBus.subscribe(["editPlayer", "playerSelect"], setEntries);
@@ -253,5 +254,12 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             return entry;
         });
 
+    }
+
+    function openInsight(entry){
+        if (entry.type.insight)
+            insights.setCurrentInsight(entry.type.insight);
+        else
+            return false;
     }
 }]);
