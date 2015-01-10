@@ -2,13 +2,11 @@
 
 angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["$q", function getDataObjectClassFactory($q) {
     /**
-     * Base class for data objects - those that should be saved to local DB (and potentially synced to cloud)
+     * Base object for data objects - those that should be saved to local DB (and potentially synced to cloud)
      * Includes methods for saving, deleting and initializing
      * @constructor
      */
-    function DataObject(){}
-
-    DataObject.prototype = {
+    var DataObjectPrototype = {
         getBaseCloudData: function(){
             return {
                 deleted: !!this._deleted,
@@ -144,5 +142,5 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
         }
     };
 
-    return DataObject;
+    return DataObjectPrototype;
 }]);
