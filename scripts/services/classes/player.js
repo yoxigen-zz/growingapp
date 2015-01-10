@@ -87,7 +87,7 @@ angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "DataObject", "I
             throw "Can't save, missing name.";
     };
 
-    Player.prototype.__proto__ = new DataObject();
+    Player.prototype.__proto__ = DataObject;
     Player.prototype.addPhoto = function(method){
         return images.addPhotoToDataObject(config.players.playerImageSize, this, method);
     };

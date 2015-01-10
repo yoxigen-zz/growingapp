@@ -174,7 +174,7 @@
             return images.addPhotoToDataObject(config.entries.images, this, method);
         };
 
-        Entry.prototype.__proto__ = new DataObject();
+        Entry.prototype.__proto__ = DataObject;
 
         Entry.getEntries = function (options) {
             options = options || {};

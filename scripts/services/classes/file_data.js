@@ -70,7 +70,7 @@ angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileDa
         }
     };
 
-    FileData.prototype.__proto__ = new DataObject();
+    FileData.prototype.__proto__ = DataObject;
     FileData.prototype.objectStore = objectStore;
     FileData.prototype.idProperty = "id";
 
