@@ -118,7 +118,7 @@
 
         Entry.prototype.__defineGetter__("ageText", function () {
             if (!this._ageText)
-                this._ageText = utils.dates.dateDiff(this.date, this.player.birthday);
+                this._ageText = utils.dates.dateDiff(this.date, this.player.birthday, true);
 
             return this._ageText;
         });

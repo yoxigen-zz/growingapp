@@ -177,40 +177,57 @@ angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", fun
 
                 return { days: date2Days - date1Days - offset, months: monthsCount };
             },
-            dateDiff: function(d1, d2){
+            dateDiff: function(d1, d2, isShort){
                 var duration = moment.duration(Math.abs(d1 - d2));
+
+                if (duration.asDays() < 1)
+                    return "Birthday";
 
                 var years = duration.years(),
                     months = duration.months(),
                     days = duration.days(),
                     str = [];
 
-                var val;
-                if (years) {
-                    val = years + " year";
-                    if (years > 1)
-                        val += "s";
+                if (isShort){
+                    if (years)
+                        str.push(years + "y");
 
-                    str.push(val);
+                    if (years || months)
+                        str.push(months + "m");
+
+                    if (days)
+                        str.push(days + "d");
+
+                    return str.join(" ");
                 }
+                else{
+                    var val;
+                    if (years) {
+                        val = years + " year";
+                        if (years > 1)
+                            val += "s";
 
-                if (months) {
-                    val = months + " month";
-                    if (months > 1)
-                        val += "s";
+                        str.push(val);
+                    }
 
-                    str.push(val);
+                    if (months) {
+                        val = months + " month";
+                        if (months > 1)
+                            val += "s";
+
+                        str.push(val);
+                    }
+
+                    if (days) {
+                        val = days + " day";
+                        if (days > 1)
+                            val += "s";
+
+                        str.push(val);
+                    }
+
+                    return methods.arrays.toSentence(str) + " old";
                 }
-
-                if (days) {
-                    val = days + " day";
-                    if (days > 1)
-                        val += "s";
-
-                    str.push(val);
-                }
-
-                return str.length ? methods.arrays.toSentence(str) + " old" : "Birthday!";
             },
             daysToMonths: function(days){
                 return Math.floor(days / avgMonthLength);

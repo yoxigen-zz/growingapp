@@ -257,9 +257,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     }
 
     function openInsight(entry){
-        if (entry.type.insight)
-            insights.setCurrentInsight(entry.type.insight);
-        else
-            return false;
+        insights.setCurrentInsight(entry.type.insight);
     }
 }]);

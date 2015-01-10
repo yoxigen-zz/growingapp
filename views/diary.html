@@ -39,14 +39,13 @@
                 <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">
                     {{entry.description}}
                 </div>
-                <div class="card-info">
-                    <div class="card-buttons">
-                        <a class="button card-{{ ::entry.type.insightIcon.id }}-button" ng-click="openInsight(entry)"></a>
-                        <a class="button card-edit-button" ng-click="selectEntry(entry)"></a>
+                <div class="card-info flex-horizontal">
+                    <div class="card-details flex-1">
+                        {{::entry.dateText}} <span class="separator">|</span> {{::entry.ageText}}
                     </div>
-                    <div class="card-details">
-                        {{::entry.dateText}}
-                        <div class="card-sub-details">{{::entry.ageText}}</div>
+                    <div class="card-buttons">
+                        <a class="button card-{{ ::entry.type.insightIcon.id }}-button" ng-if="::entry.type.insight" ng-click="openInsight(entry)"></a>
+                        <a class="button card-edit-button" ng-click="selectEntry(entry)"></a>
                     </div>
                 </div>
             </li>

@@ -1326,25 +1326,39 @@ svg.graph {
     padding: .5rem .5rem 1.5rem; }
   .cards .card-info {
     border-top: solid 1px #e2e2e2;
-    padding: .75rem;
-    font-size: .9em; }
+    font-size: .8em; }
+    .cards .card-info .card-details {
+      padding: .75rem;
+      color: #999; }
+      .cards .card-info .card-details .separator {
+        display: inline-block;
+        margin: 0 .5rem;
+        color: #ccc; }
     .cards .card-info .card-buttons {
-      float: right; }
-      .cards .card-info .card-buttons .button {
-        opacity: .4;
-        height: 2.5rem;
-        width: 2.5rem;
-        background: white no-repeat center center;
+      text-align: right; }
+    .cards .card-info .button {
+      opacity: .4;
+      height: 2.7rem;
+      width: 2.7rem;
+      background: white no-repeat center center;
+      background-size: 40%;
+      float: left; }
+      .cards .card-info .button:hover {
+        opacity: .7; }
+      .cards .card-info .button:active, .cards .card-info .button.ng-click-active {
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+        transform: translateY(0);
+        background-color: rgba(92, 210, 250, 0.5); }
+      .cards .card-info .button.card-edit-button {
+        background-image: url(../images/icons/edit.svg); }
+      .cards .card-info .button.card-charts-button {
+        background-image: url(../images/icons/charts.svg);
         background-size: 50%; }
-        .cards .card-info .card-buttons .button:hover {
-          opacity: .7; }
-        .cards .card-info .card-buttons .button.card-edit-button {
-          background-image: url(../images/icons/edit.svg); }
-        .cards .card-info .card-buttons .button.card-charts-button {
-          background-image: url(../images/icons/charts.svg);
-          background-size: 60%; }
-        .cards .card-info .card-buttons .button.card-list-button {
-          background-image: url(../images/icons/list-black.svg); }
+      .cards .card-info .button.card-list-button {
+        background-image: url(../images/icons/list-black.svg); }
     .cards .card-info .card-icon {
       float: left;
       margin-right: .5rem;
