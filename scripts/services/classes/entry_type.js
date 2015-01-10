@@ -1,10 +1,13 @@
 'use strict';
 
-angular.module("EntryType", []).factory("EntryType", function(){
+angular.module("EntryType", ["Icons"]).factory("EntryType", ["Icon", function(Icon){
     function EntryType(config){
         for(var p in config){
             if (config.hasOwnProperty(p)){
-                this[p] = config[p];
+                if (p === "icon" || p === "insightIcon")
+                    this[p] = new Icon(config[p]);
+                else
+                    this[p] = config[p];
             }
         }
     }
@@ -14,12 +17,5 @@ angular.module("EntryType", []).factory("EntryType", function(){
         return this.template || this.id;
     });
 
-    EntryType.prototype.__defineGetter__("iconCssUrl", function(){
-        if (!this._iconCssUrl)
-            this._iconCssUrl = "url(images/icons/" + this.icon + ".svg)";
-
-        return this._iconCssUrl;
-    });
-
     return EntryType;
-});
+}]);

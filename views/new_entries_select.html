@@ -3,7 +3,7 @@
         <ul class="entry-types-list">
             <li ng-repeat="entryType in entryTypes"
                 ng-click="showNewEntryForm(entryType.id)"
-                ng-style="{ 'background-image': 'url(images/icons/' + entryType.icon + '.svg)' }">
+                ng-style="{ 'background-image': entryType.icon.cssUrl }">
                 <span>{{ entryType.name }}</span>
             </li>
         </ul>

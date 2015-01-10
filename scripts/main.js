@@ -8,11 +8,11 @@ requirejs.config({
 
 // Start the main app logic.
 requirejs([
-        "components/d3",
-        "components/parse",
-        "components/moment",
-        "components/angular/angular.min"
-    ],
+    "components/d3",
+    "components/parse",
+    "components/moment",
+    "components/angular/angular.min"
+],
     function (ignore) {
         window.d3 = require('components/d3');
 
@@ -34,63 +34,67 @@ requirejs([
             "directives/toggle-display",
             "directives/on-scroll-to-bottom",
             "entries/teeth/directive/teeth.directive",
-            "services/classes/entry_type",
+            "services/classes/icon",
             "services/dbconfig"
         ], function () {
             requirejs([
-                "services/classes/data_object",
-                "services/classes/file_data",
-                "services/config",
-                "services/files",
-                "services/players",
-                "services/classes/entry",
-                "services/classes/player"
+                "services/classes/entry_type"
             ], function () {
                 requirejs([
-                    "services/images",
-                    "services/entries",
-                    "directives/dialogs/dialog",
-                    "directives/dialogs/slide_dialog",
-                    "insights/vaccines/vaccines"
+                    "services/classes/data_object",
+                    "services/classes/file_data",
+                    "services/config",
+                    "services/files",
+                    "services/players",
+                    "services/classes/entry",
+                    "services/classes/player"
                 ], function () {
                     requirejs([
-                        "services/insights",
-                        "directives/charts/line_chart"
+                        "services/images",
+                        "services/entries",
+                        "directives/dialogs/dialog",
+                        "directives/dialogs/slide_dialog",
+                        "insights/vaccines/vaccines"
                     ], function () {
                         requirejs([
+                            "services/insights",
+                            "directives/charts/line_chart"
+                        ], function () {
+                            requirejs([
                                 "services/classes/insight",
                                 "app"
                             ], function () {
-                                requirejs([
-                                    "services/cloud",
-                                    "services/statistics",
-                                    "services/navigation",
+                                    requirejs([
+                                        "services/cloud",
+                                        "services/statistics",
+                                        "services/navigation",
 
-                                    "entries/teeth/teeth",
-                                    "filters/pronoun",
-                                    "filters/unit",
-                                    "filters/tofixed",
+                                        "entries/teeth/teeth",
+                                        "filters/pronoun",
+                                        "filters/unit",
+                                        "filters/tofixed",
 
-                                    "controllers/main_controller",
-                                    "controllers/edit_player_controller",
-                                    "controllers/entries_list_controller",
-                                    "controllers/login_controller",
-                                    "controllers/signup_controller",
-                                    "entries/teeth/teeth_controller",
-                                    "controllers/signup_controller",
-                                    "controllers/signup_controller",
+                                        "controllers/main_controller",
+                                        "controllers/edit_player_controller",
+                                        "controllers/entries_list_controller",
+                                        "controllers/login_controller",
+                                        "controllers/signup_controller",
+                                        "entries/teeth/teeth_controller",
+                                        "controllers/signup_controller",
+                                        "controllers/signup_controller",
 
-                                    "insights/linechart_controller",
-                                    "insights/vaccines/vaccines_controller",
+                                        "insights/linechart_controller",
+                                        "insights/vaccines/vaccines_controller",
 
-                                    "directives/fixed",
-                                    "directives/background-image",
-                                    "directives/is-rtl"
-                                ], function () {
-                                    angular.bootstrap(document, ["GrowingApp"]);
-                                });
-                            }
-                        );
+                                        "directives/fixed",
+                                        "directives/background-image",
+                                        "directives/is-rtl"
+                                    ], function () {
+                                        angular.bootstrap(document, ["GrowingApp"]);
+                                    });
+                                }
+                            );
+                        });
                     });
                 });
             });

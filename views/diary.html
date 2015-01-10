@@ -34,13 +34,16 @@
             </div>
         </div>
         <ul class="cards">
-            <li ng-repeat="entry in entries" class="card" ng-click="openInsight(entry)">
+            <li ng-repeat="entry in entries" class="card">
                 <div ng-include="'entry-' + entry.type.templateName"></div>
                 <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">
                     {{entry.description}}
                 </div>
                 <div class="card-info">
-                    <a class="button card-edit-button" ng-click="selectEntry(entry)"></a>
+                    <div class="card-buttons">
+                        <a class="button card-{{ ::entry.type.insightIcon.id }}-button" ng-click="openInsight(entry)"></a>
+                        <a class="button card-edit-button" ng-click="selectEntry(entry)"></a>
+                    </div>
                     <div class="card-details">
                         {{::entry.dateText}}
                         <div class="card-sub-details">{{::entry.ageText}}</div>
@@ -61,7 +64,7 @@
                 ng-style="{ 'background-color': entryType.color }"
                 ng-click="showNewEntryForm(entryType)">
                 <div class="entry-image">
-                    <img ng-src="images/icons/{{::entryType.icon}}.svg" />
+                    <img ng-src="{{ ::entryType.icon.url }}" />
                 </div>
                 <span class="entry-type-name">{{ ::entryType.name }}</span>
             </li>

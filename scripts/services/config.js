@@ -1,6 +1,6 @@
 angular.module("Config", ["Utils", "Localization"]).factory("config", ["utils", "localization", function(utils, localization){
     var entries = {
-        images: { width: 600, height: 600 },
+        images: { width: 1000, height: 1000 },
         milestone: {
             types: [
                 { id: "smile", text: "Smiled for the first time! :)" },

@@ -62,19 +62,28 @@ $maxCardWidth: 640px;
     padding: .5rem .5rem 1.5rem;
   }
 
-  .card-edit-button{
-    float: right;
-    opacity: .4;
-    height: 2.5rem;
-    width: 2.5rem;
-    background: white url(../images/icons/edit.svg) no-repeat center center;
-    background-size: 40%;
-  }
   .card-info{
     border-top: solid 1px #e2e2e2;
-    padding: .75rem 0 .75rem .75rem;
+    padding: .75rem;
     font-size: .9em;
 
+    .card-buttons{
+      float: right;
+
+      .button{
+        opacity: .4;
+        height: 2.5rem;
+        width: 2.5rem;
+        background: white no-repeat center center;
+        background-size: 50%;
+
+        &:hover{ opacity: .7; }
+
+        &.card-edit-button{ background-image: url(../images/icons/edit.svg); }
+        &.card-charts-button{ background-image: url(../images/icons/charts.svg); background-size: 60%; }
+        &.card-list-button{ background-image: url(../images/icons/list-black.svg); }
+      }
+    }
     .card-icon{
       float: left;
       margin-right: .5rem;

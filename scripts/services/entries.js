@@ -3,6 +3,10 @@ angular.module("Entries")
     .factory("entries", ["utils", "localization", "config", "dbConfig", "EntryType",
     function entriesFactory(utils, localization, config, dbConfig, EntryType){
 
+    var icons = {
+
+    };
+
     var entryTypes = [
         {
             "id": "photo",
@@ -23,6 +27,7 @@ angular.module("Entries")
             template: "value",
             "icon": "weight",
             insight: "weight",
+            insightIcon: "charts",
             color: "#397a42",
             "prepareForEdit": function(entry){
                 var convertMethod = localization.convertFromUnit;
@@ -37,6 +42,7 @@ angular.module("Entries")
             "id": "height",
             "name": "Height",
             insight: "height",
+            insightIcon: "charts",
             template: "value",
             "icon": "height",
             color: "#139798",
@@ -70,6 +76,7 @@ angular.module("Entries")
         {
             "id": "vaccine",
             insight: "vaccines",
+            insightIcon: "list",
             "name": "Vaccine",
             "icon": "syringe",
             "color": "rgb(81, 202, 24)"
