@@ -38,7 +38,7 @@ angular.module("OnScrollToBottom", []).directive("onScrollToBottom", function(){
             }
 
             function isBottom(){
-                return el.scrollTop + el.clientHeight === el.scrollHeight;
+                return el.scrollTop + el.clientHeight >= el.scrollHeight - 10;
             }
         }
     }

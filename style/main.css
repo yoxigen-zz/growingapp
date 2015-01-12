@@ -27,7 +27,7 @@ body {
 html {
   font-size: 16px; }
 
-.flex, body, .flex-horizontal, .buttons-bar, .double-panel, .flex-vertical, .popup.visible, #insights-list .insight-text.center {
+.flex, body, .flex-horizontal, .buttons-bar, .double-panel, .flex-vertical, .popup.visible, #insights-list .insight-text.center, .cards .card-info .card-details {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex; }
@@ -101,7 +101,7 @@ a {
 .header-button:hover, .actionbar .actionbar-button:hover, .popup header .close-button:hover, .dialog header .close-button:hover {
   background-color: #00A8E0; }
 .header-button:active, .actionbar .actionbar-button:active, .popup header .close-button:active, .dialog header .close-button:active, .header-button.ng-click-active, .actionbar .ng-click-active.actionbar-button, .popup header .ng-click-active.close-button, .dialog header .ng-click-active.close-button {
-  background-color: #00BEFD; }
+  background-color: #00befd; }
 
 #splashscreen {
   background: #43124c url(../images/growingapp_logo.svg) no-repeat center bottom;
@@ -301,7 +301,7 @@ a {
       color: #017fcf;
       opacity: 1;
       font-weight: 400;
-      text-shadow: -1px 1px 0 white;
+      text-shadow: -1px 1px 0 White;
       font-size: 1.3rem; }
 
 .centered-buttons-block {
@@ -348,7 +348,8 @@ a {
     border-right: solid 1px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     overflow: hidden;
-    -webkit-align-items: center; }
+    -webkit-align-items: center;
+    align-items: center; }
     #tabs a:last-child {
       border-right: none; }
     #tabs a.selected {
@@ -444,7 +445,7 @@ a {
   #overlay.visible {
     display: block; }
   #overlay.active {
-    opacity: .4; }
+    opacity: 0.4; }
   @media all and (min-width: 1000px) {
     #overlay {
       display: none; } }
@@ -694,7 +695,7 @@ blockquote {
       max-height: 1.3rem;
       max-width: 1.3rem;
       vertical-align: middle;
-      margin-top: -0.1rem;
+      margin-top: -.1rem;
       margin-right: .3rem; }
     .popup header .popup-title {
       font-size: 1.3rem;
@@ -822,8 +823,8 @@ blockquote {
     .dialog .dialog-actions .dialog-button-image {
       vertical-align: middle;
       height: 1.2rem;
-      margin-top: -0.3rem;
-      margin: -0.3rem 0.1rem 0; }
+      margin-top: -.3rem;
+      margin: -.3rem .1rem 0; }
   .dialog footer {
     padding: 1rem; }
 
@@ -899,7 +900,7 @@ select {
     vertical-align: middle;
     margin-right: .2rem;
     position: relative;
-    top: -0.1rem; }
+    top: -.1rem; }
   @media all and (max-width: 320px) {
     .button .button-text {
       display: none; } }
@@ -1328,6 +1329,8 @@ svg.graph {
     border-top: solid 1px #e2e2e2;
     font-size: .8em; }
     .cards .card-info .card-details {
+      -webkit-align-items: center;
+      align-items: center;
       padding: .75rem;
       color: #999; }
       .cards .card-info .card-details .separator {
@@ -1356,7 +1359,7 @@ svg.graph {
         background-image: url(../images/icons/edit.svg); }
       .cards .card-info .button.card-charts-button {
         background-image: url(../images/icons/charts.svg);
-        background-size: 50%; }
+        background-size: 45%; }
       .cards .card-info .button.card-list-button {
         background-image: url(../images/icons/list-black.svg); }
     .cards .card-info .card-icon {

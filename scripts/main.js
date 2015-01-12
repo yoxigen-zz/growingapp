@@ -25,7 +25,6 @@ requirejs([
             "services/parse",
             "services/storage",
             "services/users",
-            "services/eventbus",
             "services/utils",
             "services/localization",
             "services/messages",
@@ -35,6 +34,7 @@ requirejs([
             "directives/on-scroll-to-bottom",
             "entries/teeth/directive/teeth.directive",
             "services/classes/icon",
+            "services/classes/eventbus",
             "services/dbconfig"
         ], function () {
             requirejs([
@@ -47,7 +47,8 @@ requirejs([
                     "services/files",
                     "services/players",
                     "services/classes/entry",
-                    "services/classes/player"
+                    "services/classes/player",
+                    "services/classes/data_object_collection"
                 ], function () {
                     requirejs([
                         "services/images",
@@ -65,6 +66,7 @@ requirejs([
                                 "app"
                             ], function () {
                                     requirejs([
+                                        "services/eventbus",
                                         "services/cloud",
                                         "services/statistics",
                                         "services/navigation",

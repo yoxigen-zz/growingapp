@@ -414,6 +414,7 @@ a{ cursor: pointer; }
     box-sizing: border-box;
     overflow: hidden;
     -webkit-align-items: center;
+    align-items: center;
 
     &:last-child{
       border-right: none;

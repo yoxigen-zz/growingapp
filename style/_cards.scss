@@ -67,6 +67,9 @@ $maxCardWidth: 640px;
     font-size: .8em;
 
     .card-details{
+      @extend .flex;
+      -webkit-align-items: center;
+      align-items: center;
       padding: .75rem;
       color: #999;
 

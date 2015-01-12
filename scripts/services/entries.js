@@ -3,10 +3,6 @@ angular.module("Entries")
     .factory("entries", ["utils", "localization", "config", "dbConfig", "EntryType",
     function entriesFactory(utils, localization, config, dbConfig, EntryType){
 
-    var icons = {
-
-    };
-
     var entryTypes = [
         {
             "id": "photo",
