@@ -5,7 +5,7 @@ requirejs.config({
         insights: "../insights"
     }
 });
-
+                            alert("WHAT");
 // Start the main app logic.
 requirejs([
     "components/d3",
@@ -13,7 +13,7 @@ requirejs([
     "components/moment",
     "components/angular/angular.min"
 ],
-    function (ignore) {
+    function (ignore) {alert("first");
         window.d3 = require('components/d3');
 
         requirejs([
