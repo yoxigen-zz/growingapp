@@ -34,7 +34,7 @@ requirejs([
             "directives/on-scroll-to-bottom",
             "entries/teeth/directive/teeth.directive",
             "services/classes/icon",
-            "services/classes/eventbus",
+            "services/classes/eventbus_class",
             "services/dbconfig"
         ], function () {
             alert(1);
