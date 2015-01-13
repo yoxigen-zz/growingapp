@@ -1,7 +1,11 @@
 (function(){
     'use strict';
 
-    angular.module("Entries").factory("entriesModel", ["Entry", "DataObjectCollection", "eventBus", function(Entry, DataObjectCollection, eventBus){
+    angular.module("Entries").factory("entriesModel", entriesModel);
+
+    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus"];
+
+    function entriesModel(Entry, DataObjectCollection, eventBus){
         var entriesCollection = new DataObjectCollection(Entry);
 
         var settingEntries,
@@ -26,5 +30,5 @@
             if (entry === editedEntry)
                 this.editedEntry = null;
         }
-    }]);
+    }
 })();

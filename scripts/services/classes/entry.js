@@ -2,8 +2,9 @@
     "use strict";
 
     angular.module("Entries", ["Players", "FileData", "DataObject", "DBConfig", "Config", "Images", "Utils", "xc.indexedDB", "Localization", "EntryType"])
-        .factory("Entry", ["$q", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils", EntryClass]);
+        .factory("Entry", EntryClass);
 
+    EntryClass.$inject = ["$q", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
     /**
      * Creates the Entry class
      * @param $indexedDB

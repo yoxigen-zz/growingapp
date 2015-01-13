@@ -4,6 +4,11 @@
 			TOGGLE_CLASS = "visible",
 			TOGGLE_ACTIVE_CLASS = "active";
 
+        /**
+         * Constructor for different kinds of dialog directives. Supplies functionality that should be available to all dialogs.
+         * @param templateUrl
+         * @constructor
+         */
 		function Dialog(templateUrl){
 			this.restrict = 'E';
 			this.transclude = true;
