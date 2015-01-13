@@ -5,7 +5,7 @@ requirejs.config({
         insights: "../insights"
     }
 });
-                            alert("WHAT");
+
 // Start the main app logic.
 requirejs([
     "components/d3",
@@ -13,7 +13,7 @@ requirejs([
     "components/moment",
     "components/angular/angular.min"
 ],
-    function (ignore) {alert("first");
+    function (ignore) {
         window.d3 = require('components/d3');
 
         requirejs([
@@ -37,11 +37,9 @@ requirejs([
             "services/classes/eventbus_class",
             "services/dbconfig"
         ], function () {
-            alert(1);
             requirejs([
                 "services/classes/entry_type"
             ], function () {
-                alert(2);
                 requirejs([
                     "services/classes/data_object",
                     "services/classes/file_data",
@@ -52,7 +50,6 @@ requirejs([
                     "services/classes/player",
                     "services/classes/data_object_collection"
                 ], function () {
-                    alert(3);
                     requirejs([
                         "services/images",
                         "services/entries",
@@ -60,17 +57,14 @@ requirejs([
                         "directives/dialogs/slide_dialog",
                         "insights/vaccines/vaccines"
                     ], function () {
-                        alert(4);
                         requirejs([
                             "services/insights",
                             "directives/charts/line_chart"
                         ], function () {
-                            alert(5);
                             requirejs([
                                 "services/classes/insight",
                                 "app"
                             ], function () {
-                                    alert(6);
                                     requirejs([
                                         "services/eventbus",
                                         "services/cloud",
@@ -98,7 +92,6 @@ requirejs([
                                         "directives/background-image",
                                         "directives/is-rtl"
                                     ], function () {
-                                        alert(7);
                                         angular.bootstrap(document, ["GrowingApp"]);
                                     });
                                 }
