@@ -66,28 +66,28 @@
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
         </div>
     </div>
-    <slide-dialog show="showEditPlayer"
+    <slide-dialog show="dialogs.editPlayer.isOpen"
                   title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}"
                   actions="editedPlayerActions"
                   on-show="onShowDialog($event)" on-hide="onHideDialog()">
         <div ng-include="'views/edit_player.html'"></div>
     </slide-dialog>
-    <dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="signInActions" submit-action="signInSubmitAction">
-        <div ng-include="'views/login.html'"></div>
+    <dialog show="dialogs.signIn.isOpen" title="{{::dialogs.signIn.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="signInActions" submit-action="signInSubmitAction">
+        <div ng-include="::dialogs.signIn.htmlUrl"></div>
     </dialog>
-    <slide-dialog show="showSignup" title="Sign Up" on-show="onShowDialog($event)" on-hide="onHideDialog()">
-        <div ng-include="'views/signup.html'"></div>
+    <slide-dialog show="dialogs.signUp.isOpen" title="{{::dialogs.signUp.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()">
+        <div ng-include="::dialogs.signUp.htmlUrl"></div>
     </slide-dialog>
-    <dialog show="showSyncOffer" title="It's time to backup!" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="syncOfferActions">
-        <div ng-include="'views/syncOffer.html'"></div>
+    <dialog show="dialogs.syncOffer.isOpen" title="{{::dialogs.syncOffer.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="syncOfferActions">
+        <div ng-include="::dialogs.syncOffer.htmlUrl"></div>
     </dialog>
-    <dialog show="showSettings"
-                  title="Settings"
-                  icon="settings_white"
+    <dialog show="dialogs.settings.isOpen"
+                  title="{{::dialogs.settings.title}}"
+                  icon="{{::dialogs.settings.icon}}"
                   on-show="onShowDialog($event)"
                   on-hide="onHideDialog()"
                   submit-action="settingsSubmitAction">
-        <div ng-include="'views/settings.html'"></div>
+        <div ng-include="::dialogs.settings.htmlUrl"></div>
     </dialog>
     <slide-dialog show="insights.currentInsight"
                   title="{{insights.currentInsight.name}}"

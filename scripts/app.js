@@ -4,6 +4,7 @@ app = angular.module("GrowingApp", [
     "Phonegap", "Parse",
     "app.filters",
     "DataObject",
+    "DataObjectCollection",
     "FileData",
     "DBConfig",
     "Config",

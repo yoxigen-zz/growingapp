@@ -1,12 +1,14 @@
 'use strict';
 
-app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", "localization", "insights",
-    function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config, localization, insights){
+app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", "eventBus", "entries", "Entry", "config", "localization", "insights", "entriesModel", "dialogs",
+    function($scope, $sce, $timeout, utils, eventBus, entries, Entry, config, localization, insights, entriesModel, dialogs){
     var settingEntries,
         removedEntryIndex,
         editedEntry,
         PAGE_SIZE = 10,
         currentPage = 0;
+
+    $scope.entries = entriesModel;
 
     $scope.localizationUnits = localization.units;
     $scope.removeEntry = removeEntry;
@@ -55,7 +57,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
             return false;
 
         $scope.removedEntry.unremove();
-        $scope.entries.splice(removedEntryIndex, 0, $scope.removedEntry);
+        //$scope.entries.splice(removedEntryIndex, 0, $scope.removedEntry);
         eventBus.triggerEvent("saveEntry", $scope.removedEntry);
         hideUnremoveMessage();
     }
@@ -119,15 +121,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     function onUnitChange(unitType){
         eventBus.triggerEvent("configChange", { unitType: unitType });
-        updateEntriesAfterUnitChange(unitType);
+        entriesModel.updateEntriesAfterUnitChange(unitType);
         config.saveLocalization();
-    }
-
-    function updateEntriesAfterUnitChange(unitType){
-        $scope.entries.forEach(function(entry){
-            if (entry.type.localizationDependencies && ~entry.type.localizationDependencies.indexOf(unitType))
-                entry.clearParsedValues();
-        });
     }
 
     function hideUnremoveMessage(){
@@ -152,7 +147,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $scope.entries.splice(0, 0, newEntry);
         sortEntries();
         if (!config.sync.lastSyncTimestamp && !config.sync.synOfferDeclined && $scope.entries.length >= config.sync.syncOfferEntryCount)
-            $scope.openSyncOffer();
+            dialogs.syncOffer.open();
     }
 
     function loadMoreEntries(){

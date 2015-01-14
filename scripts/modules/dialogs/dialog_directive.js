@@ -1,5 +1,5 @@
 (function(){
-	angular.module("Dialogs", []).factory("Dialog", ["$timeout", function($timeout){
+	angular.module("Dialogs").factory("DialogDirective", ["$timeout", function($timeout){
 		var TOGGLE_TIMEOUT = 300,
 			TOGGLE_CLASS = "visible",
 			TOGGLE_ACTIVE_CLASS = "active";
@@ -9,7 +9,7 @@
          * @param templateUrl
          * @constructor
          */
-		function Dialog(templateUrl){
+		function DialogDirective(templateUrl){
 			this.restrict = 'E';
 			this.transclude = true;
 			this.replace = true;
@@ -27,7 +27,7 @@
 			this.templateUrl = templateUrl;
 		}
 
-		Dialog.prototype = {
+        DialogDirective.prototype = {
 			link: function postLink(scope, element, attrs) {
 				var toggleTimeout,
 					toggleElement = element[0],
@@ -90,6 +90,6 @@
 			}
 		};
 
-		return Dialog;
+		return DialogDirective;
 	}]);
 })();

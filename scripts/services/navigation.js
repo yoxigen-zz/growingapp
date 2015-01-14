@@ -1,9 +1,9 @@
-app.factory("navigation", ["phonegap", "eventBus", "$route", "$rootScope", "users", function(phonegap, eventBus, $route, $rootScope, users){
+app.factory("navigation", ["phonegap", "eventBus", "$route", "$rootScope", "users", "dialogs", function(phonegap, eventBus, $route, $rootScope, users, dialogs){
     var openPopups = [],
         mainMenuItems = [
             { text: "Settings", icon: "images/icons/settings.svg", onClick: function(e){
                 e.preventDefault();
-                eventBus.triggerEvent("showSettings");
+                dialogs.settings.open();
             } },
             //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
             //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },

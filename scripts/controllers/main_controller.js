@@ -1,24 +1,23 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages", "players", "insights",
-    function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights){
+app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages", "players", "insights", "dialogs",
+    function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights, dialogs){
 
     var currentMenuItem,
         spinnerTimeout;
 
     $scope.config = config;
-    $scope.setCurrentPlayer = setCurrentPlayer;
+        $scope.dialogs = dialogs;
+
+        $scope.setCurrentPlayer = setCurrentPlayer;
     $scope.offline = !window.navigator.onLine;
     $scope.hideMenu = hideMenu;
     $scope.toggleMenu = toggleMenu;
     $scope.menuItems = navigation.mainMenuItems;
     $scope.editPlayer = editPlayer;
-    $scope.toggleEditPlayer = function(state){ $scope.showEditPlayer = state === true || state === false ? state : !$scope.showEditPlayer; };
     $scope.openLogin = openLogin;
-    $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
     $scope.onShowDialog = function(e){ eventBus.triggerEvent("popup.open", e); };
     $scope.onHideDialog = function(e){ eventBus.triggerEvent("popup.close", e); };
     $scope.addNewPlayer = addNewPlayer;
     $scope.openSignUp = openSignUp;
-    $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
     $scope.declineSyncOffer = declineSyncOffer;
     $scope.openSettings = openSettings;
     $scope.settingsSubmitAction = { icon: "ok-blue", onSubmit: saveSettings, text: "Save" };
@@ -98,7 +97,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     function openSettings(){
-        $scope.showSettings = true;
+        dialogs.settings.open();
         $scope.settings = config.getCurrentLocalization();
         delete $scope.settings.__updateTime__;
     }
@@ -106,7 +105,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         if (config.saveLocalization($scope.settings))
             eventBus.triggerEvent("settingsChange");
 
-        $scope.showSettings = false;
+        dialogs.settings.close();
         delete $scope.settings;
     }
 
@@ -139,7 +138,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         if (player instanceof Player) {
             $scope.editPlayerActions = setEditPlayerActions();
             $scope.editedPlayer = angular.copy(player);
-            $scope.toggleEditPlayer(true);
+            dialogs.editPlayer.open();
         }
         else{
             console.error("Can't edit player - expecting a Player object, got: ", player);
@@ -152,7 +151,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         }
 
         $scope.editedPlayer.save().then(function(player){
-            $scope.toggleEditPlayer(false);
+            dialogs.editPlayer.close();
             $scope.editedPlayer = null;
             $scope.setCurrentPlayer(player);
 
@@ -187,7 +186,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
                     if ($scope.players[i].playerId === $scope.editedPlayer.playerId){
                         $scope.players.splice(i, 1);
                         setPlayersSelection($scope.players);
-                        $scope.toggleEditPlayer(false);
+                        dialogs.editPlayer.close();
 
                         if ($scope.player && $scope.editedPlayer.playerId === $scope.player.playerId)
                             setFirstPlayer();
@@ -205,24 +204,21 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     function addNewPlayer(){
         setEditPlayerActions(true);
         $scope.editedPlayer = new Player();
-        $scope.toggleEditPlayer(true);
+        dialogs.editPlayer.open();
     }
 
     function openSignUp(){
-        $scope.showLogin = false;
-        $scope.showSyncOffer = false;
-        $scope.showSignup = true;
+        dialogs.openDialog("signUp", true);
     }
 
     function declineSyncOffer(){
-        $scope.showSyncOffer = false;
+        dialogs.syncOffer.close();
         config.sync.declineSyncOffer();
     }
 
 
     function onLogin(e){
-        $scope.showLogin = false;
-        $scope.showSignup = false;
+        dialogs.closeAll();
 
         var signoutItem = getMenuItemById("signOut");
 

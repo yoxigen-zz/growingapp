@@ -28,14 +28,14 @@ requirejs([
             "services/utils",
             "services/localization",
             "services/messages",
-            "services/classes/dialog",
             "services/chart",
             "directives/toggle-display",
             "directives/on-scroll-to-bottom",
             "entries/teeth/directive/teeth.directive",
             "services/classes/icon",
             "services/classes/eventbus_class",
-            "services/dbconfig"
+            "services/dbconfig",
+            "services/classes/data_object_collection"
         ], function () {
             requirejs([
                 "services/classes/entry_type"
@@ -51,13 +51,18 @@ requirejs([
                     "services/classes/data_object_collection"
                 ], function () {
                     requirejs([
+                        "modules/dialogs/dialogs_module",
                         "services/images",
                         "services/entries",
-                        "directives/dialogs/dialog",
-                        "directives/dialogs/slide_dialog",
+                        "services/entries_model",
                         "insights/vaccines/vaccines"
                     ], function () {
                         requirejs([
+                            "modules/dialogs/dialog_class",
+                            "modules/dialogs/dialogs",
+                            "modules/dialogs/dialog_directive",
+                            "modules/dialogs/dialog_directives/dialog",
+                            "modules/dialogs/dialog_directives/slide_dialog",
                             "services/insights",
                             "directives/charts/line_chart"
                         ], function () {
