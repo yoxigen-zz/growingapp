@@ -95,16 +95,17 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     function openSettings(){
-        $scope.settings = config.getCurrentLocalization();
+        $scope.settings = angular.copy(config.getCurrentLocalization());
         dialogs.settings.open();
-        delete $scope.settings.__updateTime__;
     }
     function saveSettings(){
+        delete $scope.settings.__updateTime__;
+
         if (config.saveLocalization($scope.settings))
             eventBus.triggerEvent("settingsChange");
 
         dialogs.settings.close();
-        delete $scope.settings;
+        $scope.settings = config.getCurrentLocalization();
     }
 
     function setFirstPlayer(){
