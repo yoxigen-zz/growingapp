@@ -3,9 +3,9 @@
 
     angular.module("Dialogs").factory("dialogs", dialogs);
 
-    dialogs.$inject = ["config", "Dialog"];
+    dialogs.$inject = ["Dialog"];
 
-    function dialogs(config, Dialog){
+    function dialogs(Dialog){
         var _dialogs = {
             signIn: { htmlUrl: "views/login.html", title: "Sign In" },
             signUp: { htmlUrl: "views/signup.html", title: "Sign Up" },
@@ -13,7 +13,8 @@
             editPlayer: {  },
             syncOffer: { htmlUrl: "views/syncOffer.html", title: "It's time to backup!" },
             newPlayer: {  },
-            newEntry: {  },
+            editEntry: { },
+            newEntry: { title: "New Entry Type" },
             settings: { htmlUrl: "views/settings.html", title: "Settings", icon: "settings_white" }
         };
 

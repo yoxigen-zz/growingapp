@@ -9,7 +9,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         $scope.setCurrentPlayer = setCurrentPlayer;
     $scope.offline = !window.navigator.onLine;
-    $scope.hideMenu = hideMenu;
     $scope.toggleMenu = toggleMenu;
     $scope.menuItems = navigation.mainMenuItems;
     $scope.editPlayer = editPlayer;
@@ -24,7 +23,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     $scope.signInActions = [
         { text: "New user?", onClick: openSignUp }
     ];
-
+    $scope.settings = config.getCurrentLocalization();
     $scope.insights = insights;
 
     $scope.signInSubmitAction = { text: "Sign In", onSubmit: function(){ eventBus.triggerEvent("doLogin") } };
@@ -42,7 +41,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
     eventBus.subscribe("showLogin", openLogin);
     eventBus.subscribe("showSettings", openSettings);
-    eventBus.subscribe("hideMenu", hideMenu);
     eventBus.subscribe("login", onLogin);
     eventBus.subscribe("loadingStart", onLoadingStart);
     eventBus.subscribe("loadingEnd", onLoadingEnd);
@@ -97,8 +95,8 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     }
 
     function openSettings(){
-        dialogs.settings.open();
         $scope.settings = config.getCurrentLocalization();
+        dialogs.settings.open();
         delete $scope.settings.__updateTime__;
     }
     function saveSettings(){
@@ -297,7 +295,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
     function onRouteChange(){
         $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
-        $scope.hideMenu();
+        dialogs.menu.close();
         setCurrentMenuItem();
     }
 
@@ -325,20 +323,12 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         eventBus.triggerEvent("playerSelect", player);
     }
 
-    function hideMenu(){
-        if ($scope.showMenu) {
-            eventBus.triggerEvent("popup.close");
-            $scope.showMenu = false;
-        }
-    }
-
     function toggleMenu(){
-        if ($scope.showMenu)
-            hideMenu();
-        else {
-            eventBus.triggerEvent("popup.open", { closeDialog: function(){ $scope.showMenu = false; } });
-            $scope.showMenu = true;
-        }
+        dialogs.menu.toggle();
+        if (dialogs.menu.isOpen)
+            eventBus.triggerEvent("popup.open", { closeDialog: function(){ dialogs.menu.close(); } });
+        else
+            eventBus.triggerEvent("popup.close");
     }
 
     function init(){

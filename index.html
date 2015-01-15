@@ -9,22 +9,22 @@
     <script src="phonegap.js"></script>
 </head>
 <body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }" ng-style="{ visibility: appVisibility}">
-    <div id="overlay" data-toggle-display="showMenu" ng-click="hideMenu()"></div>
-    <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="showMenu">
+    <div id="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
+    <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="dialogs.menu.isOpen">
         <div id="menu">
             <header class="actionbar"><span class="app-name">GrowingApp</span></header>
             <ul id="players-menu">
                 <li ng-repeat="listPlayer in players" class="flex-horizontal"
                     ng-class="{ selected: listPlayer.playerId === player.playerId, 'with-image': listPlayer.image.url }">
-                    <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1"><img class="player-image" ng-if="listPlayer.image.url" ng-src="{{listPlayer.image.url}}" />
+                    <a ng-click="setCurrentPlayer(listPlayer); dialogs.menu.close()" class="flex-1"><img class="player-image" ng-if="listPlayer.image.url" ng-src="{{listPlayer.image.url}}" />
                         {{::listPlayer.name}}
                     </a>
-                    <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
+                    <a ng-click="editPlayer(listPlayer); dialogs.menu.close()" class="players-menu-edit">
                         <img class="child-menu-edit" src="images/icons/edit.svg"/>
                     </a>
                 </li>
                 <li class="players-menu-add">
-                    <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
+                    <a class="button save-button" ng-click="addNewPlayer(); dialogs.menu.close()">
                         <img class="child-menu-add" src="images/icons/plus.svg"/>
                         Add Child
                     </a>
@@ -44,7 +44,7 @@
     </div>
     <div class="flex-vertical flex-1">
         <header class="flex-horizontal actionbar" id="app-title" ng-class="{ 'pad-side': showFirstTimeSelection }">
-            <a id="menu-button" class="actionbar-button" ng-click="toggleMenu()" ng-class="{ active: showMenu, render: !showFirstTimeSelection }">
+            <a id="menu-button" class="actionbar-button" ng-click="toggleMenu()" ng-class="{ active: dialogs.menu.isOpen, render: !showFirstTimeSelection }">
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
             <div class="flex-1">

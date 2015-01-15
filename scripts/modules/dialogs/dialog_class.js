@@ -1,7 +1,9 @@
 (function(){
     angular.module("Dialogs").factory("Dialog", DialogClassFactory);
 
-    function DialogClassFactory(){
+    DialogClassFactory.$inject = ["eventBus"];
+
+    function DialogClassFactory(eventBus){
         function Dialog(config){
             this.isOpen = false;
             this.htmlUrl = config.htmlUrl;
@@ -15,6 +17,7 @@
 
         Dialog.prototype.close = function(){
             this.isOpen = false;
+            eventBus.triggerEvent("popup.close", this);
         };
 
         Dialog.prototype.toggle = function(){

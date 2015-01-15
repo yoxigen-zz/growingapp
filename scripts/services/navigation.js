@@ -15,11 +15,11 @@ app.factory("navigation", ["phonegap", "eventBus", "$route", "$rootScope", "user
                 else
                     eventBus.triggerEvent("showLogin");
 
-                eventBus.triggerEvent("hideMenu");
+                dialogs.menu.close();
             } },
             { id: "signOut", hide: true, text: "Sign out", icon: "images/icons/sign_out.svg", onClick: function(e){
                 e.preventDefault();
-                eventBus.triggerEvent("hideMenu");
+                dialogs.menu.close();
                 users.logout();
                 eventBus.triggerEvent("logout");
             } }

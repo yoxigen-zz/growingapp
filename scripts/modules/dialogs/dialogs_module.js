@@ -1,1 +1,1 @@
-angular.module("Dialogs", ["Config"]);
+angular.module("Dialogs", ["Config", "EventBus"]);

@@ -20,7 +20,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
     $scope.onEntriesTypeChange = setEntries;
     $scope.selectEntry = selectEntry;
     $scope.showNewEntryForm = showNewEntryForm;
-    $scope.toggleNewEntriesSelection = toggleNewEntriesSelection;
     $scope.onUnitChange = onUnitChange;
     $scope.loadMoreEntries = loadMoreEntries;
     $scope.openInsight = openInsight;
@@ -46,7 +45,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $scope.entries.splice(removedEntryIndex, 1);
         eventBus.triggerEvent("deleteEntry", entry);
         $scope.removedEntry = entry;
-        $scope.showEditEntry = false;
+        dialogs.editEntry.close();
         setTimeout(function(){
             document.body.addEventListener("mousedown", onClickAfterRemove);
         }, 50);
@@ -64,8 +63,8 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     function saveEntry(){
         $scope.entry.save().then(function(savedEntry){
-            $scope.showEditEntry = false;
-            $scope.toggleNewEntriesSelection(false);
+            dialogs.editEntry.close();
+            dialogs.newEntry.close()
             if (savedEntry.isNew) {
                 addEntry(savedEntry);
                 eventBus.triggerEvent("saveEntry", savedEntry);
@@ -95,10 +94,6 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
         $scope.editedEntryIsNew = true;
         $scope.showNewEntriesSelection = false;
         setEntryPopupButtons(false);
-    }
-
-    function toggleNewEntriesSelection(state){
-        $scope.showNewEntriesSelection = state === true || state === false ? state : !$scope.showNewEntriesSelection;
     }
 
     function setEntryPopupButtons(isEdit){
@@ -131,7 +126,7 @@ app.controller("EntriesListController", ["$scope", "$sce", "$timeout", "utils", 
 
     function openEditEntryDialog(entryType){
         $scope.newEntryType = entryType;
-        $scope.showEditEntry = true;
+        dialogs.editEntry.open();
     }
 
     function sortEntries(){

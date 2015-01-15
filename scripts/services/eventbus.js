@@ -1,5 +1,5 @@
 "use strict";
 
-angular.module("GrowingApp").factory("eventBus", ["EventBus", function(EventBus){
+angular.module("EventBus").factory("eventBus", ["EventBus", function(EventBus){
     return new EventBus();
 }]);

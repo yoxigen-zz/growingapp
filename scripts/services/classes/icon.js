@@ -22,7 +22,7 @@
             if (!this._cssUrl)
                 this._cssUrl = "url(" + this.url + ")";
 
-            return this.cssUrl;
+            return this._cssUrl;
         });
 
         return Icon;
