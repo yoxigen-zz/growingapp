@@ -28,6 +28,14 @@
             }
         };
 
+        DataObjectCollection.prototype.__defineGetter__("size", function(){
+            return this.items.length;
+        });
+
+        DataObjectCollection.prototype.hasItem = function(item){
+            return !!~this.items.indexOf(item);
+        };
+
         DataObjectCollection.prototype.setItems = function(items){
             this.clearItems();
             this.items = items;
@@ -46,6 +54,7 @@
 
             item.remove();
             this.lastRemovedItem = { item: this.items.splice(itemIndexOf, 1), index: itemIndexOf };
+            return { index: itemIndexOf, item: item };
         };
 
         DataObjectCollection.prototype.unremoveLast = function(){
@@ -55,6 +64,14 @@
             this.items.splice(this.lastRemovedItem.index, 0, this.lastRemovedItem.item);
             this.lastRemovedItem.item.unremove();
             delete this.lastRemovedItem;
+        };
+
+        DataObjectCollection.prototype.updateItems = function(){
+            if (this.itemsType.prototype.clearParsedValues){
+                this.items.forEach(function(item){
+                    item.clearParsedValues();
+                });
+            }
         };
 
         return DataObjectCollection;

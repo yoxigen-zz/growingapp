@@ -14,6 +14,7 @@
             syncOffer: { htmlUrl: "views/syncOffer.html", title: "It's time to backup!" },
             newPlayer: {  },
             editEntry: { },
+            unremoveEntry: {},
             newEntry: { title: "New Entry Type" },
             settings: { htmlUrl: "views/settings.html", title: "Settings", icon: "settings_white" }
         };

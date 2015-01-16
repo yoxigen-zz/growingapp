@@ -1,0 +1,1 @@
+angular.module("Entries", ["Players", "FileData", "DataObject", "DBConfig", "Config", "Images", "Utils", "xc.indexedDB", "Localization", "EntryType", "Messages", "Dialogs"]);

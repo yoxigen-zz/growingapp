@@ -3,6 +3,10 @@ angular.module("Players", []).factory("players", function(){
 
     return {
         getCurrentPlayer: getCurrentPlayer,
+        getCurrentPlayerId: function(){
+            var currentPlayer = getCurrentPlayer();
+            return currentPlayer && currentPlayer.playerId;
+        },
         setCurrentPlayer: setCurrentPlayer
     };
 

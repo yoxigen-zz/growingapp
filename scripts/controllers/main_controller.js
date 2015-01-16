@@ -321,6 +321,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
                 $scope.showFirstTimeSelection = true;
         }
 
+        players.setCurrentPlayer(player);
         eventBus.triggerEvent("playerSelect", player);
     }
 

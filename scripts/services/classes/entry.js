@@ -1,8 +1,7 @@
 (function() {
     "use strict";
 
-    angular.module("Entries", ["Players", "FileData", "DataObject", "DBConfig", "Config", "Images", "Utils", "xc.indexedDB", "Localization", "EntryType"])
-        .factory("Entry", EntryClass);
+    angular.module("Entries").factory("Entry", EntryClass);
 
     EntryClass.$inject = ["$q", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
     /**
@@ -81,6 +80,8 @@
             this.__defineGetter__("type", function () {
                 return entryType;
             });
+
+            return this;
         }
 
         Entry.prototype.getCloudData = function () {
@@ -123,6 +124,16 @@
 
             return this._ageText;
         });
+
+        /**
+         * If the entry's type has a prepareForEdit function, call it. This sets up things like units that should be loaded prior to edit.
+         */
+        Entry.prototype.prepareForEdit = function(){
+            if (this.type.prepareForEdit)
+                this.type.prepareForEdit(this);
+
+            return this;
+        };
 
         /**
          * Gets the entry's data, for saving in the offline database.

@@ -2,7 +2,7 @@
     <label>
         <span class="label-text">The new weight</span>
         <div class="flex-horizontal">
-            <div class="flex-1"><input type="number" min=0 step="0.01" ng-model="entry.properties.weight" placeholder="The new weight" data-auto-focus required /></div>
+            <div class="flex-1"><input type="number" min=0 step="0.01" ng-model="entries.editedEntry.properties.weight" placeholder="The new weight" data-auto-focus required /></div>
             <div class="input-unit">
                 <a ng-click="openSettings()">{{config.localization.weight.selected}}</a>
             </div>
@@ -13,7 +13,7 @@
     <label>
         <span class="label-text">The new height</span>
         <div class="flex-horizontal">
-            <div class="flex-1"><input type="number" min=0 ng-model="entry.properties.height" data-auto-focus placeholder="The new height" /></div>
+            <div class="flex-1"><input type="number" min=0 ng-model="entries.editedEntry.properties.height" data-auto-focus placeholder="The new height" /></div>
             <div class="input-unit">
                 <a ng-click="openSettings()">{{config.localization.height.selected}}</a>
             </div>
@@ -23,29 +23,33 @@
 <script type="text/ng-template" id="entry_editor_speech">
     <label>
         <span class="label-text">What did {{ player.gender | pronoun }} say?</span>
-        <input type="text" ng-model="entry.properties.words" data-auto-focus placeholder="The new word(s) or sentence" />
+        <textarea ng-model="entries.editedEntry.properties.words"
+                  data-auto-focus
+                  rows="5"
+                  is-rtl="entries.editedEntry.rtl"
+                  placeholder="The new word(s) or sentence"></textarea>
     </label>
 </script>
 <script type="text/ng-template" id="entry_editor_milestone">
     <label>
         <span class="label-text">Select the milestone:</span>
         <div class="flex-horizontal">
-            <select ng-model="entry.properties.type" data-auto-focus ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types">
+            <select ng-model="entries.editedEntry.properties.type" data-auto-focus ng-options="milesoneType.id as milesoneType.text for milesoneType in config.entries.milestone.types">
                 <option value="">(Select the milestone)</option>
             </select>
         </div>
     </label>
     <label>
         <span class="label-text">Or enter new milestone:</span>
-        <textarea rows="3" ng-model="entry.properties.text"></textarea>
+        <textarea rows="3" ng-model="entries.editedEntry.properties.text"></textarea>
     </label>
     <div id="entry_photo_edit">
-        <img id="entry_photo_edit_image" ng-if="entry.image.localUrl || entry.image.cloudUrl" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
+        <img id="entry_photo_edit_image" ng-if="entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl" ng-src="{{entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl}}" />
         <div class="avatar-buttons">
-            <a class="button text-button" ng-click="entry.addPhoto('camera')">
+            <a class="button text-button" ng-click="entries.editedEntry.addPhoto('camera')">
                 <img src="images/icons/camera.svg" />
             </a>
-            <a class="button text-button" ng-click="entry.addPhoto('browse')">
+            <a class="button text-button" ng-click="entries.editedEntry.addPhoto('browse')">
                 <img src="images/icons/folders.svg" />
             </a>
         </div>
@@ -54,23 +58,23 @@
 <script type="text/ng-template" id="entry_editor_note">
     <label>
         <span class="label-text">What happened?</span>
-        <textarea ng-model="entry.properties.text" data-auto-focus rows="5"></textarea>
+        <textarea ng-model="entries.editedEntry.properties.text" data-auto-focus rows="5"></textarea>
     </label>
 </script>
 <script type="text/ng-template" id="entry_editor_teeth">
     <div id="teeth-selection" ng-controller="TeethController">
-        <teeth ng-model="entry.properties.tooth" highlighted-teeth="addedTeeth"></teeth>
-        <div class="tooth-name">{{config.entries.teeth.index[entry.properties.tooth].name || "Select the tooth" }}</div>
+        <teeth ng-model="entries.editedEntry.properties.tooth" highlighted-teeth="addedTeeth"></teeth>
+        <div class="tooth-name">{{config.entries.teeth.index[entries.editedEntry.properties.tooth].name || "Select the tooth" }}</div>
     </div>
 </script>
 <script type="text/ng-template" id="entry_editor_photo">
     <div id="entry_photo_edit">
-        <img id="entry_photo_edit_image" ng-if="entry.image.localUrl || entry.image.cloudUrl" ng-src="{{entry.image.localUrl || entry.image.cloudUrl}}" />
+        <img id="entry_photo_edit_image" ng-if="entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl" ng-src="{{entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl}}" />
         <div class="avatar-buttons">
-            <a class="button text-button" ng-click="entry.addPhoto('camera')">
+            <a class="button text-button" ng-click="entries.editedEntry.addPhoto('camera')">
                 <img src="images/icons/camera.svg" />
             </a>
-            <a class="button text-button" ng-click="entry.addPhoto('browse')">
+            <a class="button text-button" ng-click="entries.editedEntry.addPhoto('browse')">
                 <img src="images/icons/folders.svg" />
             </a>
         </div>
@@ -79,7 +83,7 @@
 <script type="text/ng-template" id="entry_editor_vaccine">
     <label>
         <span class="label-text">The vaccine</span>
-        <select ng-model="entry.properties.vaccineId" ng-options="vaccine.id as vaccine.name for vaccine in config.entries.vaccines.list">
+        <select ng-model="entries.editedEntry.properties.vaccineId" ng-options="vaccine.id as vaccine.name for vaccine in config.entries.vaccines.list">
             <option value="">(Select the vaccine)</option>
         </select>
     </label>

@@ -38,7 +38,8 @@ requirejs([
             "services/classes/data_object_collection"
         ], function () {
             requirejs([
-                "services/classes/entry_type"
+                "services/classes/entry_type",
+                "modules/entries/entries_module"
             ], function () {
                 requirejs([
                     "services/classes/data_object",
