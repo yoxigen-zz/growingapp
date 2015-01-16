@@ -126,7 +126,6 @@
         }
 
         function newEntry(entryType){
-            currentEntriesType = entryType;
             dialogs.newEntry.close();
             editEntry(new Entry(entryType, players.getCurrentPlayer(), true));
         }
