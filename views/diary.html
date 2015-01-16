@@ -55,7 +55,7 @@
             </li>
         </ul>
     </div>
-    <div class="floating-message" ng-show="removedEntry">
+    <div class="floating-message" ng-show="dialogs.unremoveEntry.isOpen">
         <div class="floating-message-contents">
             <span class="floating-message-text"><span class="hide-smallest-width">Entry</span> Deleted</span>
             <a ng-click="entries.unremoveLastEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
