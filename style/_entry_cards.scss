@@ -30,7 +30,10 @@
 .entry-simple-contents{
   color: White;
 
-  .entry-simple-contents-text{ padding: .5rem 1rem; }
+  .entry-simple-contents-text{
+    padding: .5rem 1rem;
+    white-space: pre;
+  }
 }
 
 .card-contents-with-image{

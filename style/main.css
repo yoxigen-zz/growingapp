@@ -1122,7 +1122,8 @@ select {
 .entry-simple-contents {
   color: White; }
   .entry-simple-contents .entry-simple-contents-text {
-    padding: .5rem 1rem; }
+    padding: .5rem 1rem;
+    white-space: pre; }
 
 .card-contents-with-image {
   position: relative; }
@@ -1324,7 +1325,8 @@ svg.graph {
   .cards .card-contents-lighter {
     background-color: #f4f4f4; }
   .cards .card-text {
-    padding: .5rem .5rem 1.5rem; }
+    padding: .5rem .5rem 1.5rem;
+    white-space: pre; }
   .cards .card-info {
     border-top: solid 1px #e2e2e2;
     font-size: .8em; }
