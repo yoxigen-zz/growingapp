@@ -1123,7 +1123,7 @@ select {
   color: White; }
   .entry-simple-contents .entry-simple-contents-text {
     padding: .5rem 1rem;
-    white-space: pre; }
+    white-space: pre-line; }
 
 .card-contents-with-image {
   position: relative; }
