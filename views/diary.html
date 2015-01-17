@@ -31,7 +31,7 @@
             </div>
             <a id="new-entry-button" class="floating-action-button add-button" ng-show="entries.items.length" title="New entry" ng-click="dialogs.newEntry.toggle()"></a>
         </header>
-        <div class="flex-1 contents-empty-message" ng-cloak ng-show="entries && !entries.items.length">
+        <div class="flex-1 contents-empty-message" ng-cloak ng-show="!entries.settingEntries && entries && !entries.items.length">
             <div>
                 <p>No {{entries.currentEntriesType || ''}} entries added yet.</p>
                 <a class="floating-action-button add-button" ng-click="dialogs.newEntry.toggle()"></a>
@@ -40,9 +40,7 @@
         <ul class="cards">
             <li ng-repeat="entry in entries.items" class="card">
                 <div ng-include="'entry-' + entry.type.templateName"></div>
-                <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">
-                    {{entry.description}}
-                </div>
+                <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">{{entry.description}}</div>
                 <div class="card-info flex-horizontal">
                     <div class="card-details flex-1">
                         {{::entry.dateText}} <span class="separator">|</span> {{::entry.ageText}}

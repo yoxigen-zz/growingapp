@@ -8,8 +8,7 @@
     function entriesModel(Entry, DataObjectCollection, eventBus, players, EntryType, messages, config, dialogs, $rootScope){
         var entriesCollection = new DataObjectCollection(Entry);
 
-        var settingEntries,
-            PAGE_SIZE = 10,
+        var PAGE_SIZE = 10,
             currentPage = 0,
             currentEntriesType,
             editedEntry,// this is the original edited entry.
@@ -49,6 +48,7 @@
             newEntry: newEntry,
             removeEntry: removeEntry,
             setEntries: setEntries,
+            settingEntries: false, // set this to true while entries are loading
             unremoveLastEntry: unremoveLastEntry,
             updateEntriesAfterUnitChange: updateEntriesAfterUnitChange
         };
@@ -159,16 +159,18 @@
                 getEntries();
             }
             else {
-                settingEntries = false;
+                api.settingEntries = false;
                 entriesCollection.clearItems();
             }
         }
 
         function getEntries(){
-            if (settingEntries)
+            if (api.settingEntries)
                 return;
 
-            settingEntries = true;
+            api.loading = true;
+
+            api.settingEntries = true;
             var getOptions = {
                 count: PAGE_SIZE,
                 offset: currentPage * PAGE_SIZE,
@@ -178,7 +180,7 @@
             };
 
             Entry.getEntries(getOptions).then(function (entries) {
-                if (settingEntries) {
+                if (api.settingEntries) {
                     entries.forEach(function(entry){
                         entriesCollection.add(entry);
                     });
@@ -187,7 +189,7 @@
                         api.allEntriesAdded = true;
                 }
             }).finally(function(){
-                settingEntries = false;
+                api.settingEntries = false;
             }).catch(function(error){
                 entriesCollection.clearItems();
                 messages.error("Error getting entries: ", error);
