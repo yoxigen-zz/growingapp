@@ -81,7 +81,7 @@
             <div ng-include="'entry_editor_' + entries.editedEntry.type.id"></div>
             <label ng-show="entries.editedEntry.type.allowDescription !== false">
                 <span class="label-text">Additional Details</span>
-                <textarea ng-model="entries.editedEntry.description"></textarea>
+                <textarea ng-model="entries.editedEntry.description" is-rtl="entries.editedEntry.rtlDescription"></textarea>
             </label>
             <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entries.editedEntry.date" /></label>
         </form>

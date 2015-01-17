@@ -41,7 +41,7 @@
     </label>
     <label>
         <span class="label-text">Or enter new milestone:</span>
-        <textarea rows="3" ng-model="entries.editedEntry.properties.text"></textarea>
+        <textarea rows="3" ng-model="entries.editedEntry.properties.text" is-rtl="entries.editedEntry.rtl"></textarea>
     </label>
     <div id="entry_photo_edit">
         <img id="entry_photo_edit_image" ng-if="entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl" ng-src="{{entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl}}" />

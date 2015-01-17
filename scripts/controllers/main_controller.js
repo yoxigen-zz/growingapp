@@ -46,6 +46,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
     eventBus.subscribe("loadingEnd", onLoadingEnd);
     eventBus.subscribe("logout", onLogout);
     eventBus.subscribe("updateObjects", onUpdateObjects);
+    eventBus.subscribe("settingsChange", onSettingsChange);
 
     window.addEventListener("online", function(){
         $scope.$apply(function(){
@@ -105,7 +106,6 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
             eventBus.triggerEvent("settingsChange");
 
         dialogs.settings.close();
-        $scope.settings = config.getCurrentLocalization();
     }
 
     function setFirstPlayer(){
@@ -225,6 +225,7 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
         signoutItem.text = "Sign out " + e.user.attributes.username;
 
         $scope.currentUser = e.user;
+        $scope.settings = config.getCurrentLocalization();
     }
 
     function onLogout(){
@@ -248,6 +249,10 @@ app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eve
 
         if (e && e.error)
             console.error(e.error);
+    }
+
+    function onSettingsChange(){
+        $scope.settings = config.getCurrentLocalization();
     }
 
     function onUpdateObjects(e){

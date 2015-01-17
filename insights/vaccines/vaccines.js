@@ -8,7 +8,7 @@ angular.module("Vaccines", ["Player", "Config", "Entries"]).factory("vaccines", 
      */
     function getVaccines(){
         return Player.getCurrentPlayer().then(function(player){
-            return Entry.getEntries({ type: "vaccine", player: player }).then(function(vaccineEntries){
+            return Entry.getEntries({ type: "vaccine", player: player, reverse: true }).then(function(vaccineEntries){
                 vaccineEntries.forEach(function(entry){
                     entry.vaccine = config.entries.vaccines.index[entry.properties.vaccineId];
                 });
