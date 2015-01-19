@@ -49,11 +49,11 @@
 
         DataObjectCollection.prototype.remove = function(item){
             var itemIndexOf = this.items.indexOf(item);
-            if (!~itemIndexOf)
-                throw new Error("Can't remove item, not found in the collection.");
 
             item.remove();
-            this.lastRemovedItem = { item: this.items.splice(itemIndexOf, 1), index: itemIndexOf };
+
+            if (~itemIndexOf)
+                this.lastRemovedItem = { item: this.items.splice(itemIndexOf, 1), index: itemIndexOf };
             return { index: itemIndexOf, item: item };
         };
 

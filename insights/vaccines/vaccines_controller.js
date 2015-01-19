@@ -5,10 +5,12 @@ angular.module("Vaccines").controller("VaccinesController", ["$scope", "vaccines
 
     entriesModel.onNewEntry.subscribe(onNewEntry);
     entriesModel.onUpdateEntry.subscribe(onUpdateEntry);
+    entriesModel.onRemoveEntry.subscribe(onRemoveEntry);
 
     $scope.$on("$destroy", function(){
         entriesModel.onNewEntry.unsubscribe(onNewEntry);
         entriesModel.onUpdateEntry.unsubscribe(onUpdateEntry);
+        entriesModel.onRemoveEntry.unsubscribe(onUpdateEntry);
     });
 
     setVaccines();
@@ -31,6 +33,18 @@ angular.module("Vaccines").controller("VaccinesController", ["$scope", "vaccines
             }
 
             sortEntries();
+        }
+    }
+
+    function onRemoveEntry(entry){
+        if (entry.type.id === "vaccine") {
+            var vaccineEntry = utils.arrays.find(vm.entries, function(_entry){
+                return _entry.timestamp === entry.timestamp;
+            });
+
+            if (vaccineEntry){
+                vm.entries.splice(vm.entries.indexOf(vaccineEntry), 1);
+            }
         }
     }
 
