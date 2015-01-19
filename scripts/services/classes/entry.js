@@ -3,7 +3,7 @@
 
     angular.module("Entries").factory("Entry", EntryClass);
 
-    EntryClass.$inject = ["$q", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
+    EntryClass.$inject = ["$q", "$indexedDB", "$filter", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
     /**
      * Creates the Entry class
      * @param $indexedDB
@@ -18,9 +18,11 @@
      * @returns {Entry}
      * @constructor
      */
-    function EntryClass($q, $indexedDB, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
+    function EntryClass($q, $indexedDB, $filter, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
         var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
             entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
+
+        var unitFilter = $filter("unit");
 
         function Entry(config, player) {
             var timestamp,
@@ -81,6 +83,9 @@
                 return entryType;
             });
 
+            if (entryType.parse)
+                entryType.parse(this);
+
             return this;
         }
 
@@ -125,6 +130,13 @@
             return this._ageText;
         });
 
+        Entry.prototype.__defineGetter__("unitValue", function(){
+            if (this._unitValue === undefined)
+                this._unitValue = unitFilter(this.properties.value, this.type.id, true) || null;
+
+            return this._unitValue;
+        });
+
         /**
          * If the entry's type has a prepareForEdit function, call it. This sets up things like units that should be loaded prior to edit.
          */
@@ -167,6 +179,11 @@
         Entry.prototype.preSave = function () {
             this.clearParsedValues();
 
+            this.age = this.player.getAge(this.date);
+
+            if (this.type.parse)
+                this.type.parse(this);
+
             if (this.type.preSave)
                 this.type.preSave(this);
         };
@@ -180,6 +197,7 @@
             delete this._ageText;
             delete this._rtl;
             delete this._rtlDescription;
+            delete this._unitValue;
         };
 
         Entry.prototype.addPhoto = function (method) {

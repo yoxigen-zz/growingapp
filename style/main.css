@@ -1387,3 +1387,7 @@ svg.graph {
     border: none; }
   .data-table tr:nth-child(2n) {
     background-color: #f1f7f9; }
+  .data-table.clickable-rows tr {
+    cursor: pointer; }
+    .data-table.clickable-rows tr:hover {
+      background-color: rgba(92, 210, 250, 0.18); }

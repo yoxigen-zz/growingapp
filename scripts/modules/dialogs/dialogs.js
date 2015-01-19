@@ -10,6 +10,7 @@
             signIn: { htmlUrl: "views/login.html", title: "Sign In" },
             signUp: { htmlUrl: "views/signup.html", title: "Sign Up" },
             menu: {  },
+            currentInsight: { actions: [ { icon: "plus", title: "Add entry" } ] },
             editPlayer: {  },
             syncOffer: { htmlUrl: "views/syncOffer.html", title: "It's time to backup!" },
             newPlayer: {  },

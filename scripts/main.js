@@ -84,7 +84,6 @@ requirejs([
 
                                         "controllers/main_controller",
                                         "controllers/edit_player_controller",
-                                        "controllers/entries_list_controller",
                                         "controllers/login_controller",
                                         "controllers/signup_controller",
                                         "entries/teeth/teeth_controller",

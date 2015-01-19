@@ -1,19 +1,19 @@
 <div class="flex-1 flex-vertical">
-            <header class="contents-header">
-                Insights
-            </header>
-            <div class="flex-1 scroll-vertical" ng-hide="firstPanelHidden">
-                <ul id="insights-list">
-                    <li ng-repeat="insight in ::insights.insightsList" ng-click="insights.setCurrentInsight(insight)" class="flex-horizontal">
-                        <div class="insight-icon" ng-style="::{ 'background-color': insight.entryType.color, 'background-image': insight.entryType.icon.cssUrl }"></div>
-                        <div class="insight-text flex-1" ng-class="{ center: !insight.description }">
-                            <h4>{{::insight.name}}</h4>
-                            <p class="insight-description">{{::insight.description}}</p>
-                        </div>
-                    </li>
-                </ul>
-                <p class="comment">
-                    More charts soon...
-                </p>
-            </div>
+    <header class="contents-header">
+        Insights
+    </header>
+    <div class="flex-1 scroll-vertical" ng-hide="firstPanelHidden">
+        <ul id="insights-list">
+            <li ng-repeat="insight in ::insights.insightsList" ng-click="insights.setCurrentInsight(insight)" class="flex-horizontal">
+                <div class="insight-icon" ng-style="::{ 'background-color': insight.entryType.color, 'background-image': insight.entryType.icon.cssUrl }"></div>
+                <div class="insight-text flex-1" ng-class="{ center: !insight.description }">
+                    <h4>{{::insight.name}}</h4>
+                    <p class="insight-description">{{::insight.description}}</p>
+                </div>
+            </li>
+        </ul>
+        <p class="comment">
+            More charts soon...
+        </p>
+    </div>
 </div>

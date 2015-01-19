@@ -61,7 +61,6 @@ app = angular.module("GrowingApp", [
             })
             .when("/", {
                 templateUrl: "views/diary.html",
-                controller: "EntriesListController",
                 currentPage: "diary"
             });
 

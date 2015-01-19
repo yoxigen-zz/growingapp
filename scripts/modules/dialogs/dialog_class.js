@@ -9,6 +9,7 @@
             this.htmlUrl = config.htmlUrl;
             this.title = config.title;
             this.icon = config.icon;
+            this.actions = config.actions;
         }
 
         Dialog.prototype.open = function(){

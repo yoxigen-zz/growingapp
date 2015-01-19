@@ -1,4 +1,4 @@
-angular.module("Insights", ["Entries"]).factory("insights", ["entries", "Insight", function(entries, Insight){
+angular.module("Insights", ["Entries", "Dialogs"]).factory("insights", ["entries", "Insight", "dialogs", "entriesModel", function(entries, Insight, dialogs, entriesModel){
     var insightsList = [
             { id: "weight", name: "Weight Chart", description: "Age to weight chart, with percentiles", entryType: entries.types.weight, className: "dark" },
             { id: "height", name: "Height Chart", description: "Age to height chart, with percentiles", entryType: entries.types.height, className: "dark" },
@@ -19,6 +19,10 @@ angular.module("Insights", ["Entries"]).factory("insights", ["entries", "Insight
     });
 
     insightsList = null;
+
+    dialogs.currentInsight.actions[0].onClick = function(){
+        entriesModel.newEntry(currentInsight.entryType);
+    };
 
     return {
         get insightsList(){
@@ -44,6 +48,7 @@ angular.module("Insights", ["Entries"]).factory("insights", ["entries", "Insight
                 currentInsight = insight;
             else
                 throw new TypeError("Invalid insight, expected either an insightId or an Insight object.");
+
         },
         closeInsight: function(){
             currentInsight = null;

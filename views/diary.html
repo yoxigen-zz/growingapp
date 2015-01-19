@@ -33,7 +33,7 @@
         </header>
         <div class="flex-1 contents-empty-message" ng-cloak ng-show="!entries.settingEntries && entries && !entries.items.length">
             <div>
-                <p>No {{entries.currentEntriesType || ''}} entries added yet.</p>
+                <p>No {{entries.currentEntriesType.name || ''}} entries added yet.</p>
                 <a class="floating-action-button add-button" ng-click="dialogs.newEntry.toggle()"></a>
             </div>
         </div>
@@ -53,37 +53,4 @@
             </li>
         </ul>
     </div>
-    <div class="floating-message" ng-show="dialogs.unremoveEntry.isOpen">
-        <div class="floating-message-contents">
-            <span class="floating-message-text"><span class="hide-smallest-width">Entry</span> Deleted</span>
-            <a ng-click="entries.unremoveLastEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
-        </div>
-    </div>
-    <dialog show="dialogs.newEntry.isOpen" title="{{::dialogs.newEntry.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()">
-        <ul class="entry-types-list">
-            <li ng-repeat="entryType in ::entryTypes"
-                ng-style="{ 'background-color': entryType.color }"
-                ng-click="entries.newEntry(entryType)">
-                <div class="entry-image">
-                    <img ng-src="{{ ::entryType.icon.url }}" />
-                </div>
-                <span class="entry-type-name">{{ ::entryType.name }}</span>
-            </li>
-        </ul>
-    </dialog>
-    <slide-dialog show="dialogs.editEntry.isOpen"
-           title="{{entries.editedEntry.isNew && 'New' || 'Edit'}} Entry: {{ entries.editedEntry.type.name }}"
-           actions="dialogs.editEntry.actions"
-           submit-action="dialogs.editEntry.submitAction"
-           on-show="onShowDialog($event)"
-           on-hide="onHideDialog()">
-        <form ng-if="entries.editedEntry">
-            <div ng-include="'entry_editor_' + entries.editedEntry.type.id"></div>
-            <label ng-show="entries.editedEntry.type.allowDescription !== false">
-                <span class="label-text">Additional Details</span>
-                <textarea ng-model="entries.editedEntry.description" is-rtl="entries.editedEntry.rtlDescription"></textarea>
-            </label>
-            <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entries.editedEntry.date" /></label>
-        </form>
-    </slide-dialog>
 </div>

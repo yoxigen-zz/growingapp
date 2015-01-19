@@ -75,7 +75,10 @@ angular.module("Entries")
             insightIcon: "list",
             "name": "Vaccine",
             "icon": "syringe",
-            "color": "rgb(81, 202, 24)"
+            "color": "rgb(81, 202, 24)",
+            parse: function(entry){
+                entry.vaccine = config.entries.vaccines.index[entry.properties.vaccineId];
+            }
 
         }
     ];

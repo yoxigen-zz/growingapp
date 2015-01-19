@@ -3,9 +3,9 @@
 
     angular.module("Entries").factory("entriesModel", entriesModel);
 
-    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope"];
+    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope"];
 
-    function entriesModel(Entry, DataObjectCollection, eventBus, players, EntryType, messages, config, dialogs, $rootScope){
+    function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope){
         var entriesCollection = new DataObjectCollection(Entry);
 
         var PAGE_SIZE = 10,
@@ -16,6 +16,11 @@
             lastRemovedEntryIndex;
 
         var SAVE_ENTRY_EVENT = "saveEntry";
+        var innerEventBusEvents = {
+            newEntry: "newEntry",
+            removeEntry: "removeEntry",
+            updateEntry: "updateEntry"
+        };
 
         eventBus.subscribe(["editPlayer", "playerSelect"], setEntries);
         eventBus.subscribe("settingsChange", setEntries);
@@ -55,6 +60,8 @@
 
         setEntries();
 
+        var entriesModelEventBus = EventBus.setToObject(api, [innerEventBusEvents.newEntry, innerEventBusEvents.removeEntry, innerEventBusEvents.updateEntry]);
+
         return api;
 
         function entrySaveAction(){
@@ -64,10 +71,12 @@
                 if (savedEntry.isNew) {
                     addEntry(savedEntry);
                     eventBus.triggerEvent(SAVE_ENTRY_EVENT, savedEntry);
+                    entriesModelEventBus.triggerEvent(innerEventBusEvents.newEntry, savedEntry);
                 }
                 else {
                     sortEntries();
                     eventBus.triggerEvent(SAVE_ENTRY_EVENT, api.editedEntry);
+                    entriesModelEventBus.triggerEvent(innerEventBusEvents.updateEntry, api.editedEntry);
                 }
             }, function(error){
                 messages.error("Couldn't save entry", error);
@@ -87,6 +96,8 @@
             lastRemovedEntryIndex = entriesCollection.remove(editedEntry).index;
 
             eventBus.triggerEvent("deleteEntry", editedEntry);
+            entriesModelEventBus.triggerEvent(innerEventBusEvents.removeEntry, editedEntry);
+
             api.editedEntry = null;
 
             dialogs.editEntry.close();
