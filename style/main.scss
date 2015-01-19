@@ -93,8 +93,6 @@ a{ cursor: pointer; }
 }
 
 .header-button{
-  &:hover{ background-color: #00A8E0; }
-  &:active, &.ng-click-active{ background-color: #00BEFD }
 }
 
 #splashscreen{
@@ -214,10 +212,6 @@ a{ cursor: pointer; }
     img{
       height: $actionbarHeight / 2;
       margin-top: $actionbarHeight / 4;
-    }
-
-    &.active{
-      background: rgba(255,255,255,.3);
     }
 
     &.selectable{

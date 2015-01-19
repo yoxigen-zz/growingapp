@@ -98,11 +98,6 @@ a {
   border: solid 1px rgba(0, 0, 0, 0.2);
   margin-right: .5rem; }
 
-.header-button:hover, .actionbar .actionbar-button:hover, .popup header .close-button:hover, .dialog header .close-button:hover {
-  background-color: #00A8E0; }
-.header-button:active, .actionbar .actionbar-button:active, .popup header .close-button:active, .dialog header .close-button:active, .header-button.ng-click-active, .actionbar .ng-click-active.actionbar-button, .popup header .ng-click-active.close-button, .dialog header .ng-click-active.close-button {
-  background-color: #00befd; }
-
 #splashscreen {
   background: #43124c url(../images/growingapp_logo.svg) no-repeat center bottom;
   background-size: contain;
@@ -196,8 +191,6 @@ a {
     .actionbar .actionbar-button img {
       height: 1.75rem;
       margin-top: 0.875rem; }
-    .actionbar .actionbar-button.active {
-      background: rgba(255, 255, 255, 0.3); }
     .actionbar .actionbar-button.selectable {
       opacity: .5;
       transform: scale(0.8);
