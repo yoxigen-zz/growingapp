@@ -110,6 +110,7 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
                         unsynced: true
                     });
 
+                    alert("image: " + JSON.stringify(dataObject.image));
                     return dataObject.image;
                 });
             });
