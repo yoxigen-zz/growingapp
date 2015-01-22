@@ -127,7 +127,9 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                     function gotFileEntry(fileEntry) {
                         fileEntry.createWriter(function(writer){
                             writer.seek(0);
-                            writer.write(base64);
+
+                            var base64noPrefix = base64.replace(/^data:image\/\w+;base64,/, "");
+                            writer.write(base64noPrefix);
 
                             deferred.resolve({ url: fileEntry.nativeURL, file: fileEntry });
                         }, deferred.reject);
