@@ -96,7 +96,7 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
             saveToPhotoAlbum: false
         }).then(function (imageUrl) {
             return getImageThumbnail(imageUrl, FileData.mimeTypes.image.JPEG).then(function (base64) {
-                return phonegap.files.saveBase64ToFile(base64, "thumbnail_" + new Date().valueOf(), fileData.mimeType).then(function (file) {
+                return phonegap.files.saveBase64ToFile(base64, "thumbnail_" + new Date().valueOf(), FileData.mimeTypes.image.JPEG.mimeType).then(function (file) {
                     dataObject.image = new FileData({
                         localUrl: imageUrl,
                         localThumbnailUrl: file.url,
@@ -108,6 +108,8 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
                     return dataObject.image;
                 });
             });
+        }, function(error){
+            messages.error(error);
         });
     }
 }]);
