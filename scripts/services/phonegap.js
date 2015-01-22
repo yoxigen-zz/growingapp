@@ -114,7 +114,6 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                 var deferred = $q.defer();
 
                 var rootDir = fileSystem.root; // to get root path of directory
-                alert("get directory " + folder);
 
                 rootDir.getDirectory(folder, { create: true, exclusive: false }, function(){
                     alert("got dir");
