@@ -140,7 +140,9 @@
                 var promises = [getFilePromise];
 
                 if (this.localThumbnailUrl){
+                    alert("get thumbnail file " + this.localThumbnailUrl);
                     promises.push(phonegap.files.getFileByUrl(this.localThumbnailUrl).then(function (file) {
+                        alert("file " + JSON.stringify(file))
                         cloudData.thumbnail = file;
                     }));
                 }

@@ -53,7 +53,7 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                     messages.error("ERROR syncing " + dataObject.constructor.name + ". Error: " + JSON.stringify(error));
                 });
             }, function(error){
-                messages.error("Error syncing DataObject to cloud: " + JSON.stringify(error));
+                messages.error("Error syncing " + dataObject.constructor.name + " to cloud: " + JSON.stringify(error));
             });
         });
     }
