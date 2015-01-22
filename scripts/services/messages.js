@@ -1,28 +1,29 @@
 angular.module("Messages", []).factory("messages", ["$q", function($q){
 	return {
 		confirm: confirm,
-		error: error
+		error: log.bind("error"),
+        log: log.bind("log")
 	};
 
 	function confirm(message){
 		return $q.when(window.confirm(message));
 	}
 
-	function error(message, error){
+    function log(type, message, obj){
         if (window.cordova) {
             if (typeof(message) === "object")
                 alert(JSON.stringify(message));
             else{
                 var message = message;
-                if (error)
-                    message += " " + JSON.stringify(error);
+                if (obj)
+                    message += " " + JSON.stringify(obj);
 
                 alert(message);
             }
         }
-        if (error)
-            console.error(message, error);
+        if (obj)
+            console[type](message, obj);
         else
-            console.error(message);
-	}
+            console[type](message);
+    }
 }]);

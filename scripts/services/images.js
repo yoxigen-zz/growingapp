@@ -95,8 +95,13 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
             targetHeight: imagesConfig.height,
             saveToPhotoAlbum: false
         }).then(function (imageUrl) {
+            messages.log("URL: " + imageUrl);
+
             return getImageThumbnail(imageUrl, FileData.mimeTypes.image.JPEG).then(function (base64) {
+                messages.log("thmbnail " + base64)
                 return phonegap.files.saveBase64ToFile(base64, "thumbnail_" + new Date().valueOf(), FileData.mimeTypes.image.JPEG.mimeType).then(function (file) {
+                    messages.log("FILE: ", file);
+
                     dataObject.image = new FileData({
                         localUrl: imageUrl,
                         localThumbnailUrl: file.url,
