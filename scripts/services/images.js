@@ -34,15 +34,20 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
         return deferred.promise;
 
         function onLoad() {
-            var canvas = document.createElement('canvas'),
-                ctx = canvas.getContext('2d'),
-                fillSize = getFillSize(image.width, image.height, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
+            try {
+                var canvas = document.createElement('canvas'),
+                    ctx = canvas.getContext('2d'),
+                    fillSize = getFillSize(image.width, image.height, THUMBNAIL_SIZE, THUMBNAIL_SIZE);
 
-            canvas.width = THUMBNAIL_SIZE;
-            canvas.height = THUMBNAIL_SIZE;
+                canvas.width = THUMBNAIL_SIZE;
+                canvas.height = THUMBNAIL_SIZE;
 
-            ctx.drawImage(image, fillSize.left, fillSize.top, fillSize.width, fillSize.height);
-            deferred.resolve(canvas.toDataURL(mimeType));
+                ctx.drawImage(image, fillSize.left, fillSize.top, fillSize.width, fillSize.height);
+                deferred.resolve(canvas.toDataURL(mimeType.id));
+            }
+            catch(e){
+                deferred.reject(e);
+            }
         }
 
     }
