@@ -121,7 +121,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
 
                     var filePath = [rootdir.fullPath, folder, fileName + "." + mimeType.extension].join("/");
 
-                    alert("file: " + filterPath);
+                    alert("file: " + filePath);
 
                     fileSystem.root.getFile(filePath, {create: true, exclusive: false}, gotFileEntry, deferred.reject);
 
