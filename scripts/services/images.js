@@ -104,7 +104,7 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
 
             return getImageThumbnail(imageUrl, FileData.mimeTypes.image.JPEG).then(function (base64) {
                 messages.log("thmbnail " + base64)
-                return phonegap.files.saveBase64ToFile(base64, "thumbnails", "thumbnail_" + new Date().valueOf(), FileData.mimeTypes.image.JPEG.mimeType).then(function (file) {
+                return phonegap.files.saveBase64ToFile(base64, "thumbnails", "thumbnail_" + new Date().valueOf(), FileData.mimeTypes.image.JPEG).then(function (file) {
                     messages.log("FILE: ", file);
 
                     dataObject.image = new FileData({
