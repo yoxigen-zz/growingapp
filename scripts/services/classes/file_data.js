@@ -3,9 +3,9 @@
 
     angular.module("FileData", ["Config", "DataObject", "Phonegap", "Images"]).factory("FileData", FileDataClass);
 
-    FileDataClass.$inject = ["$q", "dbConfig", "DataObject", "$indexedDB", "phonegap", "images"];
+    FileDataClass.$inject = ["$q", "dbConfig", "DataObject", "$indexedDB", "phonegap"];
 
-    function FileDataClass($q, dbConfig, DataObject, $indexedDB, phonegap, images) {
+    function FileDataClass($q, dbConfig, DataObject, $indexedDB, phonegap) {
         var objectStore = $indexedDB.objectStore(dbConfig.objectStores.files.name);
 
         function FileData(fileConfig) {
