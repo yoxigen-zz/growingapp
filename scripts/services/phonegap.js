@@ -129,7 +129,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                             writer.seek(0);
 
                             try {
-                                writer.write(Base64Binary.decode(base64.replace(/^data:image\/\w+;base64,/, "")));
+                                writer.write(Base64Binary.decodeArrayBuffer(base64.replace(/^data:image\/\w+;base64,/, "")));
                             }
                             catch(e){
                                 alert("CAN'T WRITE: ");
