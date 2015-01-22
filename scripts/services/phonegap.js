@@ -116,13 +116,20 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                 var rootDir = fileSystem.root; // to get root path of directory
 
                 rootDir.getDirectory(folder, { create: true, exclusive: false }, function(){
-                    alert("got dir");
+                    alert("get file " + fileName);
+                    alert("root " + rootDir.fullPath);
+                    alert("mime: " + JSON.stringify(mimeType));
 
-                    var filePath = [rootdir.fullPath, folder, fileName + "." + mimeType.extension].join("/");
+                    try {
+                        var filePath = [rootdir.fullPath, folder, fileName + "." + mimeType.extension].join("/");
 
-                    alert("file: " + filePath);
+                        alert("file: " + filePath);
 
-                    fileSystem.root.getFile(filePath, {create: true, exclusive: false}, gotFileEntry, deferred.reject);
+                        fileSystem.root.getFile(filePath, {create: true, exclusive: false}, gotFileEntry, deferred.reject);
+                    }
+                    catch(e){
+                        alert(e);
+                    }
 
                     function gotFileEntry(fileEntry) {
                         alert("got fileEntry");
