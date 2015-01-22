@@ -44,7 +44,9 @@
         <textarea rows="3" ng-model="entries.editedEntry.properties.text" is-rtl="entries.editedEntry.rtl"></textarea>
     </label>
     <div id="entry_photo_edit">
-        <img id="entry_photo_edit_image" ng-if="entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl" ng-src="{{entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl}}" />
+        <img id="entry_photo_edit_image"
+             ng-if="entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl"
+             ng-src="{{entries.editedEntry.image.thumbnailUrl}}" />
         <div class="avatar-buttons">
             <a class="button text-button" ng-click="entries.editedEntry.addPhoto('camera')">
                 <img src="images/icons/camera.svg" />
