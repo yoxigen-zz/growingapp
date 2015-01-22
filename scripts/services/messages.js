@@ -1,8 +1,8 @@
 angular.module("Messages", []).factory("messages", ["$q", function($q){
 	return {
 		confirm: confirm,
-		error: log.bind("error"),
-        log: log.bind("log")
+		error: log.bind(this "error"),
+        log: log.bind(this, "log")
 	};
 
 	function confirm(message){
