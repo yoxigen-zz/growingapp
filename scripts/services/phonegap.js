@@ -130,7 +130,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
 
                             var base64noPrefix = base64.replace(/^data:image\/\w+;base64,/, "");
 
-                            writer.write(window.btoa(base64));
+                            writer.write(window.atob(base64));
 
                             deferred.resolve({ url: fileEntry.nativeURL, file: fileEntry });
                         }, deferred.reject);
