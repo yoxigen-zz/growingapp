@@ -142,8 +142,11 @@
                 if (this.localThumbnailUrl){
                     alert("get thumbnail file " + this.localThumbnailUrl);
                     promises.push(phonegap.files.getFileByUrl(this.localThumbnailUrl).then(function (file) {
-                        alert("file " + JSON.stringify(file))
+                        alert("OK file " + JSON.stringify(file));
                         cloudData.thumbnail = file;
+                    }, function(error){
+                        alert("ERROR getting thumbnail file: " + JSON.stringify(error));
+                        return $q.reject(error);
                     }));
                 }
 
