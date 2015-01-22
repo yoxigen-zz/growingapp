@@ -151,12 +151,25 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                 return null;
             }
             else {
-                return files.download(dataObject.cloudUrl, dataObject.constructor.name, dataObject.id).then(function(fileEntry){
+                var fileDownloadPromise = files.download(dataObject.cloudUrl, dataObject.constructor.name, dataObject.id).then(function(fileEntry){
                     dataObject.setLocalUrl(fileEntry.fullPath);
+                });
+
+                var promises = [fileDownloadPromise];
+
+                if (dataObject.cloudThumbnailUrl){
+                    var thumbnailDownloadPromise = files.download(dataObject.cloudThumbnailUrl, "thumbnails", dataObject.id).then(function(fileEntry){
+                        dataObject.localThumbnailUrl = fileEntry.fullPath;
+                    });
+
+                    promises.push(thumbnailDownloadPromise);
+                }
+
+                return $q.all(promises).then(function(){
                     dataObject.save(true);
                     eventBus.triggerEvent("updateFile", { dataObject: dataObject });
                     return dataObject;
-                }, function(error){
+                }).catch(function(error){
                     messages.error(error);
                 });
             }

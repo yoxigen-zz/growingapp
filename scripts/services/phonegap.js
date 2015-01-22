@@ -109,6 +109,25 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                 });
 
                 return deferred.promise;
+            },
+            saveBase64ToFile: function(base64, folder, fileName, mimeType){
+                var deferred = $q.defer();
+
+                var rootDir = fileSystem.root; // to get root path of directory
+                rootDir.getDirectory(folder, { create: true, exclusive: false }, function(){
+                    var filePath = [rootdir.fullPath, folder, fileName + "." + mimeType.extension].join("/");
+                    fileSystem.root.getFile(filePath, {create: true, exclusive: false}, gotFileEntry, deferred.reject);
+
+                    function gotFileEntry(fileEntry) {
+                        fileEntry.createWriter(function(writer){
+                            writer.seek(0);
+                            writer.write(base64);
+                            deferred.resolve({ url: filePath, file: fileEntry });
+                        }, deferred.reject);
+                    }
+                }, deferred.reject);
+
+                return deferred.promise;
             }
         },
         images: {
