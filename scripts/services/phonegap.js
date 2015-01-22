@@ -114,14 +114,28 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                 var deferred = $q.defer();
 
                 var rootDir = fileSystem.root; // to get root path of directory
+                alert("get directory " + folder);
+
                 rootDir.getDirectory(folder, { create: true, exclusive: false }, function(){
+                    alert("got dir");
+
                     var filePath = [rootdir.fullPath, folder, fileName + "." + mimeType.extension].join("/");
+
+                    alert("file: " + filterPath);
+
                     fileSystem.root.getFile(filePath, {create: true, exclusive: false}, gotFileEntry, deferred.reject);
 
                     function gotFileEntry(fileEntry) {
+                        alert("got fileEntry");
+
                         fileEntry.createWriter(function(writer){
+                            alert("writer: " + !!writer);
+
                             writer.seek(0);
                             writer.write(base64);
+
+                            alert("WROTE!");
+
                             deferred.resolve({ url: filePath, file: fileEntry });
                         }, deferred.reject);
                     }
