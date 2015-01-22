@@ -128,11 +128,8 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                         fileEntry.createWriter(function(writer){
                             writer.seek(0);
                             writer.write(base64);
-                            alert("file entry: " + JSON.stringify(fileEntry));
-                            alert("dir: " + JSON.stringify(fileDir));
-                            alert("rot: " + JSON.stringify(rootDir));
 
-                            deferred.resolve({ url: fileDir.fullPath + filePath, file: fileEntry });
+                            deferred.resolve({ url: fileEntry.nativeURL, file: fileEntry });
                         }, deferred.reject);
                     }
                 }, deferred.reject);
