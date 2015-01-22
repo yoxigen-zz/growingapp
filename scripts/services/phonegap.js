@@ -128,10 +128,12 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                         fileEntry.createWriter(function(writer){
                             writer.seek(0);
 
-                            var base64noPrefix = base64.replace(/^data:image\/\w+;base64,/, "");
-
-                            writer.write(window.atob(base64));
-
+                            try {
+                                writer.write(Base64Binary.decode(base64));
+                            }
+                            catch(e){
+                                alert("CAN'T WRITE: " + JSON.stringify(e));
+                            }
                             deferred.resolve({ url: fileEntry.nativeURL, file: fileEntry });
                         }, deferred.reject);
                     }

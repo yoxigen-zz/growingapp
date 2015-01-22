@@ -20,6 +20,7 @@ requirejs([
             "components/angular/angular-touch.min",
             "components/angular/angular-route.min",
             "components/indexeddb",
+            "components/base64-binary",
             "filters/filters.module",
             "services/phonegap",
             "services/parse",
