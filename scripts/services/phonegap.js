@@ -118,9 +118,6 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                 rootDir.getDirectory(folder, { create: true, exclusive: false }, function(fileDir){
                     try {
                         var filePath = fileName + "." + mimeType.extension;
-
-                        alert("file: " + filePath);
-
                         fileDir.getFile(filePath, {create: true, exclusive: false}, gotFileEntry, deferred.reject);
                     }
                     catch(e){
@@ -128,17 +125,10 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
                     }
 
                     function gotFileEntry(fileEntry) {
-                        alert("got fileEntry");
-
                         fileEntry.createWriter(function(writer){
-                            alert("writer: " + !!writer);
-
                             writer.seek(0);
                             writer.write(base64);
-
-                            alert("WROTE!");
-
-                            deferred.resolve({ url: filePath, file: fileEntry });
+                            deferred.resolve({ url: fileDir.fullPath + "/" + filePath, file: fileEntry });
                         }, deferred.reject);
                     }
                 }, deferred.reject);
