@@ -45,7 +45,7 @@
     </label>
     <div id="entry_photo_edit">
         <img id="entry_photo_edit_image"
-             ng-if="entries.editedEntry.image.localUrl || entries.editedEntry.image.cloudUrl"
+             ng-if="entries.editedEntry.image.thumbnailUrl"
              ng-src="{{entries.editedEntry.image.thumbnailUrl}}" />
         <div class="avatar-buttons">
             <a class="button text-button" ng-click="entries.editedEntry.addPhoto('camera')">
