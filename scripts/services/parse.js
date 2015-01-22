@@ -260,6 +260,7 @@ angular.module("Parse", ["Phonegap"]).factory("parse", ["$q", "$rootScope", "$ht
                 return this.saveAll(className, data, options);
 
             var obj = toParseObjects(className, [data], options)[0];
+            alert("Saving to parse " + JSON.stringify(obj));
             return $q.when(obj.save());
         },
         /**

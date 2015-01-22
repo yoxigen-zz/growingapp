@@ -39,6 +39,8 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
 
         return syncImageToCloud(dataObject).then(function(uploaded){
             $q.when(dataObject.getCloudData()).then(function(cloudData){
+                messages.log("Syncing dataobject ", cloudData);
+
                 storage.setItem(dataObject.constructor.name, cloudData).then(function(savedData){
                     // If it's a newly created object, save the cloudId locally:
                     if (dataObject.cloudId !== savedData.id) {
