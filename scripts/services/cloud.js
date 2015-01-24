@@ -151,10 +151,11 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                 return null;
             }
             else {
-                alert("download file " + dataObject.cloudUrl);
                 var fileDownloadPromise = files.download(dataObject.cloudUrl, dataObject.constructor.name, dataObject.id).then(function(fileEntry){
                     alert("downloaded to " + fileEntry.fullPath);
                     dataObject.setLocalUrl(fileEntry.fullPath);
+                }, function(error){
+                    messages.error("Can't download file", error);
                 });
 
                 var promises = [fileDownloadPromise];
