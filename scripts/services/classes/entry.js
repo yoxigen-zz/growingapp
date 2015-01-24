@@ -46,6 +46,7 @@
                 if (!entryData.image && entryData.imageId) {
                     this.image = new FileData(entryData.imageId);
                     if (this.image.localUrl && !this.image.thumbnailUrl){
+                        alert("updating image ");
                         images.addThumbnailToDataObject(this);
                     }
                 }

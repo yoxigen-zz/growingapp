@@ -35,26 +35,35 @@
              */
             function setData(fileData) {
                 if (Object(fileData) === fileData) {
+                    var propertyValue;
+
                     for (var p in fileData) {
                         if (fileData.hasOwnProperty(p)) {
+                            propertyValue = fileData[p];
+
                             switch (p) {
                                 case "id":
                                 case "fileId":
-                                    if (id && fileData[p] !== id)
+                                    if (id && propertyValue !== id)
                                         throw new Error("Can't change ID for a FileData object.");
 
-                                    id = fileData[p];
+                                    id = propertyValue;
                                     break;
                                 case "file":
-                                    this.cloudUrl = fileData[p].url();
+                                    this.cloudUrl = propertyValue.url();
                                 case "thumbnail":
-                                    this.cloudThumbnailUrl = fileData[p].url();
+                                    this.cloudThumbnailUrl = propertyValue.url();
                                 case "file":
                                 case "thumbnail":
                                     this.requireDownload = true;
                                     break;
+                                case "mimeType":
+                                    if (Object(propertyValue) === propertyValue)
+                                        this.mimeType = propertyValue;
+                                    else
+                                        this.mimeType = FileData.mimeTypes.index[propertyValue];
                                 default:
-                                    this[p] = fileData[p];
+                                    this[p] = propertyValue;
                             }
                         }
                     }
@@ -80,6 +89,15 @@
                 PNG: { id: "image/png", name: "PNG", extension: "png" }
             }
         };
+
+        FileData.mimeTypes.index  = {};
+        var mimeTypeName, group;
+        for(var mimeTypeGroup in FileData.mimeTypes){
+            group = FileData.mimeTypes[mimeTypeGroup];
+            for(mimeTypeName in group){
+                FileData.mimeTypes.index[group[mimeTypeName].id] = group[mimeTypeName];
+            }
+        }
 
         FileData.prototype.__proto__ = DataObject;
         FileData.prototype.objectStore = objectStore;
@@ -163,7 +181,7 @@
             if (!this.mimeType)
                 throw new Error("Can't save FileData locally, mimeType is missing.");
 
-            localData.mimeType = this.mimeType;
+            localData.mimeType = this.mimeType.id;
 
             if (this.unsynced)
                 localData.unsynced = 1;
