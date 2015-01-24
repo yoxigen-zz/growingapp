@@ -62,6 +62,8 @@
                                         this.mimeType = propertyValue;
                                     else
                                         this.mimeType = FileData.mimeTypes.index[propertyValue];
+
+                                    break;
                                 default:
                                     this[p] = propertyValue;
                             }
