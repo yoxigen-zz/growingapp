@@ -13,6 +13,7 @@
                         $timeout(function(){
                             alert("entries: " + entries.length);
                             entries.forEach(function (entry) {
+                                alert("image: " + JSON.stringify(entry.image));
                                 if (entry.image && entry.image.localUrl && !entry.image.thumbnailUrl) {
                                     promises.push(images.addThumbnailToDataObject(entry.image));
                                 }
@@ -27,7 +28,7 @@
                                     eventBus.triggerEvent("sync");
                                 });
                             }
-                        }, 8000)
+                        },3000)
                     });
                 });
             });
