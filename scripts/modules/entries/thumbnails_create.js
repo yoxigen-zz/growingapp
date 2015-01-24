@@ -11,6 +11,7 @@
                         var promises = [];
 
                         $timeout(function(){
+                            alert("entries: " + entries.length);
                             entries.forEach(function (entry) {
                                 if (entry.image && entry.image.localUrl && !entry.image.thumbnailUrl) {
                                     promises.push(images.addThumbnailToDataObject(entry.image));

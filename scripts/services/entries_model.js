@@ -62,8 +62,6 @@
 
         var entriesModelEventBus = EventBus.setToObject(api, [innerEventBusEvents.newEntry, innerEventBusEvents.removeEntry, innerEventBusEvents.updateEntry]);
 
-        thumbnailsCreate.create();
-
         return api;
 
         function entrySaveAction(){
@@ -170,6 +168,8 @@
                 currentPage = 0;
                 entriesCollection.clearItems();
                 getEntries();
+                thumbnailsCreate.create();
+
             }
             else {
                 api.settingEntries = false;
