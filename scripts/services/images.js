@@ -93,16 +93,13 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
      * @param dataObject
      * @returns {*}
      */
-    function addThumbnailToDataObject(dataObject){
-        if (!dataObject.image)
-            return $q.when(null);
-
-        return getImageThumbnail(dataObject.image.localUrl, dataObject.image.mimeType).then(function (base64) {
-            return phonegap.files.saveBase64ToFile(base64, "thumbnails", "thumbnail_" + new Date().valueOf(), dataObject.image.mimeType).then(function (file) {
-                dataObject.image.localThumbnailUrl = file.url;
-                dataObject.image.unsaved = true;
-                dataObject.image.unsynced = true;
-                return dataObject.image;
+    function addThumbnailToDataObject(image){
+        return getImageThumbnail(image.localUrl, image.mimeType).then(function (base64) {
+            return phonegap.files.saveBase64ToFile(base64, "thumbnails", "thumbnail_" + new Date().valueOf(), image.mimeType).then(function (file) {
+                image.localThumbnailUrl = file.url;
+                image.unsaved = true;
+                image.unsynced = true;
+                return image;
             });
         });
     }
@@ -126,7 +123,7 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
                 unsynced: true
             });
 
-            return addThumbnailToDataObject(dataObject);
+            return addThumbnailToDataObject(dataObject.image);
         }, function(error){
             messages.error(error);
         });

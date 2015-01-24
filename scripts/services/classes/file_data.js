@@ -1,11 +1,11 @@
 (function(){
     'use strict';
 
-    angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileData", FileDataClass);
+    angular.module("FileData", ["Config", "DataObject", "Phonegap", "Images"]).factory("FileData", FileDataClass);
 
-    FileDataClass.$inject = ["$q", "dbConfig", "DataObject", "$indexedDB", "phonegap"];
+    FileDataClass.$inject = ["$q", "dbConfig", "DataObject", "$indexedDB", "phonegap", "images"];
 
-    function FileDataClass($q, dbConfig, DataObject, $indexedDB, phonegap) {
+    function FileDataClass($q, dbConfig, DataObject, $indexedDB, phonegap, images) {
         var objectStore = $indexedDB.objectStore(dbConfig.objectStores.files.name);
 
         function FileData(fileConfig) {
@@ -119,8 +119,13 @@
 
             var self = this;
             return FileData.getById(id).then(function (fileDataObj) {
-                if (fileDataObj)
+                if (fileDataObj) {
                     self.setData(fileDataObj);
+
+                    if (self.localUrl && !self.thumbnailUrl){
+                        images.addThumbnailToDataObject(self);
+                    }
+                }
             });
         };
 
