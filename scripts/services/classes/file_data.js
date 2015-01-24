@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    angular.module("FileData", ["Config", "DataObject", "Phonegap", "Images"]).factory("FileData", FileDataClass);
+    angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileData", FileDataClass);
 
     FileDataClass.$inject = ["$q", "dbConfig", "DataObject", "$indexedDB", "phonegap"];
 
@@ -143,7 +143,6 @@
                     promises.push(phonegap.files.getFileByUrl(this.localThumbnailUrl).then(function (file) {
                         cloudData.thumbnail = file;
                     }, function(error){
-                        alert("ERROR getting thumbnail file: " + JSON.stringify(error));
                         return $q.reject(error);
                     }));
                 }

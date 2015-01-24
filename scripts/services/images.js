@@ -1,9 +1,10 @@
 angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images", ["$q", "phonegap", "messages", "FileData", function($q, phonegap, messages, FileData){
 
-    var THUMBNAIL_SIZE = 160;
+    var THUMBNAIL_SIZE = 100;
 
 	return {
         addPhotoToDataObject: addPhotoToDataObject,
+        addThumbnailToDataObject: addThumbnailToDataObject,
 		browsePhotos: browsePhotos,
         getImageThumbnail: getImageThumbnail,
 		getPhoto: getPhoto,
@@ -88,6 +89,24 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
 	}
 
     /**
+     * Given a dataObject, tries to add a thumbnail to its image.
+     * @param dataObject
+     * @returns {*}
+     */
+    function addThumbnailToDataObject(dataObject){
+        if (!dataObject.image)
+            return $q.when(null);
+
+        return getImageThumbnail(dataObject.image.localUrl, dataObject.image.mimeType).then(function (base64) {
+            return phonegap.files.saveBase64ToFile(base64, "thumbnails", "thumbnail_" + new Date().valueOf(), dataObject.image.mimeType).then(function (file) {
+                dataObject.image.localThumbnailUrl = file.url;
+                dataObject.image.unsaved = true;
+                dataObject.image.unsynced = true;
+                return dataObject.image;
+            });
+        });
+    }
+    /**
      * Takes a picture and if successful, adds it to the DataObject.
      * Also creates a thumbnail for the image.
      * @param method "camera" / "browse". Defaults to "camera" if none.
@@ -100,19 +119,14 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
             targetHeight: imagesConfig.height,
             saveToPhotoAlbum: false
         }).then(function (imageUrl) {
-            return getImageThumbnail(imageUrl, FileData.mimeTypes.image.JPEG).then(function (base64) {
-                return phonegap.files.saveBase64ToFile(base64, "thumbnails", "thumbnail_" + new Date().valueOf(), FileData.mimeTypes.image.JPEG).then(function (file) {
-                    dataObject.image = new FileData({
-                        localUrl: imageUrl,
-                        localThumbnailUrl: file.url,
-                        mimeType: FileData.mimeTypes.image.JPEG,
-                        unsaved: true,
-                        unsynced: true
-                    });
-
-                    return dataObject.image;
-                });
+            dataObject.image = new FileData({
+                localUrl: imageUrl,
+                mimeType: FileData.mimeTypes.image.JPEG,
+                unsaved: true,
+                unsynced: true
             });
+
+            return addThumbnailToDataObject(dataObject);
         }, function(error){
             messages.error(error);
         });

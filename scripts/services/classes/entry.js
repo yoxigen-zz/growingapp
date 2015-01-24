@@ -43,8 +43,12 @@
                 this.description = entryData.description;
 
                 this.init(entryData);
-                if (!entryData.image && entryData.imageId)
+                if (!entryData.image && entryData.imageId) {
                     this.image = new FileData(entryData.imageId);
+                    if (this.image.localUrl && !this.image.thumbnailUrl){
+                        images.addThumbnailToDataObject(this);
+                    }
+                }
 
                 this.isNew = false;
             }
