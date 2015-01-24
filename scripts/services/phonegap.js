@@ -70,7 +70,7 @@ angular.module("Phonegap", []).factory("phonegap", ["$q", "$rootScope", function
 
                 var rootDir = fileSystem.root; // to get root path of directory
                 rootDir.getDirectory(folder, { create: true, exclusive: false }, function(fileDir){
-                    var downloadPath = fileDir.fullPath + filename;
+                    var downloadPath = fileDir.nativeURL + filename;
                     fileTransfer.download(encodeURI(url), downloadPath,
                         function (entry) {
                             $rootScope.$apply(function() {
