@@ -161,7 +161,9 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
 
                 if (dataObject.cloudThumbnailUrl){
                     var thumbnailDownloadPromise = files.download(dataObject.cloudThumbnailUrl, "thumbnails", dataObject.id).then(function(fileEntry){
-                        dataObject.localThumbnailUrl = fileEntry.fullPath;
+                        dataObject.localThumbnailUrl = fileEntry.nativeURL;
+                    }, function(error){
+                        messages.error("Can't download thumbnail file", error);
                     });
 
                     promises.push(thumbnailDownloadPromise);
