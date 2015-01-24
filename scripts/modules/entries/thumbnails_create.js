@@ -12,7 +12,7 @@
 
                         $timeout(function(){
                             entries.forEach(function (entry) {
-                                if (entry.image && entry.image.localURl && !entry.image.thumbnailUrl) {
+                                if (entry.image && entry.image.localUrl && !entry.image.thumbnailUrl) {
                                     promises.push(images.addThumbnailToDataObject(entry.image));
                                 }
                             });
