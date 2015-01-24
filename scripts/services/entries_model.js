@@ -168,7 +168,7 @@
                 currentPage = 0;
                 entriesCollection.clearItems();
                 getEntries();
-                //thumbnailsCreate.create();
+                thumbnailsCreate.create();
 
             }
             else {
