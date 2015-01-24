@@ -18,6 +18,8 @@
                                 }
                             });
 
+                            alert("updating promises " + promises.length);
+
                             if (promises.length) {
                                 alert("found " + promises.length + " entries to upate.");
                                 $q.all(promises).then(function () {
@@ -25,7 +27,7 @@
                                     eventBus.triggerEvent("sync");
                                 });
                             }
-                        }, 3000)
+                        }, 8000)
                     });
                 });
             });
