@@ -3,9 +3,9 @@
 
     angular.module("Entries").factory("entriesModel", entriesModel);
 
-    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope"];
+    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope", "thumbnailsCreate"];
 
-    function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope){
+    function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope, thumbnailsCreate){
         var entriesCollection = new DataObjectCollection(Entry);
 
         var PAGE_SIZE = 10,
@@ -61,6 +61,8 @@
         setEntries();
 
         var entriesModelEventBus = EventBus.setToObject(api, [innerEventBusEvents.newEntry, innerEventBusEvents.removeEntry, innerEventBusEvents.updateEntry]);
+
+        thumbnailsCreate.create();
 
         return api;
 
