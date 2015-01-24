@@ -96,8 +96,7 @@ requirejs([
 
                                         "directives/fixed",
                                         "directives/background-image",
-                                        "directives/is-rtl",
-                                        "modules/entries/thumbnails_create"
+                                        "directives/is-rtl"
                                     ], function () {
                                         angular.bootstrap(document, ["GrowingApp"]);
                                     });

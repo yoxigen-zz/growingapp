@@ -3,9 +3,9 @@
 
     angular.module("Entries").factory("entriesModel", entriesModel);
 
-    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope", "thumbnailsCreate"];
+    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope"];
 
-    function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope, thumbnailsCreate){
+    function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope){
         var entriesCollection = new DataObjectCollection(Entry);
 
         var PAGE_SIZE = 10,
@@ -168,8 +168,6 @@
                 currentPage = 0;
                 entriesCollection.clearItems();
                 getEntries();
-                thumbnailsCreate.create();
-
             }
             else {
                 api.settingEntries = false;
