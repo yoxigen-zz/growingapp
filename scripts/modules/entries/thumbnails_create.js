@@ -1,9 +1,9 @@
 (function(){
     angular.module("GrowingApp").factory("thumbnailsCreate", thumbnailsCreate);
 
-    thumbnailsCreate.$inject = ["$q", "images", "Entry", "Player", "eventBus", "$timeout"];
+    thumbnailsCreate.$inject = ["$q", "images", "Entry", "Player", "eventBus", "$timeout", "messages"];
 
-    function thumbnailsCreate($q, images, Entry, Player, eventBus, $timeout){
+    function thumbnailsCreate($q, images, Entry, Player, eventBus, $timeout, messages){
         function create() {
             Player.getAll().then(function (players) {
                 players.forEach(function (player) {
@@ -11,10 +11,8 @@
                         var promises = [];
 
                         $timeout(function(){
-                            alert("entries: " + entries.length);
                             entries.forEach(function (entry) {
-                                alert("image: " + JSON.stringify(entry.image));
-                                if (entry.image && entry.image.localUrl && !entry.image.thumbnailUrl) {
+                                if (entry.image && entry.image.localUrl && !entry.image.localThumbnailUrl) {
                                     promises.push(images.addThumbnailToDataObject(entry.image));
                                 }
                             });
@@ -26,6 +24,8 @@
                                 $q.all(promises).then(function () {
                                     alert("updating thumbnails for " + promises.length + " entries.");
                                     eventBus.triggerEvent("sync");
+                                }, function(error){
+                                    messages.error("ERROR updating thubmanils", error);
                                 });
                             }
                         },3000)
