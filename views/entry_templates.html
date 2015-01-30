@@ -1,5 +1,5 @@
 <script id="entry-photo" type="text/ng-template">
-    <img class="card-image" ng-if="entry.image.url" ng-src="{{entry.image.url}}" />
+    <img class="card-image" ng-if="entry.imageUrl" ng-src="{{entry.imageUrl}}" />
 </script>
 
 <script id="entry-note" type="text/ng-template">
@@ -34,8 +34,8 @@
 </script>
 
 <script id="entry-milestone" type="text/ng-template">
-    <div ng-class="{ 'card-contents-with-image': entry.image.url }">
-        <img class="card-image" ng-if="entry.image.url" ng-src="{{ entry.image.url}}" />
+    <div ng-class="{ 'card-contents-with-image': entry.imageUrl }">
+        <img class="card-image" ng-if="entry.imageUrl" ng-src="{{ entry.imageUrl}}" />
         <div class="card-contents card-center-contents entry-milestone-contents">
             <div class="entry-milestone-text">{{entry.player.name}} {{config.entries.milestone.typesIndex[entry.properties.type].text || entry.properties.text}}</div>
         </div>

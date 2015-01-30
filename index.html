@@ -31,7 +31,7 @@
                 </li>
             </ul>
             <ul>
-                <li ng-repeat="item in ::menuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
+                <li ng-repeat="item in ::navigation.mainMenuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
                     <a href="{{::item.href}}" ng-click="item.onClick($event)">
                             <span class="menu-icon">
                                 <img ng-src="{{::item.icon}}"/>
@@ -43,23 +43,41 @@
         </div>
     </div>
     <div class="flex-vertical flex-1">
-        <header class="flex-horizontal actionbar" id="app-title" ng-class="{ 'pad-side': showFirstTimeSelection }">
+        <header class="flex-horizontal actionbar" id="app-title" ng-class="{ 'pad-side': showFirstTimeSelection }" ng-style="{ 'background-color': entries.currentEntriesType.color }">
             <a id="menu-button" class="actionbar-button" ng-click="toggleMenu()" ng-class="{ active: dialogs.menu.isOpen, render: !showFirstTimeSelection }">
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
-            <div class="flex-1">
-                <span id="actionbar-name" ng-bind="player.name || 'GrowingApp'"></span>
+            <div class="flex-1" id="actionbar-main" ng-cloak>
+                <dropdown close-on-click="true" button-text="{{player.name}}" button-class="player-name">
+                    <ul class="dropdown-list">
+                        <li ng-repeat="_player in players" ng-click="setCurrentPlayer(_player)" ng-class="{ selected: _player === player }">
+                            <img class="list-icon player-list-icon" ng-style="{ 'background-image': _player.image.cssUrl }" />{{_player.name}}
+                        </li>
+                    </ul>
+                </dropdown>
             </div>
             <div class="hide-default" ng-class="{ visible: !showFirstTimeSelection }">
                 <div id="spinner" toggle-display="showSpinner">
                     <img src="images/icons/spinner.svg" />
                 </div>
-                <a class="actionbar-button selectable" href="#/" ng-class="{ selected: currentPage == 'diary' }">
-                    <img src="images/icons/list.svg" title="Diary" />
-                </a>
-                <a class="actionbar-button selectable" href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
-                    <img src="images/icons/charts-white.svg" title="Charts" />
-                </a>
+                <dropdown ng-if="currentPage === 'diary'"
+                          button-class="{{!entries.currentEntriesType && 'disabled no-triangle'}}"
+                          button-icon="{{entries.currentEntriesType && entries.currentEntriesType.icon.url || 'images/icons/filter.svg'}}"
+                          close-on-click="true">
+                    <ul class="dropdown-list">
+                        <li ng-if="entries.currentEntriesType" ng-click="setEntriesType(null)">
+                            <img src="images/icons/close-red.svg" class="list-icon" />Clear filter
+                        </li>
+                        <li ng-repeat="entryType in ::entryTypes" ng-click="setEntriesType(entryType)">
+                            <div class="list-icon" ng-style="{ 'background-color': entryType.color, 'background-image': entryType.icon.cssUrl }"></div>{{entryType.name}}
+                        </li>
+                    </ul>
+                </dropdown>
+                <dropdown button-icon="{{navigation.currentPage.icon}}" close-on-click="true">
+                    <ul class="dropdown-list">
+                        <li ng-repeat="page in ::navigation.pages" ng-click="navigation.setCurrentPage(page)"><img class="dropdown-list-icon" ng-src="{{page.listIcon}}" />{{page.name}}</li>
+                    </ul>
+                </dropdown>
             </div>
         </header>
         <div id="contents-wrapper" class="flex flex-1">

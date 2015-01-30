@@ -1,7 +1,7 @@
 "use strict";
 
-angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "DataObject", "Images", "FileData"]).factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images", "FileData",
-    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, images, FileData) {
+angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "Utils", "DataObject", "Images", "FileData"]).factory("Player", ["$q", "$indexedDB", "dbConfig", "config", "DataObject", "images", "FileData", "utils",
+    function getPlayerClassFactory($q, $indexedDB, dbConfig, config, DataObject, images, FileData, utils) {
     var playersObjectStore = $indexedDB.objectStore(dbConfig.objectStores.players.name),
         dayMilliseconds = 1000 * 60 * 60 * 24;
 
@@ -53,6 +53,13 @@ angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "DataObject", "I
 
         return Math.floor((date - this.birthday) / dayMilliseconds);
     };
+
+    Player.prototype.__defineGetter__("ageText", function () {
+        if (!this._ageText)
+            this._ageText = utils.dates.dateDiff(new Date(), this.birthday, false);
+
+        return this._ageText;
+    });
 
     Player.prototype.getCloudData = function(){
         return angular.extend(this.getBaseCloudData(), {

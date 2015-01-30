@@ -1,0 +1,29 @@
+#player-summary{
+  background: #2d7091;
+  text-align: center;
+  color: White;
+  padding-top: 1rem;
+  margin-bottom: .5rem;
+}
+
+#player-summary-avatar{
+  width: 11rem;
+  height: 11rem;
+  border-radius: 50%;
+  border: solid 3px #558ba7;
+  background: #183d52 no-repeat center top;
+  background-size: cover;
+  margin: 0 auto .5rem;
+}
+
+#player-summary-name{
+  font-weight: normal;
+  margin: 0 0 .5rem;
+  font-size: 1.6rem;
+}
+
+#player-summary-info{
+  padding: .8rem 1rem;
+  background: rgba(255,255,255,.2);
+  font-size: .9em;
+}

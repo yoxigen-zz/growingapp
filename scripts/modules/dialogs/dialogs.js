@@ -11,7 +11,7 @@
             signUp: { htmlUrl: "views/signup.html", title: "Sign Up" },
             menu: {  },
             currentInsight: { actions: [ { icon: "plus", title: "Add entry" } ] },
-            editPlayer: {  },
+            editPlayer: { htmlUrl: "views/edit_player.html" },
             syncOffer: { htmlUrl: "views/syncOffer.html", title: "It's time to backup!" },
             newPlayer: {  },
             editEntry: { },

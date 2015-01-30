@@ -134,6 +134,13 @@
             return this.localThumbnailUrl || this.cloudThumbnailUrl;
         });
 
+        FileData.prototype.__defineGetter__("cssUrl", function(){
+            if (this.url)
+                return "url(" + this.url + ")";
+
+            return null;
+        });
+
         FileData.prototype.setLocalUrl = function (value) {
             this.localUrl = value;
             delete this.requireDownload;

@@ -43,8 +43,8 @@
         <span class="label-text">Or enter new milestone:</span>
         <textarea rows="3" ng-model="entries.editedEntry.properties.text" is-rtl="entries.editedEntry.rtl"></textarea>
     </label>
-    <div id="entry_photo_edit">
-        <img id="entry_photo_edit_image"
+    <div class="entry_photo_edit">
+        <img class="entry_photo_edit_image"
              ng-if="entries.editedEntry.image.thumbnailUrl"
              ng-src="{{entries.editedEntry.image.thumbnailUrl}}" />
         <div class="avatar-buttons">
@@ -70,8 +70,8 @@
     </div>
 </script>
 <script type="text/ng-template" id="entry_editor_photo">
-    <div id="entry_photo_edit">
-        <img id="entry_photo_edit_image"
+    <div class="entry_photo_edit">
+        <img class="entry_photo_edit_image"
              ng-if="entries.editedEntry.image.thumbnailUrl"
              ng-src="{{entries.editedEntry.image.thumbnailUrl}}" />
         <div class="avatar-buttons">

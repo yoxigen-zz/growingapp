@@ -1,5 +1,5 @@
 (function(){
-	angular.module("Dialogs").factory("DialogDirective", ["$timeout", function($timeout){
+	angular.module("Dialogs").factory("DialogDirective", ["$timeout", "Dialog", function($timeout, Dialog){
 		var TOGGLE_TIMEOUT = 300,
 			TOGGLE_CLASS = "visible",
 			TOGGLE_ACTIVE_CLASS = "active";
@@ -17,11 +17,9 @@
 				title: "@",
 				background: "@",
 				icon: "@",
-				show: "=",
+                dialog: "=",
 				actions: "=",
                 submitAction: "=",
-				onShow: "&",
-				onHide: "&",
 				"class": "@"
 			};
 			this.templateUrl = templateUrl;
@@ -37,7 +35,17 @@
 					window.removeEventListener("keydown", onKeyDown);
 				});
 
-				scope.$watch("show", function(isVisible){
+                scope.$watch("dialog", function(dialog){
+                    if (dialog instanceof Dialog){
+                        if (dialog.title && !attrs.title)
+                            scope.title = dialog.title;
+
+                        if (dialog.icon && !attrs.icon)
+                            scope.icon = dialog.icon;
+                    }
+                });
+
+				scope.$watch("dialog.isOpen", function(isVisible){
 					if (!!isVisible == dialogIsOpen)
 						return;
 
@@ -59,7 +67,6 @@
 						}, 40);
 
 						window.addEventListener("keydown", onKeyDown);
-						scope.onShow && scope.onShow({ $event: { closeDialog: scope.closeDialog.bind(this, null), toggleId: attrs.show }});
 						dialogIsOpen = true;
 					}
 					else{
@@ -70,20 +77,19 @@
 						}, TOGGLE_TIMEOUT);
 
 						window.removeEventListener("keydown", onKeyDown);
-						scope.onHide && scope.onHide({ toggleId: attrs.show });
 						dialogIsOpen = false;
 					}
 				});
 
 				scope.closeDialog = function(e){
 					if (!e || e.target === toggleElement || e.target.dataset.closesDialog)
-						scope.show = false;
+						scope.dialog.close();
 				};
 
 				function onKeyDown(e){
 					if (e.keyCode === 27) {
 						scope.$apply(function(){
-							scope.show = false;
+                            scope.dialog.close();
 						});
 					}
 				}

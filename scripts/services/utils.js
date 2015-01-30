@@ -185,6 +185,7 @@ angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", fun
 
                 var years = duration.years(),
                     months = duration.months(),
+                    weeks,
                     days = duration.days(),
                     str = [];
 
@@ -218,7 +219,16 @@ angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", fun
                         str.push(val);
                     }
 
-                    if (days) {
+                    if (!years && months < 2) {
+                        weeks = duration.weeks();
+                        val = weeks + " week";
+                        if (val > 1)
+                            val += "s";
+
+                        str.push(val);
+                    }
+
+                    if (!years && !months && !weeks) {
                         val = days + " day";
                         if (days > 1)
                             val += "s";

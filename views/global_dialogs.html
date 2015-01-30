@@ -1,34 +1,27 @@
-<slide-dialog show="dialogs.editPlayer.isOpen"
+<slide-dialog dialog="::dialogs.editPlayer"
               title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}"
-              actions="editedPlayerActions"
-              on-show="onShowDialog($event)" on-hide="onHideDialog()">
-    <div ng-include="'views/edit_player.html'"></div>
+              actions="editedPlayerActions">
+    <div ng-include="::dialogs.editPlayer.htmlUrl"></div>
 </slide-dialog>
-<dialog show="dialogs.signIn.isOpen" title="{{::dialogs.signIn.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="signInActions" submit-action="signInSubmitAction">
+<dialog dialog="::dialog.signIn" actions="signInActions" submit-action="signInSubmitAction">
     <div ng-include="::dialogs.signIn.htmlUrl"></div>
 </dialog>
-<slide-dialog show="dialogs.signUp.isOpen" title="{{::dialogs.signUp.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()">
+<slide-dialog dialog="dialogs.signUp">
     <div ng-include="::dialogs.signUp.htmlUrl"></div>
 </slide-dialog>
-<dialog show="dialogs.syncOffer.isOpen" title="{{::dialogs.syncOffer.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="syncOfferActions">
+<dialog dialog="dialogs.syncOffer" actions="syncOfferActions">
     <div ng-include="::dialogs.syncOffer.htmlUrl"></div>
 </dialog>
-<dialog show="dialogs.settings.isOpen"
-        title="{{::dialogs.settings.title}}"
-        icon="{{::dialogs.settings.icon}}"
-        on-show="onShowDialog($event)"
-        on-hide="onHideDialog()"
+<dialog dialog="dialogs.settings"
         submit-action="settingsSubmitAction">
     <div ng-include="::dialogs.settings.htmlUrl"></div>
 </dialog>
-<slide-dialog show="insights.currentInsight"
+<slide-dialog dialog="dialogs.currentInsight"
               title="{{insights.currentInsight.name}}"
               icon="{{insights.currentInsight.entryType.icon.id}}"
-              on-show="onShowDialog($event)"
               background="{{insights.currentInsight.entryType.color}}"
               class="no-padding {{insights.currentInsight.className}}"
-              actions="dialogs.currentInsight.actions"
-              on-hide="onHideDialog()">
+              actions="dialogs.currentInsight.actions">
     <div ng-include="insights.currentInsight.templateUrl"></div>
 </slide-dialog>
 <div class="floating-message" ng-show="dialogs.unremoveEntry.isOpen">
@@ -37,7 +30,7 @@
         <a ng-click="entries.unremoveLastEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
     </div>
 </div>
-<dialog show="dialogs.newEntry.isOpen" title="{{::dialogs.newEntry.title}}" on-show="onShowDialog($event)" on-hide="onHideDialog()">
+<dialog dialog="dialogs.newEntry">
     <ul class="entry-types-list">
         <li ng-repeat="entryType in ::entryTypes"
             ng-style="{ 'background-color': entryType.color }"
@@ -49,12 +42,10 @@
         </li>
     </ul>
 </dialog>
-<slide-dialog show="dialogs.editEntry.isOpen"
+<slide-dialog dialog="dialogs.editEntry"
               title="{{entries.editedEntry.isNew && 'New' || 'Edit'}} Entry: {{ entries.editedEntry.type.name }}"
               actions="dialogs.editEntry.actions"
-              submit-action="dialogs.editEntry.submitAction"
-              on-show="onShowDialog($event)"
-              on-hide="onHideDialog()">
+              submit-action="dialogs.editEntry.submitAction">
     <form ng-if="entries.editedEntry">
         <div ng-include="'entry_editor_' + entries.editedEntry.type.id"></div>
         <label ng-show="entries.editedEntry.type.allowDescription !== false">

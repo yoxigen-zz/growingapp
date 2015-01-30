@@ -85,6 +85,10 @@ a{ cursor: pointer; }
   &.visible{ display: block; }
 }
 
+.remove{
+  color: $removeColor;
+  font-weight: bold;
+}
 .player-edit-image{
   height: 6.9rem;
   max-width: 7rem;
@@ -138,7 +142,7 @@ a{ cursor: pointer; }
 
 #app-title{
   @media all and (min-width: $leftMenuMinWidth){
-    padding-left: .8rem;
+    padding: 0 .8rem;
   }
 
   &.pad-side{
@@ -148,11 +152,27 @@ a{ cursor: pointer; }
 .actionbar{
   height: $actionbarHeight;
   line-height: $actionbarHeight - .1;
-  background: $actionbarBackground;
+  background-color: $actionbarBackground;
   color: $actionbarColor;
   box-shadow: 0 3px 4px rgba(0,0,0,.25);
-  z-index: 1;
+  position: relative;
+  z-index: 2;
+  padding-right: .5rem;
+  -webkit-transition: background-color 300ms ease;
+  -moz-transition: background-color 300ms ease;
+  -ms-transition: background-color 300ms ease;
+  -o-transition: background-color 300ms ease;
+  transition: background-color 300ms ease;
 
+  .player-name{
+    font-size: 1.4rem;
+    color: White;
+    padding-left: 0;
+  }
+
+  .player-list-icon{
+    background-size: cover;
+  }
   .edit-button{
     height: .8rem;
   }
@@ -179,13 +199,41 @@ a{ cursor: pointer; }
     }
   }
 
+  #actionbar-main{
+    padding-right: .5rem;
+
+    h1{
+      margin: 0;
+      font-weight: 400;
+    }
+    h2{
+      margin: 0;
+      font-size: .9rem;
+      font-weight: normal;
+      color: rgba(255,255,255,.7);
+    }
+    &.with-selection{
+      line-height: 1.5rem;
+      padding-top: .2rem;
+    }
+
+    select.fancy-select{
+      color: rgba(255,255,255,.7);
+
+      &.player-select{
+        color: White;
+        font-size: 1.3rem;
+        left: -4px;
+        top: 2px;
+      }
+    }
+  }
   #actionbar-name{
     display: block;
-    padding-right: .5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 300;
   }
 
@@ -213,24 +261,29 @@ a{ cursor: pointer; }
       height: $actionbarHeight / 2;
       margin-top: $actionbarHeight / 4;
     }
-
-    &.selectable{
-      opacity: .5;
-      transform: scale(.8);
-      -webkit-transform: scale(.8);
-      -ms-transform: scale(.8);
-    }
-
-    &.selected{
-      opacity: 1;
-    }
-
-    &:active, &.ng-click-active{ opacity: 1}
   }
 }
+
+.list-icon{
+  height: 27px;
+  width: 27px;
+  border-radius: 50%;
+  margin-right: .5rem;
+  background-position: center center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  left: -5px;
+  position: relative;
+  top: -1px;
+}
+
+
 #contents-wrapper{
   overflow: hidden;
   position: relative;
+  z-index:1;
 
   -webkit-box-orient: vertical;
   -webkit-flex-flow: column;
@@ -446,6 +499,8 @@ $spinnerSize: 2rem;
   transition: opacity 400ms ease-out;
   display: none;
   opacity: 0;
+  position: relative;
+  top: 10px;
 
   img{
     width: $spinnerSize;
@@ -496,6 +551,10 @@ $spinnerSize: 2rem;
 $floatingActionButtonDiameter: 3.5rem;
 
 .floating-action-button{
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10;
   height: $floatingActionButtonDiameter;
   width: $floatingActionButtonDiameter;
   border-radius: 50%;
@@ -551,3 +610,5 @@ $floatingActionButtonDiameter: 3.5rem;
 @import "player_edit";
 @import "cards";
 @import "data-table";
+@import "player_summary";
+@import "../scripts/directives/dropdown/dropdown";

@@ -19,6 +19,16 @@
          done-scrolling="entries.allEntriesAdded"
          ng-class="{ 'flex-vertical': entries && !entries.items.length }"
          ng-show="player && !showFirstTimeSelection">
+        <!--
+        <div id="player-summary">
+            <div id="player-summary-avatar" ng-style="{ 'background-image': 'url(' + player.image.url + ')' }"></div>
+            <h2 id="player-summary-name">{{player.name}}</h2>
+            <div id="player-summary-info">
+                <span>{{player.ageText}}</span>
+            </div>
+        </div>
+        -->
+        <!--
         <header class="contents-header flex-horizontal" ng-show="player && !showFirstTimeSelection">
             <div class="header-controls flex-1">
                 <h2>Recent Activities</h2>
@@ -29,8 +39,10 @@
                     <option value="">All entry types</option>
                 </select>
             </div>
-            <a id="new-entry-button" class="floating-action-button add-button" ng-show="entries.items.length" title="New entry" ng-click="dialogs.newEntry.toggle()"></a>
+
         </header>
+        -->
+        <a id="new-entry-button" class="floating-action-button add-button" ng-show="entries.items.length" title="New entry" ng-click="dialogs.newEntry.toggle()"></a>
         <div class="flex-1 contents-empty-message" ng-cloak ng-show="!entries.settingEntries && entries && !entries.items.length">
             <div>
                 <p>No {{entries.currentEntriesType.name || ''}} entries added yet.</p>

@@ -3,6 +3,7 @@ app = angular.module("GrowingApp", [
     "xc.indexedDB",
     "Phonegap", "Parse",
     "app.filters",
+    "Dropdown",
     "DataObject",
     "DataObjectCollection",
     "FileData",

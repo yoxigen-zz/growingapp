@@ -19,6 +19,9 @@ angular.module("DataObject", ["xc.indexedDB", "Parse"]).factory("DataObject", ["
                 cloudId: this.cloudId
             };
         },
+        get imageUrl(){
+            return this.image && this.image.url;
+        },
         /**
          * To be used by child classes when the instance is created
          * @param data

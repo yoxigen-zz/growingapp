@@ -32,6 +32,7 @@ requirejs([
             "services/chart",
             "directives/toggle-display",
             "directives/on-scroll-to-bottom",
+            "directives/dropdown/dropdown",
             "entries/teeth/directive/teeth.directive",
             "services/classes/icon",
             "services/classes/eventbus_class",

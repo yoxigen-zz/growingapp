@@ -49,6 +49,10 @@ angular.module("Insights", ["Entries", "Dialogs"]).factory("insights", ["entries
             else
                 throw new TypeError("Invalid insight, expected either an insightId or an Insight object.");
 
+            if (currentInsight)
+                dialogs.currentInsight.open();
+            else
+                dialogs.currentInsight.close();
         },
         closeInsight: function(){
             currentInsight = null;

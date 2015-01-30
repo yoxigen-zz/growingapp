@@ -19,11 +19,9 @@
         $scope.setCurrentPlayer = setCurrentPlayer;
         $scope.offline = !window.navigator.onLine;
         $scope.toggleMenu = toggleMenu;
-        $scope.menuItems = navigation.mainMenuItems;
+        $scope.navigation = navigation;
         $scope.editPlayer = editPlayer;
         $scope.openLogin = openLogin;
-        $scope.onShowDialog = function(e){ eventBus.triggerEvent("popup.open", e); };
-        $scope.onHideDialog = function(e){ eventBus.triggerEvent("popup.close", e); };
         $scope.addNewPlayer = addNewPlayer;
         $scope.openSignUp = openSignUp;
         $scope.declineSyncOffer = declineSyncOffer;
@@ -38,7 +36,7 @@
         $scope.entries = entriesModel;
         $scope.localizationUnits = localization.units;
         $scope.entryTypes = entries.typesArray;
-        $scope.onEntriesTypeChange = entriesModel.setEntries;
+        $scope.setEntriesType = setEntriesType;
 
         $scope.signInSubmitAction = { text: "Sign In", onSubmit: function(){ eventBus.triggerEvent("doLogin") } };
 
@@ -83,7 +81,7 @@
             if (currentMenuItem)
                 currentMenuItem.selected = false;
 
-            for(var i= 0, item; item = $scope.menuItems[i]; i++){
+            for(var i= 0, item; item = navigation.mainMenuItems[i]; i++){
                 if (item.href === hash){
                     currentMenuItem = item;
                     item.selected = true;
@@ -96,7 +94,7 @@
             if (!itemId)
                 return null;
 
-            for(var i= 0, item; item = $scope.menuItems[i]; i++){
+            for(var i= 0, item; item = navigation.mainMenuItems[i]; i++){
                 if (item.id === itemId)
                     return item;
             }
@@ -104,6 +102,10 @@
             return null;
         }
 
+        function setEntriesType(type){
+            entriesModel.currentEntriesType = type;
+            entriesModel.setEntries();
+        }
 
         function openLogin(){
             $scope.showLogin = true;
@@ -320,11 +322,15 @@
         }
 
         function setCurrentPlayer(player){
-            if ($scope.player === player)
+            if (player === $scope.player)
                 return;
 
             if (!player)
                 player = $scope.players.length ? $scope.players[0] : null;
+            else
+                player = utils.arrays.find($scope.players, function(_player){
+                     return _player.playerId === player.playerId;
+                });
 
             $scope.player = player;
 
@@ -346,10 +352,6 @@
 
         function toggleMenu(){
             dialogs.menu.toggle();
-            if (dialogs.menu.isOpen)
-                eventBus.triggerEvent("popup.open", { closeDialog: function(){ dialogs.menu.close(); } });
-            else
-                eventBus.triggerEvent("popup.close");
         }
 
         function init(){

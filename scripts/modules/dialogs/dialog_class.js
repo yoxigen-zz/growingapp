@@ -1,28 +1,36 @@
 (function(){
     angular.module("Dialogs").factory("Dialog", DialogClassFactory);
 
-    DialogClassFactory.$inject = ["eventBus"];
+    DialogClassFactory.$inject = ["EventBus"];
 
-    function DialogClassFactory(eventBus){
+    function DialogClassFactory(EventBus){
         function Dialog(config){
+            var eventBus = EventBus.setToObject(this, ["open", "close"]);
+
             this.isOpen = false;
             this.htmlUrl = config.htmlUrl;
             this.title = config.title;
             this.icon = config.icon;
             this.actions = config.actions;
+
+            this.open = function(){
+                this.isOpen = true;
+                eventBus.triggerEvent("open");
+            };
+
+            this.close = function(shouldTriggerEvent){
+                this.isOpen = false;
+
+                if (shouldTriggerEvent !== false)
+                    eventBus.triggerEvent("close");
+            };
         }
 
-        Dialog.prototype.open = function(){
-            this.isOpen = true;
-        };
-
-        Dialog.prototype.close = function(){
-            this.isOpen = false;
-            eventBus.triggerEvent("popup.close", this);
-        };
-
         Dialog.prototype.toggle = function(){
-            this.isOpen = !this._isOpen;
+            if (this.isOpen)
+                this.close(true);
+            else
+                this.open();
         };
 
         return Dialog;
