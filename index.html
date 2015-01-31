@@ -8,7 +8,8 @@
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="phonegap.js"></script>
 </head>
-<body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }" ng-style="{ visibility: appVisibility}">
+<body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
+    <div id="splashscreen" ng-class="{ 'hide': appLoaded }" ng-if="!splashscreenKill">GrowingApp</div>
     <div id="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
     <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="dialogs.menu.isOpen">
         <div id="menu">

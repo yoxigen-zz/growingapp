@@ -371,6 +371,10 @@
                 });
 
                 cloud.sync({ isOnLoad: true });
+                $scope.appLoaded = true;
+                $timeout(function(){
+                    $scope.splashscreenKill = true;
+                }, 450);
             });
         }
     }

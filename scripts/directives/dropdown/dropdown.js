@@ -30,7 +30,6 @@
             function open(){
                 dropdownEl.classList.add("dropdown-open");
                 setMenuPositionTimeout = setTimeout(setMenuPositionAndShow);
-                document.body.addEventListener("mousedown", onMouseDown);
                 window.addEventListener("resize", close);
                 scope.isOpen = true;
                 document.addEventListener("backbutton", close);
@@ -116,6 +115,7 @@
 
                 dropdownEl.classList.add("dropdown-visible");
                 addMouseUpTimeout = setTimeout(function(){
+                    document.body.addEventListener("mousedown", onMouseDown);
                     menuEl.addEventListener("mouseup", close);
                 }, 320);
             }

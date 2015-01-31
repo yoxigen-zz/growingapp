@@ -116,6 +116,7 @@ a {
   font-size: 1.8rem;
   font-weight: 300;
   line-height: 15rem;
+  opacity: 1;
   -webkit-transition: all 500ms ease-out;
   -moz-transition: all 500ms ease-out;
   -ms-transition: all 500ms ease-out;
@@ -123,8 +124,6 @@ a {
   transition: all 500ms ease-out; }
   #splashscreen.hide {
     opacity: 0; }
-  #splashscreen.kill {
-    display: none; }
 
 #menu-button {
   display: none; }
