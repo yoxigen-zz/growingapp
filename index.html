@@ -20,24 +20,14 @@
     <div id="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
     <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="dialogs.menu.isOpen">
         <div id="menu">
-            <header class="actionbar"><span class="app-name">GrowingApp</span></header>
-            <ul id="players-menu">
-                <li ng-repeat="listPlayer in players" class="flex-horizontal"
-                    ng-class="{ selected: listPlayer.playerId === player.playerId, 'with-image': listPlayer.image.url }">
-                    <a ng-click="setCurrentPlayer(listPlayer); dialogs.menu.close()" class="flex-1"><img class="player-image" ng-if="listPlayer.image.url" ng-src="{{listPlayer.image.url}}" />
-                        {{::listPlayer.name}}
+            <header class="actionbar flex-horizontal">
+                <div class="flex-1 app-name">GrowingApp</div>
+                <div>
+                    <a class="actionbar-button" ng-click="dialogs.menu.close()">
+                        <img src="images/icons/back.svg" />
                     </a>
-                    <a ng-click="editPlayer(listPlayer); dialogs.menu.close()" class="players-menu-edit">
-                        <img class="child-menu-edit" src="images/icons/edit.svg"/>
-                    </a>
-                </li>
-                <li class="players-menu-add">
-                    <a class="button save-button" ng-click="addNewPlayer(); dialogs.menu.close()">
-                        <img class="child-menu-add" src="images/icons/plus.svg"/>
-                        Add Child
-                    </a>
-                </li>
-            </ul>
+                </div>
+            </header>
             <ul>
                 <li ng-repeat="item in ::navigation.mainMenuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
                     <a href="{{::item.href}}" ng-click="item.onClick($event)">
@@ -63,7 +53,7 @@
                 <dropdown close-on-click="true" button-text="{{player.name}}" button-class="player-name">
                     <ul class="dropdown-list">
                         <li ng-repeat="_player in players" ng-click="setCurrentPlayer(_player)" ng-class="{ selected: _player === player }">
-                            <img class="list-icon player-list-icon" ng-style="{ 'background-image': _player.image.cssUrl }" />{{_player.name}}
+                            <div class="list-icon player-list-icon" ng-style="{ 'background-image': _player.image.cssUrl }"></div>{{_player.name}}
                         </li>
                     </ul>
                     <ul class="dropdown-list">
