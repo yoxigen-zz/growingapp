@@ -113,15 +113,33 @@ a {
   z-index: 99999;
   text-align: center;
   color: white;
-  font-size: 1.8rem;
-  font-weight: 300;
-  line-height: 15rem;
   opacity: 1;
-  -webkit-transition: all 500ms ease-out;
-  -moz-transition: all 500ms ease-out;
-  -ms-transition: all 500ms ease-out;
-  -o-transition: all 500ms ease-out;
+  -webkit-transition: opacity 500ms ease-out;
+  -moz-transition: opacity 500ms ease-out;
+  -ms-transition: opacity 500ms ease-out;
+  -o-transition: opacity 500ms ease-out;
   transition: all 500ms ease-out; }
+  @media all and (orientation: landscape) {
+    #splashscreen {
+      background-position: right bottom;
+      background-size: 60%; }
+      #splashscreen div {
+        padding-left: 2rem;
+        box-sizing: border-box;
+        text-align: left !important; }
+      #splashscreen h1 {
+        display: inline; } }
+  #splashscreen h1 {
+    font-size: 1.8rem;
+    font-weight: 300; }
+  #splashscreen .spinner {
+    display: inline-block;
+    opacity: 1; }
+  #splashscreen div {
+    position: absolute;
+    top: 25%;
+    width: 100%;
+    text-align: center; }
   #splashscreen.hide {
     opacity: 0; }
 
@@ -403,7 +421,7 @@ a {
   to {
     -webkit-transform: rotate(-360deg); } }
 
-#spinner {
+.spinner {
   -webkit-transition: opacity 400ms ease-out;
   -moz-transition: opacity 400ms ease-out;
   -ms-transition: opacity 400ms ease-out;
@@ -413,16 +431,16 @@ a {
   opacity: 0;
   position: relative;
   top: 10px; }
-  #spinner img {
+  .spinner img {
     width: 2rem;
     height: 2rem;
     -webkit-animation-name: rotate;
     -webkit-animation-duration: 1.5s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear; }
-  #spinner.visible {
+  .spinner.visible {
     display: inline-block; }
-  #spinner.active {
+  .spinner.active {
     opacity: 1; }
 
 .floating-message {

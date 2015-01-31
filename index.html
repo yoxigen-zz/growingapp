@@ -9,7 +9,14 @@
     <script src="phonegap.js"></script>
 </head>
 <body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
-    <div id="splashscreen" ng-class="{ 'hide': appLoaded }" ng-if="!splashscreenKill">GrowingApp</div>
+    <div id="splashscreen" ng-class="{ 'hide': appLoaded }" ng-if="!splashscreenKill">
+        <div>
+            <h1>GrowingApp</h1>
+            <span class="spinner">
+                <img src="images/icons/spinner.svg" />
+            </span>
+        </div>
+    </div>
     <div id="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
     <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="dialogs.menu.isOpen">
         <div id="menu">
@@ -62,7 +69,7 @@
                 </dropdown>
             </div>
             <div class="hide-default" ng-class="{ visible: !showFirstTimeSelection }">
-                <div id="spinner" toggle-display="showSpinner">
+                <div class="spinner" toggle-display="showSpinner">
                     <img src="images/icons/spinner.svg" />
                 </div>
                 <dropdown ng-if="currentPage === 'diary'"
