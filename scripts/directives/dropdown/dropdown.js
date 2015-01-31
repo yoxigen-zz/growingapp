@@ -46,7 +46,7 @@
                 });
                 document.body.removeEventListener("mousedown", onMouseDown);
                 window.removeEventListener("resize", close);
-                menuEl.removeEventListener("click", close);
+                menuEl.removeEventListener("mouseup", close);
                 document.removeEventListener("backbutton", close);
                 scope.isOpen = false;
             }
@@ -116,7 +116,7 @@
                 dropdownEl.classList.add("dropdown-visible");
                 addMouseUpTimeout = setTimeout(function(){
                     document.body.addEventListener("mousedown", onMouseDown);
-                    menuEl.addEventListener("click", close);
+                    menuEl.addEventListener("mouseup", close);
                 }, 320);
             }
         }

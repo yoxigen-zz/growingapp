@@ -66,6 +66,11 @@
                             <img class="list-icon player-list-icon" ng-style="{ 'background-image': _player.image.cssUrl }" />{{_player.name}}
                         </li>
                     </ul>
+                    <ul class="dropdown-list">
+                        <li ng-click="addNewPlayer()">
+                            <div class="list-icon" style="background-image: url(images/icons/plus-black.svg)"></div>Add Child
+                        </li>
+                    </ul>
                 </dropdown>
             </div>
             <div class="hide-default" ng-class="{ visible: !showFirstTimeSelection }">
@@ -80,14 +85,16 @@
                         <li ng-if="entries.currentEntriesType" ng-click="setEntriesType(null)">
                             <img src="images/icons/close-red.svg" class="list-icon" />Clear filter
                         </li>
-                        <li ng-repeat="entryType in ::entryTypes" ng-click="setEntriesType(entryType)">
+                        <li ng-repeat="entryType in ::entryTypes" ng-class="{ selected: entryType === entries.currentEntriesType }" ng-click="setEntriesType(entryType)">
                             <div class="list-icon" ng-style="{ 'background-color': entryType.color, 'background-image': entryType.icon.cssUrl }"></div>{{entryType.name}}
                         </li>
                     </ul>
                 </dropdown>
                 <dropdown button-icon="{{navigation.currentPage.icon}}" close-on-click="true">
                     <ul class="dropdown-list">
-                        <li ng-repeat="page in ::navigation.pages" ng-click="navigation.setCurrentPage(page)"><img class="dropdown-list-icon" ng-src="{{page.listIcon}}" />{{page.name}}</li>
+                        <li ng-repeat="page in ::navigation.pages"
+                            ng-class="{ selected: page === navigation.currentPage }"
+                            ng-click="setEntriesType(null); navigation.setCurrentPage(page)"><img class="dropdown-list-icon" ng-src="{{page.listIcon}}" />{{page.name}}</li>
                     </ul>
                 </dropdown>
             </div>

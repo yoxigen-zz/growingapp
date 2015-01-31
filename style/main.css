@@ -118,7 +118,7 @@ a {
   -moz-transition: opacity 500ms ease-out;
   -ms-transition: opacity 500ms ease-out;
   -o-transition: opacity 500ms ease-out;
-  transition: all 500ms ease-out; }
+  transition: opacity 500ms ease-out; }
   @media all and (orientation: landscape) {
     #splashscreen {
       background-position: right bottom;
@@ -1500,13 +1500,18 @@ svg.graph {
     font-size: 1rem;
     font-style: normal;
     white-space: nowrap; }
+    .dropdown-directive .dropdown-list:not(:first-child) {
+      border-top: solid 1px #ddd; }
     .dropdown-directive .dropdown-list li {
       padding: .7rem 2rem .7rem 1rem;
       line-height: 20px;
       cursor: pointer;
-      text-overflow: ellipsis; }
-      .dropdown-directive .dropdown-list li:hover {
-        background: rgba(92, 210, 250, 0.18); }
+      text-overflow: ellipsis;
+      /*
+      &:hover{
+        background: $lightHoverColor;
+      }
+      */ }
       .dropdown-directive .dropdown-list li.ng-click-active, .dropdown-directive .dropdown-list li:active {
         background: rgba(92, 210, 250, 0.5); }
       .dropdown-directive .dropdown-list li .dropdown-list-icon {
@@ -1515,6 +1520,8 @@ svg.graph {
         vertical-align: middle;
         position: relative;
         top: -1px; }
+      .dropdown-directive .dropdown-list li.selected {
+        color: #017fcf; }
     .dropdown-directive .dropdown-list .dropdown-list-icon {
       width: 1.2rem;
       margin-right: 1rem;

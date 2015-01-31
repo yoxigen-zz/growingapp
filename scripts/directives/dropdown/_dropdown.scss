@@ -41,16 +41,20 @@
     font-style: normal;
     white-space: nowrap;
 
+    &:not(:first-child){
+      border-top: solid 1px #ddd;
+    }
+
     li{
       padding: .7rem 2rem .7rem 1rem;
       line-height: 20px;
       cursor: pointer;
       text-overflow: ellipsis;
-
+      /*
       &:hover{
         background: $lightHoverColor;
       }
-
+      */
       &.ng-click-active, &:active{
         background: $lightActiveColor;
       }
@@ -61,6 +65,10 @@
         vertical-align: middle;
         position: relative;
         top: -1px;
+      }
+
+      &.selected{
+        color: #017fcf;
       }
     }
 
