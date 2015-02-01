@@ -49,6 +49,11 @@
                 menuEl.removeEventListener("mouseup", close);
                 document.removeEventListener("backbutton", close);
                 scope.isOpen = false;
+
+                // Since mousedown/up are handled separately, the ng-touch module fails to remove the ng-click-active class, need to do it manually:
+                Array.prototype.slice.call(menuEl.querySelectorAll(".ng-click-active"), 0).forEach(function(activeItem){
+                    activeItem.classList.remove("ng-click-active");
+                });
             }
 
             function onMouseDown(e){
