@@ -1,7 +1,7 @@
 app.factory("statistics", ["utils", function(utils){
     var methods = {
         getPercentiles: function(chartId, player, units){
-            return utils.data.getCsv("data/" + chartId + "_" + player.gender + "_weeks_" + units + ".csv", function(d) {
+            return utils.data.getCsv("data/" + chartId + "_" + player.gender.id + "_weeks_" + units + ".csv", function(d) {
                 return {
                     P05: +d.P5,
                     P10: +d.P10,

@@ -13,12 +13,15 @@ angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "Utils", "DataOb
             angular.extend(this, data);
             id = data.playerId;
 
+            if (typeof(this.gender) === "string")
+                this.gender = config.getGender(this.gender);
+
             this.init(data);
             if (!data.image && data.imageId)
                 this.image = new FileData(data.imageId);
         }
         else {
-            this.gender = "f";
+            this.gender = config.getGender("f");
             this.birthday = new Date();
         }
 
@@ -66,7 +69,7 @@ angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "Utils", "DataOb
             playerId: this.playerId,
             birthday: this.birthday,
             name: this.name,
-            gender: this.gender,
+            gender: this.gender.id,
             id: this.cloudId
         });
     };
@@ -75,7 +78,7 @@ angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "Utils", "DataOb
         var localData = {
             name: this.name,
             birthday: this.birthday,
-            gender: this.gender
+            gender: this.gender.id
         };
 
         if (this.playerId)

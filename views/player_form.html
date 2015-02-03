@@ -1,0 +1,16 @@
+<div class="player-edit">
+    <form ng-submit="playersService.savePlayer(playersService.editedPlayer)" class="light-form centered">
+        <div class="player-image" ng-click="playersService.editedPlayer.addPhoto()"
+             ng-style="{ 'background-image': playersService.editedPlayer.image.cssUrl }"></div>
+        <section class="light-form-section">
+            <input type="text" ng-model="playersService.editedPlayer.name" placeholder="Name"/>
+        </section>
+        <section class="light-form-section">
+            <input type="date" ng-model="playersService.editedPlayer.birthday" placeholder="Birthday"/>
+            <dropdown button-text="{{playersService.editedPlayer.gender.name}}"></dropdown>
+        </section>
+        <section class="light-form-section">
+            <input type="submit" class="btn btn-success" value="{{playersService.editedPlayer.playerId && 'Save' || 'Add'}} child" />
+        </section>
+    </form>
+</div>

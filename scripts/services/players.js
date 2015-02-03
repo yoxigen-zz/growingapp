@@ -1,7 +1,10 @@
 angular.module("Players", []).factory("players", function(){
     var currentPlayer;
 
-    return {
+    var methods = {
+        editPlayer: function(player){
+            methods.editedPlayer = player;
+        },
         getCurrentPlayer: getCurrentPlayer,
         getCurrentPlayerId: function(){
             var currentPlayer = getCurrentPlayer();
@@ -9,6 +12,8 @@ angular.module("Players", []).factory("players", function(){
         },
         setCurrentPlayer: setCurrentPlayer
     };
+
+    return methods;
 
     function getCurrentPlayer(){
         return currentPlayer;

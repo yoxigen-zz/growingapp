@@ -22,7 +22,7 @@
 </script>
 <script type="text/ng-template" id="entry_editor_speech">
     <label>
-        <span class="label-text">What did {{ player.gender | pronoun }} say?</span>
+        <span class="label-text">What did {{ player.gender.pronoun }} say?</span>
         <textarea ng-model="entries.editedEntry.properties.words"
                   data-auto-focus
                   rows="5"

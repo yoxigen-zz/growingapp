@@ -601,13 +601,16 @@ $floatingActionButtonDiameter: 3.5rem;
   }
 }
 
-#overlay{
+.overlay{
   position: fixed;
   z-index: 100;
   top: 0;
   bottom: 0;
   left: 0;
   width: 100%;
+}
+
+#overlay{
   background: #000;
   opacity: 0;
   -webkit-transition: opacity 300ms ease-out;
@@ -622,11 +625,13 @@ $floatingActionButtonDiameter: 3.5rem;
   }
 }
 
+@import "first-time";
 @import "items-list";
 @import "menu";
 @import "popup";
 @import "dialog";
 @import "forms";
+@import "light_form";
 @import "panels";
 @import "entry_types";
 @import "entry_cards";

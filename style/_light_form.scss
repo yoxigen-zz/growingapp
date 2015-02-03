@@ -1,0 +1,36 @@
+.light-form{
+  input[type=text], input[type=number], input[type=date]{
+    border: none;
+    outline: none;
+    padding: 5px;
+    border-bottom: solid 2px rgba(0,0,0,.2);
+    width: auto;
+  }
+
+  &.centered{
+    text-align: center;
+
+    input[type=text], input[type=number], input[type=date]{
+      text-align: center;
+    }
+  }
+
+  .light-form-section{
+    padding: .5rem 0;
+  }
+
+  .btn{
+    padding: .7rem 1rem;
+    border-radius: 3px;
+    display: inline-block;
+    border: none;
+    font-size: 1.2rem;
+    width: 100%;
+    max-width: 400px;
+
+    &.btn-success{
+      background: #0fd52b;
+      color: rgba(0,0,0,.87);
+    }
+  }
+}

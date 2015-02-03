@@ -16,6 +16,7 @@
         $scope.config = config;
         $scope.dialogs = dialogs;
 
+        $scope.playersService = players;
         $scope.setCurrentPlayer = setCurrentPlayer;
         $scope.offline = !window.navigator.onLine;
         $scope.toggleMenu = toggleMenu;
@@ -44,6 +45,8 @@
             { text: "Don't backup", onClick: declineSyncOffer },
             { text: "Backup now", onClick: openSignUp }
         ];
+
+
         // TODO: move these to a new EditPlayerController:
         $scope.savePlayer = savePlayer;
         $scope.removePlayer = removePlayer;
@@ -134,7 +137,7 @@
                 if (config.sync.lastSyncTimestamp)
                     $scope.addNewPlayer();
                 else
-                    $scope.showFirstTimeSelection = true;
+                    setFirstTime();
             }
         }
 
@@ -343,7 +346,7 @@
                 if (config.sync.lastSyncTimestamp)
                     $scope.addNewPlayer();
                 else
-                    $scope.showFirstTimeSelection = true;
+                    setFirstTime();
             }
 
             players.setCurrentPlayer(player);
@@ -352,6 +355,11 @@
 
         function toggleMenu(){
             dialogs.menu.toggle();
+        }
+
+        function setFirstTime(){
+            $scope.showFirstTimeSelection = true;
+            players.editPlayer(new Player());
         }
 
         function init(){

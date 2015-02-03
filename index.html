@@ -17,7 +17,8 @@
             </span>
         </div>
     </div>
-    <div id="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
+    <div ng-if="showFirstTimeSelection" class="overlay flex-vertical"  ng-include="'views/first_time.html'"></div>
+    <div id="overlay" class="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
     <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="dialogs.menu.isOpen">
         <div id="menu">
             <header class="actionbar flex-horizontal">

@@ -67,6 +67,16 @@ angular.module("Config", ["Utils", "Localization"]).factory("config", ["utils", 
         }
     };
 
+    var genders = [
+        { id: "f", name: "Girl", pronoun: "she" },
+        { id: "m", name: "Boy", pronoun: "he" }
+    ];
+
+    var genderIndex = {
+        f: genders[0],
+        m: genders[1]
+    };
+
     var currentLocalization = localization.getLocalizationDefaults();
 
     var localizationSetTime,
@@ -94,6 +104,10 @@ angular.module("Config", ["Utils", "Localization"]).factory("config", ["utils", 
 
     return {
         entries: entries,
+        genders: genders,
+        getGender: function(id){
+            return genderIndex[id];
+        },
         getCurrentLocalization: function(){
             var values = {};
             for(var p in currentLocalization){
