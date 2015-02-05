@@ -1,36 +1,87 @@
 .light-form{
+
   input[type=text], input[type=number], input[type=date]{
     border: none;
     outline: none;
-    padding: 5px;
+    padding: 4px;
     border-bottom: solid 2px rgba(0,0,0,.2);
     width: auto;
-  }
+    text-align: left;
 
-  &.centered{
-    text-align: center;
-
-    input[type=text], input[type=number], input[type=date]{
+    &.centered{
       text-align: center;
     }
   }
 
-  .light-form-section{
-    padding: .5rem 0;
+  .dropdown-directive-button{
+    border-bottom: solid 2px rgba(0,0,0,.2);
+    padding: .4rem 1.4rem .4rem 0;
   }
 
-  .btn{
+  input[type=date]{
+    background: url(../images/icons/calendar.gif) no-repeat right 11px;
+  }
+
+  &.centered{
+    text-align: center;
+  }
+
+  .light-form-section{
+    padding: .1rem 0;
+  }
+
+  label{
+    display: block;
+  }
+
+  .label-bottom{
+    color: $labelColor;
+    display: block;
+    font-size: .8rem;
+    font-weight: bold;
+  }
+
+  .btn {
     padding: .7rem 1rem;
     border-radius: 3px;
     display: inline-block;
     border: none;
-    font-size: 1.2rem;
-    width: 100%;
-    max-width: 400px;
+    cursor: pointer;
+    background: none;
+    -webkit-appearance: none;
 
-    &.btn-success{
+    &.btn-submit{
+      width: 100%;
+      max-width: 400px;
+      font-size: 1.2rem;
+
+    }
+    &.btn-success {
       background: #0fd52b;
-      color: rgba(0,0,0,.87);
+      color: rgba(0, 0, 0, .87);
+    }
+  }
+
+  .btn-icon{
+    width: 3rem;
+    height: 3rem;
+    margin: .5rem;
+  }
+}
+
+.image-type-selection{
+  padding: .3rem;
+
+  .btn{
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #666;
+    padding: 1rem 2rem;
+    cursor: pointer;
+
+    .btn-icon{
+      display: block;
     }
   }
 }

@@ -1,13 +1,15 @@
-<div id="first-time" class="flex-1 flex-vertical">
+<div id="first-time" class="flex-1">
     <header>GrowingApp</header>
-    <main class="flex-1">
-        To get started, please add a child:
-        <div ng-include="'views/player_form.html'"></div>
-    </main>
-    <footer>
-        Already have an account?
-        <div>
-            <a id="first-time-signin">Sign in</a>
-        </div>
-    </footer>
+    <div class="flex-1 flex-vertical">
+        <main class="flex-1 scroll-vertical first-time-main">
+            To get started, please add a child:
+            <div ng-include="'views/player_form.html'"></div>
+        </main>
+        <footer class="first-time-footer">
+            Already have an account?
+            <div>
+                <a id="first-time-signin">Sign in</a>
+            </div>
+        </footer>
+    </div>
 </div>

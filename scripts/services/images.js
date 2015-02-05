@@ -1,4 +1,4 @@
-angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images", ["$q", "phonegap", "messages", "FileData", function($q, phonegap, messages, FileData){
+angular.module("Images", ["Phonegap", "Messages", "FileData", "Dialogs"]).factory("images", ["$q", "phonegap", "messages", "FileData", "dialogs", function($q, phonegap, messages, FileData, dialogs){
 
     var THUMBNAIL_SIZE = 100;
 
@@ -103,6 +103,30 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
             });
         });
     }
+
+    /**
+     * Displays a modal with selection for the image retrieval method - browse or camera,
+     * returns a promise that resolves with the result.
+     */
+    function selectImageMethod(){
+        var deferred = $q.defer();
+
+        dialogs.imageMethodSelect.select = function(method){
+            dialogs.imageMethodSelect.close();
+            deferred.resolve(method);
+        };
+
+        dialogs.imageMethodSelect.open();
+
+        dialogs.imageMethodSelect.onClose.subscribe(onCloseDialog);
+
+        function onCloseDialog(){
+            delete dialogs.imageMethodSelect.select;
+            dialogs.imageMethodSelect.onClose.unsubscribe(onCloseDialog);
+        }
+        return deferred.promise;
+    }
+
     /**
      * Takes a picture and if successful, adds it to the DataObject.
      * Also creates a thumbnail for the image.
@@ -110,22 +134,29 @@ angular.module("Images", ["Phonegap", "Messages", "FileData"]).factory("images",
      * @returns {*} The promise is called with the new image
      */
      function addPhotoToDataObject(imagesConfig, dataObject, method) {
-        return getPhoto(method, {
-            allowEdit: true,
-            targetWidth: imagesConfig.width,
-            targetHeight: imagesConfig.height,
-            saveToPhotoAlbum: false
-        }).then(function (imageUrl) {
-            dataObject.image = new FileData({
-                localUrl: imageUrl,
-                mimeType: FileData.mimeTypes.image.JPEG,
-                unsaved: true,
-                unsynced: true
-            });
+        if (!method)
+            selectImageMethod().then(doGetPhoto);
+        else
+            doGetPhoto(method);
 
-            return addThumbnailToDataObject(dataObject.image);
-        }, function(error){
-            messages.error(error);
-        });
+        function doGetPhoto(method) {
+            return getPhoto(method, {
+                allowEdit: true,
+                targetWidth: imagesConfig.width,
+                targetHeight: imagesConfig.height,
+                saveToPhotoAlbum: false
+            }).then(function (imageUrl) {
+                dataObject.image = new FileData({
+                    localUrl: imageUrl,
+                    mimeType: FileData.mimeTypes.image.JPEG,
+                    unsaved: true,
+                    unsynced: true
+                });
+
+                return addThumbnailToDataObject(dataObject.image);
+            }, function (error) {
+                messages.error(error);
+            });
+        }
     }
 }]);

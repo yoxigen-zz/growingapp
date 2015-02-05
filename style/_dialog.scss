@@ -48,6 +48,12 @@ $dialogHeaderHeight: 3rem;
   pointer-events: all;
 }
 
+.fit-contents{
+  .dialog{
+    min-height: 0;
+    width: auto;
+  }
+}
 .dialog{
   pointer-events: all;
   width: 100%;
@@ -127,4 +133,12 @@ $dialogHeaderHeight: 3rem;
   footer{
     padding: 1rem;
   }
+}
+
+.dialog-title{
+  background: #1e94f6;
+  padding: .5rem;
+  border-radius: 3px;
+  color: White;
+  margin: 0;
 }

@@ -68,8 +68,8 @@ angular.module("Config", ["Utils", "Localization"]).factory("config", ["utils", 
     };
 
     var genders = [
-        { id: "f", name: "Girl", pronoun: "she" },
-        { id: "m", name: "Boy", pronoun: "he" }
+        { id: "f", name: "Girl", pronoun: "she", icon: "images/icons/female.svg" },
+        { id: "m", name: "Boy", pronoun: "he", icon: "images/icons/male.svg" }
     ];
 
     var genderIndex = {

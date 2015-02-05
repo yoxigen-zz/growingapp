@@ -82,6 +82,18 @@
   }
 }
 
+.button-triangle{
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  position: absolute;
+  top: 50%;
+  right: 0;
+}
+
 .dropdown-directive-button{
   display: inline-block;
   padding: .5rem 1rem .5rem;
@@ -100,14 +112,25 @@
   }
 
   &:not(.no-triangle)::after{
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #fff;
-    position: absolute;
-    top: 50%;
-    right: 0;
+    @extend .button-triangle;
+  }
+
+  &.small-icon{
+    font-size: 1rem;
+
+    img {
+      height: 1rem;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  &.black-button{
+    &:not(.no-triangle)::after{
+      @extend .button-triangle;
+      border-top-color: #999;
+    }
   }
 }

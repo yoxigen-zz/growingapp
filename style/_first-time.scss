@@ -1,25 +1,53 @@
+$firstTimePadding: 1.5rem;
+$firstTimePaddingSmall: 1rem;
+
 #first-time{
   background: White;
+  @extend .flex;
+
+  webkit-box-orient: horizontal;
+  -webkit-flex-flow: row;
+  flex-flow: row;
+  flex-direction: row;
+
+  @media all and (max-width: 400px){
+    -webkit-box-orient: vertical;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+    flex-direction: column;
+
+    & > header{
+      height: 150px;
+      font-size: 1.4rem;
+      padding: $firstTimePadding;
+    }
+
+    .first-time-main{
+      padding: 1rem $firstTimePadding
+    }
+    .first-time-footer{
+      padding: 1.6rem $firstTimePadding;
+    }
+  }
 
   & > header{
-    height: 150px;
-    background: #75468b;
+    height: auto;
     background: #75468b url(../images/logo_header.svg) no-repeat right bottom;
     background-size: contain;
     color: White;
-    padding: 2.5rem 0 0 2rem;
+    padding: 2.5rem $firstTimePaddingSmall;
     box-sizing: border-box;
-    font-size: 1.4rem;
     font-weight: 300;
+    font-size: 1.2rem;
   }
 
-  & > main{
-    padding: 1.5rem 2rem;
+  .first-time-main{
+    padding: 1rem $firstTimePaddingSmall;
   }
 
-  & > footer{
+  .first-time-footer{
     background: #1e94f6;
-    padding: 1.6rem 2rem;
+    padding: 1rem $firstTimePaddingSmall;
     color: White;
     font-weight: 300;
   }

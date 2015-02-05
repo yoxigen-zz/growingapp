@@ -16,6 +16,17 @@
         submit-action="settingsSubmitAction">
     <div ng-include="::dialogs.settings.htmlUrl"></div>
 </dialog>
+<dialog dialog="dialogs.imageMethodSelect" class="fit-contents">
+    <div class="image-type-selection">
+        <div class="light-form">
+            <h4 class="dialog-title">Get image from</h4>
+            <div>
+                <button class="btn" ng-click="dialogs.imageMethodSelect.select('browse')"><img src="images/icons/folders.svg" class="btn-icon" /> Browse</button>
+                <button class="btn" ng-click="dialogs.imageMethodSelect.select('camera')"><img src="images/icons/camera.svg" class="btn-icon" /> Camera</button>
+            </div>
+        </div>
+    </div>
+</dialog>
 <slide-dialog dialog="dialogs.currentInsight"
               title="{{insights.currentInsight.name}}"
               icon="{{insights.currentInsight.entryType.icon.id}}"

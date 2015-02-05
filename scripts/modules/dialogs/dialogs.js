@@ -9,6 +9,7 @@
         var _dialogs = {
             signIn: { htmlUrl: "views/login.html", title: "Sign In" },
             signUp: { htmlUrl: "views/signup.html", title: "Sign Up" },
+            imageMethodSelect: { htmlUrl: "views/image_method_select.html" },
             menu: {  },
             currentInsight: { actions: [ { icon: "plus", title: "Add entry" } ] },
             editPlayer: { htmlUrl: "views/edit_player.html" },

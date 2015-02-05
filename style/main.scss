@@ -34,6 +34,9 @@ a{ cursor: pointer; }
   text-align: right;
 }
 
+.align-right{ text-align: right; }
+.align-left{ text-align: left; }
+.align-center{ text-align: center; }
 
 .flex-horizontal{
   @extend .flex;

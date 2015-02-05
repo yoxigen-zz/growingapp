@@ -27,7 +27,7 @@ body {
 html {
   font-size: 16px; }
 
-.flex, body, .flex-horizontal, .buttons-bar, .double-panel, .flex-vertical, .popup.visible, #insights-list .insight-text.center, .cards .card-info .card-details {
+.flex, body, .flex-horizontal, .buttons-bar, .double-panel, .flex-vertical, #first-time, .popup.visible, #insights-list .insight-text.center, .cards .card-info .card-details {
   display: -webkit-box;
   display: -webkit-flex;
   display: flex; }
@@ -52,6 +52,15 @@ a {
 .rtl {
   direction: rtl;
   text-align: right; }
+
+.align-right {
+  text-align: right; }
+
+.align-left {
+  text-align: left; }
+
+.align-center {
+  text-align: center; }
 
 .flex-horizontal, .buttons-bar, .double-panel {
   -webkit-box-orient: horizontal;
@@ -512,22 +521,39 @@ a {
       display: none; } }
 
 #first-time {
-  background: White; }
+  background: White;
+  webkit-box-orient: horizontal;
+  -webkit-flex-flow: row;
+  flex-flow: row;
+  flex-direction: row; }
+  @media all and (max-width: 400px) {
+    #first-time {
+      -webkit-box-orient: vertical;
+      -webkit-flex-flow: column;
+      flex-flow: column;
+      flex-direction: column; }
+      #first-time > header {
+        height: 150px;
+        font-size: 1.4rem;
+        padding: 1.5rem; }
+      #first-time .first-time-main {
+        padding: 1rem 1.5rem; }
+      #first-time .first-time-footer {
+        padding: 1.6rem 1.5rem; } }
   #first-time > header {
-    height: 150px;
-    background: #75468b;
+    height: auto;
     background: #75468b url(../images/logo_header.svg) no-repeat right bottom;
     background-size: contain;
     color: White;
-    padding: 2.5rem 0 0 2rem;
+    padding: 2.5rem 1rem;
     box-sizing: border-box;
-    font-size: 1.4rem;
-    font-weight: 300; }
-  #first-time > main {
-    padding: 1.5rem 2rem; }
-  #first-time > footer {
+    font-weight: 300;
+    font-size: 1.2rem; }
+  #first-time .first-time-main {
+    padding: 1rem 1rem; }
+  #first-time .first-time-footer {
     background: #1e94f6;
-    padding: 1.6rem 2rem;
+    padding: 1rem 1rem;
     color: White;
     font-weight: 300; }
 
@@ -805,6 +831,10 @@ blockquote {
   padding: 0;
   pointer-events: all; }
 
+.fit-contents .dialog {
+  min-height: 0;
+  width: auto; }
+
 .dialog {
   pointer-events: all;
   width: 100%;
@@ -861,6 +891,13 @@ blockquote {
       margin: -.3rem .1rem 0; }
   .dialog footer {
     padding: 1rem; }
+
+.dialog-title {
+  background: #1e94f6;
+  padding: .5rem;
+  border-radius: 3px;
+  color: White;
+  margin: 0; }
 
 form input[type=text], form textarea, form input[type=number], form input[type=date], form input[type=password], form input[type=email] {
   border: solid 1px #b9cfd6;
@@ -1017,26 +1054,59 @@ select {
 .light-form input[type=text], .light-form input[type=number], .light-form input[type=date] {
   border: none;
   outline: none;
-  padding: 5px;
+  padding: 4px;
   border-bottom: solid 2px rgba(0, 0, 0, 0.2);
-  width: auto; }
+  width: auto;
+  text-align: left; }
+  .light-form input[type=text].centered, .light-form input[type=number].centered, .light-form input[type=date].centered {
+    text-align: center; }
+.light-form .dropdown-directive-button {
+  border-bottom: solid 2px rgba(0, 0, 0, 0.2);
+  padding: .4rem 1.4rem .4rem 0; }
+.light-form input[type=date] {
+  background: url(../images/icons/calendar.gif) no-repeat right 11px; }
 .light-form.centered {
   text-align: center; }
-  .light-form.centered input[type=text], .light-form.centered input[type=number], .light-form.centered input[type=date] {
-    text-align: center; }
 .light-form .light-form-section {
-  padding: .5rem 0; }
+  padding: .1rem 0; }
+.light-form label {
+  display: block; }
+.light-form .label-bottom {
+  color: #1e94f6;
+  display: block;
+  font-size: .8rem;
+  font-weight: bold; }
 .light-form .btn {
   padding: .7rem 1rem;
   border-radius: 3px;
   display: inline-block;
   border: none;
-  font-size: 1.2rem;
-  width: 100%;
-  max-width: 400px; }
+  cursor: pointer;
+  background: none;
+  -webkit-appearance: none; }
+  .light-form .btn.btn-submit {
+    width: 100%;
+    max-width: 400px;
+    font-size: 1.2rem; }
   .light-form .btn.btn-success {
     background: #0fd52b;
     color: rgba(0, 0, 0, 0.87); }
+.light-form .btn-icon {
+  width: 3rem;
+  height: 3rem;
+  margin: .5rem; }
+
+.image-type-selection {
+  padding: .3rem; }
+  .image-type-selection .btn {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #666;
+    padding: 1rem 2rem;
+    cursor: pointer; }
+    .image-type-selection .btn .btn-icon {
+      display: block; }
 
 .panel-wrapper {
   overflow: hidden; }
@@ -1338,6 +1408,18 @@ svg.graph {
         width: 5rem;
         height: 5rem; } }
 
+.player-edit {
+  padding-top: 1rem; }
+  .player-edit .player-image {
+    width: 7rem;
+    height: 7rem;
+    background: #1e94f6 url(../images/icons/user.svg) no-repeat center 100%;
+    background-size: 97%;
+    border-radius: 50%;
+    margin: auto;
+    border: solid 3px #1e94f6;
+    cursor: pointer; }
+
 .cards {
   list-style: none;
   margin: 0;
@@ -1535,6 +1617,17 @@ svg.graph {
       position: relative;
       top: -2px; }
 
+.button-triangle, .dropdown-directive-button:not(.no-triangle)::after, .dropdown-directive-button.black-button:not(.no-triangle)::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  position: absolute;
+  top: 50%;
+  right: 0; }
+
 .dropdown-directive-button {
   display: inline-block;
   padding: .5rem 1rem .5rem;
@@ -1549,13 +1642,13 @@ svg.graph {
     padding-right: .5rem; }
   .dropdown-directive-button img {
     height: 1.6rem; }
-  .dropdown-directive-button:not(.no-triangle)::after {
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 6px solid #fff;
-    position: absolute;
-    top: 50%;
-    right: 0; }
+  .dropdown-directive-button.small-icon {
+    font-size: 1rem; }
+    .dropdown-directive-button.small-icon img {
+      height: 1rem;
+      vertical-align: middle;
+      margin-right: 0.5rem;
+      position: relative;
+      top: -2px; }
+  .dropdown-directive-button.black-button:not(.no-triangle)::after {
+    border-top-color: #999; }
