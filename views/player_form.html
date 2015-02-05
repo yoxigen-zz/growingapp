@@ -1,39 +1,43 @@
 <div class="player-edit">
-    <form ng-submit="playersService.savePlayer(playersService.editedPlayer)" class="light-form centered">
-        <section class="light-form-section">
+    <form ng-submit="saveEditedPlayer()" class="light-form centered">
+        <section class="light-form-section player-edit-image-section">
             <div class="player-image"
                  ng-click="playersService.editedPlayer.addPhoto()"
                  ng-style="{ 'background-image': playersService.editedPlayer.image.cssUrl }"></div>
         </section>
-        <section class="light-form-section">
-            <label>
-                <input type="text" ng-model="playersService.editedPlayer.name" class="centered" />
-                <span class="label-bottom">Name</span>
-            </label>
-        </section>
-        <section class="light-form-section flex-horizontal">
-            <label class="flex-1 align-left">
-                <div style="display: inline-block">
-                    <input type="date" ng-model="playersService.editedPlayer.birthday" placeholder="Birthday"/>
-                    <span class="label-bottom align-center">Birthday</span>
-                </div>
-            </label>
-            <label>
-                <dropdown button-text="{{playersService.editedPlayer.gender.name}}"
-                          button-icon="{{playersService.editedPlayer.gender.icon}}"
-                          button-class="small-icon black-button"
-                          close-on-click="true">
-                    <ul class="dropdown-list">
-                        <li ng-repeat="gender in ::config.genders"
-                            ng-class="{ selected: gender === playersService.editedPlayer.gender }"
-                            ng-click="playersService.editedPlayer.gender = gender"><img class="dropdown-list-icon" ng-src="{{gender.icon}}" />{{gender.name}}</li>
-                    </ul>
-                </dropdown>
-                <span class="label-bottom">Gender</span>
-            </label>
-        </section>
-        <section class="light-form-section">
-            <input type="submit" class="btn btn-success btn-submit" value="{{playersService.editedPlayer.playerId && 'Save' || 'Add'}} child" />
-        </section>
+        <div class="player-edit-inputs">
+            <section class="light-form-section">
+                <label>
+                    <div style="display: inline-block">
+                        <input type="text" required ng-model="playersService.editedPlayer.name" class="centered" />
+                        <span class="label-bottom align-center">Name</span>
+                    </div>
+                </label>
+            </section>
+            <section class="light-form-section flex-horizontal">
+                <label class="flex-1 align-left">
+                    <div style="display: inline-block">
+                        <input type="date" required ng-model="playersService.editedPlayer.birthday" placeholder="Birthday"/>
+                        <span class="label-bottom align-center">Birthday</span>
+                    </div>
+                </label>
+                <label>
+                    <dropdown button-text="{{playersService.editedPlayer.gender.name}}"
+                              button-icon="{{playersService.editedPlayer.gender.icon}}"
+                              button-class="small-icon black-button"
+                              close-on-click="true">
+                        <ul class="dropdown-list">
+                            <li ng-repeat="gender in ::config.genders"
+                                ng-class="{ selected: gender === playersService.editedPlayer.gender }"
+                                ng-click="playersService.editedPlayer.gender = gender"><img class="dropdown-list-icon" ng-src="{{gender.icon}}" />{{gender.name}}</li>
+                        </ul>
+                    </dropdown>
+                    <span class="label-bottom">Gender</span>
+                </label>
+            </section>
+            <section class="light-form-section">
+                <input type="submit" class="btn btn-success btn-submit" value="{{playersService.editedPlayer.playerId && 'Save' || 'Add'}} child" />
+            </section>
+        </div>
     </form>
 </div>

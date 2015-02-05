@@ -8,6 +8,9 @@
     width: auto;
     text-align: left;
 
+    &:focus{
+      border-color: #1e94f6;
+    }
     &.centered{
       text-align: center;
     }

@@ -10,25 +10,7 @@ $firstTimePaddingSmall: 1rem;
   flex-flow: row;
   flex-direction: row;
 
-  @media all and (max-width: 400px){
-    -webkit-box-orient: vertical;
-    -webkit-flex-flow: column;
-    flex-flow: column;
-    flex-direction: column;
 
-    & > header{
-      height: 150px;
-      font-size: 1.4rem;
-      padding: $firstTimePadding;
-    }
-
-    .first-time-main{
-      padding: 1rem $firstTimePadding
-    }
-    .first-time-footer{
-      padding: 1.6rem $firstTimePadding;
-    }
-  }
 
   & > header{
     height: auto;
@@ -39,6 +21,28 @@ $firstTimePaddingSmall: 1rem;
     box-sizing: border-box;
     font-weight: 300;
     font-size: 1.2rem;
+    margin-right: 2px;
+  }
+
+  @media all and (max-width: 400px){
+    -webkit-box-orient: vertical;
+    -webkit-flex-flow: column;
+    flex-flow: column;
+    flex-direction: column;
+
+    & > header{
+      height: 150px;
+      font-size: 1.4rem;
+      padding: $firstTimePadding;
+      margin-right: 0;
+    }
+
+    .first-time-main{
+      padding: 1rem $firstTimePadding
+    }
+    .first-time-footer{
+      padding: 1.6rem $firstTimePadding;
+    }
   }
 
   .first-time-main{

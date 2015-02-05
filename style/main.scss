@@ -439,6 +439,9 @@ a{ cursor: pointer; }
   top: -1rem;
 }
 
+.entries{
+  background: #e2e2e2;
+}
 .light-hoverable{
   &:hover{
     background-color: rgba(92, 210, 250, 0.18);

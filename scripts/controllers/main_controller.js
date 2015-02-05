@@ -18,6 +18,8 @@
 
         $scope.playersService = players;
         $scope.setCurrentPlayer = setCurrentPlayer;
+        $scope.saveEditedPlayer = saveEditedPlayer;
+
         $scope.offline = !window.navigator.onLine;
         $scope.toggleMenu = toggleMenu;
         $scope.navigation = navigation;
@@ -171,7 +173,6 @@
             $scope.editedPlayer.save().then(function(player){
                 dialogs.editPlayer.close();
                 $scope.editedPlayer = null;
-                $scope.setCurrentPlayer(player);
 
                 if (player.isNew){
                     $scope.players.push(player);
@@ -187,6 +188,9 @@
                         }
                     }
                 }
+
+                setCurrentPlayer(player);
+
                 setPlayersSelection($scope.players);
                 eventBus.triggerEvent("editPlayer", player);
             }, function(error){
@@ -351,6 +355,12 @@
 
             players.setCurrentPlayer(player);
             eventBus.triggerEvent("playerSelect", player);
+        }
+
+        function saveEditedPlayer(){
+            // TODO: improve this, remove the editedPlayer from scope
+            $scope.editedPlayer = players.editedPlayer;
+            savePlayer();
         }
 
         function toggleMenu(){

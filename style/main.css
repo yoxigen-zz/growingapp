@@ -370,6 +370,9 @@ a {
   position: relative;
   top: -1rem; }
 
+.entries {
+  background: #e2e2e2; }
+
 .light-hoverable:hover, .items-list li:hover, #insights-list li:hover {
   background-color: rgba(92, 210, 250, 0.18); }
 .light-hoverable:active, .items-list li:active, #insights-list li:active, .light-hoverable.ng-click-active, .items-list li.ng-click-active, #insights-list li.ng-click-active {
@@ -526,6 +529,16 @@ a {
   -webkit-flex-flow: row;
   flex-flow: row;
   flex-direction: row; }
+  #first-time > header {
+    height: auto;
+    background: #75468b url(../images/logo_header.svg) no-repeat right bottom;
+    background-size: contain;
+    color: White;
+    padding: 2.5rem 1rem;
+    box-sizing: border-box;
+    font-weight: 300;
+    font-size: 1.2rem;
+    margin-right: 2px; }
   @media all and (max-width: 400px) {
     #first-time {
       -webkit-box-orient: vertical;
@@ -535,20 +548,12 @@ a {
       #first-time > header {
         height: 150px;
         font-size: 1.4rem;
-        padding: 1.5rem; }
+        padding: 1.5rem;
+        margin-right: 0; }
       #first-time .first-time-main {
         padding: 1rem 1.5rem; }
       #first-time .first-time-footer {
         padding: 1.6rem 1.5rem; } }
-  #first-time > header {
-    height: auto;
-    background: #75468b url(../images/logo_header.svg) no-repeat right bottom;
-    background-size: contain;
-    color: White;
-    padding: 2.5rem 1rem;
-    box-sizing: border-box;
-    font-weight: 300;
-    font-size: 1.2rem; }
   #first-time .first-time-main {
     padding: 1rem 1rem; }
   #first-time .first-time-footer {
@@ -892,7 +897,7 @@ blockquote {
   .dialog footer {
     padding: 1rem; }
 
-.dialog-title {
+.dialog-bold-title {
   background: #1e94f6;
   padding: .5rem;
   border-radius: 3px;
@@ -1058,6 +1063,8 @@ select {
   border-bottom: solid 2px rgba(0, 0, 0, 0.2);
   width: auto;
   text-align: left; }
+  .light-form input[type=text]:focus, .light-form input[type=number]:focus, .light-form input[type=date]:focus {
+    border-color: #1e94f6; }
   .light-form input[type=text].centered, .light-form input[type=number].centered, .light-form input[type=date].centered {
     text-align: center; }
 .light-form .dropdown-directive-button {
@@ -1419,6 +1426,21 @@ svg.graph {
     margin: auto;
     border: solid 3px #1e94f6;
     cursor: pointer; }
+  @media all and (min-width: 400px) {
+    .player-edit form {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-orient: horizontal;
+      -webkit-flex-flow: row;
+      flex-flow: row;
+      flex-direction: row; }
+    .player-edit .player-edit-inputs {
+      flex: 1;
+      -webkit-flex: 1;
+      -webkit-box-flex: 1;
+      text-align: left;
+      padding: .5rem 1.5rem 0; } }
 
 .cards {
   list-style: none;
@@ -1599,9 +1621,12 @@ svg.graph {
       &:hover{
         background: $lightHoverColor;
       }
+      */
+      /*
+      &.ng-click-active, &:active{
+        background: $lightActiveColor;
+      }
       */ }
-      .dropdown-directive .dropdown-list li.ng-click-active, .dropdown-directive .dropdown-list li:active {
-        background: rgba(92, 210, 250, 0.5); }
       .dropdown-directive .dropdown-list li .dropdown-list-icon {
         width: 1rem;
         margin-right: .5rem;
