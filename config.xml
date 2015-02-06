@@ -4,7 +4,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.yoxigen.growingapp"
-        version   = "0.7.2">
+        version   = "0.7.3">
 
     <name>GrowingApp</name>
 
@@ -78,6 +78,10 @@
     <icon src="res/icon/windows-phone/icon-48.png"  gap:platform="winphone" />
     <icon src="res/icon/windows-phone/icon-173.png" gap:platform="winphone"   gap:role="background" />
     -->
+
+    <gap:config-file platform="android" parent="/manifest/application">
+        android:windowSoftInputMode="stateVisible"
+    </gap:config-file>
 
     <!-- Define app splash screen for each platform.
     <gap:splash src="res/screen/android/screen-ldpi-portrait.png"       gap:platform="android" gap:density="ldpi" />
