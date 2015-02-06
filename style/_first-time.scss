@@ -24,6 +24,19 @@ $firstTimePaddingSmall: 1rem;
     margin-right: 2px;
   }
 
+
+
+  .first-time-main{
+    padding: 1rem $firstTimePaddingSmall;
+  }
+
+  .first-time-footer{
+    background: #1e94f6;
+    padding: .5rem $firstTimePaddingSmall;
+    color: White;
+    font-weight: 300;
+  }
+
   @media all and (max-width: 400px){
     -webkit-box-orient: vertical;
     -webkit-flex-flow: column;
@@ -31,7 +44,7 @@ $firstTimePaddingSmall: 1rem;
     flex-direction: column;
 
     & > header{
-      height: 150px;
+      height: 120px;
       font-size: 1.4rem;
       padding: $firstTimePadding;
       margin-right: 0;
@@ -43,17 +56,6 @@ $firstTimePaddingSmall: 1rem;
     .first-time-footer{
       padding: 1.6rem $firstTimePadding;
     }
-  }
-
-  .first-time-main{
-    padding: 1rem $firstTimePaddingSmall;
-  }
-
-  .first-time-footer{
-    background: #1e94f6;
-    padding: 1rem $firstTimePaddingSmall;
-    color: White;
-    font-weight: 300;
   }
 }
 

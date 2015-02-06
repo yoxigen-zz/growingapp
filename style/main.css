@@ -539,6 +539,13 @@ a {
     font-weight: 300;
     font-size: 1.2rem;
     margin-right: 2px; }
+  #first-time .first-time-main {
+    padding: 1rem 1rem; }
+  #first-time .first-time-footer {
+    background: #1e94f6;
+    padding: 0.5rem 1rem;
+    color: White;
+    font-weight: 300; }
   @media all and (max-width: 400px) {
     #first-time {
       -webkit-box-orient: vertical;
@@ -546,7 +553,7 @@ a {
       flex-flow: column;
       flex-direction: column; }
       #first-time > header {
-        height: 150px;
+        height: 120px;
         font-size: 1.4rem;
         padding: 1.5rem;
         margin-right: 0; }
@@ -554,13 +561,6 @@ a {
         padding: 1rem 1.5rem; }
       #first-time .first-time-footer {
         padding: 1.6rem 1.5rem; } }
-  #first-time .first-time-main {
-    padding: 1rem 1rem; }
-  #first-time .first-time-footer {
-    background: #1e94f6;
-    padding: 1rem 1rem;
-    color: White;
-    font-weight: 300; }
 
 #first-time-signin {
   font-size: 1.4rem;
@@ -1426,6 +1426,9 @@ svg.graph {
     margin: auto;
     border: solid 3px #1e94f6;
     cursor: pointer; }
+    .player-edit .player-image.with-image {
+      background-position: top center;
+      background-size: cover; }
   @media all and (min-width: 400px) {
     .player-edit form {
       display: -webkit-box;

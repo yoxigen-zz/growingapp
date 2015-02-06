@@ -58,6 +58,11 @@
     margin: auto;
     border: solid 3px #1e94f6;
     cursor: pointer;
+
+    &.with-image{
+      background-position: top center;
+      background-size: cover;
+    }
   }
 
   @media all and (min-width: 400px){

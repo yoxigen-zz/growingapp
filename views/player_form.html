@@ -2,6 +2,7 @@
     <form ng-submit="saveEditedPlayer()" class="light-form centered">
         <section class="light-form-section player-edit-image-section">
             <div class="player-image"
+                 ng-class="{ 'with-image': playersService.editedPlayer.image }"
                  ng-click="playersService.editedPlayer.addPhoto()"
                  ng-style="{ 'background-image': playersService.editedPlayer.image.cssUrl }"></div>
         </section>
