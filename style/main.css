@@ -553,14 +553,14 @@ a {
       flex-flow: column;
       flex-direction: column; }
       #first-time > header {
-        height: 120px;
+        height: 100px;
         font-size: 1.4rem;
         padding: 1.5rem;
         margin-right: 0; }
       #first-time .first-time-main {
         padding: 1rem 1.5rem; }
       #first-time .first-time-footer {
-        padding: 1.6rem 1.5rem; } }
+        padding: 1.2rem 1.5rem; } }
 
 #first-time-signin {
   font-size: 1.4rem;
