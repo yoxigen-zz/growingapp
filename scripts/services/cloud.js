@@ -38,8 +38,15 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
             return;
 
         return syncImageToCloud(dataObject).then(function(uploaded){
+            if (dataObject.isSyncing)
+                return $q.when(dataObject);
+
+            dataObject.isSyncing = true;
+
             return $q.when(dataObject.getCloudData()).then(function(cloudData){
                 return storage.setItem(dataObject.constructor.name, cloudData).then(function(savedData){
+                    delete dataObject.isSyncing;
+
                     // If it's a newly created object, save the cloudId locally:
                     if (dataObject.cloudId !== savedData.id) {
                         dataObject.cloudId = savedData.id;
@@ -47,6 +54,8 @@ app.factory("cloud", ["$q", "eventBus", "Entry", "Player", "FileData", "Storage"
                     }
 
                     eventBus.triggerEvent("updateObjects", { type: dataObject.constructor.name, objects: [dataObject] });
+
+                    return dataObject;
                 }, function(error){
                     messages.error("ERROR syncing " + dataObject.constructor.name + ". Error: " + JSON.stringify(error));
                 });
