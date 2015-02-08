@@ -37,7 +37,10 @@
                 </label>
             </section>
             <section class="light-form-section">
-                <input type="submit" class="btn btn-success btn-submit" value="{{playersService.editedPlayer.playerId && 'Save' || 'Add'}} child" />
+                <button type="submit" class="btn btn-success btn-submit">
+                    <img src="images/icons/ok_black.svg" />
+                    {{playersService.editedPlayer.playerId && 'Save' || 'Add'}} child
+                </button>
             </section>
         </div>
     </form>

@@ -524,29 +524,36 @@ a {
       display: none; } }
 
 #first-time {
-  background: White;
+  background: #1e94f6;
   webkit-box-orient: horizontal;
   -webkit-flex-flow: row;
   flex-flow: row;
   flex-direction: row; }
   #first-time > header {
     height: auto;
-    background: #75468b url(../images/logo_header.svg) no-repeat right bottom;
+    background: #43124c url(../images/logo_header.svg) no-repeat right bottom;
     background-size: contain;
     color: White;
     padding: 2.5rem 1rem;
     box-sizing: border-box;
     font-weight: 300;
     font-size: 1.2rem;
-    margin-right: 2px; }
+    border-right: solid 2px White; }
+  @media all and (min-width: 600px) {
+    #first-time .first-time-contents {
+      flex: 1;
+      -webkit-flex: 1;
+      -webkit-box-flex: 1; }
+    #first-time .player-edit-inputs {
+      padding-right: 0; } }
   #first-time .first-time-main {
-    padding: 1rem 1rem; }
+    padding: 1rem 1rem;
+    background: White; }
   #first-time .first-time-footer {
-    background: #1e94f6;
     padding: 0.5rem 1rem;
     color: White;
     font-weight: 300; }
-  @media all and (max-width: 400px) {
+  @media all and (max-width: 600px) {
     #first-time {
       -webkit-box-orient: vertical;
       -webkit-flex-flow: column;
@@ -556,7 +563,7 @@ a {
         height: 100px;
         font-size: 1.4rem;
         padding: 1.5rem;
-        margin-right: 0; }
+        border-right: none; }
       #first-time .first-time-main {
         padding: 1rem 1.5rem; }
       #first-time .first-time-footer {
@@ -1070,8 +1077,6 @@ select {
 .light-form .dropdown-directive-button {
   border-bottom: solid 2px rgba(0, 0, 0, 0.2);
   padding: .4rem 1.4rem .4rem 0; }
-.light-form input[type=date] {
-  background: url(../images/icons/calendar.gif) no-repeat right 11px; }
 .light-form.centered {
   text-align: center; }
 .light-form .light-form-section {
@@ -1098,6 +1103,12 @@ select {
   .light-form .btn.btn-success {
     background: #0fd52b;
     color: rgba(0, 0, 0, 0.87); }
+  .light-form .btn img {
+    height: 1.2rem;
+    margin-right: .3rem;
+    vertical-align: middle;
+    position: relative;
+    top: -2px; }
 .light-form .btn-icon {
   width: 3rem;
   height: 3rem;
@@ -1429,7 +1440,7 @@ svg.graph {
     .player-edit .player-image.with-image {
       background-position: top center;
       background-size: cover; }
-  @media all and (min-width: 400px) {
+  @media all and (min-width: 600px) {
     .player-edit form {
       display: -webkit-box;
       display: -webkit-flex;

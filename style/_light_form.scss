@@ -21,10 +21,6 @@
     padding: .4rem 1.4rem .4rem 0;
   }
 
-  input[type=date]{
-    background: url(../images/icons/calendar.gif) no-repeat right 11px;
-  }
-
   &.centered{
     text-align: center;
   }
@@ -62,6 +58,14 @@
     &.btn-success {
       background: #0fd52b;
       color: rgba(0, 0, 0, .87);
+    }
+
+    img{
+      height: 1.2rem;
+      margin-right: .3rem;
+      vertical-align: middle;
+      position: relative;
+      top: -2px;
     }
   }
 

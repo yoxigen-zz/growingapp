@@ -2,7 +2,7 @@ $firstTimePadding: 1.5rem;
 $firstTimePaddingSmall: 1rem;
 
 #first-time{
-  background: White;
+  background: #1e94f6;
   @extend .flex;
 
   webkit-box-orient: horizontal;
@@ -14,30 +14,40 @@ $firstTimePaddingSmall: 1rem;
 
   & > header{
     height: auto;
-    background: #75468b url(../images/logo_header.svg) no-repeat right bottom;
+    background: #43124c url(../images/logo_header.svg) no-repeat right bottom;
     background-size: contain;
     color: White;
     padding: 2.5rem $firstTimePaddingSmall;
     box-sizing: border-box;
     font-weight: 300;
     font-size: 1.2rem;
-    margin-right: 2px;
+    border-right: solid 2px White;
   }
 
+  @media all and (min-width: 600px){
+    .first-time-contents{
+      flex: 1;
+      -webkit-flex: 1;
+      -webkit-box-flex: 1;
+    }
 
+    .player-edit-inputs{
+      padding-right: 0;
+    }
+  }
 
   .first-time-main{
     padding: 1rem $firstTimePaddingSmall;
+    background: White;
   }
 
   .first-time-footer{
-    background: #1e94f6;
     padding: .5rem $firstTimePaddingSmall;
     color: White;
     font-weight: 300;
   }
 
-  @media all and (max-width: 400px){
+  @media all and (max-width: 600px){
     -webkit-box-orient: vertical;
     -webkit-flex-flow: column;
     flex-flow: column;
@@ -47,7 +57,7 @@ $firstTimePaddingSmall: 1rem;
       height: 100px;
       font-size: 1.4rem;
       padding: $firstTimePadding;
-      margin-right: 0;
+      border-right: none;
     }
 
     .first-time-main{
