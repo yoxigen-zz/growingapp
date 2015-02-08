@@ -74,6 +74,7 @@
                     entriesModelEventBus.triggerEvent(innerEventBusEvents.newEntry, savedEntry);
                 }
                 else {
+                    entriesCollection.updateItem(savedEntry);
                     sortEntries();
                     eventBus.triggerEvent(SAVE_ENTRY_EVENT, api.editedEntry);
                     entriesModelEventBus.triggerEvent(innerEventBusEvents.updateEntry, api.editedEntry);

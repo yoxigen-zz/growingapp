@@ -3,6 +3,6 @@ app.filter("unit", ["localization", "config", function(localization, config){
 		var currentUnit = config.localization[unitType].selected,
 			convertMethod = reverse ? localization.convertToUnit : localization.convertFromUnit;
 
-		return convertMethod(unitType, input, currentUnit);
+		return convertMethod(unitType, input, currentUnit).toFixed(2);
 	}
 }]);

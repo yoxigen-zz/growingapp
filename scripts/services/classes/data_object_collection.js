@@ -1,5 +1,5 @@
 (function(){
-    angular.module("DataObjectCollection", []).factory("DataObjectCollection", function(){
+    angular.module("DataObjectCollection", ["Utils"]).factory("DataObjectCollection", ["utils", function(utils){
         function DataObjectCollection(type){
             this.itemsType = type;
             this.items = [];
@@ -74,6 +74,21 @@
             }
         };
 
+        /**
+         * Given an item ID, removes the item with the specified ID from the collection and inserts another one instead
+         * @param itemId
+         * @param newItem
+         */
+        DataObjectCollection.prototype.updateItem = function(newItem){
+            var item = utils.arrays.find(this.items, function(item){
+                return item.id === newItem.id;
+            });
+
+            if (item){
+                this.items.splice(this.items.indexOf(item), 1, newItem);
+            }
+        };
+
         return DataObjectCollection;
-    });
+    }]);
 })();

@@ -132,7 +132,7 @@
 
         Entry.prototype.__defineGetter__("unitValue", function(){
             if (this._unitValue === undefined)
-                this._unitValue = unitFilter(this.properties.value, this.type.id, true) || null;
+                this._unitValue = unitFilter(this.properties.value, this.type.id, false) || null;
 
             return this._unitValue;
         });
@@ -167,8 +167,9 @@
             });
         };
 
-        Entry.prototype.__defineGetter__("idProperty", function () {
-            return "timestamp";
+        Entry.prototype.idProperty = "timestamp";
+        Entry.prototype.__defineGetter__("id", function(){
+            return this.timestamp;
         });
 
         Entry.prototype.getNewId = function () {

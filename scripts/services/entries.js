@@ -31,6 +31,7 @@ angular.module("Entries")
             },
             "preSave": function(entry){
                 entry.properties.value = localization.convertToUnit("weight", entry.properties.weight, config.localization.weight.selected);
+                delete entry._unitValue;
             },
             "localizationDependencies": ["weight"]
         },
