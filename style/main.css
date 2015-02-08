@@ -539,11 +539,13 @@ a {
     font-weight: 300;
     font-size: 1.2rem;
     border-right: solid 2px White; }
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 500px) {
     #first-time .first-time-contents {
       flex: 1;
       -webkit-flex: 1;
-      -webkit-box-flex: 1; }
+      -webkit-box-flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto; }
     #first-time .player-edit-inputs {
       padding-right: 0; } }
   #first-time .first-time-main {
@@ -553,7 +555,7 @@ a {
     padding: 0.5rem 1rem;
     color: White;
     font-weight: 300; }
-  @media all and (max-width: 600px) {
+  @media all and (max-width: 500px) {
     #first-time {
       -webkit-box-orient: vertical;
       -webkit-flex-flow: column;
@@ -1440,7 +1442,7 @@ svg.graph {
     .player-edit .player-image.with-image {
       background-position: top center;
       background-size: cover; }
-  @media all and (min-width: 600px) {
+  @media all and (min-width: 500px) {
     .player-edit form {
       display: -webkit-box;
       display: -webkit-flex;

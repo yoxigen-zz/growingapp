@@ -24,11 +24,13 @@ $firstTimePaddingSmall: 1rem;
     border-right: solid 2px White;
   }
 
-  @media all and (min-width: 600px){
+  @media all and (min-width: 500px){
     .first-time-contents{
       flex: 1;
       -webkit-flex: 1;
       -webkit-box-flex: 1;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
 
     .player-edit-inputs{
@@ -47,7 +49,7 @@ $firstTimePaddingSmall: 1rem;
     font-weight: 300;
   }
 
-  @media all and (max-width: 600px){
+  @media all and (max-width: 500px){
     -webkit-box-orient: vertical;
     -webkit-flex-flow: column;
     flex-flow: column;
