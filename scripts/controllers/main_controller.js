@@ -1,4 +1,4 @@
-(function(){
+define(["angular", "services/eventbus"], function(angular){
     angular.module("GrowingApp").controller("MainController", MainController);
 
     MainController.$inject = [
@@ -396,4 +396,4 @@
             });
         }
     }
-})();
+});

@@ -1,5 +1,7 @@
-"use strict";
+define(["classes/eventbus_class"], function(){
+    "use strict";
 
-angular.module("EventBus").factory("eventBus", ["EventBus", function(EventBus){
-    return new EventBus();
-}]);
+    return angular.module("EventBus").factory("eventBus", ["EventBus", function(EventBus){
+        return new EventBus();
+    }]);
+});

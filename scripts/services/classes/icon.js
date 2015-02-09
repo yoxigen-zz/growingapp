@@ -1,4 +1,4 @@
-(function(){
+define(["angular"], function(angular){
     'use strict';
 
     angular.module("Icons", []).factory("Icon", function(){
@@ -27,4 +27,4 @@
 
         return Icon;
     });
-})();
+});

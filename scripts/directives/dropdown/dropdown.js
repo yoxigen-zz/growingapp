@@ -1,5 +1,5 @@
-(function(){
-    angular.module("Dropdown", []).directive("dropdown", ["$timeout", function($timeout){
+define(["angular"], function(angular){
+    return angular.module("Dropdown", []).directive("dropdown", ["$timeout", function($timeout){
         return {
             replace: true,
             restrict: "E",
@@ -126,4 +126,4 @@
             }
         }
     }]);
-})();
+});

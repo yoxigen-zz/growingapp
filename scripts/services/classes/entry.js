@@ -1,4 +1,4 @@
-(function() {
+define(["angular", "modules/entries/entries", "classes/data_object", "classes/file_data"], function(angular){
     "use strict";
 
     angular.module("Entries").factory("Entry", EntryClass);
@@ -6,15 +6,6 @@
     EntryClass.$inject = ["$q", "$indexedDB", "$filter", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
     /**
      * Creates the Entry class
-     * @param $indexedDB
-     * @param entries
-     * @param Player
-     * @param FileData
-     * @param DataObject
-     * @param dbConfig
-     * @param config
-     * @param images
-     * @param utils
      * @returns {Entry}
      * @constructor
      */
@@ -265,4 +256,4 @@
 
         return Entry;
     }
-})();
+});

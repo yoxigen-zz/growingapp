@@ -1,5 +1,11 @@
-(function(){
-    angular.module("DataObjectCollection", ["Utils"]).factory("DataObjectCollection", ["utils", function(utils){
+define(["angular", "services/utils"], function(angular){
+    "use strict";
+
+    angular.module("DataObjectCollection", ["Utils"]).factory("DataObjectCollection", DataObjectCollectionClass);
+
+    DataObjectCollectionClass.$inject = ["utils"];
+
+    function DataObjectCollectionClass(utils){
         function DataObjectCollection(type){
             this.itemsType = type;
             this.items = [];
@@ -90,5 +96,5 @@
         };
 
         return DataObjectCollection;
-    }]);
-})();
+    }
+});

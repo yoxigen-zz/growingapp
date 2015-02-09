@@ -1,5 +1,10 @@
-(function(){
-	angular.module("Dialogs").factory("DialogDirective", ["$timeout", "Dialog", function($timeout, Dialog){
+define(["angular", "modules/dialogs/dialogs_module"], function(angular){
+    "use strict";
+
+    angular.module("Dialogs").factory("DialogDirective", dialogDirective);
+    dialogDirective.$inject = ["$timeout", "Dialog"];
+
+	function dialogDirective($timeout, Dialog){
 		var TOGGLE_TIMEOUT = 300,
 			TOGGLE_CLASS = "visible",
 			TOGGLE_ACTIVE_CLASS = "active";
@@ -97,5 +102,5 @@
 		};
 
 		return DialogDirective;
-	}]);
-})();
+	}
+});

@@ -1,10 +1,14 @@
-(function(){
+define(["angular", "modules/entries/entries_module"], function(angular){
     'use strict';
 
     angular.module("Entries").factory("entriesModel", entriesModel);
 
     entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope"];
 
+    /**
+     * The model object for entries - responsible for holding entries and supplies methods for adding, removing, editing, etc.
+     * @returns {{allEntriesAdded: boolean, addEntry: addEntry, currentEntriesType, currentEntriesType, editEntry: editEntry, editedEntry: null, items: Array, getEntries: getEntries, loadMoreEntries: loadMoreEntries, newEntry: newEntry, removeEntry: removeEntry, setEntries: setEntries, settingEntries: boolean, unremoveLastEntry: unremoveLastEntry, updateEntriesAfterUnitChange: updateEntriesAfterUnitChange}}
+     */
     function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope){
         var entriesCollection = new DataObjectCollection(Entry);
 
@@ -250,4 +254,4 @@
             sortEntries();
         }
     }
-})();
+});

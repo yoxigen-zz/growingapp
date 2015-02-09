@@ -1,4 +1,4 @@
-(function(){
+define(["angular", "services/phonegap", "services/config", "classes/data_object"], function(angular) {
     'use strict';
 
     angular.module("FileData", ["Config", "DataObject", "Phonegap"]).factory("FileData", FileDataClass);
@@ -92,11 +92,11 @@
             }
         };
 
-        FileData.mimeTypes.index  = {};
+        FileData.mimeTypes.index = {};
         var mimeTypeName, group;
-        for(var mimeTypeGroup in FileData.mimeTypes){
+        for (var mimeTypeGroup in FileData.mimeTypes) {
             group = FileData.mimeTypes[mimeTypeGroup];
-            for(mimeTypeName in group){
+            for (mimeTypeName in group) {
                 FileData.mimeTypes.index[group[mimeTypeName].id] = group[mimeTypeName];
             }
         }
@@ -130,11 +130,11 @@
             return this.localUrl || this.cloudUrl;
         });
 
-        FileData.prototype.__defineGetter__("thumbnailUrl", function(){
+        FileData.prototype.__defineGetter__("thumbnailUrl", function () {
             return this.localThumbnailUrl || this.cloudThumbnailUrl;
         });
 
-        FileData.prototype.__defineGetter__("cssUrl", function(){
+        FileData.prototype.__defineGetter__("cssUrl", function () {
             if (this.url)
                 return "url(" + this.url + ")";
 
@@ -166,15 +166,15 @@
 
                 var promises = [getFilePromise];
 
-                if (this.localThumbnailUrl){
+                if (this.localThumbnailUrl) {
                     promises.push(phonegap.files.getFileByUrl(this.localThumbnailUrl).then(function (file) {
                         cloudData.thumbnail = file;
-                    }, function(error){
+                    }, function (error) {
                         return $q.reject(error);
                     }));
                 }
 
-                return $q.all(promises).then(function(){
+                return $q.all(promises).then(function () {
                     return cloudData;
                 });
             }
@@ -270,4 +270,4 @@
 
         return FileData;
     }
-})();
+});

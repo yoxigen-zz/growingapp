@@ -1,4 +1,4 @@
-(function(){
+define(["angular", "modules/dialogs/dialog_class"], function(angular){
     'use strict';
 
     angular.module("Dialogs").factory("dialogs", dialogs);
@@ -48,4 +48,4 @@
             }
         }
     }
-})();
+});

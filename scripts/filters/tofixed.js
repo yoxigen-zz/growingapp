@@ -1,13 +1,19 @@
-angular.module("app.filters").filter("toFixed", function(){
-	var decimalMatch = /^(\d+\.)(\d+)$/;
+define(["app"], function (app) {
+    'use strict';
 
-	return function(input, decimalPoints){
-		var str = String(input),
-			match = str.match(decimalMatch);
+    app.filter("toFixed", toFixed);
 
-		if (!match)
-			return input;
+    var decimalMatch = /^(\d+\.)(\d+)$/;
 
-		return match[1] + match[2].substr(0, decimalPoints);
-	}
+    function toFixed() {
+        return function(input, decimalPoints){
+            var str = String(input),
+                match = str.match(decimalMatch);
+
+            if (!match)
+                return input;
+
+            return match[1] + match[2].substr(0, decimalPoints);
+        }
+    }
 });

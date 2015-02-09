@@ -1,4 +1,6 @@
-(function(){
+define(["angular", "modules/dialogs/dialogs_module"], function(angular){
+    "use strict";
+
     angular.module("Dialogs").factory("Dialog", DialogClassFactory);
 
     DialogClassFactory.$inject = ["EventBus"];
@@ -35,4 +37,4 @@
 
         return Dialog;
     }
-})();
+});
