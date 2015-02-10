@@ -12,6 +12,8 @@ define(["angular"], function(angular){
 
         function log(type, message, obj){
             if (window.cordova) {
+                return; // No alerts required in prod version.
+
                 if (typeof(message) === "object")
                     alert(JSON.stringify(message));
                 else{
