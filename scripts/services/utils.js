@@ -207,7 +207,7 @@ define(["angular", "d3", "moment"], function(angular, d3, moment){
                         if (years)
                             str.push(years + "y");
 
-                        if (years || months)
+                        if (months)
                             str.push(months + "m");
 
                         if (days)

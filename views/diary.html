@@ -1,49 +1,19 @@
 <div class="flex-vertical flex-1 entries">
-    <!--
-    <div ng-show="showFirstTimeSelection" ng-cloak class="flex-1 contents-empty-message">
-        <div class="vertical-buttons-bar centered-buttons-block">
-            <p class="vertical-buttons-text contents-empty-message-title">Welcome to GrowingApp!</p>
-            <p class="vertical-buttons-text">Let's get started:</p>
-            <a class="button save-button" ng-click="addNewPlayer()">
-                <img src="images/icons/plus.svg" />
-                <span class="button-text">Add child</span>
-            </a>
-            <p class="vertical-buttons-text">Already have a user?</p>
-            <a class="button save-button" ng-click="dialogs.signIn.open()">
-                <img src="images/icons/cloud_sync_white.svg" />
-                <span class="button-text">Sign in</span>
-            </a>
-        </div>
-    </div>
-    -->
     <div class="contents-scroll flex-1"
          on-scroll-to-bottom="entries.loadMoreEntries()"
          done-scrolling="entries.allEntriesAdded"
          ng-class="{ 'flex-vertical': entries && !entries.items.length }"
-         ng-show="player && !showFirstTimeSelection">
-        <!--
-        <div id="player-summary">
-            <div id="player-summary-avatar" ng-style="{ 'background-image': 'url(' + player.image.url + ')' }"></div>
+         ng-show="player">
+        <div id="player-summary" ng-show="!entries.currentEntriesType">
+            <div id="player-summary-avatar"
+                 ng-class="{ 'with-image': player.image }"
+                 ng-style="{ 'background-image': player.image.cssUrl }"
+                 ng-click="editPlayer(player)"></div>
             <h2 id="player-summary-name">{{player.name}}</h2>
             <div id="player-summary-info">
                 <span>{{player.ageText}}</span>
             </div>
         </div>
-        -->
-        <!--
-        <header class="contents-header flex-horizontal" ng-show="player && !showFirstTimeSelection">
-            <div class="header-controls flex-1">
-                <h2>Recent Activities</h2>
-                <select class="fancy-select"
-                        ng-model="entries.currentEntriesType"
-                        ng-change="onEntriesTypeChange()"
-                        ng-options="entryType as entryType.name for entryType in ::entryTypes">
-                    <option value="">All entry types</option>
-                </select>
-            </div>
-
-        </header>
-        -->
         <a id="new-entry-button" class="floating-action-button add-button" ng-show="entries.items.length" title="New entry" ng-click="dialogs.newEntry.toggle()"></a>
         <div class="flex-1 contents-empty-message" ng-cloak ng-show="!entries.settingEntries && entries && !entries.items.length">
             <div>

@@ -157,7 +157,8 @@ define(["angular", "services/eventbus"], function(angular){
         function editPlayer(player){
             if (player instanceof Player) {
                 $scope.editPlayerActions = setEditPlayerActions();
-                $scope.editedPlayer = angular.copy(player);
+                players.editPlayer($scope.editedPlayer = angular.copy(player));
+
                 dialogs.editPlayer.open();
             }
             else{
