@@ -210,3 +210,16 @@ select{
   display: block;
   margin-bottom: .3rem;
 }
+
+.entry_photo_edit{
+  text-align: center;
+  margin-bottom: 1rem;
+
+  div{
+    font-size: .8em;
+    color: #666;
+  }
+  .entry-image-edit{
+    max-height: 200px;
+  }
+}

@@ -140,9 +140,9 @@ define(["angular", "services/phonegap", "services/messages", "classes/file_data"
          */
         function addPhotoToDataObject(imagesConfig, dataObject, method) {
             if (!method)
-                selectImageMethod().then(doGetPhoto);
+                return selectImageMethod().then(doGetPhoto);
             else
-                doGetPhoto(method);
+                return doGetPhoto(method);
 
             function doGetPhoto(method) {
                 return getPhoto(method, {

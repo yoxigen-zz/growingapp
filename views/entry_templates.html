@@ -42,10 +42,14 @@
     </div>
 </script>
 <script id="entry-vaccine" type="text/ng-template">
-    <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
-        <img class="entry-measure-icon" ng-src="{{::entry.type.icon.url}}" />
-        <div class="item-measure">{{entry.vaccine.name}}
-            <div class="item-measure-subtitle">({{entry.vaccine.disease}})</div>
+    <div ng-class="{ 'card-contents-with-image': entry.imageUrl }" class="entry-with-value" ng-style="{ 'background-color': entry.type.color }">
+        <img class="card-image" ng-if="entry.imageUrl" ng-src="{{ entry.imageUrl}}" />
+        <div class="card-contents card-center-contents entry-vaccine-contents">
+            <div class="entry-vaccine-text">
+                <div>{{entry.vaccine.name || entry.properties.text}}
+                    <div ng-if="entry.vaccine.disease" class="item-measure-subtitle">({{entry.vaccine.disease}})</div>
+                </div>
+            </div>
         </div>
     </div>
 </script>

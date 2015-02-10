@@ -15,6 +15,7 @@ define([
     "directives/dropdown/dropdown",
     "directives/on-scroll-to-bottom",
     "directives/toggle-display",
+    "directives/data_object_image",
     "services/messages",
     "services/localization",
     "services/utils"

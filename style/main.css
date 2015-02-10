@@ -1065,6 +1065,15 @@ select {
   display: block;
   margin-bottom: .3rem; }
 
+.entry_photo_edit {
+  text-align: center;
+  margin-bottom: 1rem; }
+  .entry_photo_edit div {
+    font-size: .8em;
+    color: #666; }
+  .entry_photo_edit .entry-image-edit {
+    max-height: 200px; }
+
 .light-form input[type=text], .light-form input[type=number], .light-form input[type=date] {
   border: none;
   outline: none;
@@ -1253,6 +1262,17 @@ select {
 
 .entry-milestone-contents {
   background-color: #017fcf;
+  color: White;
+  min-height: 8rem; }
+
+.entry-vaccine-text {
+  background: url(../images/icons/syringe.svg) no-repeat center top;
+  padding-top: 3rem;
+  text-align: center;
+  color: White; }
+
+.entry-vaccine-contents {
+  background-color: #51ca18;
   color: White;
   min-height: 8rem; }
 
