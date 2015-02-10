@@ -10,7 +10,7 @@
         <tbody>
             <tr ng-repeat="vaccineEntry in vaccines.entries" ng-click="vaccines.editEntry(vaccineEntry)">
                 <td>{{vaccineEntry.dateText}}</td>
-                <td>{{vaccineEntry.vaccine.name}}</td>
+                <td>{{vaccineEntry.vaccine.name || vaccineEntry.properties.text}}</td>
                 <td>{{vaccineEntry.vaccine.disease}}</td>
             </tr>
         </tbody>

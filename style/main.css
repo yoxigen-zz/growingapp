@@ -1072,7 +1072,8 @@ select {
     font-size: .8em;
     color: #666; }
   .entry_photo_edit .entry-image-edit {
-    max-height: 200px; }
+    max-height: 280px;
+    max-width: 100%; }
 
 .light-form input[type=text], .light-form input[type=number], .light-form input[type=date] {
   border: none;
