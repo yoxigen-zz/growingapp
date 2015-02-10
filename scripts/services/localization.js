@@ -14,14 +14,14 @@ define(["angular"], function(angular){
                     { "name": "cm", "display": "cm", "multiplier": 1 },
                     { "name": "inches", "display": "″", "multiplier": 2.54 }
                 ],
-                selected: "cm"
+                selected: "inches"
             },
             weight: {
                 all: [
                     { "name": "kg", "display": "kg", "multiplier": 1 },
                     { "name": "lb", "display": "lbs", "multiplier": 0.453592 }
                 ],
-                selected: "kg"
+                selected: "lb"
             }
         };
 

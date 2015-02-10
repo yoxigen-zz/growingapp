@@ -184,11 +184,24 @@ define(["angular", "d3", "moment"], function(angular, d3, moment){
                     if (duration.asDays() < 1)
                         return "Birthday";
 
-                    var years = duration.years(),
-                        months = duration.months(),
-                        weeks,
-                        days = duration.days(),
+                    var lastDate = d1 > d2 ? d1 : d2,
+                        firstDate = d1 === lastDate ? d2 : d1;
+
+                    var years = lastDate.getFullYear() - firstDate.getFullYear(),
+                        months = lastDate.getMonth() - firstDate.getMonth(),
+                        days = lastDate.getDate() - firstDate.getDate(),
                         str = [];
+
+                    if (days < 0){
+                        days += 30;
+                        months -= 1;
+                    }
+
+                    if (months < 0){
+                        months += 12;
+                        years -= 1;
+                    }
+
 
                     if (isShort){
                         if (years)
@@ -220,16 +233,7 @@ define(["angular", "d3", "moment"], function(angular, d3, moment){
                             str.push(val);
                         }
 
-                        if (!years && months < 2) {
-                            weeks = duration.weeks();
-                            val = weeks + " week";
-                            if (val > 1)
-                                val += "s";
-
-                            str.push(val);
-                        }
-
-                        if (!years && !months && !weeks) {
+                        if (!years && !months) {
                             val = days + " day";
                             if (days > 1)
                                 val += "s";
