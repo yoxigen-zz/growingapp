@@ -3,9 +3,9 @@ define(["app"], function (app) {
 
     app.factory("navigation", navigation);
 
-    navigation.$inject = ["phonegap", "eventBus", "$route", "$rootScope", "users", "dialogs", "Dialog", "db"];
+    navigation.$inject = ["phonegap", "eventBus", "$route", "$rootScope", "users", "dialogs", "Dialog"];
 
-    function navigation(phonegap, eventBus, $route, $rootScope, users, dialogs, Dialog, db) {
+    function navigation(phonegap, eventBus, $route, $rootScope, users, dialogs, Dialog) {
         var backButtonCallbacks = [],
             mainMenuItems = [
                 { text: "Settings", icon: "images/icons/settings.svg", onClick: function(e){
@@ -30,7 +30,6 @@ define(["app"], function (app) {
                     if (window.confirm("Warning: All unsaved entries will be deleted. Continue?")){
                         users.logout();
                         eventBus.triggerEvent("logout");
-                        db.clearDb();
                     }
 
                     dialogs.menu.close();

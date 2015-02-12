@@ -47,12 +47,16 @@ define(["app"], function(app) {
             if ($scope.newUser.country)
                 newUser.country = $scope.newUser.country;
 
+            $scope.loading = true;
+
             users.signUp(newUser).then(function(user){
                 eventBus.triggerEvent("login", { user: user, isNewUser: true });
                 $scope.signupError = null;
             }, function(error){
                 console.error("Error creating new user: ", error);
                 $scope.signupError = error.message;
+            }).finally(function(){
+                $scope.loading = false;
             });
         }
     }

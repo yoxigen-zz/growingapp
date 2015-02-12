@@ -1,4 +1,4 @@
-<form ng-controller="SignUpController">
+<form ng-controller="SignUpController" ng-submit="signUp()" ng-class="{ loading: loading }">
     <div class="">
         <label>
             <span class="label-text">Email Address</span>
@@ -21,9 +21,14 @@
         <div class="form-error" ng-show="signupError">{{signupError}}</div>
     </div>
     <footer class="flex-horizontal buttons-bar">
-        <a class="flex-1 button save-button" ng-click="signUp()" ng-disabled="!newUser.username || !newUser.password || !newUser.confirmPassword || signupError">
+        <button class="flex-1 button save-button"
+                type="submit"
+                ng-disabled="!newUser.username || !newUser.password || !newUser.confirmPassword || signupError">
             <img src="images/icons/ok.svg"/>
-            <span class="button-text">Create User</span>
-        </a>
+            Create User
+        </button>
+        <div class="form-loading">
+            <img src="images/icons/spinner_blue.svg" />
+        </div>
     </footer>
 </form>

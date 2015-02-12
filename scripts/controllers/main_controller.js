@@ -6,10 +6,10 @@ define(["angular", "services/eventbus"], function(angular){
         "localization", "eventBus", "users",
         "cloud", "config", "utils", "$timeout",
         "navigation", "messages", "players",
-        "insights", "dialogs", "entriesModel", "entries"
+        "insights", "dialogs", "entriesModel", "entries", "db"
     ];
 
-    function MainController($scope, $route, Player, localization, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights, dialogs, entriesModel, entries){
+    function MainController($scope, $route, Player, localization, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights, dialogs, entriesModel, entries, db){
         var currentMenuItem,
             spinnerTimeout;
 
@@ -258,6 +258,7 @@ define(["angular", "services/eventbus"], function(angular){
 
             $scope.currentUser = null;
             $scope.players = [];
+            db.clearDb();
 
             config.sync.clearLastSyncTimestamp();
             setCurrentPlayer(null);

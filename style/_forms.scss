@@ -27,6 +27,20 @@ form{
       margin-bottom: 0;
     }
   }
+
+  button{
+    border: none;
+  }
+
+  &.loading{
+    .form-loading{
+      display: block;
+    }
+
+    button[type=submit]{
+      display: none;
+    }
+  }
 }
 
 .input-unit{
@@ -113,6 +127,22 @@ select{
     &:hover{
       background: $defaultButtonBackgroundColor;
     }
+  }
+}
+
+.form-loading{
+  display: none;
+  padding-top: .5rem;
+  text-align: center;
+  width: 100%;
+
+  img{
+      width: 2rem;
+      height: 2rem;
+      -webkit-animation-name: rotate;
+      -webkit-animation-duration: 1.5s;
+      -webkit-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
   }
 }
 

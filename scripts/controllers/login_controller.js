@@ -33,11 +33,16 @@ define(["app"], function(app){
                 return;
             }
 
+            $scope.loading = true;
+
             users.login($scope.loginUser.username, $scope.loginUser.password).then(function(user){
                 onLogin(user);
             }, function(error){
                 $scope.loginError = error.message;
+                alert(error.message);
                 messages.error("Can't login: " + error.message);
+            }).finally(function(){
+                $scope.loading = false;
             });
         }
 
