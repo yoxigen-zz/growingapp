@@ -257,6 +257,10 @@ define(["angular", "services/eventbus"], function(angular){
             signoutItem.hide = true;
 
             $scope.currentUser = null;
+            $scope.players = [];
+
+            config.sync.clearLastSyncTimestamp();
+            setCurrentPlayer(null);
         }
 
         function onLoadingStart(e){
@@ -334,7 +338,7 @@ define(["angular", "services/eventbus"], function(angular){
                 return;
 
             if (!player)
-                player = $scope.players.length ? $scope.players[0] : null;
+                player = $scope.players && $scope.players.length ? $scope.players[0] : null;
             else
                 player = utils.arrays.find($scope.players, function(_player){
                      return _player.playerId === player.playerId;

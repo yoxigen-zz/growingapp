@@ -254,6 +254,10 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
             return Entry.getEntries(options);
         };
 
+        Entry.clearAll = function(){
+            return entriesObjectStore.clear();
+        };
+
         return Entry;
     }
 });

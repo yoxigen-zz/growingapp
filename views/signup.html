@@ -1,5 +1,5 @@
 <form ng-controller="SignUpController">
-    <div class="popup-contents">
+    <div class="">
         <label>
             <span class="label-text">Email Address</span>
             <input type="email" ng-model="newUser.username"  ng-class="{ 'error-highlight': highlight == 'username' }" required data-auto-focus />
@@ -14,7 +14,9 @@
         </label>
         <label>
             <span class="label-text">I'm From</span>
-            <select ng-model="newUser.country" ng-options="country.code as country.name for country in countries"></select>
+            <select ng-model="newUser.country" ng-options="country.code as country.name for country in countries" style="max-width: 100%">
+                <option value="">(Please select country)</option>
+            </select>
         </label>
         <div class="form-error" ng-show="signupError">{{signupError}}</div>
     </div>

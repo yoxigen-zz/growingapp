@@ -88,6 +88,8 @@ define(["angular", "moment", "services/utils", "services/localization"], functio
             lastSync,
             syncOfferDeclined;
 
+        var LAST_SYNC_STORAGE_KEY = "lastSync";
+
         entries.milestone.typesIndex = utils.arrays.toIndex(entries.milestone.types, "id");
         entries.vaccines.index = utils.arrays.toIndex(entries.vaccines.list, "id");
         entries.teeth.index = utils.arrays.toIndex(entries.teeth.list, "id");
@@ -165,13 +167,17 @@ define(["angular", "moment", "services/utils", "services/localization"], functio
                 return false;
             },
             sync: {
+                clearLastSyncTimestamp: function(){
+                    lastSync = null;
+                    localStorage.removeItem(LAST_SYNC_STORAGE_KEY);
+                },
                 declineSyncOffer: function(){
                     syncOfferDeclined = true;
                     localStorage.setItem("syncOfferDeclined", "1");
                 },
                 get lastSyncTimestamp(){
                     if (lastSync === undefined) {
-                        lastSync = localStorage.getItem("lastSync");
+                        lastSync = localStorage.getItem(LAST_SYNC_STORAGE_KEY);
 
                         if (lastSync)
                             lastSync = new Date(parseInt(lastSync));
@@ -186,7 +192,7 @@ define(["angular", "moment", "services/utils", "services/localization"], functio
                         throw TypeError("Invalid type for lastSyncTimestamp, must be a date.");
 
                     lastSync = value;
-                    localStorage.setItem("lastSync", lastSync.valueOf());
+                    localStorage.setItem(LAST_SYNC_STORAGE_KEY, lastSync.valueOf());
                 },
                 get synOfferDeclined(){
                     if (syncOfferDeclined === undefined)

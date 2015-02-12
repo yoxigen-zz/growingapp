@@ -257,6 +257,10 @@ define(["angular", "services/phonegap", "services/config", "classes/data_object"
             });
         };
 
+        FileData.clearAll = function(){
+            return objectStore.clear();
+        };
+
         FileData.getById = function (fileId) {
             return objectStore.find(fileId).then(function (objData) {
                 if (objData)

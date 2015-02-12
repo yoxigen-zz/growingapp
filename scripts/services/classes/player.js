@@ -150,6 +150,10 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
             });
         };
 
+        Player.clearAll = function(){
+            return playersObjectStore.clear();
+        };
+
         Player.updatePlayers = function(updatedPlayers){
             if (updatedPlayers && updatedPlayers.length){
                 updatedPlayers.forEach(function(player){

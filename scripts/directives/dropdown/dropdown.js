@@ -10,7 +10,7 @@ define(["angular"], function(angular){
                 buttonIcon: "@",
                 closeOnClick: "="
             },
-            template: '<div class="dropdown-directive"><button ng-click="open()" class="dropdown-directive-button {{buttonClass}}"><img ng-if="buttonIcon" ng-src="{{buttonIcon}}" />{{buttonText}}</button>' +
+            template: '<div class="dropdown-directive"><button type="button" ng-click="open()" class="dropdown-directive-button {{buttonClass}}"><img ng-if="buttonIcon" ng-src="{{buttonIcon}}" />{{buttonText}}</button>' +
                 '<div class="dropdown-directive-menu" ng-transclude></div></div>',
             link: dropdownLink
         };

@@ -33,6 +33,12 @@ define(["angular", "modules/entries/entries_module"], function(angular){
                 onUpdateEntries(e.objects)
         });
 
+        eventBus.subscribe("logout", function(){
+            api.currentEntriesType = null;
+            entriesCollection = new DataObjectCollection(Entry);
+            api.items = entriesCollection.items;
+        });
+
         dialogs.editEntry.submitAction = { icon: "ok", title: "Save entry", onSubmit: entrySaveAction };
 
         var api = {

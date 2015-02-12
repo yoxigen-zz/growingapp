@@ -52,7 +52,7 @@ define(["app"], function(app) {
                 $scope.signupError = null;
             }, function(error){
                 console.error("Error creating new user: ", error);
-                $scope.loginError = error.message;
+                $scope.signupError = error.message;
             });
         }
     }

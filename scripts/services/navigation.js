@@ -3,9 +3,9 @@ define(["app"], function (app) {
 
     app.factory("navigation", navigation);
 
-    navigation.$inject = ["phonegap", "eventBus", "$route", "$rootScope", "users", "dialogs", "Dialog"];
+    navigation.$inject = ["phonegap", "eventBus", "$route", "$rootScope", "users", "dialogs", "Dialog", "db"];
 
-    function navigation(phonegap, eventBus, $route, $rootScope, users, dialogs, Dialog) {
+    function navigation(phonegap, eventBus, $route, $rootScope, users, dialogs, Dialog, db) {
         var backButtonCallbacks = [],
             mainMenuItems = [
                 { text: "Settings", icon: "images/icons/settings.svg", onClick: function(e){
@@ -20,15 +20,20 @@ define(["app"], function (app) {
                     if (users.getCurrentUser())
                         eventBus.triggerEvent("sync");
                     else
-                        eventBus.triggerEvent("showLogin");
+                        dialogs.signIn.open();
 
                     dialogs.menu.close();
                 } },
                 { id: "signOut", hide: true, text: "Sign out", icon: "images/icons/sign_out.svg", onClick: function(e){
                     e.preventDefault();
+
+                    if (window.confirm("Warning: All unsaved entries will be deleted. Continue?")){
+                        users.logout();
+                        eventBus.triggerEvent("logout");
+                        db.clearDb();
+                    }
+
                     dialogs.menu.close();
-                    users.logout();
-                    eventBus.triggerEvent("logout");
                 } }
             ],
             pages = [

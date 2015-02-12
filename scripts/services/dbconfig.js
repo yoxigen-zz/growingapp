@@ -1,5 +1,7 @@
 define(["angular"], function(angular){
     angular.module("DBConfig", []).constant("dbConfig", {
+        version: 17,
+        dbName: "diaryDB",
         objectStores: {
             entries: {
                 name: "entries",

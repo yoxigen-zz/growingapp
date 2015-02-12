@@ -925,6 +925,8 @@ form input[type=text], form textarea, form input[type=number], form input[type=d
   font-weight: 300; }
   form input[type=text].input-small, form textarea.input-small, form input[type=number].input-small, form input[type=date].input-small, form input[type=password].input-small, form input[type=email].input-small {
     width: 10rem; }
+  form input[type=text].ng-touched.ng-invalid, form textarea.ng-touched.ng-invalid, form input[type=number].ng-touched.ng-invalid, form input[type=date].ng-touched.ng-invalid, form input[type=password].ng-touched.ng-invalid, form input[type=email].ng-touched.ng-invalid {
+    background: #fcc; }
 form label {
   margin-bottom: 1rem;
   display: block; }
@@ -1074,6 +1076,9 @@ select {
   .entry_photo_edit .entry-image-edit {
     max-height: 280px;
     max-width: 100%; }
+
+.white-form {
+  background: White; }
 
 .light-form input[type=text], .light-form input[type=number], .light-form input[type=date] {
   border: none;
