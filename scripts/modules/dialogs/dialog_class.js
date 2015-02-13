@@ -18,14 +18,17 @@ define(["angular", "modules/dialogs/dialogs_module"], function(angular){
             this.open = function(){
                 this.isOpen = true;
                 eventBus.triggerEvent("open");
-            };
+            }.bind(this);
 
             this.close = function(shouldTriggerEvent){
+                if (!this.isOpen)
+                    return;
+
                 this.isOpen = false;
 
                 if (shouldTriggerEvent !== false)
                     eventBus.triggerEvent("close");
-            };
+            }.bind(this);
         }
 
         Dialog.prototype.toggle = function(){
