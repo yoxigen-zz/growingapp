@@ -226,7 +226,7 @@ define(["angular", "services/eventbus"], function(angular){
 
         function addNewPlayer(){
             setEditPlayerActions(true);
-            $scope.editedPlayer = new Player();
+            players.editPlayer(new Player());
             dialogs.editPlayer.open();
         }
 
