@@ -552,8 +552,8 @@ $spinnerSize: 2rem;
 }
 
 .floating-message{
-  position: fixed;
-  top: 85%;
+  position: absolute;
+  bottom: 2rem;
   right: 0;
   left: 0;
   z-index: 102;

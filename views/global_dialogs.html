@@ -21,12 +21,6 @@
               actions="dialogs.currentInsight.actions">
     <div ng-include="insights.currentInsight.templateUrl"></div>
 </slide-dialog>
-<div class="floating-message" ng-show="dialogs.unremoveEntry.isOpen">
-    <div class="floating-message-contents">
-        <span class="floating-message-text"><span class="hide-smallest-width">Entry</span> Deleted</span>
-        <a ng-click="entries.unremoveLastEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
-    </div>
-</div>
 <dialog dialog="dialogs.newEntry">
     <ul class="entry-types-list">
         <li ng-repeat="entryType in ::entryTypes"

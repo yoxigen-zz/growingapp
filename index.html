@@ -92,6 +92,12 @@
         </header>
         <div id="contents-wrapper" class="flex flex-1" ng-if="!showFirstTimeSelection">
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
+            <div class="floating-message" ng-show="dialogs.unremoveEntry.isOpen">
+                <div class="floating-message-contents">
+                    <span class="floating-message-text"><span class="hide-smallest-width">Entry</span> Deleted</span>
+                    <a ng-click="entries.unremoveLastEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
+                </div>
+            </div>
         </div>
     </div>
     <div ng-include="'views/global_dialogs.html'"></div>
