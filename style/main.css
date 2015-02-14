@@ -94,6 +94,11 @@ a {
 .text-page a {
   color: #1e94f6;
   text-decoration: none; }
+.text-page h3 {
+  margin-top: 0;
+  margin-bottom: 0; }
+.text-page section {
+  margin-top: 2rem; }
 
 .app-version {
   color: rgba(0, 0, 0, 0.87);
