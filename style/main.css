@@ -546,7 +546,7 @@ a {
   flex-direction: row; }
   #first-time > header {
     height: auto;
-    background: #43124c url(../images/logo_header.svg) no-repeat right bottom;
+    background: #43124c url(../images/growingapp_logo_low.svg) no-repeat right bottom;
     background-size: contain;
     color: White;
     padding: 2.5rem 1rem;

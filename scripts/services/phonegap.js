@@ -35,8 +35,8 @@ define(["angular", "components/base64-binary"], function(angular, Base64Binary){
             }
 
             if (typeof(cordova.getAppVersion) !== "undefined") {
-                cordova.getAppVersion(function (version) {
-                    version.value = version;
+                cordova.getAppVersion(function(_version) {
+                    version.value = _version;
                 });
             }
         },false);
