@@ -53,7 +53,7 @@
     <gap:plugin name="org.apache.cordova.camera" />
     <gap:plugin name="org.apache.cordova.file" />
     <gap:plugin name="org.apache.cordova.file-transfer" />
-    <gap:plugin name="net.bgta.phonegap.plugins.appversion" />
+    <gap:plugin name="uk.co.whiteoctober.cordova.appversion" version="0.1.4" />
 
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
