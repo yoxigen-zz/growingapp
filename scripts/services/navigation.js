@@ -38,7 +38,7 @@ define(["app"], function (app) {
                     dialogs.contact.open();
                 } },
                 {
-                    id: "about", text: "About GrowingApp", onClick: function(e){
+                    id: "about", text: "About GrowingApp", icon: "images/icons/info.svg", onClick: function(e){
                         e.preventDefault();
                         dialogs.about.open();
                     }
