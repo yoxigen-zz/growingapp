@@ -13,7 +13,6 @@ define(["app"], function (app) {
                     dialogs.settings.open();
                 } },
                 //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
-                //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },
                 { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", className: "disable-offline", onClick: function(e){
                     e.preventDefault();
 
@@ -33,7 +32,17 @@ define(["app"], function (app) {
                     }
 
                     dialogs.menu.close();
-                } }
+                } },
+                { id: "contact", text: "Contact us", icon: "images/icons/mail.svg", className: "menu-item-separator", onClick: function(e){
+                    e.preventDefault();
+                    dialogs.contact.open();
+                } },
+                {
+                    id: "about", text: "About GrowingApp", onClick: function(e){
+                        e.preventDefault();
+                        dialogs.about.open();
+                    }
+                }
             ],
             pages = [
                 { name: "Diary", "url": "#/", icon: "images/icons/diary.svg", listIcon: "images/icons/diary-black.svg" },

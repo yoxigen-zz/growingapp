@@ -5,7 +5,8 @@ define(["angular", "components/base64-binary"], function(angular, Base64Binary){
         var defaultCameraOptions,
             deviceReady,
             onDeviceReady,
-            fileSystem;
+            fileSystem,
+            version = { value: "?" };
 
         document.addEventListener("deviceready",function(){
             deviceReady = true;
@@ -32,6 +33,12 @@ define(["angular", "components/base64-binary"], function(angular, Base64Binary){
                     callback();
                 });
             }
+
+            if (typeof(getAppVersion) !== "undefined") {
+                getAppVersion(function (version) {
+                    version.value = version;
+                });
+            }
         },false);
 
         function runOnDeviceReady(callback){
@@ -46,6 +53,9 @@ define(["angular", "components/base64-binary"], function(angular, Base64Binary){
         }
 
         var methods = {
+            app: {
+                version: version
+            },
             onBackButton: {
                 addEventListener: function(eventHandler){
                     runOnDeviceReady(function(){

@@ -32,9 +32,9 @@
             <ul>
                 <li ng-repeat="item in ::navigation.mainMenuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
                     <a href="{{::item.href}}" ng-click="item.onClick($event)">
-                            <span class="menu-icon">
-                                <img ng-src="{{::item.icon}}"/>
-                            </span>
+                        <span class="menu-icon">
+                            <img ng-src="{{::item.icon}}"/>
+                        </span>
                         <span class="menu-title">{{item.text}}</span>
                     </a>
                 </li>

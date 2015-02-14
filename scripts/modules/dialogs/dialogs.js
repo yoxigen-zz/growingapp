@@ -7,18 +7,20 @@ define(["angular", "modules/dialogs/dialog_class"], function(angular){
 
     function dialogs(Dialog){
         var _dialogs = {
-            signIn: { htmlUrl: "views/login.html", title: "Sign In" },
-            signUp: { htmlUrl: "views/signup.html", title: "Sign Up" },
+            about: { htmlUrl: "views/about.html", title: "About GrowingApp" },
+            contact: { htmlUrl: "views/contact.html", title: "Contact Us" },
+            currentInsight: { actions: [ { icon: "plus", title: "Add entry" } ] },
+            editEntry: { },
+            editPlayer: { htmlUrl: "views/edit_player.html" },
             imageMethodSelect: { htmlUrl: "views/image_method_select.html" },
             menu: {  },
-            currentInsight: { actions: [ { icon: "plus", title: "Add entry" } ] },
-            editPlayer: { htmlUrl: "views/edit_player.html" },
-            syncOffer: { htmlUrl: "views/syncOffer.html", title: "It's time to backup!" },
-            newPlayer: {  },
-            editEntry: { },
-            unremoveEntry: {},
             newEntry: { title: "New Entry Type" },
-            settings: { htmlUrl: "views/settings.html", title: "Settings", icon: "settings_white" }
+            newPlayer: {  },
+            settings: { htmlUrl: "views/settings.html", title: "Settings", icon: "settings_white" },
+            signIn: { htmlUrl: "views/login.html", title: "Sign In" },
+            signUp: { htmlUrl: "views/signup.html", title: "Sign Up" },
+            syncOffer: { htmlUrl: "views/syncOffer.html", title: "It's time to backup!" },
+            unremoveEntry: {}
         };
 
         for(var dialogId in _dialogs){

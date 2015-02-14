@@ -6,10 +6,10 @@ define(["angular", "services/eventbus"], function(angular){
         "localization", "eventBus", "users",
         "cloud", "config", "utils", "$timeout",
         "navigation", "messages", "players",
-        "insights", "dialogs", "entriesModel", "entries", "db"
+        "insights", "dialogs", "entriesModel", "entries", "db", "phonegap"
     ];
 
-    function MainController($scope, $route, Player, localization, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights, dialogs, entriesModel, entries, db){
+    function MainController($scope, $route, Player, localization, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights, dialogs, entriesModel, entries, db, phonegap){
         var currentMenuItem,
             spinnerTimeout;
 
@@ -42,6 +42,7 @@ define(["angular", "services/eventbus"], function(angular){
         $scope.setEntriesType = setEntriesType;
 
         $scope.signInSubmitAction = { text: "Sign In", onSubmit: function(){ eventBus.triggerEvent("doLogin") } };
+        $scope.appVersion = phonegap.app.version;
 
         $scope.syncOfferActions = [
             { text: "Don't backup", onClick: declineSyncOffer },

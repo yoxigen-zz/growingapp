@@ -24,7 +24,7 @@
     position: static;
     padding-right: 0;
     border-right: solid 1px #C6CCCE;
-    background: #e1e8ea;
+    background: White;
 
     &.render {
       display: block;
@@ -91,6 +91,11 @@
 
       &.selected {
         background: #80cce6;
+      }
+
+      &.menu-item-separator{
+        border-top: solid 1px #ddd;
+        margin-top: 1rem;
       }
     }
   }

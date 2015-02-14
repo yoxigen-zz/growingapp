@@ -18,7 +18,8 @@ define([
     "directives/data_object_image",
     "services/messages",
     "services/localization",
-    "services/utils"
+    "services/utils",
+    "services/phonegap"
 ], function(angular){
 
     return angular.module("GrowingApp", [
@@ -26,6 +27,7 @@ define([
         "Dropdown",
         "DataObject",
         "FileData",
+        "Phonegap",
         "DBConfig",
         "DB",
         "Config",

@@ -45,6 +45,9 @@ body {
 
 a {
   cursor: pointer; }
+  a.large-link {
+    font-size: 1.2rem;
+    color: #1e94f6; }
 
 .relative {
   position: relative; }
@@ -87,6 +90,10 @@ a {
 .scroll-vertical {
   overflow-x: hidden;
   overflow-y: auto; }
+
+.text-page a {
+  color: #1e94f6;
+  text-decoration: none; }
 
 @media all and (max-width: 400px) {
   .hide-small-width {
@@ -131,7 +138,8 @@ a {
   @media all and (orientation: landscape) {
     #splashscreen {
       background-position: right bottom;
-      background-size: 60%; }
+      background-image: url(../images/growingapp_logo_low.svg);
+      background-size: 80%; }
       #splashscreen div {
         padding-left: 2rem;
         box-sizing: border-box;
@@ -182,6 +190,10 @@ a {
   -ms-transition: background-color 300ms ease;
   -o-transition: background-color 300ms ease;
   transition: background-color 300ms ease; }
+  @media all and (orientation: landscape) {
+    .actionbar {
+      height: 3rem;
+      line-height: 2.8rem; } }
   .actionbar .player-name {
     font-size: 1.4rem;
     color: White;
@@ -254,6 +266,9 @@ a {
     .actionbar .actionbar-button img {
       height: 1.75rem;
       margin-top: 0.875rem; }
+      @media all and (orientation: landscape) {
+        .actionbar .actionbar-button img {
+          margin-top: 0.58333rem; } }
 
 .list-icon {
   height: 27px;
@@ -668,7 +683,7 @@ blockquote {
       position: static;
       padding-right: 0;
       border-right: solid 1px #C6CCCE;
-      background: #e1e8ea; }
+      background: White; }
       #menu-wrapper.render {
         display: block; } }
 
@@ -717,6 +732,9 @@ blockquote {
       background-color: #c1cacc; }
     #menu ul li.selected {
       background: #80cce6; }
+    #menu ul li.menu-item-separator {
+      border-top: solid 1px #ddd;
+      margin-top: 1rem; }
   #menu .menu-icon {
     display: block;
     float: left;

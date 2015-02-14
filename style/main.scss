@@ -27,7 +27,14 @@ body{
   flex-direction: column;
 }
 
-a{ cursor: pointer; }
+a{
+  cursor: pointer;
+
+  &.large-link{
+    font-size: 1.2rem;
+    color: #1e94f6;
+  }
+}
 .relative{ position: relative; }
 .rtl{
   direction: rtl;
@@ -71,6 +78,12 @@ a{ cursor: pointer; }
   overflow-y: auto;
 }
 
+.text-page{
+  a{
+    color: #1e94f6;
+    text-decoration: none;
+  }
+}
 .hide-small-width{
   @media all and (max-width: 400px){
     display: none;
@@ -124,7 +137,8 @@ a{ cursor: pointer; }
 
   @media all and (orientation: landscape){
     background-position: right bottom;
-    background-size: 60%;
+    background-image: url(../images/growingapp_logo_low.svg);
+    background-size: 80%;
 
     div{
       padding-left: 2rem;
@@ -190,6 +204,11 @@ a{ cursor: pointer; }
   -ms-transition: background-color 300ms ease;
   -o-transition: background-color 300ms ease;
   transition: background-color 300ms ease;
+
+  @media all and (orientation: landscape){
+    height: 3rem;
+    line-height: 2.8rem;
+  }
 
   .player-name{
     font-size: 1.4rem;
@@ -288,6 +307,10 @@ a{ cursor: pointer; }
     img{
       height: $actionbarHeight / 2;
       margin-top: $actionbarHeight / 4;
+
+      @media all and (orientation: landscape){
+        margin-top: $actionbarHeight / 6;
+      }
     }
   }
 }
