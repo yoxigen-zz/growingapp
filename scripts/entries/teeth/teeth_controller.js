@@ -3,9 +3,9 @@ define(["app"], function(app) {
 
     app.controller("TeethController", teethController);
 
-    teethController.$inject = ["$scope", "teeth", "eventBus", "$timeout"];
+    teethController.$inject = ["$scope", "teeth", "eventBus", "$timeout", "players"];
 
-    function teethController($scope, teeth, eventBus, $timeout) {
+    function teethController($scope, teeth, eventBus, $timeout, players) {
         eventBus.subscribe("saveEntry", function(entry){
             if (entry.type.id === "teeth") {
                 $timeout(setAddedTeeth, 1000);
@@ -13,7 +13,7 @@ define(["app"], function(app) {
         });
 
         function setAddedTeeth() {
-            teeth.getAllAddedTeeth($scope.player.playerId).then(function (addedTeeth) {
+            teeth.getAllAddedTeeth(players.currentPlayer.playerId).then(function (addedTeeth) {
                 $scope.addedTeeth = addedTeeth;
             });
         }

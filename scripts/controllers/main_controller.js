@@ -2,30 +2,26 @@ define(["angular", "services/eventbus"], function(angular){
     angular.module("GrowingApp").controller("MainController", MainController);
 
     MainController.$inject = [
-        "$scope", "$route", "Player",
+        "$scope", "$route",
         "localization", "eventBus", "users",
         "cloud", "config", "utils", "$timeout",
         "navigation", "messages", "players",
         "insights", "dialogs", "entriesModel", "entries", "db", "phonegap"
     ];
 
-    function MainController($scope, $route, Player, localization, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights, dialogs, entriesModel, entries, db, phonegap){
+    function MainController($scope, $route, localization, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights, dialogs, entriesModel, entries, db, phonegap){
         var currentMenuItem,
             spinnerTimeout;
 
         $scope.config = config;
         $scope.dialogs = dialogs;
 
-        $scope.playersService = players;
-        $scope.setCurrentPlayer = setCurrentPlayer;
-        $scope.saveEditedPlayer = saveEditedPlayer;
+        $scope.players = players;
 
         $scope.offline = !window.navigator.onLine;
         $scope.toggleMenu = toggleMenu;
         $scope.navigation = navigation;
-        $scope.editPlayer = editPlayer;
         $scope.openLogin = openLogin;
-        $scope.addNewPlayer = addNewPlayer;
         $scope.openSignUp = openSignUp;
         $scope.declineSyncOffer = declineSyncOffer;
         $scope.openSettings = openSettings;
@@ -49,12 +45,6 @@ define(["angular", "services/eventbus"], function(angular){
             { text: "Backup now", onClick: openSignUp }
         ];
 
-
-        // TODO: move these to a new EditPlayerController:
-        $scope.savePlayer = savePlayer;
-        $scope.removePlayer = removePlayer;
-
-
         $scope.$on("$routeChangeSuccess", onRouteChange);
 
         eventBus.subscribe("showLogin", openLogin);
@@ -63,7 +53,6 @@ define(["angular", "services/eventbus"], function(angular){
         eventBus.subscribe("loadingStart", onLoadingStart);
         eventBus.subscribe("loadingEnd", onLoadingEnd);
         eventBus.subscribe("logout", onLogout);
-        eventBus.subscribe("updateObjects", onUpdateObjects);
         eventBus.subscribe("settingsChange", onSettingsChange);
 
         window.addEventListener("online", function(){
@@ -130,105 +119,11 @@ define(["angular", "services/eventbus"], function(angular){
             dialogs.settings.close();
         }
 
-        function setFirstPlayer(){
-            $scope.setCurrentPlayer($scope.players && $scope.players.length ? $scope.players[0] : null);
-        }
-
-        function setPlayersSelection(players){
-            $scope.playersSelection = players.concat([{ name: "+ Add New Child" }]);
-            if (!players.length) {
-                if (config.sync.lastSyncTimestamp)
-                    $scope.addNewPlayer();
-                else
-                    setFirstTime();
-            }
-        }
-
-        function setEditPlayerActions(isNewPlayer){
-            var actions = [
-                { icon: "ok", title: "Save child", onClick: savePlayer }
-            ];
-
-            if(!isNewPlayer)
-                actions.splice(0, 0, { icon: "trash", title: "Delete child", onClick: removePlayer });
-
-            $scope.editedPlayerActions = actions;
-        }
-
-        function editPlayer(player){
-            if (player instanceof Player) {
-                $scope.editPlayerActions = setEditPlayerActions();
-                players.editPlayer($scope.editedPlayer = angular.copy(player));
-
-                dialogs.editPlayer.open();
-            }
-            else{
-                console.error("Can't edit player - expecting a Player object, got: ", player);
-            }
-        }
-
-        function savePlayer(){
-            if (!$scope.editedPlayer.name){
-                return;
-            }
-
-            $scope.editedPlayer.save().then(function(player){
-                dialogs.editPlayer.close();
-                $scope.editedPlayer = null;
-
-                if (player.isNew){
-                    $scope.players.push(player);
-                    $scope.players.sort(function(a,b){
-                        return a.name < b.name ? 1 : -1;
-                    });
-                }
-                else{
-                    for(var i= 0, menuPlayer; menuPlayer = $scope.players[i]; i++){
-                        if (menuPlayer.playerId === player.playerId) {
-                            $scope.players[i] = player;
-                            break;
-                        }
-                    }
-                }
-
-                setCurrentPlayer(player);
-
-                setPlayersSelection($scope.players);
-                eventBus.triggerEvent("editPlayer", player);
-            }, function(error){
-                messages.error("Error saving: " + error);
-            });
-        }
-
-        function removePlayer(){
-            messages.confirm("Are you sure you wish to remove this child from the list?").then(function(confirmed){
-                if (!confirmed)
-                    return;
-
-                $scope.editedPlayer.remove().then(function(){
-                    for(var i=0; i < $scope.players.length; i++){
-                        if ($scope.players[i].playerId === $scope.editedPlayer.playerId){
-                            $scope.players.splice(i, 1);
-                            setPlayersSelection($scope.players);
-                            dialogs.editPlayer.close();
-
-                            if ($scope.player && $scope.editedPlayer.playerId === $scope.player.playerId)
-                                setFirstPlayer();
-
-                            eventBus.triggerEvent("deletePlayer", $scope.editedPlayer);
-
-                            $scope.editedPlayer = null;
-                            break;
-                        }
-                    }
-                });
-            });
-        }
-
-        function addNewPlayer(){
-            setEditPlayerActions(true);
-            players.editPlayer(new Player());
-            dialogs.editPlayer.open();
+        function onNoPlayers(){
+            if (config.sync.lastSyncTimestamp)
+                players.addNewPlayer();
+            else
+                setFirstTime();
         }
 
         function openSignUp(){
@@ -244,6 +139,8 @@ define(["angular", "services/eventbus"], function(angular){
         function onLogin(e){
             dialogs.closeAll();
 
+            $scope.showFirstTimeSelection = false;
+
             var signoutItem = getMenuItemById("signOut");
 
             signoutItem.hide = false;
@@ -258,11 +155,10 @@ define(["angular", "services/eventbus"], function(angular){
             signoutItem.hide = true;
 
             $scope.currentUser = null;
-            $scope.players = [];
+            players.clear();
             db.clearDb();
 
             config.sync.clearLastSyncTimestamp();
-            setCurrentPlayer(null);
         }
 
         function onLoadingStart(e){
@@ -285,89 +181,10 @@ define(["angular", "services/eventbus"], function(angular){
             $scope.settings = config.getCurrentLocalization();
         }
 
-        function onUpdateObjects(e){
-            if (e.type === "Player")
-                onUpdatePlayers(e.objects);
-        }
-
-        function onUpdatePlayers(_players){
-            var deletedCurrentPlayer;
-
-            _players.forEach(function(player){
-                if (player.isNew){
-                    if (!player.deleted)
-                        $scope.players.push(player);
-                }
-                else {
-                    var existingPlayer = utils.arrays.find($scope.players, function (p) {
-                            return p.playerId === player.playerId;
-                        }),
-                        existingPlayerIndex;
-
-                    if (existingPlayer) {
-                        existingPlayerIndex = $scope.players.indexOf(existingPlayer);
-                        if (player.deleted)
-                            $scope.players.splice(existingPlayerIndex, 1);
-                        else {
-                            if (!$scope.players)
-                                $scope.players = [];
-
-                            $scope.players[existingPlayerIndex] = player;
-                        }
-                    }
-
-                    if ($scope.player && player.playerId === $scope.player.playerId) {
-                        if (player.deleted)
-                            deletedCurrentPlayer = true;
-                        else
-                            $scope.player = player;
-                    }
-                }
-            });
-
-            if ((!$scope.player && $scope.players.length)|| deletedCurrentPlayer)
-                setFirstPlayer();
-        }
-
         function onRouteChange(){
             $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
             dialogs.menu.close();
             setCurrentMenuItem();
-        }
-
-        function setCurrentPlayer(player){
-            if (player === $scope.player)
-                return;
-
-            if (!player)
-                player = $scope.players && $scope.players.length ? $scope.players[0] : null;
-            else
-                player = utils.arrays.find($scope.players, function(_player){
-                     return _player.playerId === player.playerId;
-                });
-
-            $scope.player = player;
-
-            if (player && player.playerId) {
-                config.players.setCurrentPlayerId(player.playerId);
-                $scope.showFirstTimeSelection = false;
-            }
-            else {
-                config.players.removeCurrentPlayerId();
-                if (config.sync.lastSyncTimestamp)
-                    $scope.addNewPlayer();
-                else
-                    setFirstTime();
-            }
-
-            players.setCurrentPlayer(player);
-            eventBus.triggerEvent("playerSelect", player);
-        }
-
-        function saveEditedPlayer(){
-            // TODO: improve this, remove the editedPlayer from scope
-            $scope.editedPlayer = players.editedPlayer;
-            savePlayer();
         }
 
         function toggleMenu(){
@@ -376,7 +193,7 @@ define(["angular", "services/eventbus"], function(angular){
 
         function setFirstTime(){
             $scope.showFirstTimeSelection = true;
-            players.editPlayer(new Player());
+            players.addNewPlayer(false);
         }
 
         function init(){
@@ -384,16 +201,15 @@ define(["angular", "services/eventbus"], function(angular){
             if (user)
                 eventBus.triggerEvent("login", { user: user });
 
-            Player.getAll().then(function(allPlayers){
-                $scope.players = allPlayers;
-                setPlayersSelection(allPlayers);
-
-                Player.getCurrentPlayer().then(function(currentPlayer){
-                    if (currentPlayer) {
-                        $scope.setCurrentPlayer(currentPlayer);
-                        players.setCurrentPlayer(currentPlayer);
-                    }
-                });
+            players.getAll().then(function(allPlayers){
+                if (!allPlayers || !allPlayers.length)
+                    onNoPlayers();
+                else {
+                    players.getCurrentPlayer().then(function (currentPlayer) {
+                        if (!currentPlayer)
+                            onNoPlayers();
+                    });
+                }
 
                 cloud.sync({ isOnLoad: true });
                 $scope.appLoaded = true;

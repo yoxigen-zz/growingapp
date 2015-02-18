@@ -2,15 +2,15 @@
     <form ng-submit="saveEditedPlayer()" class="light-form centered">
         <section class="light-form-section player-edit-image-section">
             <div class="player-image"
-                 ng-class="{ 'with-image': playersService.editedPlayer.image }"
-                 ng-click="playersService.editedPlayer.addPhoto()"
-                 ng-style="{ 'background-image': playersService.editedPlayer.image.cssUrl }"></div>
+                 ng-class="{ 'with-image': players.editedPlayer.image }"
+                 ng-click="players.editedPlayer.addPhoto()"
+                 ng-style="{ 'background-image': players.editedPlayer.image.cssUrl }"></div>
         </section>
         <div class="player-edit-inputs">
             <section class="light-form-section">
                 <label>
                     <div style="display: inline-block">
-                        <input type="text" required ng-model="playersService.editedPlayer.name" class="centered" />
+                        <input type="text" required ng-model="players.editedPlayer.name" class="centered" />
                         <span class="label-bottom align-center">Name</span>
                     </div>
                 </label>
@@ -18,28 +18,28 @@
             <section class="light-form-section flex-horizontal">
                 <label class="flex-1 align-left">
                     <div style="display: inline-block">
-                        <input type="date" required ng-model="playersService.editedPlayer.birthday" placeholder="Birthday"/>
+                        <input type="date" required ng-model="players.editedPlayer.birthday" placeholder="Birthday"/>
                         <span class="label-bottom align-center">Birthday</span>
                     </div>
                 </label>
                 <label>
-                    <dropdown button-text="{{playersService.editedPlayer.gender.name}}"
-                              button-icon="{{playersService.editedPlayer.gender.icon}}"
+                    <dropdown button-text="{{players.editedPlayer.gender.name}}"
+                              button-icon="{{players.editedPlayer.gender.icon}}"
                               button-class="small-icon black-button"
                               close-on-click="true">
                         <ul class="dropdown-list">
                             <li ng-repeat="gender in ::config.genders"
-                                ng-class="{ selected: gender === playersService.editedPlayer.gender }"
-                                ng-click="playersService.editedPlayer.gender = gender"><img class="dropdown-list-icon" ng-src="{{gender.icon}}" />{{gender.name}}</li>
+                                ng-class="{ selected: gender === players.editedPlayer.gender }"
+                                ng-click="players.editedPlayer.gender = gender"><img class="dropdown-list-icon" ng-src="{{gender.icon}}" />{{gender.name}}</li>
                         </ul>
                     </dropdown>
                     <span class="label-bottom">Gender</span>
                 </label>
             </section>
-            <section class="light-form-section">
-                <button type="submit" class="btn btn-success btn-submit" ng-show="!playersService.editedPlayer.playerId">
+            <section class="light-form-section" ng-show="showFirstTimeSelection">
+                <button type="submit" class="btn btn-success btn-submit">
                     <img src="images/icons/ok_black.svg" />
-                    {{playersService.editedPlayer.playerId && 'Save' || 'Add'}} child
+                    {{players.editedPlayer.playerId && 'Save' || 'Add'}} child
                 </button>
             </section>
         </div>

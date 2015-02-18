@@ -1,4 +1,4 @@
-define(["angular", "classes/data_object", "classes/file_data", "services/dbconfig", "services/config", "services/utils", "services/images"], function(angular){
+define(["angular", "classes/data_object", "classes/file_data", "services/dbconfig", "services/config", "services/utils", "services/images"], function (angular) {
     "use strict";
 
     angular.module("Player", ["xc.indexedDB", "DBConfig", "Config", "Utils", "DataObject", "Images", "FileData"]).factory("Player", PlayerClass);
@@ -12,8 +12,7 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
         function Player(data) {
             var id;
 
-            if (data && data.playerId && data.name)
-            {
+            if (data && data.playerId && data.name) {
                 angular.extend(this, data);
                 id = data.playerId;
 
@@ -48,7 +47,7 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
          * @param date
          * @returns {*}
          */
-        Player.prototype.getAge = function(date){
+        Player.prototype.getAge = function (date) {
             if (!date)
                 date = new Date();
 
@@ -68,7 +67,16 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
             return this._ageText;
         });
 
-        Player.prototype.getCloudData = function(){
+        Player.prototype.preSave = function () {
+            this.clearParsedValues();
+
+        };
+
+        Player.prototype.clearParsedValues = function(){
+            delete this._ageText;
+        };
+
+        Player.prototype.getCloudData = function () {
             return angular.extend(this.getBaseCloudData(), {
                 playerId: this.playerId,
                 birthday: this.birthday,
@@ -78,7 +86,7 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
             });
         };
 
-        Player.prototype.getLocalData = function(){
+        Player.prototype.getLocalData = function () {
             var localData = {
                 name: this.name,
                 birthday: this.birthday,
@@ -91,18 +99,18 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
             return angular.extend(this.getBaseLocalData(), localData);
         };
 
-        Player.prototype.__defineGetter__("idProperty", function(){
+        Player.prototype.__defineGetter__("idProperty", function () {
             return "playerId";
         });
 
         Player.prototype.objectStore = playersObjectStore;
-        Player.prototype.validate = function(){
+        Player.prototype.validate = function () {
             if (!this.name)
                 throw "Can't save, missing name.";
         };
 
         Player.prototype.__proto__ = DataObject;
-        Player.prototype.addPhoto = function(method){
+        Player.prototype.addPhoto = function (method) {
             return images.addPhotoToDataObject(config.players.playerImageSize, this, method);
         };
 
@@ -112,26 +120,15 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
 
             options = options || {};
 
-            return playersObjectStore.internalObjectStore(dbConfig.objectStores.players.name, "readonly").then(function(objectStore){
+            return playersObjectStore.internalObjectStore(dbConfig.objectStores.players.name, "readonly").then(function (objectStore) {
                 var idx = objectStore.index(options.unsynced ? "unsync_idx" : "name_idx");
                 var players = [],
                     deferred = $q.defer(),
                     cursor = idx.openCursor(null);
 
-                cursor.onsuccess = function(event) {
+                cursor.onsuccess = function (event) {
                     var cursor = event.target.result;
                     if (!cursor) {
-                        if (!Player.playersIndex)
-                            Player.playersIndex = {};
-
-                        players.forEach(function(player){
-                            if (!Player.playersIndex[player.playerId])
-                                Player.playersIndex[player.playerId] = player;
-                        });
-
-                        if (!options)
-                            Player.players = players;
-
                         deferred.resolve(players);
                         return;
                     }
@@ -140,55 +137,18 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
                     cursor.continue();
                 };
 
-                cursor.onerror = function(event){
+                cursor.onerror = function (event) {
                     deferred.reject(event);
                 };
 
                 return deferred.promise;
-            }, function(){
+            }, function () {
                 return $q.when([]);
             });
         };
 
-        Player.clearAll = function(){
+        Player.clearAll = function () {
             return playersObjectStore.clear();
-        };
-
-        Player.updatePlayers = function(updatedPlayers){
-            if (updatedPlayers && updatedPlayers.length){
-                updatedPlayers.forEach(function(player){
-                    if (player.deleted && Player.playersIndex[player.playerId])
-                        delete Player.playersIndex[player.playerId];
-                    else
-                        Player.playersIndex[player.playerId] = player;
-                });
-            }
-        };
-
-        Player.getById = function(playerId){
-            if (!Player.playersIndex){
-                return Player.getAll().then(function(players){
-                    return Player.playersIndex[playerId];
-                }).catch(function(error){
-                    return $q.reject("Can't get Player by ID, can't get all players.");
-                });
-            }
-
-            return Player.playersIndex[playerId];
-        };
-
-        Player.getCurrentPlayer = function(){
-            var currentPlayerId = config.players.getCurrentPlayerId();
-            if (currentPlayerId)
-                return $q.when(Player.getById(currentPlayerId));
-            else{
-                return Player.getAll().then(function(players) {
-                    if (players && players.length)
-                        return players[0];
-
-                    return null;
-                });
-            }
         };
 
         return Player;

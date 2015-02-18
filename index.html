@@ -51,14 +51,14 @@
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
             <div class="flex-1" id="actionbar-main" ng-cloak>
-                <dropdown close-on-click="true" button-text="{{player.name}}" button-class="player-name">
+                <dropdown close-on-click="true" button-text="{{players.currentPlayer.name}}" button-class="player-name">
                     <ul class="dropdown-list">
-                        <li ng-repeat="_player in players" ng-click="setCurrentPlayer(_player)" ng-class="{ selected: _player === player }">
-                            <div class="list-icon player-list-icon" ng-style="{ 'background-image': _player.image.cssUrl }"></div>{{_player.name}}
+                        <li ng-repeat="player in players.allPlayers" ng-click="players.setCurrentPlayer(player)" ng-class="{ selected: player.isCurrentPlayer }">
+                            <div class="list-icon player-list-icon" ng-style="{ 'background-image': player.image.cssUrl }"></div>{{player.name}}
                         </li>
                     </ul>
                     <ul class="dropdown-list">
-                        <li ng-click="addNewPlayer()">
+                        <li ng-click="players.addNewPlayer(true)">
                             <div class="list-icon" style="background-image: url(images/icons/plus-black.svg)"></div>Add Child
                         </li>
                     </ul>

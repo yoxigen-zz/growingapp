@@ -1,9 +1,9 @@
-define(["angular", "classes/player", "services/config", "modules/entries/entries", "services/utils", "classes/entry"], function(angular){
-    angular.module("Vaccines", ["Player", "Config", "Entries", "Utils"]).factory("vaccines", vaccines);
+define(["angular", "services/players", "classes/entry"], function(angular){
+    angular.module("Vaccines", ["Players", "Entries"]).factory("vaccines", vaccines);
 
-    vaccines.$inject = ["config", "Player", "Entry"];
+    vaccines.$inject = ["players", "Entry"];
 
-    function vaccines(config, Player, Entry) {
+    function vaccines(players, Entry) {
         return {
             getVaccines: getVaccines
         };
@@ -12,7 +12,7 @@ define(["angular", "classes/player", "services/config", "modules/entries/entries
          * Gets all the vaccines for the current player
          */
         function getVaccines() {
-            return Player.getCurrentPlayer().then(function (player) {
+            return players.getCurrentPlayer().then(function (player) {
                 return Entry.getEntries({ type: "vaccine", player: player, reverse: true });
             });
         }

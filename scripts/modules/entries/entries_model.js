@@ -149,7 +149,7 @@ define(["angular", "modules/entries/entries_module"], function(angular){
 
         function newEntry(entryType){
             dialogs.newEntry.close();
-            editEntry(new Entry(entryType, players.getCurrentPlayer(), true));
+            editEntry(new Entry(entryType, players.currentPlayer, true));
         }
 
         function updateEntriesAfterUnitChange(unitType) {
@@ -174,7 +174,7 @@ define(["angular", "modules/entries/entries_module"], function(angular){
         }
 
         function setEntries(){
-            if (players.getCurrentPlayer() && players.getCurrentPlayer().playerId) {
+            if (players.currentPlayer && players.currentPlayer.playerId) {
                 api.allEntriesAdded = false;
                 currentPage = 0;
                 entriesCollection.clearItems();
@@ -197,7 +197,7 @@ define(["angular", "modules/entries/entries_module"], function(angular){
                 count: PAGE_SIZE,
                 offset: currentPage * PAGE_SIZE,
                 type: currentEntriesType && currentEntriesType.id,
-                playerId: players.getCurrentPlayer().playerId,
+                playerId: players.currentPlayer.playerId,
                 reverse: true
             };
 
@@ -222,7 +222,7 @@ define(["angular", "modules/entries/entries_module"], function(angular){
             var updatedEntriesIndex = {},
                 handled = 0;
 
-            var currentPlayerId = players.getCurrentPlayerId();
+            var currentPlayerId = players.currentPlayer.playerId;
 
             entries.forEach(function(entry){
                 if (entry.player.playerId !== currentPlayerId)

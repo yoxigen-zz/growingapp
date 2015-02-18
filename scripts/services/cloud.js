@@ -3,13 +3,13 @@ define(["app", "classes/entry", "classes/player", "classes/file_data", "services
 
     app.factory("cloud", cloud);
 
-    cloud.$inject = ["$q", "eventBus", "Entry", "Player", "FileData", "Storage", "users", "config", "messages", "files"];
+    cloud.$inject = ["$q", "eventBus", "Entry", "players", "Player", "FileData", "Storage", "users", "config", "messages", "files"];
 
     /**
      * Manages data sync with the cloud. Without this, the app is offline-only.
      * @returns {{sync: sync}}
      */
-    function cloud($q, eventBus, Entry, Player, FileData, Storage, users, config, messages, files) {
+    function cloud($q, eventBus, Entry, players, Player, FileData, Storage, users, config, messages, files) {
 
         var storage = new Storage().cloud,
             cloudEnabled,
@@ -215,8 +215,8 @@ define(["app", "classes/entry", "classes/player", "classes/file_data", "services
             // Both Player and Entry objects need updates to files, so FileData comes first.
             // Entry needs updates to Players (entry for a new player, for example), so Player comes second and Entry last, it has no dependencies.
             return syncObjectsFromCloud(FileData).then(function () {
-                return syncObjectsFromCloud(Player).then(function (players) {
-                    Player.updatePlayers(players);
+                return syncObjectsFromCloud(Player).then(function (_players) {
+                    players.updatePlayers(_players);
 
                     return syncObjectsFromCloud(Entry).then(setLastUpdateTime);
                 });
@@ -292,7 +292,7 @@ define(["app", "classes/entry", "classes/player", "classes/file_data", "services
             isSyncing = true;
             eventBus.triggerEvent("loadingStart", params);
 
-            Player.getAll().then(function () {
+            players.getAll().then(function () {
                 syncFromCloud().then(function () {
                     syncToCloud().then(function () {
                         isSyncing = false;

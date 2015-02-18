@@ -3,13 +3,13 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
 
     angular.module("Entries").factory("Entry", EntryClass);
 
-    EntryClass.$inject = ["$q", "$indexedDB", "$filter", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
+    EntryClass.$inject = ["$q", "$indexedDB", "$filter", "entries", "Player", "players", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
     /**
      * Creates the Entry class
      * @returns {Entry}
      * @constructor
      */
-    function EntryClass($q, $indexedDB, $filter, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
+    function EntryClass($q, $indexedDB, $filter, entries, Player, players, FileData, DataObject, dbConfig, config, images, utils) {
         var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
             entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
@@ -27,7 +27,7 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
                 this.date = entryData.date;
                 this.age = entryData.age;
                 this.properties = entryData.properties;
-                this.player = entryData.player || Player.getById(entryData.playerId);
+                this.player = entryData.player || players.getPlayerById(entryData.playerId);
                 if (!this.player)
                     throw new Error("Can't create entry - no player found for playerId " + entryData.playerId);
 

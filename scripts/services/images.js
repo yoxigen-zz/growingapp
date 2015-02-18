@@ -146,7 +146,6 @@ define(["angular", "services/phonegap", "services/messages", "classes/file_data"
 
             function doGetPhoto(method) {
                 return getPhoto(method, {
-                    allowEdit: true,
                     targetWidth: imagesConfig.width,
                     targetHeight: imagesConfig.height,
                     saveToPhotoAlbum: false
@@ -160,7 +159,7 @@ define(["angular", "services/phonegap", "services/messages", "classes/file_data"
 
                     return addThumbnailToDataObject(dataObject.image);
                 }, function (error) {
-                    messages.error(error);
+                    //messages.error(error);
                 });
             }
         }

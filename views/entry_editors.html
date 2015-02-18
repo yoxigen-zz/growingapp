@@ -69,6 +69,17 @@
 <script type="text/ng-template" id="entry_editor_vaccine">
     <label>
         <span class="label-text">The vaccine</span>
+        <!--
+        <dropdown close-on-click="true" button-text="Select the vaccine...">
+            <ul class="dropdown-list">
+                <li ng-repeat="vaccine in config.entries.vaccines.list"
+                    ng-click="entries.editedEntry.properties.vaccineId = vaccine.id"
+                    ng-class="{ selected: entries.editedEntry.properties.vaccineId == vaccine.id }">
+                    {{vaccine.name}}
+                </li>
+            </ul>
+        </dropdown>
+        -->
         <select ng-model="entries.editedEntry.properties.vaccineId" ng-options="vaccine.id as vaccine.name for vaccine in config.entries.vaccines.list">
             <option value="">(Select the vaccine)</option>
         </select>

@@ -1,7 +1,7 @@
 <slide-dialog dialog="::dialogs.editPlayer"
               title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}"
               class="white-form"
-              actions="editedPlayerActions">
+              actions="players.editedPlayerActions">
     <div ng-include="'views/player_form.html'"></div>
 </slide-dialog>
 <dialog dialog="::dialogs.signIn" actions="signInActions" submit-action="signInSubmitAction">

@@ -3,15 +3,15 @@
          on-scroll-to-bottom="entries.loadMoreEntries()"
          done-scrolling="entries.allEntriesAdded"
          ng-class="{ 'flex-vertical': entries && !entries.items.length }"
-         ng-show="player">
+         ng-show="players.currentPlayer">
         <div id="player-summary" ng-show="!entries.currentEntriesType">
             <div id="player-summary-avatar"
-                 ng-class="{ 'with-image': player.image }"
-                 ng-style="{ 'background-image': player.image.cssUrl }"
-                 ng-click="editPlayer(player)"></div>
-            <h2 id="player-summary-name">{{player.name}}</h2>
+                 ng-class="{ 'with-image': players.currentPlayer.image }"
+                 ng-style="{ 'background-image': players.currentPlayer.image.cssUrl }"
+                 ng-click="players.editPlayer(players.currentPlayer, true)"></div>
+            <h2 id="player-summary-name">{{players.currentPlayer.name}}</h2>
             <div id="player-summary-info">
-                <span>{{player.ageText}}</span>
+                <span>{{players.currentPlayer.ageText}}</span>
             </div>
         </div>
         <a id="new-entry-button" class="floating-action-button add-button" ng-show="entries.items.length" title="New entry" ng-click="dialogs.newEntry.toggle()"></a>

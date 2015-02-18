@@ -3,9 +3,9 @@ define(["app"], function(app) {
 
     app.controller("LineChartInsightController", lineChartInsightController);
 
-    lineChartInsightController.$inject = ["$scope", "$filter", "Entry", "utils", "eventBus", "config", "statistics", "localization", "insights", "entriesModel"];
+    lineChartInsightController.$inject = ["$scope", "$filter", "Entry", "utils", "eventBus", "config", "statistics", "localization", "insights", "entriesModel", "players"];
 
-    function lineChartInsightController($scope, $filter, Entry, utils, eventBus, config, statistics, localization, insights, entriesModel) {
+    function lineChartInsightController($scope, $filter, Entry, utils, eventBus, config, statistics, localization, insights, entriesModel, players) {
         var insightId = insights.currentInsight.id,
             unit = localization.units[insightId][config.localization[insightId].selected],
             unitFilter = $filter("unit");
@@ -48,19 +48,19 @@ define(["app"], function(app) {
         }
 
         function setData() {
-            if (!$scope.player || !$scope.player.playerId){
+            if (!players.currentPlayer || !players.currentPlayer.playerId){
                 $scope.chartData = [];
                 return;
             }
 
-            Entry.getEntries({ playerId: $scope.player.playerId, type: insightId }).then(function (chartEntries) {
+            Entry.getEntries({ playerId: players.currentPlayer.playerId, type: insightId }).then(function (chartEntries) {
                 $scope.chartData = chartEntries;
                 setStats(chartEntries);
             }).catch(function(error){
                 console.error("Can't get entries for " + insightId + " chart: ", error);
             });
 
-            statistics.getPercentiles(insightId, $scope.player, unit.name).then(function(percentileData){
+            statistics.getPercentiles(insightId, players.currentPlayer, unit.name).then(function(percentileData){
                 $scope.percentileData = percentileData;
             }, function(error){
                 console.error(error);
