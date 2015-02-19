@@ -1,11 +1,11 @@
-define(["angular", "classes/player", "services/config", "services/eventbus", "services/utils", "modules/dialogs/dialogs_module"], function(angular){
+define(["angular", "classes/player", "services/config", "services/eventbus", "services/utils", "modules/dialogs/dialogs_module", "services/users"], function(angular){
     "use strict";
 
-    angular.module("Players", ["Player", "Config", "EventBus", "Utils", "Dialogs", "Messages"]).factory("players", players);
+    angular.module("Players", ["Player", "Config", "EventBus", "Utils", "Dialogs", "Messages", "Users"]).factory("players", players);
 
-    players.$inject = ["$q", "Player", "config", "eventBus", "utils", "dialogs", "messages"];
+    players.$inject = ["$q", "Player", "config", "eventBus", "utils", "dialogs", "messages", "users"];
 
-    function players($q, Player, config, eventBus, utils, dialogs, messages){
+    function players($q, Player, config, eventBus, utils, dialogs, messages, users){
         var playersIndex;
 
         var api = {
@@ -55,8 +55,10 @@ define(["angular", "classes/player", "services/config", "services/eventbus", "se
 
         function init(){
             getAllPlayers().then(getCurrentPlayer);
-
             eventBus.subscribe("updateObjects", onSyncObjects);
+
+            // On logout, reset players:
+            users.onLogout.subscribe(api.clear);
         }
 
         function setCurrentPlayer(player){
@@ -81,7 +83,9 @@ define(["angular", "classes/player", "services/config", "services/eventbus", "se
 
             api.currentPlayer = player;
 
-            player.isCurrentPlayer = true;
+            if (player)
+                player.isCurrentPlayer = true;
+
             eventBus.triggerEvent("playerSelect", player);
 
             return player;

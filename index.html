@@ -30,7 +30,7 @@
                 </div>
             </header>
             <ul>
-                <li ng-repeat="item in ::navigation.mainMenuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
+                <li ng-repeat="item in ::navigation.mainMenuItems" class="{{item.className}}" ng-show="!item.hide">
                     <a href="{{::item.href}}" ng-click="item.onClick($event)">
                         <span class="menu-icon">
                             <img ng-src="{{::item.icon}}"/>
@@ -47,7 +47,7 @@
                 ng-show="!showFirstTimeSelection"
                 ng-class="{ 'pad-side': showFirstTimeSelection }"
                 ng-style="{ 'background-color': entries.currentEntriesType.color }">
-            <a id="menu-button" class="actionbar-button" ng-click="toggleMenu()" ng-class="{ active: dialogs.menu.isOpen, render: !showFirstTimeSelection }">
+            <a id="menu-button" class="actionbar-button" ng-click="dialogs.menu.toggle()" ng-class="{ active: dialogs.menu.isOpen, render: !showFirstTimeSelection }">
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
             <div class="flex-1" id="actionbar-main" ng-cloak>

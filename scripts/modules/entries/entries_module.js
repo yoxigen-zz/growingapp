@@ -1,6 +1,7 @@
 define([
     "angular",
     "services/players",
+    "services/users",
     "classes/file_data",
     "services/dbconfig",
     "services/config",
@@ -12,5 +13,5 @@ define([
     "classes/data_object_collection",
     "classes/eventbus_class",
     "modules/dialogs/dialogs"], function(angular){
-    return angular.module("Entries", ["Players", "FileData", "DataObject", "DataObjectCollection", "DBConfig", "Config", "Images", "Utils", "xc.indexedDB", "Localization", "EntryType", "Messages", "Dialogs"]);
+    return angular.module("Entries", ["Users", "Players", "FileData", "DataObject", "DataObjectCollection", "DBConfig", "Config", "Images", "Utils", "xc.indexedDB", "Localization", "EntryType", "Messages", "Dialogs"]);
 });

@@ -16,8 +16,8 @@ define(["app", "classes/entry", "classes/player", "classes/file_data", "services
             isSyncing;
 
         eventBus.subscribe(["saveEntry", "deleteEntry", "editPlayer", "deletePlayer"], syncDataObjectToCloud);
-        eventBus.subscribe("login", onLogin);
-        eventBus.subscribe("logout", function () {
+        users.onLogin.subscribe(onLogin);
+        users.onLogout.subscribe(function () {
             cloudEnabled = false;
         });
         eventBus.subscribe("sync", sync);

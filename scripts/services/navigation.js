@@ -28,7 +28,6 @@ define(["app"], function (app) {
 
                     if (window.confirm("Warning: All unsaved entries will be deleted. Continue?")){
                         users.logout();
-                        eventBus.triggerEvent("logout");
                     }
 
                     dialogs.menu.close();

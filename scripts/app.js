@@ -11,6 +11,7 @@ define([
     "components/angular/angular-touch.min",
     "components/angular/angular-route.min",
     "services/db",
+    "modules/dialogs/dialogs_module",
     "entries/teeth/directive/teeth.directive",
     "directives/dropdown/dropdown",
     "directives/on-scroll-to-bottom",

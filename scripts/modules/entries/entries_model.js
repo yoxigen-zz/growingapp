@@ -3,13 +3,13 @@ define(["angular", "modules/entries/entries_module"], function(angular){
 
     angular.module("Entries").factory("entriesModel", entriesModel);
 
-    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope"];
+    entriesModel.$inject = ["Entry", "DataObjectCollection", "eventBus", "EventBus", "players", "EntryType", "messages", "config", "dialogs", "$rootScope", "users"];
 
     /**
      * The model object for entries - responsible for holding entries and supplies methods for adding, removing, editing, etc.
      * @returns {{allEntriesAdded: boolean, addEntry: addEntry, currentEntriesType, currentEntriesType, editEntry: editEntry, editedEntry: null, items: Array, getEntries: getEntries, loadMoreEntries: loadMoreEntries, newEntry: newEntry, removeEntry: removeEntry, setEntries: setEntries, settingEntries: boolean, unremoveLastEntry: unremoveLastEntry, updateEntriesAfterUnitChange: updateEntriesAfterUnitChange}}
      */
-    function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope){
+    function entriesModel(Entry, DataObjectCollection, eventBus, EventBus, players, EntryType, messages, config, dialogs, $rootScope, users){
         var entriesCollection = new DataObjectCollection(Entry);
 
         var PAGE_SIZE = 10,
@@ -33,7 +33,7 @@ define(["angular", "modules/entries/entries_module"], function(angular){
                 onUpdateEntries(e.objects)
         });
 
-        eventBus.subscribe("logout", function(){
+        users.onLogout.subscribe(function(){
             api.currentEntriesType = null;
             entriesCollection = new DataObjectCollection(Entry);
             api.items = entriesCollection.items;

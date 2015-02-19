@@ -50,7 +50,6 @@ define(["app"], function(app) {
             $scope.loading = true;
 
             users.signUp(newUser).then(function(user){
-                eventBus.triggerEvent("login", { user: user, isNewUser: true });
                 $scope.signupError = null;
             }, function(error){
                 console.error("Error creating new user: ", error);

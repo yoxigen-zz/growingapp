@@ -3,13 +3,13 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
 
     angular.module("Entries").factory("Entry", EntryClass);
 
-    EntryClass.$inject = ["$q", "$indexedDB", "$filter", "entries", "Player", "players", "FileData", "DataObject", "dbConfig", "config", "images", "utils"];
+    EntryClass.$inject = ["$q", "$indexedDB", "$filter", "entries", "Player", "players", "FileData", "DataObject", "dbConfig", "config", "images", "utils", "localization"];
     /**
      * Creates the Entry class
      * @returns {Entry}
      * @constructor
      */
-    function EntryClass($q, $indexedDB, $filter, entries, Player, players, FileData, DataObject, dbConfig, config, images, utils) {
+    function EntryClass($q, $indexedDB, $filter, entries, Player, players, FileData, DataObject, dbConfig, config, images, utils, localization) {
         var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
             entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
 
@@ -128,6 +128,13 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
             return this._unitValue;
         });
 
+        Entry.prototype.__defineGetter__("unitDisplay", function(){
+            if (this._unitDisplay === undefined)
+                this._unitDisplay = localization.units[this.type.id][config.localization[this.type.id].selected].display;
+
+            return this._unitDisplay;
+        });
+
         /**
          * If the entry's type has a prepareForEdit function, call it. This sets up things like units that should be loaded prior to edit.
          */
@@ -190,6 +197,7 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
             delete this._rtl;
             delete this._rtlDescription;
             delete this._unitValue;
+            delete this._unitDisplay;
         };
 
         Entry.prototype.addPhoto = function (method) {

@@ -29,7 +29,7 @@
 <script id="entry-value" type="text/ng-template">
     <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
         <img class="entry-measure-icon" ng-src="{{::entry.type.icon.url}}" />
-        <div class="item-measure">{{entry.unitValue}}<span class="item-unit">{{localizationUnits[entry.type.id][config.localization[entry.type.id].selected].display}}</span></div>
+        <div class="item-measure">{{entry.unitValue}}<span class="item-unit">{{entry.unitDisplay}}</span></div>
     </div>
 </script>
 

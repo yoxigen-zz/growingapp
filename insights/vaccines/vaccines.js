@@ -1,4 +1,4 @@
-define(["angular", "services/players", "classes/entry"], function(angular){
+define(["angular", "services/players", "modules/entries/entries"], function(angular){
     angular.module("Vaccines", ["Players", "Entries"]).factory("vaccines", vaccines);
 
     vaccines.$inject = ["players", "Entry"];

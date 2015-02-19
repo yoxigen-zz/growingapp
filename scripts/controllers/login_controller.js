@@ -15,11 +15,6 @@ define(["app"], function(app){
             $scope.loginUser.username = username;
         });
 
-        $scope.$watch("showLogin", function(value){
-            if (!value)
-                $scope.loginUser.password = null;
-        });
-
         eventBus.subscribe("doLogin", signIn);
 
         function signIn(){
@@ -35,9 +30,7 @@ define(["app"], function(app){
 
             $scope.loading = true;
 
-            users.login($scope.loginUser.username, $scope.loginUser.password).then(function(user){
-                onLogin(user);
-            }, function(error){
+            users.login($scope.loginUser.username, $scope.loginUser.password).catch(function(error){
                 $scope.loginError = error.message;
                 alert(error.message);
                 messages.error("Can't login: " + error.message);
@@ -47,16 +40,10 @@ define(["app"], function(app){
         }
 
         function facebookLogin(){
-            users.facebookLogin().then(function(user){
-                onLogin(user);
-            }, function(error){
+            users.facebookLogin().catch(function(error){
                 messages.error("Can't login: " + error.message);
                 $scope.loginError = error.message;
             });
-        }
-
-        function onLogin(user){
-            eventBus.triggerEvent("login", { user: user });
         }
     }
 });
