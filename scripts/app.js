@@ -8,8 +8,8 @@ define([
     "modules/entries/entries_module",
     "services/users",
     "services/files",
-    "components/angular/angular-touch.min",
-    "components/angular/angular-route.min",
+    "angularTouch",
+    "angularRoute",
     "services/db",
     "modules/dialogs/dialogs_module",
     "entries/teeth/directive/teeth.directive",
@@ -22,7 +22,6 @@ define([
     "services/utils",
     "services/phonegap"
 ], function(angular){
-
     return angular.module("GrowingApp", [
         "ngRoute", "ngTouch",
         "Dropdown",
