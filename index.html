@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="phonegap.js"></script>
 </head>
-<body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }">
+<body ng-controller="MainController" ng-class="{ offline: offline }">
     <div id="splashscreen" ng-class="{ 'hide': appLoaded }" ng-if="!splashscreenKill">
         <div>
             <h1>GrowingApp</h1>
@@ -17,7 +17,7 @@
             </span>
         </div>
     </div>
-    <div ng-if="showFirstTimeSelection" class="overlay flex-vertical"  ng-include="'views/first_time.html'"></div>
+    <div ng-if="showFirstTimeSelection" class="overlay flex-vertical" ng-include="'views/first_time.html'"></div>
     <div id="overlay" class="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
     <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="dialogs.menu.isOpen">
         <div id="menu">
@@ -41,7 +41,7 @@
             </ul>
         </div>
     </div>
-    <div class="flex-vertical flex-1">
+    <div class="flex-vertical full-height">
         <header class="flex-horizontal actionbar"
                 id="app-title"
                 ng-show="!showFirstTimeSelection"

@@ -2,6 +2,7 @@ define(function(){
     requirejs.config({
         baseUrl: 'scripts',
         enforceDefine: true,
+        urlArgs: "bust=" +  (new Date()).getTime(),
         paths: {
             components: "../components",
             parse: "../components/parse",

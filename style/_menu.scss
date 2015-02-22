@@ -19,17 +19,6 @@
       transform: translateX(0);
     }
   }
-
-  @media all and (min-width: $leftMenuMinWidth) {
-    position: static;
-    padding-right: 0;
-    border-right: solid 1px #C6CCCE;
-    background: White;
-
-    &.render {
-      display: block;
-    }
-  }
 }
 
 #menu {
@@ -46,19 +35,6 @@
   transform: translateX(-100%);
   transition: transform 300ms ease-out;
   -webkit-transition: -webkit-transform 300ms ease-out;
-
-  @media all and (min-width: $leftMenuMinWidth) {
-    width: 18rem;
-    -webkit-transform: none;
-    transform: none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -ms-transition: none;
-    -o-transition: none;
-    transition: none;
-    box-shadow: none;
-
-  }
 
   .actionbar {
     padding: 0 0 0 $padding;

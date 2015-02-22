@@ -1,4 +1,4 @@
-define(["angular"], function(angular){
+define(["angular", "components/IndexedDBShim.min"], function(angular){
     /**
      * @license $indexedDBProvider
      * (c) 2013 Clemens Capitain (webcss)

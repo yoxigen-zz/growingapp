@@ -6,6 +6,7 @@ $padding: .8rem;
 
 html{
   font-size: 16px;
+  height: 100%;
 }
 
 .flex{
@@ -14,6 +15,7 @@ html{
   display: flex;
 }
 body{
+  height: 100%;
   @extend .flex;
   background: $contentBackgroundColor;
   color: $contentTextColor;
@@ -187,11 +189,6 @@ a{
   display: none;
 
   &.render{ display: block;}
-  @media all and (min-width: $leftMenuMinWidth){
-    display: none;
-
-    &.render{ display: none;}
-  }
 }
 
 #app-title{
@@ -450,7 +447,8 @@ a{
   text-align: center;
 
   div{
-     margin: 0 auto;
+    width: 100%;
+    margin: 1rem auto;
   }
 
   p{
@@ -643,6 +641,9 @@ $floatingActionButtonDiameter: 3.5rem;
   }
 }
 
+.full-height{
+  height: 100%;
+}
 .overlay{
   position: fixed;
   z-index: 100;
@@ -650,6 +651,7 @@ $floatingActionButtonDiameter: 3.5rem;
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 100%;
 }
 
 #overlay{

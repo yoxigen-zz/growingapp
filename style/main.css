@@ -25,7 +25,8 @@ body {
   margin: 0; }
 
 html {
-  font-size: 16px; }
+  font-size: 16px;
+  height: 100%; }
 
 .flex, body, .flex-horizontal, .buttons-bar, .double-panel, .flex-vertical, #first-time, .popup.visible, #insights-list .insight-text.center, .cards .card-info .card-details {
   display: -webkit-box;
@@ -33,6 +34,7 @@ html {
   display: flex; }
 
 body {
+  height: 100%;
   background: #f4f4f4;
   color: #243033;
   padding: 0;
@@ -173,11 +175,6 @@ a {
   display: none; }
   #menu-button.render {
     display: block; }
-  @media all and (min-width: 1000px) {
-    #menu-button {
-      display: none; }
-      #menu-button.render {
-        display: none; } }
 
 @media all and (min-width: 1000px) {
   #app-title {
@@ -376,7 +373,8 @@ a {
   display: flex;
   text-align: center; }
   .contents-empty-message div {
-    margin: 0 auto; }
+    width: 100%;
+    margin: 1rem auto; }
   .contents-empty-message p {
     opacity: .5;
     font-size: 1.2rem;
@@ -525,13 +523,17 @@ a {
   .floating-action-button.add-button {
     background-image: url(../images/icons/plus.svg); }
 
+.full-height {
+  height: 100%; }
+
 .overlay {
   position: fixed;
   z-index: 100;
   top: 0;
   bottom: 0;
   left: 0;
-  width: 100%; }
+  width: 100%;
+  height: 100%; }
 
 #overlay {
   background: #000;
@@ -552,7 +554,8 @@ a {
   webkit-box-orient: horizontal;
   -webkit-flex-flow: row;
   flex-flow: row;
-  flex-direction: row; }
+  flex-direction: row;
+  overflow: auto; }
   #first-time > header {
     height: auto;
     background: #43124c url(../images/growingapp_logo_low.svg) no-repeat right bottom;
@@ -687,14 +690,6 @@ blockquote {
   #menu-wrapper.active #menu {
     -webkit-transform: translateX(0);
     transform: translateX(0); }
-  @media all and (min-width: 1000px) {
-    #menu-wrapper {
-      position: static;
-      padding-right: 0;
-      border-right: solid 1px #C6CCCE;
-      background: White; }
-      #menu-wrapper.render {
-        display: block; } }
 
 #menu {
   max-width: 100%;
@@ -710,17 +705,6 @@ blockquote {
   transform: translateX(-100%);
   transition: transform 300ms ease-out;
   -webkit-transition: -webkit-transform 300ms ease-out; }
-  @media all and (min-width: 1000px) {
-    #menu {
-      width: 18rem;
-      -webkit-transform: none;
-      transform: none;
-      -webkit-transition: none;
-      -moz-transition: none;
-      -ms-transition: none;
-      -o-transition: none;
-      transition: none;
-      box-shadow: none; } }
   #menu .actionbar {
     padding: 0 0 0 0.8rem;
     font-weight: bold; }
@@ -799,6 +783,7 @@ blockquote {
       margin-top: -.1rem;
       margin-right: .3rem; }
     .popup header .popup-title {
+      display: block;
       font-size: 1.3rem;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -884,7 +869,9 @@ blockquote {
   min-height: 5cm;
   background: #fafafa;
   border-radius: 2px;
-  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5); }
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  /* Safari... */ }
   .dialog header {
     font-weight: bold;
     font-size: 1rem;
