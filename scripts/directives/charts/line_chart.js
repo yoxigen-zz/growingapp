@@ -20,8 +20,7 @@ define(["angular", "d3", "modules/chart", "services/utils"], function (angular, 
                     points,
                     color,
                     percentileColor,
-                    helpersData,
-                    drawn;
+                    helpersData;
 
                 scope.$watch(attrs.helpers, function (value) {
                     if (!value)

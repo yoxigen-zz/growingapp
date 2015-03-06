@@ -95,6 +95,8 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
 
             if (this.playerId)
                 localData.playerId = this.playerId;
+            else
+                localData.playerId = new Date().valueOf();
 
             return angular.extend(this.getBaseLocalData(), localData);
         };
@@ -119,7 +121,6 @@ define(["angular", "classes/data_object", "classes/file_data", "services/dbconfi
                 return $q.when(Player.players);
 
             options = options || {};
-
             return playersObjectStore.internalObjectStore(dbConfig.objectStores.players.name, "readonly").then(function (objectStore) {
                 var idx = objectStore.index(options.unsynced ? "unsync_idx" : "name_idx");
                 var players = [],

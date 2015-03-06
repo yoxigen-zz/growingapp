@@ -39,6 +39,7 @@ define(function(){
     });
 
     requirejs([
+            "components/polyfills/classlist",
             "app"
         ], function () {
             requirejs([

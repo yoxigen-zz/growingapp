@@ -20,6 +20,7 @@ define(["app", "classes/entry", "classes/player", "classes/file_data", "services
         users.onLogout.subscribe(function () {
             cloudEnabled = false;
         });
+
         eventBus.subscribe("sync", sync);
         eventBus.subscribe("settingsChange", syncSettingsToCloud);
 
@@ -164,6 +165,11 @@ define(["app", "classes/entry", "classes/player", "classes/file_data", "services
             });
         }
 
+        /**
+         * Downloads a FileData's file from cloud to local and also downloads the FileData's thumbnail if necessary.
+         * @param dataObject
+         * @returns {*}
+         */
         function downloadFile(dataObject) {
             if (dataObject.requireDownload) {
                 if (!dataObject.cloudUrl) {

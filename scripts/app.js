@@ -38,11 +38,9 @@ define([
         "OnScrollToBottom",
         "ToggleDisplay", "EventBus", "Utils", "Storage", "Users", "Charts", "Teeth", "Messages", "Dialogs", "Localization", "Files"])
         .config(["$routeProvider", "$locationProvider", "$indexedDBProvider", "dbConfig", function ($routeProvider, $locationProvider, $indexedDBProvider, dbConfig) {
-            var currentDbVersion = 17;
-
             $indexedDBProvider
                 .connection('diaryDB')
-                .upgradeDatabase(currentDbVersion, function(event, db, tx){
+                .upgradeDatabase(dbConfig.version, function(event, db, tx){
                     if (event.newVersion > event.oldVersion) {
                         var objectStoreConfig,
                             objectStore;

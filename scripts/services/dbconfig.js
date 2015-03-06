@@ -1,11 +1,11 @@
 define(["angular"], function(angular){
     angular.module("DBConfig", []).constant("dbConfig", {
-        version: 17,
+        version: 20,
         dbName: "diaryDB",
         objectStores: {
             entries: {
                 name: "entries",
-                version: 1,
+                version: 20,
                 params: { keyPath: "timestamp" },
                 indexes: [
                     { name: 'type_idx', fields: ['playerId', 'type', 'date'], params: {unique: false} },
@@ -13,6 +13,15 @@ define(["angular"], function(angular){
                     { name: 'age_idx', fields: ['age'], params: {unique: false} },
                     { name: 'timestamp_idx', fields: 'timestamp', params: {unique: true} },
                     { name: 'unsync_idx', fields: 'unsynced', params: {unique: false} }
+                ]
+            },
+            test: {
+                name: "test",
+                version: 20,
+                params: { keyPath: "id" },
+                indexes: [
+                    { name: "id_idx", fields: "id", params: { unique: true }},
+                    { name: "multiple_idx", fields: ["name", "age"], unique: false }
                 ]
             },
             files: {

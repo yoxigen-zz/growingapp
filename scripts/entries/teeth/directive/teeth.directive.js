@@ -15,7 +15,7 @@ define(["angular"], function(angular){
 
                 ngModel.$render = function() {
                     var toothId = ngModel.$viewValue,
-                        toothElement = svg.querySelector("#" + toothId);
+                        toothElement = svg.querySelector("[data-id='" + toothId + "']");
 
                     selectTooth(toothElement);
                 };
@@ -28,7 +28,7 @@ define(["angular"], function(angular){
                         teethElements = svg.querySelectorAll(".tooth");
 
                     for(var i= 0, tooth; tooth = teethElements[i]; i++){
-                        if (!~highlightedTeeth.indexOf(tooth.id))
+                        if (!~highlightedTeeth.indexOf(tooth.getAttribute("data-id")))
                             tooth.classList.remove("highlighted");
                         else
                             tooth.classList.add("highlighted");
@@ -40,7 +40,7 @@ define(["angular"], function(angular){
 
                     if (e.target.classList.contains("tooth") || (isShadow = e.target.classList.contains("shadow"))) {
                         scope.$apply(function(){
-                            var toothElement = isShadow ? svg.querySelector("#" + e.target.dataset.tooth) : e.target;
+                            var toothElement = isShadow ? svg.querySelector("[data-id='" + e.target.getAttribute("data-tooth") + "']") : e.target;
                             selectTooth(toothElement, true);
                         });
                     }

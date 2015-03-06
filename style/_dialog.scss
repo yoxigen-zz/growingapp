@@ -37,7 +37,9 @@ $dialogHeaderHeight: 3rem;
   pointer-events: none;
 
   -webkit-align-items: center;
+  -webkit-box-align: center;
   -moz-justify-content: center;
+  -webkit-box-pack: center;
   justify-content: center;
 }
 
@@ -108,7 +110,9 @@ $dialogHeaderHeight: 3rem;
     background: rgba(250, 250, 250, 0.5);
     display: flex;
     -webkit-align-items: center;
+    -webkit-box-align: center;
     -webkit-justify-content: center;
+    -webkit-box-pack: center;
     opacity: 1;
   }
 

@@ -62,6 +62,7 @@
       */
       .dropdown-list-icon{
         width: 1rem;
+        height: 1rem;
         margin-right: .5rem;
         vertical-align: middle;
         position: relative;
@@ -75,6 +76,7 @@
 
     .dropdown-list-icon{
       width: 1.2rem;
+      height: 1.2rem;
       margin-right: 1rem;
       vertical-align: middle;
       position: relative;
@@ -110,6 +112,7 @@
   }
   img{
     height: 1.6rem;
+    width: 1.6rem;
   }
 
   &:not(.no-triangle)::after{
@@ -121,6 +124,7 @@
 
     img {
       height: 1rem;
+      width: 1rem;
       vertical-align: middle;
       margin-right: 0.5rem;
       position: relative;

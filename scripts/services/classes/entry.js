@@ -221,10 +221,8 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
                     entries = [],
                     currentRecord = 0,
                     deferred = $q.defer(),
-                    cursorRange = options.unsynced ? null : IDBKeyRange.bound(
-                        options.type ? [playerId, options.type] : [playerId],
-                        options.type ? [playerId, options.type, new Date()] : [playerId, new Date()]
-                    ),
+                    cursorRangeValues = getCursorRange(options.type, playerId),
+                    cursorRange = options.unsynced ? null : IDBKeyRange.bound(cursorRangeValues.from, cursorRangeValues.to),
                     cursor = idx.openCursor(cursorRange, options.reverse ? "prev" : "next");
 
                 cursor.onsuccess = function(event) {
@@ -236,7 +234,6 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
                     }
                     else if (!cursor || count && currentRecord === lastIndex) {
                         deferred.resolve(entries);
-                        return;
                     }
                     else {
                         if(!cursor.value.deleted || options.includeDeleted) {
@@ -267,5 +264,29 @@ define(["angular", "modules/entries/entries", "classes/data_object", "classes/fi
         };
 
         return Entry;
+
+        /**
+         * Gets the indexedDB cursor to use for a given entryType (can be null) and playerId
+         * @param entryType
+         * @param playerId
+         * @returns {{from: *[], to: *[]}}
+         */
+        function getCursorRange(entryType, playerId){
+            var oldDate = new Date();
+            oldDate.setYear(0);
+
+            if (entryType){
+                return {
+                    from: [playerId, entryType, oldDate],
+                    to: [playerId, entryType, new Date()]
+                };
+            }
+            else{
+                return {
+                    from: [playerId, oldDate],
+                    to: [playerId, new Date()]
+                };
+            }
+        }
     }
 });

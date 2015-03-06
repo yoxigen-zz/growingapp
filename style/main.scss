@@ -441,6 +441,7 @@ a{
 
 .contents-empty-message{
   -webkit-align-items: center;
+  -webkit-box-align: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -526,6 +527,7 @@ a{
     box-sizing: border-box;
     overflow: hidden;
     -webkit-align-items: center;
+    -webkit-box-align: center;
     align-items: center;
 
     &:last-child{
