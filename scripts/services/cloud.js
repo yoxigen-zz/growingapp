@@ -211,6 +211,15 @@ define(["app", "classes/entry", "classes/player", "classes/file_data", "services
             config.sync.lastSyncTimestamp = new Date();
         }
 
+        /**
+         * If cloud is currently enabled (logged-in and online), gets data from cloud. In this order:
+         * 1. Get the current user settings
+         * 2. FileData objects
+         * 3. Players
+         * 4. Entries
+         * 5. Sets the last sync time
+         * @returns {*}
+         */
         function syncFromCloud() {
             if (!cloudEnabled)
                 return;

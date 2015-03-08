@@ -2,8 +2,7 @@ define(["angular", "d3", "moment"], function(angular, d3, moment){
     'use strict';
 
     return angular.module("Utils", []).factory("utils", ["$filter", "$rootScope", "$q", function($filter, $rootScope, $q){
-        var stringParsers = {},
-            dayMilliseconds = 1000 * 60 * 60 * 24,
+        var dayMilliseconds = 1000 * 60 * 60 * 24,
             avgMonthLength = 365 / 12;
 
         var rtlRegExp = /[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/;
