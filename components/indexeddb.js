@@ -80,7 +80,6 @@ define(["angular", "components/IndexedDBShim"], function(angular){
         };
 
         module.$get = ['$q', '$rootScope', '$window', function($q, $rootScope, $window) {
-
             if(!('indexedDB' in $window)) {
                 $window.indexedDB = $window.mozIndexedDB || $window.webkitIndexedDB || $window.msIndexedDB;
             }
