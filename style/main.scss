@@ -128,9 +128,6 @@ a{
   margin-right: .5rem;
 }
 
-.header-button{
-}
-
 #splashscreen{
   background: #43124c url(../images/growingapp_logo.svg) no-repeat center bottom;
   background-size: contain;
@@ -307,7 +304,7 @@ a{
   }
 
   .actionbar-button{
-    @extend .header-button;
+
     display: inline-block;
     height: 100%;
     width: 2rem;

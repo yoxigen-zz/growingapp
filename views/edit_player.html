@@ -22,7 +22,7 @@
             <label>
                 <span class="label-text">Gender</span>
                 <select ng-model="editedPlayer.gender.id"
-                        ng-options="gender.id as gender.name for gender in config.genders"></select>
+                        ng-options="gender.id as gender.name for gender in config.genders track by gender.id"></select>
             </label>
             <label>
                 <span class="label-text">Birthday</span>

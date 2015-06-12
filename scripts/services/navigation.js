@@ -8,36 +8,62 @@ define(["app"], function (app) {
     function navigation(phonegap, eventBus, $route, $rootScope, users, dialogs, Dialog) {
         var backButtonCallbacks = [],
             mainMenuItems = [
-                { text: "Settings", icon: "images/icons/settings.svg", onClick: function(e){
-                    e.preventDefault();
-                    dialogs.settings.open();
-                } },
-                //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
-                { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", className: "disable-offline", onClick: function(e){
-                    e.preventDefault();
-
-                    if (users.getCurrentUser())
-                        eventBus.triggerEvent("sync");
-                    else
-                        dialogs.signIn.open();
-
-                    dialogs.menu.close();
-                } },
-                { id: "signOut", hide: true, text: "Sign out", icon: "images/icons/sign_out.svg", onClick: function(e){
-                    e.preventDefault();
-
-                    if (window.confirm("Warning: All unsaved entries will be deleted. Continue?")){
-                        users.logout();
-                    }
-
-                    dialogs.menu.close();
-                } },
-                { id: "contact", text: "Contact us", icon: "images/icons/mail.svg", className: "menu-item-separator", onClick: function(e){
-                    e.preventDefault();
-                    dialogs.contact.open();
-                } },
                 {
-                    id: "about", text: "About GrowingApp", icon: "images/icons/info.svg", onClick: function(e){
+                    id: "settings",
+                    text: "Settings",
+                    icon: "images/icons/settings.svg",
+                    onClick: function(e){
+                        e.preventDefault();
+                        dialogs.settings.open();
+                    }
+                },
+                //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
+                {
+                    id: "sync",
+                    text: "Sync data with cloud",
+                    icon: "images/icons/cloud_sync.svg",
+                    className: "disable-offline",
+                    onClick: function(e){
+                        e.preventDefault();
+
+                        if (users.getCurrentUser())
+                            eventBus.triggerEvent("sync");
+                        else
+                            dialogs.signIn.open();
+
+                        dialogs.menu.close();
+                    }
+                },
+                {
+                    id: "signOut",
+                    hide: true,
+                    text: "Sign out",
+                    icon: "images/icons/sign_out.svg",
+                    onClick: function(e){
+                        e.preventDefault();
+
+                        if (window.confirm("Warning: All unsaved entries will be deleted. Continue?")){
+                            users.logout();
+                        }
+
+                        dialogs.menu.close();
+                    }
+                },
+                {
+                    id: "contact",
+                    text: "Contact us",
+                    icon: "images/icons/mail.svg",
+                    className: "menu-item-separator",
+                    onClick: function(e){
+                        e.preventDefault();
+                        dialogs.contact.open();
+                    }
+                },
+                {
+                    id: "about",
+                    text: "About GrowingApp",
+                    icon: "images/icons/info.svg",
+                    onClick: function(e){
                         e.preventDefault();
                         dialogs.about.open();
                     }

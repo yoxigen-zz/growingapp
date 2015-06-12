@@ -30,7 +30,7 @@
                 </div>
             </header>
             <ul>
-                <li ng-repeat="item in ::navigation.mainMenuItems" class="{{item.className}}" ng-show="!item.hide">
+                <li ng-repeat="item in ::navigation.mainMenuItems track by item.id" class="{{item.className}}" ng-show="!item.hide">
                     <a href="{{::item.href}}" ng-click="item.onClick($event)">
                         <span class="menu-icon">
                             <img ng-src="{{::item.icon}}"/>
@@ -53,7 +53,7 @@
             <div class="flex-1" id="actionbar-main" ng-cloak>
                 <dropdown close-on-click="true" button-text="{{players.currentPlayer.name}}" button-class="player-name">
                     <ul class="dropdown-list">
-                        <li ng-repeat="player in players.allPlayers" ng-click="players.setCurrentPlayer(player)" ng-class="{ selected: player.isCurrentPlayer }">
+                        <li ng-repeat="player in players.allPlayers track by player.playerId" ng-click="players.setCurrentPlayer(player)" ng-class="{ selected: player.isCurrentPlayer }">
                             <div class="list-icon player-list-icon" ng-style="{ 'background-image': player.image.cssUrl }"></div>{{player.name}}
                         </li>
                     </ul>
@@ -76,14 +76,14 @@
                         <li ng-if="entries.currentEntriesType" ng-click="setEntriesType(null)">
                             <img src="images/icons/close-red.svg" class="list-icon" />Clear filter
                         </li>
-                        <li ng-repeat="entryType in ::entryTypes" ng-class="{ selected: entryType === entries.currentEntriesType }" ng-click="setEntriesType(entryType)">
+                        <li ng-repeat="entryType in ::entryTypes track by entryType.id" ng-class="{ selected: entryType === entries.currentEntriesType }" ng-click="setEntriesType(entryType)">
                             <div class="list-icon" ng-style="{ 'background-color': entryType.color, 'background-image': entryType.icon.cssUrl }"></div>{{entryType.name}}
                         </li>
                     </ul>
                 </dropdown>
                 <dropdown button-icon="{{navigation.currentPage.icon}}" close-on-click="true">
                     <ul class="dropdown-list">
-                        <li ng-repeat="page in ::navigation.pages"
+                        <li ng-repeat="page in ::navigation.pages track by page.name"
                             ng-class="{ selected: page === navigation.currentPage }"
                             ng-click="setEntriesType(null); navigation.setCurrentPage(page)"><img class="dropdown-list-icon" ng-src="{{page.listIcon}}" />{{page.name}}</li>
                     </ul>

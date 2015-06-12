@@ -22,7 +22,7 @@
             </div>
         </div>
         <ul class="cards">
-            <li ng-repeat="entry in entries.items" class="card">
+            <li ng-repeat="entry in entries.items track by entry.timestamp" class="card">
                 <div ng-include="'entry-' + entry.type.templateName"></div>
                 <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">{{entry.description}}</div>
                 <div class="card-info flex-horizontal">

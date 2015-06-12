@@ -67,7 +67,6 @@
 
   @media all and (min-width: 500px){
     form{
-      @extend .flex;
       display: -webkit-box;
       display: -webkit-flex;
       display: flex;

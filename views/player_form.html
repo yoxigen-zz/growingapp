@@ -28,7 +28,7 @@
                               button-class="small-icon black-button"
                               close-on-click="true">
                         <ul class="dropdown-list">
-                            <li ng-repeat="gender in ::config.genders"
+                            <li ng-repeat="gender in ::config.genders track by gender.id"
                                 ng-class="{ selected: gender === players.editedPlayer.gender }"
                                 ng-click="players.editedPlayer.gender = gender"><img class="dropdown-list-icon" ng-src="{{gender.icon}}" />{{gender.name}}</li>
                         </ul>

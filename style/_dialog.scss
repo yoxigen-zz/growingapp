@@ -76,7 +76,6 @@ $dialogHeaderHeight: 3rem;
       font-size: 1.3rem;
     }
     .close-button{
-      @extend .header-button;
       float: right;
       display: block;
       height: 2rem;

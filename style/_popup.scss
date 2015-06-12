@@ -59,7 +59,6 @@ $popupHeaderHeight: $contentsHeaderHeight;
     }
 
     .close-button{
-      @extend .header-button;
       display: block;
       height: 2rem;
       padding: .5rem;

@@ -1,7 +1,7 @@
 <div>
     <div id="newEntryType" class="entry-types-dialog" >
         <ul class="entry-types-list">
-            <li ng-repeat="entryType in entryTypes"
+            <li ng-repeat="entryType in entryTypes track by entryType.id"
                 ng-click="showNewEntryForm(entryType.id)"
                 ng-style="{ 'background-image': entryType.icon.cssUrl }">
                 <span>{{ entryType.name }}</span>

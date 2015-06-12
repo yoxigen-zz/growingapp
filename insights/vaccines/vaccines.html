@@ -8,7 +8,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="vaccineEntry in vaccines.entries" ng-click="vaccines.editEntry(vaccineEntry)">
+            <tr ng-repeat="vaccineEntry in vaccines.entries track by vaccineEntry.timestamp" ng-click="vaccines.editEntry(vaccineEntry)">
                 <td>{{vaccineEntry.dateText}}</td>
                 <td>{{vaccineEntry.vaccine.name || vaccineEntry.properties.text}}</td>
                 <td>{{vaccineEntry.vaccine.disease}}</td>

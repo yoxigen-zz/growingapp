@@ -29,7 +29,7 @@
 </slide-dialog>
 <dialog dialog="dialogs.newEntry">
     <ul class="entry-types-list">
-        <li ng-repeat="entryType in ::entryTypes"
+        <li ng-repeat="entryType in ::entryTypes track by entryType.id"
             ng-style="{ 'background-color': entryType.color }"
             ng-click="entries.newEntry(entryType)">
             <div class="entry-image">
