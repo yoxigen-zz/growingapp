@@ -30,6 +30,7 @@
       @extend .flex;
 
       -webkit-align-items: center;
+      -webkit-box-align: center;
       align-items: center;
     }
   }

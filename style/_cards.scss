@@ -11,7 +11,7 @@ $maxCardWidth: 640px;
     max-width: $maxCardWidth;
     background: White;
     border-radius: $cardBorderRadius;
-    box-shadow: 1px 1px 5px rgba(0,0,0,.5);
+    border: solid 1px #cfcfcf;
     margin-bottom: 1rem;
   }
 
@@ -49,7 +49,10 @@ $maxCardWidth: 640px;
   .card-center-contents{
     display: flex;
     -webkit-align-items: center;
+    -webkit-box-align: center;
     -webkit-justify-content: center;
+    -webkit-box-pack: center;
+
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
@@ -60,6 +63,7 @@ $maxCardWidth: 640px;
 
   .card-text{
     padding: .5rem .5rem 1.5rem;
+    white-space: pre-line;
   }
 
   .card-info{
@@ -67,6 +71,11 @@ $maxCardWidth: 640px;
     font-size: .8em;
 
     .card-details{
+      @extend .flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-align: center;
       padding: .75rem;
       color: #999;
 

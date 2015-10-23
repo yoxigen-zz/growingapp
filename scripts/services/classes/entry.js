@@ -1,26 +1,19 @@
-(function() {
+define(["angular", "modules/entries/entries", "classes/data_object", "classes/file_data"], function(angular){
     "use strict";
 
-    angular.module("Entries", ["Players", "FileData", "DataObject", "DBConfig", "Config", "Images", "Utils", "xc.indexedDB", "Localization", "EntryType"])
-        .factory("Entry", ["$q", "$indexedDB", "entries", "Player", "FileData", "DataObject", "dbConfig", "config", "images", "utils", EntryClass]);
+    angular.module("Entries").factory("Entry", EntryClass);
 
+    EntryClass.$inject = ["$q", "$indexedDB", "$filter", "entries", "Player", "players", "FileData", "DataObject", "dbConfig", "config", "images", "utils", "localization"];
     /**
      * Creates the Entry class
-     * @param $indexedDB
-     * @param entries
-     * @param Player
-     * @param FileData
-     * @param DataObject
-     * @param dbConfig
-     * @param config
-     * @param images
-     * @param utils
      * @returns {Entry}
      * @constructor
      */
-    function EntryClass($q, $indexedDB, entries, Player, FileData, DataObject, dbConfig, config, images, utils) {
+    function EntryClass($q, $indexedDB, $filter, entries, Player, players, FileData, DataObject, dbConfig, config, images, utils, localization) {
         var OBJECT_STORE_NAME = dbConfig.objectStores.entries.name,
             entriesObjectStore = $indexedDB.objectStore(OBJECT_STORE_NAME);
+
+        var unitFilter = $filter("unit");
 
         function Entry(config, player) {
             var timestamp,
@@ -34,7 +27,7 @@
                 this.date = entryData.date;
                 this.age = entryData.age;
                 this.properties = entryData.properties;
-                this.player = entryData.player || Player.getById(entryData.playerId);
+                this.player = entryData.player || players.getPlayerById(entryData.playerId);
                 if (!this.player)
                     throw new Error("Can't create entry - no player found for playerId " + entryData.playerId);
 
@@ -80,6 +73,11 @@
             this.__defineGetter__("type", function () {
                 return entryType;
             });
+
+            if (entryType.parse)
+                entryType.parse(this);
+
+            return this;
         }
 
         Entry.prototype.getCloudData = function () {
@@ -123,6 +121,30 @@
             return this._ageText;
         });
 
+        Entry.prototype.__defineGetter__("unitValue", function(){
+            if (this._unitValue === undefined)
+                this._unitValue = unitFilter(this.properties.value, this.type.id, false) || null;
+
+            return this._unitValue;
+        });
+
+        Entry.prototype.__defineGetter__("unitDisplay", function(){
+            if (this._unitDisplay === undefined)
+                this._unitDisplay = localization.units[this.type.id][config.localization[this.type.id].selected].display;
+
+            return this._unitDisplay;
+        });
+
+        /**
+         * If the entry's type has a prepareForEdit function, call it. This sets up things like units that should be loaded prior to edit.
+         */
+        Entry.prototype.prepareForEdit = function(){
+            if (this.type.prepareForEdit)
+                this.type.prepareForEdit(this);
+
+            return this;
+        };
+
         /**
          * Gets the entry's data, for saving in the offline database.
          * @param isSynced Whether the data for this entry is already synced in the cloud (in which case the data arrived from the cloud)
@@ -143,8 +165,9 @@
             });
         };
 
-        Entry.prototype.__defineGetter__("idProperty", function () {
-            return "timestamp";
+        Entry.prototype.idProperty = "timestamp";
+        Entry.prototype.__defineGetter__("id", function(){
+            return this.timestamp;
         });
 
         Entry.prototype.getNewId = function () {
@@ -154,6 +177,11 @@
         Entry.prototype.objectStore = entriesObjectStore;
         Entry.prototype.preSave = function () {
             this.clearParsedValues();
+
+            this.age = this.player.getAge(this.date);
+
+            if (this.type.parse)
+                this.type.parse(this);
 
             if (this.type.preSave)
                 this.type.preSave(this);
@@ -168,6 +196,8 @@
             delete this._ageText;
             delete this._rtl;
             delete this._rtlDescription;
+            delete this._unitValue;
+            delete this._unitDisplay;
         };
 
         Entry.prototype.addPhoto = function (method) {
@@ -191,10 +221,8 @@
                     entries = [],
                     currentRecord = 0,
                     deferred = $q.defer(),
-                    cursorRange = options.unsynced ? null : IDBKeyRange.bound(
-                        options.type ? [playerId, options.type] : [playerId],
-                        options.type ? [playerId, options.type, new Date()] : [playerId, new Date()]
-                    ),
+                    cursorRangeValues = getCursorRange(options.type, playerId),
+                    cursorRange = options.unsynced ? null : IDBKeyRange.bound(cursorRangeValues.from, cursorRangeValues.to),
                     cursor = idx.openCursor(cursorRange, options.reverse ? "prev" : "next");
 
                 cursor.onsuccess = function(event) {
@@ -206,7 +234,6 @@
                     }
                     else if (!cursor || count && currentRecord === lastIndex) {
                         deferred.resolve(entries);
-                        return;
                     }
                     else {
                         if(!cursor.value.deleted || options.includeDeleted) {
@@ -232,6 +259,34 @@
             return Entry.getEntries(options);
         };
 
+        Entry.clearAll = function(){
+            return entriesObjectStore.clear();
+        };
+
         return Entry;
+
+        /**
+         * Gets the indexedDB cursor to use for a given entryType (can be null) and playerId
+         * @param entryType
+         * @param playerId
+         * @returns {{from: *[], to: *[]}}
+         */
+        function getCursorRange(entryType, playerId){
+            var oldDate = new Date();
+            oldDate.setYear(0);
+
+            if (entryType){
+                return {
+                    from: [playerId, entryType, oldDate],
+                    to: [playerId, entryType, new Date()]
+                };
+            }
+            else{
+                return {
+                    from: [playerId, oldDate],
+                    to: [playerId, new Date()]
+                };
+            }
+        }
     }
-})();
+});

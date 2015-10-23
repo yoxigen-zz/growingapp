@@ -1,85 +1,111 @@
-'use strict';
+define(["app"], function(app) {
+    "use strict";
 
-app.controller("LineChartInsightController", ["$scope", "$filter", "Entry", "utils", "eventBus", "config", "statistics", "localization", "insights",
-    function($scope, $filter, Entry, utils, eventBus, config, statistics, localization, insights){
-    var insightId = insights.currentInsight.id,
-        unit = localization.units[insightId][config.localization[insightId].selected],
-        unitFilter = $filter("unit");
+    app.controller("LineChartInsightController", lineChartInsightController);
 
-    eventBus.subscribe("playerSelect", setData);
+    lineChartInsightController.$inject = ["$scope", "$filter", "Entry", "utils", "eventBus", "config", "statistics", "localization", "insights", "entriesModel", "players"];
 
-    $scope.$on("$destroy", function(){ eventBus.unsubscribe("playerSelect", setData); });
+    function lineChartInsightController($scope, $filter, Entry, utils, eventBus, config, statistics, localization, insights, entriesModel, players) {
+        var insightId = insights.currentInsight.id,
+            unit = localization.units[insightId][config.localization[insightId].selected],
+            unitFilter = $filter("unit");
 
-    $scope.chartSettings = {
-        dataSeries: "player.name",
-        x: "age",
-        y: "value",
-        interpolate: "cardinal",
-        "axes": {
-            "x": {
-                "type": "age",
-                "tickFormat": "age",
-                renderGrid: false
-            },
-            "y": {
-                tickFormat: "d",
-                unit: unit.display
-            }
-        },
-        "scales": {
-            "x": {},
-            "y": {}
-        }
-    };
+        init();
 
-    setData();
+        function init(){
+            eventBus.subscribe("playerSelect", setData);
 
-
-    function setData() {
-        if (!$scope.player || !$scope.player.playerId){
-            $scope.chartData = [];
-            return;
-        }
-
-        Entry.getEntries({ playerId: $scope.player.playerId, type: insightId }).then(function (data) {
-            $scope.chartData = data.map(function(item){
-                var itemCopy = angular.copy(item);
-                itemCopy.value = unitFilter(item.properties.value || item.properties[insightId], insightId, item.properties.value);
-                return itemCopy;
+            $scope.$on("$destroy", function(){
+                eventBus.unsubscribe("playerSelect", setData);
+                entriesModel.onNewEntry.unsubscribe(onNewEntry);
             });
 
-            setStats(data);
-        }).catch(function(error){
-            console.error("Can't get entries for " + insightId + " chart: ", error);
-        });
+            $scope.chartSettings = {
+                dataSeries: "player.name",
+                x: "age",
+                y: "unitValue",
+                interpolate: "cardinal",
+                "axes": {
+                    "x": {
+                        "type": "age",
+                        "tickFormat": "age",
+                        renderGrid: false
+                    },
+                    "y": {
+                        tickFormat: "d",
+                        unit: unit.display
+                    }
+                },
+                "scales": {
+                    "x": {},
+                    "y": {}
+                }
+            };
 
-        statistics.getPercentiles(insightId, $scope.player, unit.name).then(function(percentileData){
-            $scope.percentileData = percentileData;
-        }, function(error){
-            console.error(error);
-        });
-    }
+            setData();
 
-    function setStats(data){
-        var stats = [],
-            values = [];
-
-        if (!data || !data.length){
-            $scope.stats = null;
-            return;
+            entriesModel.onNewEntry.subscribe(onNewEntry);
         }
 
-        values = data.map(function(item){
-            return unitFilter(item.properties.value || item.properties[insightId], insightId, item.properties.value);
-        });
+        function setData() {
+            if (!players.currentPlayer || !players.currentPlayer.playerId){
+                $scope.chartData = [];
+                return;
+            }
 
-        stats.push({
-            color: "#00acd7",
-            title: "Average gain per month",
-            value: ((Math.max.apply(null, values) - Math.min.apply(null, values)) / utils.dates.millisecondsToMonths(data[data.length - 1].date - data[0].date)).toFixed(2) + config.localization[insightId].selected
-        });
+            Entry.getEntries({ playerId: players.currentPlayer.playerId, type: insightId }).then(function (chartEntries) {
+                $scope.chartData = chartEntries;
+                setStats(chartEntries);
+            }).catch(function(error){
+                console.error("Can't get entries for " + insightId + " chart: ", error);
+            });
 
-        $scope.stats = stats;
+            statistics.getPercentiles(insightId, players.currentPlayer, unit.name).then(function(percentileData){
+                $scope.percentileData = percentileData;
+            }, function(error){
+                console.error(error);
+            });
+        }
+
+        function onNewEntry(entry){
+            if (insights.currentInsight.entryType === entry.type){
+                var newData = Array.prototype.slice.call($scope.chartData, 0);
+                newData.push(entry);
+                newData.sort(function(a,b){
+                    if (a.date === b.date)
+                        return 0;
+
+                    if (a.date > b.date)
+                        return 1;
+
+                    return -1;
+                });
+
+                $scope.chartData = newData;
+            }
+        }
+
+
+        function setStats(data){
+            var stats = [],
+                values = [];
+
+            if (!data || !data.length){
+                $scope.stats = null;
+                return;
+            }
+
+            values = data.map(function(item){
+                return unitFilter(item.properties.value || item.properties[insightId], insightId, item.properties.value);
+            });
+
+            stats.push({
+                color: "#00acd7",
+                title: "Average gain per month",
+                value: ((Math.max.apply(null, values) - Math.min.apply(null, values)) / utils.dates.millisecondsToMonths(data[data.length - 1].date - data[0].date)).toFixed(2) + config.localization[insightId].selected
+            });
+
+            $scope.stats = stats;
+        }
     }
-
-}]);
+});

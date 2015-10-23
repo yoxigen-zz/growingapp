@@ -1,86 +1,40 @@
 <div class="flex-vertical flex-1 entries">
-    <div ng-show="showFirstTimeSelection" ng-cloak class="flex-1 contents-empty-message">
-        <div class="vertical-buttons-bar centered-buttons-block">
-            <p class="vertical-buttons-text contents-empty-message-title">Welcome to GrowingApp!</p>
-            <p class="vertical-buttons-text">Let's get started:</p>
-            <a class="button save-button" ng-click="addNewPlayer()">
-                <img src="images/icons/plus.svg" />
-                <span class="button-text">Add child</span>
-            </a>
-            <p class="vertical-buttons-text">Already have a user?</p>
-            <a class="button save-button" ng-click="openLogin()">
-                <img src="images/icons/cloud_sync_white.svg" />
-                <span class="button-text">Sign in</span>
-            </a>
-        </div>
-    </div>
-    <div class="contents-scroll flex-1" on-scroll-to-bottom="loadMoreEntries()" done-scrolling="allEntriesAdded" ng-class="{ 'flex-vertical': entries && !entries.length }" ng-show="player && !showFirstTimeSelection">
-        <header class="contents-header flex-horizontal" ng-show="player && !showFirstTimeSelection">
-            <div class="header-controls flex-1">
-                <h2>Recent Activities</h2>
-                <select class="fancy-select"
-                        ng-model="currentEntriesType"
-                        ng-change="onEntriesTypeChange()"
-                        ng-options="entryType.id as entryType.name for entryType in ::entryTypes">
-                    <option value="">All entry types</option>
-                </select>
+    <div class="contents-scroll flex-1"
+         on-scroll-to-bottom="entries.loadMoreEntries()"
+         done-scrolling="entries.allEntriesAdded"
+         ng-class="{ 'flex-vertical': entries && !entries.items.length }"
+         ng-show="players.currentPlayer">
+        <div id="player-summary" ng-show="!entries.currentEntriesType">
+            <div id="player-summary-avatar"
+                 ng-class="{ 'with-image': players.currentPlayer.image }"
+                 ng-style="{ 'background-image': players.currentPlayer.image.cssUrl }"
+                 ng-click="players.editPlayer(players.currentPlayer, true)"></div>
+            <h2 id="player-summary-name">{{players.currentPlayer.name}}</h2>
+            <div id="player-summary-info">
+                <span>{{players.currentPlayer.ageText}}</span>
             </div>
-            <a id="new-entry-button" class="floating-action-button add-button" ng-show="entries.length" title="New entry" ng-click="toggleNewEntriesSelection()"></a>
-        </header>
-        <div class="flex-1 contents-empty-message" ng-cloak ng-show="entries && !entries.length">
+        </div>
+        <a id="new-entry-button" class="floating-action-button add-button" ng-show="entries.items.length" title="New entry" ng-click="dialogs.newEntry.toggle()"></a>
+        <div class="flex-1 contents-empty-message" ng-cloak ng-show="!entries.settingEntries && entries && !entries.items.length">
             <div>
-                <p>No {{currentEntriesType || ''}} entries added yet.</p>
-                <a class="floating-action-button add-button" ng-click="toggleNewEntriesSelection()"></a>
+                <p>No {{entries.currentEntriesType.name || ''}} entries added yet.</p>
+                <a class="floating-action-button add-button" ng-click="dialogs.newEntry.toggle()"></a>
             </div>
         </div>
         <ul class="cards">
-            <li ng-repeat="entry in entries" class="card">
+            <li ng-repeat="entry in entries.items track by entry.timestamp" class="card">
                 <div ng-include="'entry-' + entry.type.templateName"></div>
-                <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">
-                    {{entry.description}}
-                </div>
+                <div ng-if="entry.description" class="card-text" is-rtl="entry.rtlDescription">{{entry.description}}</div>
                 <div class="card-info flex-horizontal">
                     <div class="card-details flex-1">
                         {{::entry.dateText}} <span class="separator">|</span> {{::entry.ageText}}
                     </div>
                     <div class="card-buttons">
-                        <a class="button card-{{ ::entry.type.insightIcon.id }}-button" ng-if="::entry.type.insight" ng-click="openInsight(entry)"></a>
-                        <a class="button card-edit-button" ng-click="selectEntry(entry)"></a>
+                        <a class="button card-{{ ::entry.type.insightIcon.id }}-button" ng-if="::entry.type.insight" ng-click="insights.setCurrentInsight(entry.type.insight)"></a>
+                        <a class="button card-edit-button" ng-click="entries.editEntry(entry)"></a>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
-    <div class="floating-message" ng-show="removedEntry">
-        <div class="floating-message-contents">
-            <span class="floating-message-text"><span class="hide-smallest-width">Entry</span> Deleted</span>
-            <a ng-click="unremoveEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
-        </div>
-    </div>
-    <dialog show="showNewEntriesSelection" title="New Entry Type" on-show="onShowDialog($event)" on-hide="onHideDialog()">
-        <ul class="entry-types-list">
-            <li ng-repeat="entryType in ::entryTypes"
-                ng-style="{ 'background-color': entryType.color }"
-                ng-click="showNewEntryForm(entryType)">
-                <div class="entry-image">
-                    <img ng-src="{{ ::entryType.icon.url }}" />
-                </div>
-                <span class="entry-type-name">{{ ::entryType.name }}</span>
-            </li>
-        </ul>
-    </dialog>
-    <slide-dialog show="showEditEntry"
-           title="{{editedEntryIsNew && 'New' || 'Edit'}} Entry: {{ newEntryType.name }}"
-           actions="entryPopupButtons"
-           on-show="onShowDialog($event)"
-           on-hide="onHideDialog()">
-        <form>
-            <div ng-if="newEntryType" ng-include="'entry_editor_' + newEntryType.id"></div>
-            <label ng-show="newEntryType.allowDescription !== false">
-                <span class="label-text">Additional Details</span>
-                <textarea ng-model="entry.description"></textarea>
-            </label>
-            <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entry.date" /></label>
-        </form>
-    </slide-dialog>
 </div>

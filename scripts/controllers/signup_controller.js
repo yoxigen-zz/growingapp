@@ -1,51 +1,62 @@
-app.controller("SignUpController", ["$scope", "$http", "users", "eventBus", function($scope, $http, users, eventBus){
-    $scope.newUser = {};
-    $scope.signUp = signUp;
+define(["app"], function(app) {
+    "use strict";
 
-    $http.get("data/countries.json").then(function(response){
-        $scope.countries = response.data;
-    });
+    app.controller("SignUpController", signupController);
 
-    function signUp(){
-        if (!$scope.newUser.username){
-            $scope.signupError = "Please specify your email address";
-            $scope.highlight = "username";
-            return;
-        }
+    signupController.$inject = ["$scope", "$http", "users", "eventBus"];
 
-        if (!$scope.newUser.password){
-            $scope.signupError = "Please enter password.";
-            $scope.highlight = "password";
-            return;
-        }
+    function signupController($scope, $http, users, eventBus) {
+        $scope.newUser = {};
+        $scope.signUp = signUp;
 
-        if (!$scope.newUser.confirmPassword){
-            $scope.signupError = "Please confirm password.";
-            $scope.highlight = "confirm";
-            return;
-        }
-
-        if ($scope.newUser.confirmPassword !== $scope.newUser.password){
-            $scope.signupError = "Passwords don't match.";
-            $scope.highlight = "confirm";
-            return;
-        }
-
-        var newUser = {
-            email: $scope.newUser.username,
-            username: $scope.newUser.username,
-            password: $scope.newUser.password
-        };
-
-        if ($scope.newUser.country)
-            newUser.country = $scope.newUser.country;
-
-        users.signUp(newUser).then(function(user){
-            eventBus.triggerEvent("login", { user: user, isNewUser: true });
-            $scope.signupError = null;
-        }, function(error){
-            console.error("Error creating new user: ", error);
-            $scope.loginError = error.message;
+        $http.get("data/countries.json").then(function(response){
+            $scope.countries = response.data;
         });
+
+        function signUp(){
+            if (!$scope.newUser.username){
+                $scope.signupError = "Please specify your email address";
+                $scope.highlight = "username";
+                return;
+            }
+
+            if (!$scope.newUser.password){
+                $scope.signupError = "Please enter password.";
+                $scope.highlight = "password";
+                return;
+            }
+
+            if (!$scope.newUser.confirmPassword){
+                $scope.signupError = "Please confirm password.";
+                $scope.highlight = "confirm";
+                return;
+            }
+
+            if ($scope.newUser.confirmPassword !== $scope.newUser.password){
+                $scope.signupError = "Passwords don't match.";
+                $scope.highlight = "confirm";
+                return;
+            }
+
+            var newUser = {
+                email: $scope.newUser.username,
+                username: $scope.newUser.username,
+                password: $scope.newUser.password
+            };
+
+            if ($scope.newUser.country)
+                newUser.country = $scope.newUser.country;
+
+            $scope.loading = true;
+
+            users.signUp(newUser).then(function(user){
+                $scope.signupError = null;
+            }, function(error){
+                console.error("Error creating new user: ", error);
+                $scope.signupError = error.message;
+            }).finally(function(){
+                $scope.loading = false;
+            });
+        }
     }
-}]);
+});

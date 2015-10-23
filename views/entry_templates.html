@@ -1,5 +1,5 @@
 <script id="entry-photo" type="text/ng-template">
-    <img class="card-image" ng-if="entry.image.url" ng-src="{{entry.image.url}}" />
+    <img class="card-image" ng-if="entry.imageUrl" ng-src="{{entry.imageUrl}}" />
 </script>
 
 <script id="entry-note" type="text/ng-template">
@@ -12,9 +12,7 @@
 <script id="entry-speech" type="text/ng-template">
     <div class="card-contents entry-simple-contents flex-horizontal" is-rtl="::entry.rtl" ng-style="{ 'background-color': entry.type.color }">
         <img class="entry-icon" ng-src="images/icons/word.svg" />
-        <div class="flex-1 entry-simple-contents-text">
-            <blockquote>{{entry.properties.words}}</blockquote>
-        </div>
+        <div class="flex-1 entry-simple-contents-text"><blockquote>{{entry.properties.words}}</blockquote></div>
     </div>
 </script>
 
@@ -31,23 +29,27 @@
 <script id="entry-value" type="text/ng-template">
     <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
         <img class="entry-measure-icon" ng-src="{{::entry.type.icon.url}}" />
-        <div class="item-measure">{{entry.properties.value | unit: entry.type.id}}<span class="item-unit">{{localizationUnits[entry.type.id][config.localization[entry.type.id].selected].display}}</span></div>
+        <div class="item-measure">{{entry.unitValue}}<span class="item-unit">{{entry.unitDisplay}}</span></div>
     </div>
 </script>
 
 <script id="entry-milestone" type="text/ng-template">
-    <div ng-class="{ 'card-contents-with-image': entry.image.url }">
-        <img class="card-image" ng-if="entry.image.url" ng-src="{{ entry.image.url}}" />
+    <div ng-class="{ 'card-contents-with-image': entry.imageUrl }">
+        <img class="card-image" ng-if="entry.imageUrl" ng-src="{{ entry.imageUrl}}" />
         <div class="card-contents card-center-contents entry-milestone-contents">
             <div class="entry-milestone-text">{{entry.player.name}} {{config.entries.milestone.typesIndex[entry.properties.type].text || entry.properties.text}}</div>
         </div>
     </div>
 </script>
 <script id="entry-vaccine" type="text/ng-template">
-    <div class="card-contents entry-with-value" ng-style="{ 'background-color': entry.type.color }">
-        <img class="entry-measure-icon" ng-src="{{::entry.type.icon.url}}" />
-        <div class="item-measure">{{::config.entries.vaccines.index[entry.properties.vaccineId].name}}
-            <div class="item-measure-subtitle">({{::config.entries.vaccines.index[entry.properties.vaccineId].disease}})</div>
+    <div ng-class="{ 'card-contents-with-image': entry.imageUrl }" class="entry-with-value" ng-style="{ 'background-color': entry.type.color }">
+        <img class="card-image" ng-if="entry.imageUrl" ng-src="{{ entry.imageUrl}}" />
+        <div class="card-contents card-center-contents entry-vaccine-contents">
+            <div class="entry-vaccine-text">
+                <div>{{entry.vaccine.name || entry.properties.text}}
+                    <div ng-if="entry.vaccine.disease" class="item-measure-subtitle">({{entry.vaccine.disease}})</div>
+                </div>
+            </div>
         </div>
     </div>
 </script>

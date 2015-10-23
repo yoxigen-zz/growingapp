@@ -21,8 +21,8 @@
         </label>
             <label>
                 <span class="label-text">Gender</span>
-                <select ng-model="editedPlayer.gender"
-                        ng-options="gender.id as gender.label for gender in [{ id: 'f', label: 'Female'}, { id: 'm', label: 'Male' }]"></select>
+                <select ng-model="editedPlayer.gender.id"
+                        ng-options="gender.id as gender.name for gender in config.genders track by gender.id"></select>
             </label>
             <label>
                 <span class="label-text">Birthday</span>

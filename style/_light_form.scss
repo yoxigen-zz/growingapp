@@ -1,0 +1,97 @@
+.white-form{
+  background: White;
+}
+.light-form{
+
+  input[type=text], input[type=number], input[type=date]{
+    border: none;
+    outline: none;
+    padding: 4px;
+    border-bottom: solid 2px rgba(0,0,0,.2);
+    width: auto;
+    text-align: left;
+
+    &:focus{
+      border-color: #1e94f6;
+    }
+    &.centered{
+      text-align: center;
+    }
+  }
+
+  .dropdown-directive-button{
+    border-bottom: solid 2px rgba(0,0,0,.2);
+    padding: .4rem 1.4rem .4rem 0;
+  }
+
+  &.centered{
+    text-align: center;
+  }
+
+  .light-form-section{
+    padding: .1rem 0;
+  }
+
+  label{
+    display: block;
+  }
+
+  .label-bottom{
+    color: $labelColor;
+    display: block;
+    font-size: .8rem;
+    font-weight: bold;
+  }
+
+  .btn {
+    padding: .7rem 1rem;
+    border-radius: 3px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    background: none;
+    -webkit-appearance: none;
+
+    &.btn-submit{
+      width: 100%;
+      max-width: 400px;
+      font-size: 1.2rem;
+
+    }
+    &.btn-success {
+      background: #0fd52b;
+      color: rgba(0, 0, 0, .87);
+    }
+
+    img{
+      height: 1.2rem;
+      margin-right: .3rem;
+      vertical-align: middle;
+      position: relative;
+      top: -2px;
+    }
+  }
+
+  .btn-icon{
+    width: 3rem;
+    height: 3rem;
+    margin: .5rem;
+  }
+}
+
+.image-type-selection{
+  padding: .3rem;
+
+  .btn{
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #666;
+    padding: 1rem 2rem;
+    cursor: pointer;
+
+    .btn-icon{
+      display: block;
+    }
+  }
+}

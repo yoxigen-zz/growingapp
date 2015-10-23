@@ -1,0 +1,69 @@
+<slide-dialog dialog="::dialogs.editPlayer"
+              title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}"
+              class="white-form"
+              actions="players.editedPlayerActions">
+    <div ng-include="'views/player_form.html'"></div>
+</slide-dialog>
+<dialog dialog="::dialogs.signIn" actions="dialogs.signIn.actions" submit-action="signInSubmitAction">
+    <div ng-include="::dialogs.signIn.htmlUrl"></div>
+</dialog>
+<slide-dialog dialog="dialogs.signUp">
+    <div ng-include="::dialogs.signUp.htmlUrl"></div>
+</slide-dialog>
+<slide-dialog dialog="dialogs.about" class="white-form text-page">
+    <div ng-include="::dialogs.about.htmlUrl"></div>
+</slide-dialog>
+<slide-dialog dialog="dialogs.contact" class="white-form text-page">
+    <div ng-include="::dialogs.contact.htmlUrl"></div>
+</slide-dialog>
+<dialog dialog="dialogs.syncOffer" actions="::dialogs.syncOffer.actions">
+    <div ng-include="::dialogs.syncOffer.htmlUrl"></div>
+</dialog>
+<slide-dialog dialog="dialogs.currentInsight"
+              title="{{insights.currentInsight.name}}"
+              icon="{{insights.currentInsight.entryType.icon.id}}"
+              background="{{insights.currentInsight.entryType.color}}"
+              class="no-padding {{insights.currentInsight.className}}"
+              actions="dialogs.currentInsight.actions">
+    <div ng-include="insights.currentInsight.templateUrl"></div>
+</slide-dialog>
+<dialog dialog="dialogs.newEntry">
+    <ul class="entry-types-list">
+        <li ng-repeat="entryType in ::entryTypes track by entryType.id"
+            ng-style="{ 'background-color': entryType.color }"
+            ng-click="entries.newEntry(entryType)">
+            <div class="entry-image">
+                <img ng-src="{{ ::entryType.icon.url }}" />
+            </div>
+            <span class="entry-type-name">{{ ::entryType.name }}</span>
+        </li>
+    </ul>
+</dialog>
+<slide-dialog dialog="dialogs.editEntry"
+              title="{{entries.editedEntry.isNew && 'New' || 'Edit'}} Entry: {{ entries.editedEntry.type.name }}"
+              actions="dialogs.editEntry.actions"
+              submit-action="dialogs.editEntry.submitAction">
+    <form ng-if="entries.editedEntry">
+        <div ng-include="'entry_editor_' + entries.editedEntry.type.id"></div>
+        <label ng-show="entries.editedEntry.type.allowDescription !== false">
+            <span class="label-text">Additional Details</span>
+            <textarea ng-model="entries.editedEntry.description" is-rtl="entries.editedEntry.rtlDescription"></textarea>
+        </label>
+        <label class="no-margin"><span class="label-text">Entry date</span><input type="date" ng-model="entries.editedEntry.date" /></label>
+    </form>
+</slide-dialog>
+<dialog dialog="dialogs.settings"
+        submit-action="settingsSubmitAction">
+    <div ng-include="::dialogs.settings.htmlUrl"></div>
+</dialog>
+<dialog dialog="dialogs.imageMethodSelect" class="fit-contents">
+    <div class="image-type-selection">
+        <div class="light-form">
+            <h4 class="dialog-bold-title">Get image from</h4>
+            <div>
+                <button class="btn" ng-click="dialogs.imageMethodSelect.select('browse')"><img src="images/icons/folders.svg" class="btn-icon" /> Browse</button>
+                <button class="btn" ng-click="dialogs.imageMethodSelect.select('camera')"><img src="images/icons/camera.svg" class="btn-icon" /> Camera</button>
+            </div>
+        </div>
+    </div>
+</dialog>

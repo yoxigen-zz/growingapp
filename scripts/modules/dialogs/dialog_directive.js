@@ -1,10 +1,20 @@
-(function(){
-	angular.module("Dialogs", []).factory("Dialog", ["$timeout", function($timeout){
+define(["angular", "modules/dialogs/dialogs_module"], function(angular){
+    "use strict";
+
+    angular.module("Dialogs").factory("DialogDirective", dialogDirective);
+    dialogDirective.$inject = ["$timeout", "Dialog"];
+
+	function dialogDirective($timeout, Dialog){
 		var TOGGLE_TIMEOUT = 300,
 			TOGGLE_CLASS = "visible",
 			TOGGLE_ACTIVE_CLASS = "active";
 
-		function Dialog(templateUrl){
+        /**
+         * Constructor for different kinds of dialog directives. Supplies functionality that should be available to all dialogs.
+         * @param templateUrl
+         * @constructor
+         */
+		function DialogDirective(templateUrl){
 			this.restrict = 'E';
 			this.transclude = true;
 			this.replace = true;
@@ -12,17 +22,15 @@
 				title: "@",
 				background: "@",
 				icon: "@",
-				show: "=",
+                dialog: "=",
 				actions: "=",
                 submitAction: "=",
-				onShow: "&",
-				onHide: "&",
 				"class": "@"
 			};
 			this.templateUrl = templateUrl;
 		}
 
-		Dialog.prototype = {
+        DialogDirective.prototype = {
 			link: function postLink(scope, element, attrs) {
 				var toggleTimeout,
 					toggleElement = element[0],
@@ -32,7 +40,17 @@
 					window.removeEventListener("keydown", onKeyDown);
 				});
 
-				scope.$watch("show", function(isVisible){
+                scope.$watch("dialog", function(dialog){
+                    if (dialog instanceof Dialog){
+                        if (dialog.title && !attrs.title)
+                            scope.title = dialog.title;
+
+                        if (dialog.icon && !attrs.icon)
+                            scope.icon = dialog.icon;
+                    }
+                });
+
+				scope.$watch("dialog.isOpen", function(isVisible){
 					if (!!isVisible == dialogIsOpen)
 						return;
 
@@ -54,7 +72,6 @@
 						}, 40);
 
 						window.addEventListener("keydown", onKeyDown);
-						scope.onShow && scope.onShow({ $event: { closeDialog: scope.closeDialog.bind(this, null), toggleId: attrs.show }});
 						dialogIsOpen = true;
 					}
 					else{
@@ -65,26 +82,25 @@
 						}, TOGGLE_TIMEOUT);
 
 						window.removeEventListener("keydown", onKeyDown);
-						scope.onHide && scope.onHide({ toggleId: attrs.show });
 						dialogIsOpen = false;
 					}
 				});
 
 				scope.closeDialog = function(e){
 					if (!e || e.target === toggleElement || e.target.dataset.closesDialog)
-						scope.show = false;
+						scope.dialog.close();
 				};
 
 				function onKeyDown(e){
 					if (e.keyCode === 27) {
 						scope.$apply(function(){
-							scope.show = false;
+                            scope.dialog.close();
 						});
 					}
 				}
 			}
 		};
 
-		return Dialog;
-	}]);
-})();
+		return DialogDirective;
+	}
+});

@@ -1,5 +1,6 @@
 .entry-measure-icon{
   width: 6rem;
+  height: 6rem;
 }
 
 .entry-milestone-text{
@@ -10,6 +11,19 @@
 
 .entry-milestone-contents{
   background-color: #017fcf;
+  color: White;
+  min-height: 8rem;
+}
+
+.entry-vaccine-text{
+  background: url(../images/icons/syringe.svg) no-repeat center top;
+  padding-top: 3rem;
+  text-align: center;
+  color: White;
+}
+
+.entry-vaccine-contents{
+  background-color: rgb(81, 202, 24);
   color: White;
   min-height: 8rem;
 }
@@ -30,7 +44,10 @@
 .entry-simple-contents{
   color: White;
 
-  .entry-simple-contents-text{ padding: .5rem 1rem; }
+  .entry-simple-contents-text{
+    padding: .5rem 1rem;
+    white-space: pre-line;
+  }
 }
 
 .card-contents-with-image{

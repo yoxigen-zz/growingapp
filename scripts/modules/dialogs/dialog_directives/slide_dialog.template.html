@@ -16,6 +16,12 @@
                ng-click="action.onClick()">
                 <img ng-src="images/icons/{{::action.icon}}.svg" />
             </a>
+            <a ng-if="::submitAction"
+               class="popup-header-button"
+               ng-click="submitAction.onSubmit()"
+               title="{{::submitAction.title}}">
+                <img ng-src="images/icons/{{::submitAction.icon}}.svg" />
+            </a>
         </div>
     </header>
     <div class="flex-1 scroll-vertical popup-contents" ng-transclude></div>

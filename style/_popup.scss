@@ -50,6 +50,7 @@ $popupHeaderHeight: $contentsHeaderHeight;
     }
 
     .popup-title{
+      display: block;
       font-size: 1.3rem;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -58,7 +59,6 @@ $popupHeaderHeight: $contentsHeaderHeight;
     }
 
     .close-button{
-      @extend .header-button;
       display: block;
       height: 2rem;
       padding: .5rem;

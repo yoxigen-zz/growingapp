@@ -1,5 +1,9 @@
-(function(){
-    angular.module("Storage", ["Parse"]).factory('Storage', ["$injector", "$q", "$rootScope", "parse", function ($injector, $q, $rootScope, parse) {
+define(["angular", "services/parse"], function(angular){
+    angular.module("Storage", ["Parse"]).factory('Storage', storage);
+
+    storage.$inject = ["$injector", "$q", "$rootScope", "parse"];
+
+    function storage($injector, $q, $rootScope, parse) {
         function Storage(id, options){
             // Make sure this Storage is unique, to avoid conflicts between two storage users:
             this.options = options || {};
@@ -272,5 +276,5 @@
         };
 
         return function(id, options) { return $injector.instantiate(Storage, { id: id, options: options }); };
-    }]);
-})();
+    }
+});

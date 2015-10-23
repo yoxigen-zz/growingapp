@@ -1,367 +1,169 @@
-app.controller("MainController", ["$scope", "$route", "Player", "phonegap", "eventBus", "users", "cloud", "config", "utils", "$timeout", "navigation", "messages", "players", "insights",
-    function($scope, $route, Player, phonegap, eventBus, users, cloud, config, utils, $timeout, navigation, messages, players, insights){
+define(["angular", "app"], function(angular){
+    angular.module("GrowingApp").controller("MainController", MainController);
 
-    var currentMenuItem,
-        spinnerTimeout;
-
-    $scope.config = config;
-    $scope.setCurrentPlayer = setCurrentPlayer;
-    $scope.offline = !window.navigator.onLine;
-    $scope.hideMenu = hideMenu;
-    $scope.toggleMenu = toggleMenu;
-    $scope.menuItems = navigation.mainMenuItems;
-    $scope.editPlayer = editPlayer;
-    $scope.toggleEditPlayer = function(state){ $scope.showEditPlayer = state === true || state === false ? state : !$scope.showEditPlayer; };
-    $scope.openLogin = openLogin;
-    $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
-    $scope.onShowDialog = function(e){ eventBus.triggerEvent("popup.open", e); };
-    $scope.onHideDialog = function(e){ eventBus.triggerEvent("popup.close", e); };
-    $scope.addNewPlayer = addNewPlayer;
-    $scope.openSignUp = openSignUp;
-    $scope.openSyncOffer = function(){ $scope.showSyncOffer = true; };
-    $scope.declineSyncOffer = declineSyncOffer;
-    $scope.openSettings = openSettings;
-    $scope.settingsSubmitAction = { icon: "ok-blue", onSubmit: saveSettings, text: "Save" };
-    $scope.signInActions = [
-        { text: "New user?", onClick: openSignUp }
+    MainController.$inject = [
+        "$scope", "$route",
+        "localization", "eventBus", "users",
+        "cloud", "config", "$timeout",
+        "navigation", "players",
+        "insights", "dialogs", "entriesModel", "entries", "db", "phonegap"
     ];
 
-    $scope.insights = insights;
+    function MainController($scope, $route, localization, eventBus, users, cloud, config, $timeout, navigation, players, insights, dialogs, entriesModel, entries, db, phonegap){
+        var spinnerTimeout;
 
-    $scope.signInSubmitAction = { text: "Sign In", onSubmit: function(){ eventBus.triggerEvent("doLogin") } };
+        $scope.config = config;
+        $scope.dialogs = dialogs;
 
-    $scope.syncOfferActions = [
-        { text: "Don't backup", onClick: declineSyncOffer },
-        { text: "Backup now", onClick: openSignUp }
-    ];
-    // TODO: move these to a new EditPlayerController:
-    $scope.savePlayer = savePlayer;
-    $scope.removePlayer = removePlayer;
+        $scope.players = players;
 
-
-    $scope.$on("$routeChangeSuccess", onRouteChange);
-
-    eventBus.subscribe("showLogin", openLogin);
-    eventBus.subscribe("showSettings", openSettings);
-    eventBus.subscribe("hideMenu", hideMenu);
-    eventBus.subscribe("login", onLogin);
-    eventBus.subscribe("loadingStart", onLoadingStart);
-    eventBus.subscribe("loadingEnd", onLoadingEnd);
-    eventBus.subscribe("logout", onLogout);
-    eventBus.subscribe("updateObjects", onUpdateObjects);
-
-    window.addEventListener("online", function(){
-        $scope.$apply(function(){
-            $scope.offline = false;
-        });
-    });
-
-    window.addEventListener("offline", function(){
-        $scope.$apply(function(){
-            $scope.offline = true;
-        });
-    });
-
-    // Returning here just to make sure that after this there are only function definitions, to organize code:
-    return init();
-
-
-    function setCurrentMenuItem(){
-        var hash = window.location.hash;
-        if (currentMenuItem)
-            currentMenuItem.selected = false;
-
-        for(var i= 0, item; item = $scope.menuItems[i]; i++){
-            if (item.href === hash){
-                currentMenuItem = item;
-                item.selected = true;
-                return;
-            }
-        }
-    }
-
-    function getMenuItemById(itemId){
-        if (!itemId)
-            return null;
-
-        for(var i= 0, item; item = $scope.menuItems[i]; i++){
-            if (item.id === itemId)
-                return item;
-        }
-
-        return null;
-    }
-
-
-    function openLogin(){
-        $scope.showLogin = true;
-    }
-
-    function openSettings(){
-        $scope.showSettings = true;
+        $scope.offline = !window.navigator.onLine;
+        $scope.navigation = navigation;
+        $scope.openSettings = openSettings;
+        $scope.settingsSubmitAction = { icon: "ok-blue", onSubmit: saveSettings, text: "Save" };
         $scope.settings = config.getCurrentLocalization();
-        delete $scope.settings.__updateTime__;
-    }
-    function saveSettings(){
-        if (config.saveLocalization($scope.settings))
-            eventBus.triggerEvent("settingsChange");
+        $scope.insights = insights;
 
-        $scope.showSettings = false;
-        delete $scope.settings;
-    }
+        $scope.entries = entriesModel;
+        $scope.localization = localization;
+        $scope.entryTypes = entries.typesArray;
+        $scope.setEntriesType = setEntriesType;
 
-    function setFirstPlayer(){
-        $scope.setCurrentPlayer($scope.players && $scope.players.length ? $scope.players[0] : null);
-    }
+        $scope.signInSubmitAction = { text: "Sign In", onSubmit: function(){ eventBus.triggerEvent("doLogin") } };
+        $scope.appVersion = phonegap.app.version;
 
-    function setPlayersSelection(players){
-        $scope.playersSelection = players.concat([{ name: "+ Add New Child" }]);
-        if (!players.length) {
-            if (config.sync.lastSyncTimestamp)
-                $scope.addNewPlayer();
-            else
-                $scope.showFirstTimeSelection = true;
-        }
-    }
+        $scope.$on("$routeChangeSuccess", onRouteChange);
 
-    function setEditPlayerActions(isNewPlayer){
-        var actions = [
-            { icon: "ok", title: "Save child", onClick: savePlayer }
-        ];
-
-        if(!isNewPlayer)
-            actions.splice(0, 0, { icon: "trash", title: "Delete child", onClick: removePlayer });
-
-        $scope.editedPlayerActions = actions;
-    }
-
-    function editPlayer(player){
-        if (player instanceof Player) {
-            $scope.editPlayerActions = setEditPlayerActions();
-            $scope.editedPlayer = angular.copy(player);
-            $scope.toggleEditPlayer(true);
-        }
-        else{
-            console.error("Can't edit player - expecting a Player object, got: ", player);
-        }
-    }
-
-    function savePlayer(){
-        if (!$scope.editedPlayer.name){
-            return;
-        }
-
-        $scope.editedPlayer.save().then(function(player){
-            $scope.toggleEditPlayer(false);
-            $scope.editedPlayer = null;
-            $scope.setCurrentPlayer(player);
-
-            if (player.isNew){
-                $scope.players.push(player);
-                $scope.players.sort(function(a,b){
-                    return a.name < b.name ? 1 : -1;
-                });
-            }
-            else{
-                for(var i= 0, menuPlayer; menuPlayer = $scope.players[i]; i++){
-                    if (menuPlayer.playerId === player.playerId) {
-                        $scope.players[i] = player;
-                        break;
-                    }
-                }
-            }
-            setPlayersSelection($scope.players);
-            eventBus.triggerEvent("editPlayer", player);
-        }, function(error){
-            messages.error("Error saving: " + error);
+        users.onLogin.subscribe(onLogin);
+        users.onLogout.subscribe(onLogout);
+        eventBus.subscribe("loadingStart", onLoadingStart);
+        eventBus.subscribe("loadingEnd", onLoadingEnd);
+        eventBus.subscribe("settingsChange", onSettingsChange);
+        eventBus.subscribe("playerSelect", function(){
+            if ($scope.showFirstTimeSelection)
+                $scope.showFirstTimeSelection = false;
         });
-    }
 
-    function removePlayer(){
-        messages.confirm("Are you sure you wish to remove this child from the list?").then(function(confirmed){
-            if (!confirmed)
-                return;
-
-            $scope.editedPlayer.remove().then(function(){
-                for(var i=0; i < $scope.players.length; i++){
-                    if ($scope.players[i].playerId === $scope.editedPlayer.playerId){
-                        $scope.players.splice(i, 1);
-                        setPlayersSelection($scope.players);
-                        $scope.toggleEditPlayer(false);
-
-                        if ($scope.player && $scope.editedPlayer.playerId === $scope.player.playerId)
-                            setFirstPlayer();
-
-                        eventBus.triggerEvent("deletePlayer", $scope.editedPlayer);
-
-                        $scope.editedPlayer = null;
-                        break;
-                    }
-                }
+        window.addEventListener("online", function(){
+            $scope.$apply(function(){
+                $scope.offline = false;
             });
         });
-    }
 
-    function addNewPlayer(){
-        setEditPlayerActions(true);
-        $scope.editedPlayer = new Player();
-        $scope.toggleEditPlayer(true);
-    }
-
-    function openSignUp(){
-        $scope.showLogin = false;
-        $scope.showSyncOffer = false;
-        $scope.showSignup = true;
-    }
-
-    function declineSyncOffer(){
-        $scope.showSyncOffer = false;
-        config.sync.declineSyncOffer();
-    }
-
-
-    function onLogin(e){
-        $scope.showLogin = false;
-        $scope.showSignup = false;
-
-        var signoutItem = getMenuItemById("signOut");
-
-        signoutItem.hide = false;
-        signoutItem.text = "Sign out " + e.user.attributes.username;
-
-        $scope.currentUser = e.user;
-    }
-
-    function onLogout(){
-        var signoutItem = getMenuItemById("signOut");
-        signoutItem.hide = true;
-
-        $scope.currentUser = null;
-    }
-
-    function onLoadingStart(e){
-        $timeout.cancel(spinnerTimeout);
-        if (!e || !e.isOnLoad) {
-            spinnerTimeout = $timeout(function () {
-                $scope.showSpinner = true;
-            }, 300);
-        }
-    }
-    function onLoadingEnd(e){
-        $scope.showSpinner = false;
-        $timeout.cancel(spinnerTimeout);
-
-        if (e && e.error)
-            console.error(e.error);
-    }
-
-    function onUpdateObjects(e){
-        if (e.type === "Player")
-            onUpdatePlayers(e.objects);
-    }
-
-    function onUpdatePlayers(_players){
-        var deletedCurrentPlayer;
-
-        _players.forEach(function(player){
-            if (player.isNew){
-                if (!player.deleted)
-                    $scope.players.push(player);
-            }
-            else {
-                var existingPlayer = utils.arrays.find($scope.players, function (p) {
-                        return p.playerId === player.playerId;
-                    }),
-                    existingPlayerIndex;
-
-                if (existingPlayer) {
-                    existingPlayerIndex = $scope.players.indexOf(existingPlayer);
-                    if (player.deleted)
-                        $scope.players.splice(existingPlayerIndex, 1);
-                    else {
-                        if (!$scope.players)
-                            $scope.players = [];
-
-                        $scope.players[existingPlayerIndex] = player;
-                    }
-                }
-
-                if ($scope.player && player.playerId === $scope.player.playerId) {
-                    if (player.deleted)
-                        deletedCurrentPlayer = true;
-                    else
-                        $scope.player = player;
-                }
-            }
+        window.addEventListener("offline", function(){
+            $scope.$apply(function(){
+                $scope.offline = true;
+            });
         });
 
-        if ((!$scope.player && $scope.players.length)|| deletedCurrentPlayer)
-            setFirstPlayer();
-    }
+        return init();
 
-    function onRouteChange(){
-        $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
-        $scope.hideMenu();
-        setCurrentMenuItem();
-    }
+        function getMenuItemById(itemId){
+            if (!itemId)
+                return null;
 
-    function setCurrentPlayer(player){
-        if ($scope.player === player)
-            return;
+            for(var i= 0, item; item = navigation.mainMenuItems[i]; i++){
+                if (item.id === itemId)
+                    return item;
+            }
 
-        if (!player)
-            player = $scope.players.length ? $scope.players[0] : null;
+            return null;
+        }
 
-        $scope.player = player;
+        function setEntriesType(type){
+            entriesModel.currentEntriesType = type;
+            entriesModel.setEntries();
+        }
 
-        if (player && player.playerId) {
-            config.players.setCurrentPlayerId(player.playerId);
+        function openSettings(){
+            $scope.settings = angular.copy(config.getCurrentLocalization());
+            dialogs.settings.open();
+        }
+        function saveSettings(){
+            delete $scope.settings.__updateTime__;
+
+            if (config.saveLocalization($scope.settings))
+                eventBus.triggerEvent("settingsChange");
+
+            dialogs.settings.close();
+        }
+
+        function onNoPlayers(){
+            if (config.sync.lastSyncTimestamp)
+                players.addNewPlayer();
+            else
+                setFirstTime();
+        }
+
+        function onLogin(e){
             $scope.showFirstTimeSelection = false;
+
+            var signoutItem = getMenuItemById("signOut");
+
+            signoutItem.hide = false;
+            signoutItem.text = "Sign out " + e.user.attributes.username;
+
+            $scope.settings = config.getCurrentLocalization();
         }
-        else {
-            config.players.removeCurrentPlayerId();
-            if (config.sync.lastSyncTimestamp)
-                $scope.addNewPlayer();
-            else
-                $scope.showFirstTimeSelection = true;
+
+        function onLogout(){
+            var signoutItem = getMenuItemById("signOut");
+            signoutItem.hide = true;
+
+            config.sync.clearLastSyncTimestamp();
+            setFirstTime();
         }
 
-        eventBus.triggerEvent("playerSelect", player);
-    }
-
-    function hideMenu(){
-        if ($scope.showMenu) {
-            eventBus.triggerEvent("popup.close");
-            $scope.showMenu = false;
+        function onLoadingStart(e){
+            $timeout.cancel(spinnerTimeout);
+            if (!e || !e.isOnLoad) {
+                spinnerTimeout = $timeout(function () {
+                    $scope.showSpinner = true;
+                }, 300);
+            }
         }
-    }
+        function onLoadingEnd(e){
+            $scope.showSpinner = false;
+            $timeout.cancel(spinnerTimeout);
 
-    function toggleMenu(){
-        if ($scope.showMenu)
-            hideMenu();
-        else {
-            eventBus.triggerEvent("popup.open", { closeDialog: function(){ $scope.showMenu = false; } });
-            $scope.showMenu = true;
+            if (e && e.error)
+                console.error(e.error);
         }
-    }
 
-    function init(){
-        var user = users.getCurrentUser();
-        if (user)
-            eventBus.triggerEvent("login", { user: user });
+        function onSettingsChange(){
+            $scope.settings = config.getCurrentLocalization();
+        }
 
-        Player.getAll().then(function(allPlayers){
-            $scope.players = allPlayers;
-            setPlayersSelection(allPlayers);
+        function onRouteChange(){
+            $scope.currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
+            dialogs.menu.close();
+        }
 
-            Player.getCurrentPlayer().then(function(currentPlayer){
-                if (currentPlayer) {
-                    $scope.setCurrentPlayer(currentPlayer);
-                    players.setCurrentPlayer(currentPlayer);
+        function setFirstTime(){
+            $scope.showFirstTimeSelection = true;
+            players.addNewPlayer(false);
+        }
+
+        function init(){
+            if (users.currentUser)
+                onLogin({ user: users.currentUser });
+
+            players.getAll().then(function(allPlayers){
+                if (!allPlayers || !allPlayers.length)
+                    onNoPlayers();
+                else {
+                    players.getCurrentPlayer().then(function (currentPlayer) {
+                        if (!currentPlayer)
+                            onNoPlayers();
+                    });
                 }
-            });
 
-            cloud.sync({ isOnLoad: true });
-        });
+                cloud.sync({ isOnLoad: true });
+                $scope.appLoaded = true;
+                $timeout(function(){
+                    $scope.splashscreenKill = true;
+                }, 450);
+            });
+        }
     }
-}]);
+});

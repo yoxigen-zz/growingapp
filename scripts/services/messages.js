@@ -1,28 +1,33 @@
-angular.module("Messages", []).factory("messages", ["$q", function($q){
-	return {
-		confirm: confirm,
-		error: error
-	};
+define(["angular"], function(angular){
+    return angular.module("Messages", []).factory("messages", ["$q", function($q){
+        return {
+            confirm: confirm,
+            error: log.bind(this, "error"),
+            log: log.bind(this, "log")
+        };
 
-	function confirm(message){
-		return $q.when(window.confirm(message));
-	}
-
-	function error(message, error){
-        if (window.cordova) {
-            if (typeof(message) === "object")
-                alert(JSON.stringify(message));
-            else{
-                var message = message;
-                if (error)
-                    message += " " + JSON.stringify(error);
-
-                alert(message);
-            }
+        function confirm(message){
+            return $q.when(window.confirm(message));
         }
-        if (error)
-            console.error(message, error);
-        else
-            console.error(message);
-	}
-}]);
+
+        function log(type, message, obj){
+            if (window.cordova) {
+                return; // No alerts required in prod version.
+
+                if (typeof(message) === "object")
+                    alert(JSON.stringify(message));
+                else{
+                    var message = message;
+                    if (obj)
+                        message += " " + JSON.stringify(obj);
+
+                    alert(message);
+                }
+            }
+            if (obj)
+                console[type](message, obj);
+            else
+                console[type](message);
+        }
+    }]);
+});

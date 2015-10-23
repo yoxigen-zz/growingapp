@@ -1,7 +1,7 @@
-(function(){
+define(["angular", "../entries/entries", "modules/entries/entries_model", "modules/dialogs/dialogs"], function(angular){
     'use strict';
 
-    angular.module("Insights").factory("Insight", function(){
+    return angular.module("Insights", ["Entries", "Dialogs"]).factory("Insight", function(){
         function Insight(config){
             this.validate(config);
             this.id = config.id;
@@ -31,4 +31,4 @@
 
         return Insight;
     });
-})();
+});

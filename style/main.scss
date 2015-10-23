@@ -3,8 +3,10 @@
 $tabsHeight: 2.5rem;
 $padding: .8rem;
 
+
 html{
   font-size: 16px;
+  height: 100%;
 }
 
 .flex{
@@ -13,6 +15,7 @@ html{
   display: flex;
 }
 body{
+  height: 100%;
   @extend .flex;
   background: $contentBackgroundColor;
   color: $contentTextColor;
@@ -26,13 +29,23 @@ body{
   flex-direction: column;
 }
 
-a{ cursor: pointer; }
+a{
+  cursor: pointer;
+
+  &.large-link{
+    font-size: 1.2rem;
+    color: #1e94f6;
+  }
+}
 .relative{ position: relative; }
 .rtl{
   direction: rtl;
   text-align: right;
 }
 
+.align-right{ text-align: right; }
+.align-left{ text-align: left; }
+.align-center{ text-align: center; }
 
 .flex-horizontal{
   @extend .flex;
@@ -67,6 +80,25 @@ a{ cursor: pointer; }
   overflow-y: auto;
 }
 
+.text-page{
+  a{
+    color: #1e94f6;
+    text-decoration: none;
+  }
+
+  h3{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  section{
+    margin-top: 2rem;
+  }
+}
+
+.app-version{
+  color: rgba(0,0,0,.87);
+  font-size: .9em;
+}
 .hide-small-width{
   @media all and (max-width: 400px){
     display: none;
@@ -85,16 +117,15 @@ a{ cursor: pointer; }
   &.visible{ display: block; }
 }
 
+.remove{
+  color: $removeColor;
+  font-weight: bold;
+}
 .player-edit-image{
   height: 6.9rem;
   max-width: 7rem;
   border: solid 1px rgba(0, 0, 0, 0.2);
   margin-right: .5rem;
-}
-
-.header-button{
-  &:hover{ background-color: #00A8E0; }
-  &:active, &.ng-click-active{ background-color: #00BEFD }
 }
 
 #splashscreen{
@@ -108,22 +139,46 @@ a{ cursor: pointer; }
   z-index: 99999;
   text-align: center;
   color: white;
-  font-size: 1.8rem;
-  font-weight: 300;
-  line-height: 15rem;
+  opacity: 1;
 
-  -webkit-transition: all 500ms ease-out;
-  -moz-transition: all 500ms ease-out;
-  -ms-transition: all 500ms ease-out;
-  -o-transition: all 500ms ease-out;
-  transition: all 500ms ease-out;
+  -webkit-transition: opacity 500ms ease-out;
+  -moz-transition: opacity 500ms ease-out;
+  -ms-transition: opacity 500ms ease-out;
+  -o-transition: opacity 500ms ease-out;
+  transition: opacity 500ms ease-out;
 
-  &.hide{
-    opacity: 0;
+  @media all and (orientation: landscape){
+    background-position: right bottom;
+    background-image: url(../images/growingapp_logo_low.svg);
+    background-size: 80%;
+
+    div{
+      padding-left: 2rem;
+      box-sizing: border-box;
+      text-align: left !important;
+    }
+
+    h1{
+      display: inline;
+    }
   }
 
-  &.kill{
-    display: none;
+  h1{
+    font-size: 1.8rem;
+    font-weight: 300;
+  }
+  .spinner{
+    display: inline-block;
+    opacity: 1;
+  }
+  div{
+    position: absolute;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+  }
+  &.hide{
+    opacity: 0;
   }
 }
 
@@ -131,16 +186,11 @@ a{ cursor: pointer; }
   display: none;
 
   &.render{ display: block;}
-  @media all and (min-width: $leftMenuMinWidth){
-    display: none;
-
-    &.render{ display: none;}
-  }
 }
 
 #app-title{
   @media all and (min-width: $leftMenuMinWidth){
-    padding-left: .8rem;
+    padding: 0 .8rem;
   }
 
   &.pad-side{
@@ -150,11 +200,33 @@ a{ cursor: pointer; }
 .actionbar{
   height: $actionbarHeight;
   line-height: $actionbarHeight - .1;
-  background: $actionbarBackground;
+  background-color: $actionbarBackground;
   color: $actionbarColor;
   box-shadow: 0 3px 4px rgba(0,0,0,.25);
-  z-index: 1;
+  position: relative;
+  z-index: 2;
+  padding-right: .5rem;
+  -webkit-transition: background-color 300ms ease;
+  -moz-transition: background-color 300ms ease;
+  -ms-transition: background-color 300ms ease;
+  -o-transition: background-color 300ms ease;
+  transition: background-color 300ms ease;
 
+  @media all and (orientation: landscape){
+    height: 3rem;
+    line-height: 2.8rem;
+  }
+
+  .player-name{
+    font-size: 1.4rem;
+    color: White;
+    padding-left: 0;
+  }
+
+  .player-list-icon{
+    background-size: cover;
+    background-color: $actionbarBackground;
+  }
   .edit-button{
     height: .8rem;
   }
@@ -181,13 +253,41 @@ a{ cursor: pointer; }
     }
   }
 
+  #actionbar-main{
+    padding-right: .5rem;
+
+    h1{
+      margin: 0;
+      font-weight: 400;
+    }
+    h2{
+      margin: 0;
+      font-size: .9rem;
+      font-weight: normal;
+      color: rgba(255,255,255,.7);
+    }
+    &.with-selection{
+      line-height: 1.5rem;
+      padding-top: .2rem;
+    }
+
+    select.fancy-select{
+      color: rgba(255,255,255,.7);
+
+      &.player-select{
+        color: White;
+        font-size: 1.3rem;
+        left: -4px;
+        top: 2px;
+      }
+    }
+  }
   #actionbar-name{
     display: block;
-    padding-right: .5rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 300;
   }
 
@@ -204,7 +304,7 @@ a{ cursor: pointer; }
   }
 
   .actionbar-button{
-    @extend .header-button;
+
     display: inline-block;
     height: 100%;
     width: 2rem;
@@ -214,29 +314,34 @@ a{ cursor: pointer; }
     img{
       height: $actionbarHeight / 2;
       margin-top: $actionbarHeight / 4;
-    }
 
-    &.active{
-      background: rgba(255,255,255,.3);
+      @media all and (orientation: landscape){
+        margin-top: $actionbarHeight / 6;
+      }
     }
-
-    &.selectable{
-      opacity: .5;
-      transform: scale(.8);
-      -webkit-transform: scale(.8);
-      -ms-transform: scale(.8);
-    }
-
-    &.selected{
-      opacity: 1;
-    }
-
-    &:active, &.ng-click-active{ opacity: 1}
   }
 }
+
+.list-icon{
+  height: 27px;
+  width: 27px;
+  border-radius: 50%;
+  margin-right: .5rem;
+  background-position: center center;
+  background-size: 60%;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  left: -5px;
+  position: relative;
+  top: -1px;
+}
+
+
 #contents-wrapper{
   overflow: hidden;
   position: relative;
+  z-index:1;
 
   -webkit-box-orient: vertical;
   -webkit-flex-flow: column;
@@ -333,13 +438,15 @@ a{ cursor: pointer; }
 
 .contents-empty-message{
   -webkit-align-items: center;
+  -webkit-box-align: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
   text-align: center;
 
   div{
-     margin: 0 auto;
+    width: 100%;
+    margin: 1rem auto;
   }
 
   p{
@@ -364,6 +471,9 @@ a{ cursor: pointer; }
   top: -1rem;
 }
 
+.entries{
+  background: #e2e2e2;
+}
 .light-hoverable{
   &:hover{
     background-color: rgba(92, 210, 250, 0.18);
@@ -414,6 +524,8 @@ a{ cursor: pointer; }
     box-sizing: border-box;
     overflow: hidden;
     -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
 
     &:last-child{
       border-right: none;
@@ -443,7 +555,7 @@ $spinnerSize: 2rem;
   }
 }
 
-#spinner{
+.spinner{
   -webkit-transition: opacity 400ms ease-out;
   -moz-transition: opacity 400ms ease-out;
   -ms-transition: opacity 400ms ease-out;
@@ -451,6 +563,8 @@ $spinnerSize: 2rem;
   transition: opacity 400ms ease-out;
   display: none;
   opacity: 0;
+  position: relative;
+  top: 10px;
 
   img{
     width: $spinnerSize;
@@ -471,8 +585,8 @@ $spinnerSize: 2rem;
 }
 
 .floating-message{
-  position: fixed;
-  top: 85%;
+  position: absolute;
+  bottom: 2rem;
   right: 0;
   left: 0;
   z-index: 102;
@@ -501,6 +615,10 @@ $spinnerSize: 2rem;
 $floatingActionButtonDiameter: 3.5rem;
 
 .floating-action-button{
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 10;
   height: $floatingActionButtonDiameter;
   width: $floatingActionButtonDiameter;
   border-radius: 50%;
@@ -522,13 +640,20 @@ $floatingActionButtonDiameter: 3.5rem;
   }
 }
 
-#overlay{
+.full-height{
+  height: 100%;
+}
+.overlay{
   position: fixed;
   z-index: 100;
   top: 0;
   bottom: 0;
   left: 0;
   width: 100%;
+  height: 100%;
+}
+
+#overlay{
   background: #000;
   opacity: 0;
   -webkit-transition: opacity 300ms ease-out;
@@ -543,11 +668,13 @@ $floatingActionButtonDiameter: 3.5rem;
   }
 }
 
+@import "first-time";
 @import "items-list";
 @import "menu";
 @import "popup";
 @import "dialog";
 @import "forms";
+@import "light_form";
 @import "panels";
 @import "entry_types";
 @import "entry_cards";
@@ -556,3 +683,5 @@ $floatingActionButtonDiameter: 3.5rem;
 @import "player_edit";
 @import "cards";
 @import "data-table";
+@import "player_summary";
+@import "../scripts/directives/dropdown/dropdown";

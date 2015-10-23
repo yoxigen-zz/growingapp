@@ -1,5 +1,5 @@
 <div class="flex-1 scroll-vertical" ng-controller="VaccinesController as vaccines">
-    <table class="data-table">
+    <table class="data-table clickable-rows">
         <thead>
             <tr>
                 <th>Date</th>
@@ -8,10 +8,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="vaccineEntry in ::vaccines.entries">
-                <td>{{::vaccineEntry.dateText}}</td>
-                <td>{{::vaccineEntry.vaccine.name}}</td>
-                <td>{{::vaccineEntry.vaccine.disease}}</td>
+            <tr ng-repeat="vaccineEntry in vaccines.entries track by vaccineEntry.timestamp" ng-click="vaccines.editEntry(vaccineEntry)">
+                <td>{{vaccineEntry.dateText}}</td>
+                <td>{{vaccineEntry.vaccine.name || vaccineEntry.properties.text}}</td>
+                <td>{{vaccineEntry.vaccine.disease}}</td>
             </tr>
         </tbody>
     </table>

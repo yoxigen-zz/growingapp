@@ -1,4 +1,4 @@
-#menu-wrapper{
+#menu-wrapper {
   position: fixed;
   max-width: 80%;
   top: 0;
@@ -9,163 +9,74 @@
   padding-right: 1rem;
   z-index: 101;
 
-  &.visible{ display: block; }
+  &.visible {
+    display: block;
+  }
 
-  &.active{
-    #menu{
+  &.active {
+    #menu {
       -webkit-transform: translateX(0);
       transform: translateX(0);
     }
   }
-
-  @media all and (min-width: $leftMenuMinWidth){
-    position: static;
-    padding-right: 0;
-    border-right: solid 1px #C6CCCE;
-    background: #e1e8ea;
-
-    &.render{
-      display: block;
-    }
-  }
 }
 
-#menu{
+#menu {
   max-width: 100%;
   min-width: 16rem;
   height: 100%;
-  background: #e1e8ea;
-  box-shadow: 2px 2px 15px rgba(0,0,0,.6);
+  background: White;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, .6);
   padding-bottom: .5rem;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
-  transition: all 300ms ease-out;
-  -webkit-transition: all 300ms ease-out;
+  transition: transform 300ms ease-out;
+  -webkit-transition: -webkit-transform 300ms ease-out;
 
-  @media all and (min-width: $leftMenuMinWidth){
-    width: 18rem;
-    -webkit-transform: none;
-    transform: none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -ms-transition: none;
-    -o-transition: none;
-    transition: none;
-    box-shadow: none;
-
-  }
-
-  .actionbar{
-    padding: 0 $padding;
+  .actionbar {
+    padding: 0 0 0 $padding;
     font-weight: bold;
   }
 
-  .app-name{
+  .app-name {
     font-size: 1.2rem;
   }
-  ul{
+  ul {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 1rem 0 0;
 
-    li{
-      border-top: solid 1px rgba(154, 167, 172, 0.20);
+    a {
+      text-decoration: none;
+      color: #333;
+      padding: 1rem 1.5rem 1rem 1rem;
+      display: block;
+    }
 
-      &:hover{
+    li {
+      &:hover {
         background-color: #D7E0E2;
       }
 
-      &:active, &.ng-click-active{
+      &:active, &.ng-click-active {
         background-color: #c1cacc;
       }
 
-      &.selected{
+      &.selected {
         background: #80cce6;
       }
+
+      &.menu-item-separator{
+        border-top: solid 1px #ddd;
+        margin-top: 1rem;
+      }
     }
   }
 
-  #players-menu{
-    background: #eff5f7;
-    padding-bottom: 2rem;
-
-    li{
-      padding: 0;
-
-      &.players-menu-add{
-        padding: .5rem;
-        &:hover{
-          background: none;
-        }
-
-        a {
-          color: White;
-          display: block;
-          padding: .5rem 1rem;
-          border-radius: 3px;
-        }
-      }
-
-      a{
-        padding: 1rem;
-      }
-
-      &.with-image{
-        a.flex-1{ padding: .5rem; }
-      }
-    }
-
-    .player-image{
-      height: 2.5rem;
-      vertical-align: middle;
-      border-radius: 50%;
-      margin-right: .3rem;
-      margin-top: -1px;
-    }
-
-    .players-menu-edit{
-      background: rgba(154, 167, 172, 0.1);
-      border-left: solid 1px rgba(154, 167, 172, 0.2);
-
-      &:hover{
-        background: rgba(6, 145, 199, 0.27);
-      }
-    }
-
-    .child-menu-edit{
-      height: 1.2rem;
-      opacity: .4;
-      position: relative;
-      top: 2px;
-    }
-    .child-menu-add{
-      height: 1.2rem;
-      margin-right: .3rem;
-      vertical-align: middle;
-    }
-
-    .child-menu-icon{
-      height: 2.5rem;
-      vertical-align: middle;
-      border: solid 1px #4e5355;
-      margin-right: .5rem;
-    }
-    .child-menu-name{
-      font-weight: bold;
-
-    }
-  }
-
-  a{
-    text-decoration: none;
-    color: #333;
-    padding: 1rem 1.5rem 1rem 1rem;
-    display: block;
-  }
-  .menu-icon{
+  .menu-icon {
     display: block;
     float: left;
     width: 1.5rem;
@@ -173,19 +84,19 @@
     text-align: center;
     opacity: .4;
 
-    img{
+    img {
       height: 1.3rem;
     }
   }
 
-  .menu-title{
+  .menu-title {
     display: block;
     margin-left: 2.5rem;
     font-size: 1rem;
   }
 }
 
-.offline #menu li.disable-offline a{
+.offline #menu li.disable-offline a {
   opacity: .4;
   cursor: not-allowed;
 }

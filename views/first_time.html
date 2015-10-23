@@ -1,0 +1,15 @@
+<div id="first-time" class="flex-1">
+    <header>GrowingApp</header>
+    <div class="first-time-contents">
+        <div class="first-time-main">
+            To get started, please add a child:
+            <div ng-include="'views/player_form.html'"></div>
+        </div>
+        <footer class="first-time-footer">
+            Already have an account?
+            <div>
+                <a id="first-time-signin" ng-click="dialogs.signIn.open()">Sign in</a>
+            </div>
+        </footer>
+    </div>
+</div>

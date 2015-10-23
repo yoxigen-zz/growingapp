@@ -1,4 +1,4 @@
-(function(){
+define(["angular"], function(angular){
     'use strict';
 
     angular.module("Icons", []).factory("Icon", function(){
@@ -22,9 +22,9 @@
             if (!this._cssUrl)
                 this._cssUrl = "url(" + this.url + ")";
 
-            return this.cssUrl;
+            return this._cssUrl;
         });
 
         return Icon;
     });
-})();
+});

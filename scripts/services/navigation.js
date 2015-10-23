@@ -1,58 +1,144 @@
-app.factory("navigation", ["phonegap", "eventBus", "$route", "$rootScope", "users", function(phonegap, eventBus, $route, $rootScope, users){
-    var openPopups = [],
-        mainMenuItems = [
-            { text: "Settings", icon: "images/icons/settings.svg", onClick: function(e){
-                e.preventDefault();
-                eventBus.triggerEvent("showSettings");
-            } },
-            //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
-            //{ text: "Feedback / Bugs", href: "#/", icon: "images/icons/mail.svg" },
-            { text: "Sync data with cloud", icon: "images/icons/cloud_sync.svg", className: "disable-offline", onClick: function(e){
-                e.preventDefault();
+define(["app"], function (app) {
+    'use strict';
 
-                if (users.getCurrentUser())
-                    eventBus.triggerEvent("sync");
+    app.factory("navigation", navigation);
+
+    navigation.$inject = ["phonegap", "eventBus", "$route", "$rootScope", "users", "dialogs", "Dialog"];
+
+    function navigation(phonegap, eventBus, $route, $rootScope, users, dialogs, Dialog) {
+        var backButtonCallbacks = [],
+            mainMenuItems = [
+                {
+                    id: "settings",
+                    text: "Settings",
+                    icon: "images/icons/settings.svg",
+                    onClick: function(e){
+                        e.preventDefault();
+                        dialogs.settings.open();
+                    }
+                },
+                //{ text: "Share", href: "#/share", icon: "images/icons/share.svg" },
+                {
+                    id: "sync",
+                    text: "Sync data with cloud",
+                    icon: "images/icons/cloud_sync.svg",
+                    className: "disable-offline",
+                    onClick: function(e){
+                        e.preventDefault();
+
+                        if (users.getCurrentUser())
+                            eventBus.triggerEvent("sync");
+                        else
+                            dialogs.signIn.open();
+
+                        dialogs.menu.close();
+                    }
+                },
+                {
+                    id: "signOut",
+                    hide: true,
+                    text: "Sign out",
+                    icon: "images/icons/sign_out.svg",
+                    onClick: function(e){
+                        e.preventDefault();
+
+                        if (window.confirm("Warning: All unsaved entries will be deleted. Continue?")){
+                            users.logout();
+                        }
+
+                        dialogs.menu.close();
+                    }
+                },
+                {
+                    id: "contact",
+                    text: "Contact us",
+                    icon: "images/icons/mail.svg",
+                    className: "menu-item-separator",
+                    onClick: function(e){
+                        e.preventDefault();
+                        dialogs.contact.open();
+                    }
+                },
+                {
+                    id: "about",
+                    text: "About GrowingApp",
+                    icon: "images/icons/info.svg",
+                    onClick: function(e){
+                        e.preventDefault();
+                        dialogs.about.open();
+                    }
+                }
+            ],
+            pages = [
+                { name: "Diary", "url": "#/", icon: "images/icons/diary.svg", listIcon: "images/icons/diary-black.svg" },
+                { name: "Insights", "url": "#/insights", icon: "images/icons/charts-white.svg", listIcon: "images/icons/charts.svg" }
+            ];
+
+        phonegap.onBackButton.addEventListener(onBackButton);
+
+        function onBackButton(){
+            $rootScope.safeApply(function(){
+                if (backButtonCallbacks.length)
+                    backButtonCallbacks.pop()();
                 else
-                    eventBus.triggerEvent("showLogin");
+                    navigateUp();
+            });
+        }
 
-                eventBus.triggerEvent("hideMenu");
-            } },
-            { id: "signOut", hide: true, text: "Sign out", icon: "images/icons/sign_out.svg", onClick: function(e){
-                e.preventDefault();
-                eventBus.triggerEvent("hideMenu");
-                users.logout();
-                eventBus.triggerEvent("logout");
-            } }
-        ];
+        function navigateUp(){
+            var currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
+            if (currentPage === "diary"){
+                navigator.app.exitApp();
+            }
+            else if (currentPage === "insights"){
+                window.location.hash = "/";
+            }
+        }
 
-    phonegap.onBackButton.addEventListener(onBackButton);
-    eventBus.subscribe("popup.open", function(popup){
-        openPopups.push(popup);
-    });
-    eventBus.subscribe("popup.close", function(popup){
-        openPopups.pop();
-    });
+        var methods = {
+            addBackButtonCallback: function(callback){
+                if (!(callback instanceof Function))
+                    throw new TypeError("Invalid callback, expected a function but got " + callback);
 
-    function onBackButton(){
-        $rootScope.safeApply(function(){
-            if (openPopups.length)
-                openPopups[openPopups.length - 1].closeDialog();
-            else
-                navigateUp();
+                backButtonCallbacks.push(callback);
+            },
+            removeLastBackButtonCallback: function(){
+                backButtonCallbacks.pop();
+            },
+            currentPage:  window.location.hash === "#/insights" ? pages[1] : pages[0],
+            setCurrentPage: function(page){
+                page = ~pages.indexOf(page) ? page : pages[0];
+                methods.currentPage = page;
+                window.location.hash = page.url;
+            },
+            mainMenuItems: mainMenuItems,
+            pages: pages
+        };
+
+        $rootScope.$on("$routeChangeSuccess", function(){
+            var currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
+            methods.currentPage = currentPage === "diary" ? pages[0] : pages[1];
         });
-    }
 
-    function navigateUp(){
-        var currentPage = $route.current.$$route && $route.current.$$route.currentPage || "diary";
-        if (currentPage === "diary"){
-            navigator.app.exitApp();
+        initDialogs();
+
+        return methods;
+
+        function initDialog(dialog){
+            if (dialog instanceof Dialog){
+                dialog.onClose.subscribe(methods.removeLastBackButtonCallback);
+                dialog.onOpen.subscribe(function(){
+                    methods.addBackButtonCallback(function(){
+                        dialog.close(false);
+                    });
+                });
+            }
         }
-        else if (currentPage === "insights"){
-            window.location.hash = "/";
+
+        function initDialogs(){
+            for(var dialogName in dialogs){
+                initDialog(dialogs[dialogName]);
+            }
         }
     }
-
-    return {
-        mainMenuItems: mainMenuItems
-    };
-}]);
+});

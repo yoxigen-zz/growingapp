@@ -8,95 +8,99 @@
     <link rel="stylesheet" type="text/css" href="style/main.css"/>
     <script src="phonegap.js"></script>
 </head>
-<body ng-controller="MainController" class="flex-horizontal" ng-class="{ offline: offline }" ng-style="{ visibility: appVisibility}">
-    <div id="overlay" data-toggle-display="showMenu" ng-click="hideMenu()"></div>
-    <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="showMenu">
+<body ng-controller="MainController" ng-class="{ offline: offline }">
+    <div id="splashscreen" ng-class="{ 'hide': appLoaded }" ng-if="!splashscreenKill">
+        <div>
+            <h1>GrowingApp</h1>
+            <span class="spinner">
+                <img src="images/icons/spinner.svg" />
+            </span>
+        </div>
+    </div>
+    <div ng-if="showFirstTimeSelection" class="overlay flex-vertical" ng-include="'views/first_time.html'"></div>
+    <div id="overlay" class="overlay" data-toggle-display="dialogs.menu.isOpen" ng-click="dialogs.menu.close()"></div>
+    <div id="menu-wrapper" ng-class="{ render: !showFirstTimeSelection }" data-toggle-display="dialogs.menu.isOpen">
         <div id="menu">
-            <header class="actionbar"><span class="app-name">GrowingApp</span></header>
-            <ul id="players-menu">
-                <li ng-repeat="listPlayer in players" class="flex-horizontal"
-                    ng-class="{ selected: listPlayer.playerId === player.playerId, 'with-image': listPlayer.image.url }">
-                    <a ng-click="setCurrentPlayer(listPlayer); hideMenu()" class="flex-1"><img class="player-image" ng-if="listPlayer.image.url" ng-src="{{listPlayer.image.url}}" />
-                        {{::listPlayer.name}}
+            <header class="actionbar flex-horizontal">
+                <div class="flex-1 app-name">GrowingApp</div>
+                <div>
+                    <a class="actionbar-button" ng-click="dialogs.menu.close()">
+                        <img src="images/icons/back.svg" />
                     </a>
-                    <a ng-click="editPlayer(listPlayer); hideMenu()" class="players-menu-edit">
-                        <img class="child-menu-edit" src="images/icons/edit.svg"/>
-                    </a>
-                </li>
-                <li class="players-menu-add">
-                    <a class="button save-button" ng-click="addNewPlayer(); hideMenu()">
-                        <img class="child-menu-add" src="images/icons/plus.svg"/>
-                        Add Child
-                    </a>
-                </li>
-            </ul>
+                </div>
+            </header>
             <ul>
-                <li ng-repeat="item in ::menuItems" class="{{item.className}}" ng-class="{ selected: item.selected }" ng-show="!item.hide">
+                <li ng-repeat="item in ::navigation.mainMenuItems track by item.id" class="{{item.className}}" ng-show="!item.hide">
                     <a href="{{::item.href}}" ng-click="item.onClick($event)">
-                            <span class="menu-icon">
-                                <img ng-src="{{::item.icon}}"/>
-                            </span>
-                        <span class="menu-title">{{::item.text}}</span>
+                        <span class="menu-icon">
+                            <img ng-src="{{::item.icon}}"/>
+                        </span>
+                        <span class="menu-title">{{item.text}}</span>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-    <div class="flex-vertical flex-1">
-        <header class="flex-horizontal actionbar" id="app-title" ng-class="{ 'pad-side': showFirstTimeSelection }">
-            <a id="menu-button" class="actionbar-button" ng-click="toggleMenu()" ng-class="{ active: showMenu, render: !showFirstTimeSelection }">
+    <div class="flex-vertical full-height">
+        <header class="flex-horizontal actionbar"
+                id="app-title"
+                ng-show="!showFirstTimeSelection"
+                ng-class="{ 'pad-side': showFirstTimeSelection }"
+                ng-style="{ 'background-color': entries.currentEntriesType.color }">
+            <a id="menu-button" class="actionbar-button" ng-click="dialogs.menu.toggle()" ng-class="{ active: dialogs.menu.isOpen, render: !showFirstTimeSelection }">
                 <img src="images/icons/menu-lines.svg" title="Menu"/>
             </a>
-            <div class="flex-1">
-                <span id="actionbar-name" ng-bind="player.name || 'GrowingApp'"></span>
+            <div class="flex-1" id="actionbar-main" ng-cloak>
+                <dropdown close-on-click="true" button-text="{{players.currentPlayer.name}}" button-class="player-name">
+                    <ul class="dropdown-list">
+                        <li ng-repeat="player in players.allPlayers track by player.playerId" ng-click="players.setCurrentPlayer(player)" ng-class="{ selected: player.isCurrentPlayer }">
+                            <div class="list-icon player-list-icon" ng-style="{ 'background-image': player.image.cssUrl }"></div>{{player.name}}
+                        </li>
+                    </ul>
+                    <ul class="dropdown-list">
+                        <li ng-click="players.addNewPlayer(true)">
+                            <div class="list-icon" style="background-image: url(images/icons/plus-black.svg)"></div>Add Child
+                        </li>
+                    </ul>
+                </dropdown>
             </div>
             <div class="hide-default" ng-class="{ visible: !showFirstTimeSelection }">
-                <div id="spinner" toggle-display="showSpinner">
+                <div class="spinner" toggle-display="showSpinner">
                     <img src="images/icons/spinner.svg" />
                 </div>
-                <a class="actionbar-button selectable" href="#/" ng-class="{ selected: currentPage == 'diary' }">
-                    <img src="images/icons/list.svg" title="Diary" />
-                </a>
-                <a class="actionbar-button selectable" href="#/insights" ng-class="{ selected: currentPage == 'insights' }">
-                    <img src="images/icons/charts-white.svg" title="Charts" />
-                </a>
+                <dropdown ng-if="currentPage === 'diary'"
+                          button-class="{{!entries.currentEntriesType && 'disabled no-triangle'}}"
+                          button-icon="{{entries.currentEntriesType && entries.currentEntriesType.icon.url || 'images/icons/filter.svg'}}"
+                          close-on-click="true">
+                    <ul class="dropdown-list">
+                        <li ng-if="entries.currentEntriesType" ng-click="setEntriesType(null)">
+                            <img src="images/icons/close-red.svg" class="list-icon" />Clear filter
+                        </li>
+                        <li ng-repeat="entryType in ::entryTypes track by entryType.id" ng-class="{ selected: entryType === entries.currentEntriesType }" ng-click="setEntriesType(entryType)">
+                            <div class="list-icon" ng-style="{ 'background-color': entryType.color, 'background-image': entryType.icon.cssUrl }"></div>{{entryType.name}}
+                        </li>
+                    </ul>
+                </dropdown>
+                <dropdown button-icon="{{navigation.currentPage.icon}}" close-on-click="true">
+                    <ul class="dropdown-list">
+                        <li ng-repeat="page in ::navigation.pages track by page.name"
+                            ng-class="{ selected: page === navigation.currentPage }"
+                            ng-click="setEntriesType(null); navigation.setCurrentPage(page)"><img class="dropdown-list-icon" ng-src="{{page.listIcon}}" />{{page.name}}</li>
+                    </ul>
+                </dropdown>
             </div>
         </header>
-        <div id="contents-wrapper" class="flex flex-1">
+        <div id="contents-wrapper" class="flex flex-1" ng-if="!showFirstTimeSelection">
             <div id="contents" class="flex-1 flex-vertical" ng-view></div>
+            <div class="floating-message" ng-show="dialogs.unremoveEntry.isOpen">
+                <div class="floating-message-contents">
+                    <span class="floating-message-text"><span class="hide-smallest-width">Entry</span> Deleted</span>
+                    <a ng-click="entries.unremoveLastEntry()" id="undoEntryRemove"><img src="images/icons/undo.svg" /> Undo</a>
+                </div>
+            </div>
         </div>
     </div>
-    <slide-dialog show="showEditPlayer"
-                  title="{{editedPlayer.playerId && 'Edit Child' || 'Add New Child'}}"
-                  actions="editedPlayerActions"
-                  on-show="onShowDialog($event)" on-hide="onHideDialog()">
-        <div ng-include="'views/edit_player.html'"></div>
-    </slide-dialog>
-    <dialog show="showLogin" title="Sign In" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="signInActions" submit-action="signInSubmitAction">
-        <div ng-include="'views/login.html'"></div>
-    </dialog>
-    <slide-dialog show="showSignup" title="Sign Up" on-show="onShowDialog($event)" on-hide="onHideDialog()">
-        <div ng-include="'views/signup.html'"></div>
-    </slide-dialog>
-    <dialog show="showSyncOffer" title="It's time to backup!" on-show="onShowDialog($event)" on-hide="onHideDialog()" actions="syncOfferActions">
-        <div ng-include="'views/syncOffer.html'"></div>
-    </dialog>
-    <dialog show="showSettings"
-                  title="Settings"
-                  icon="settings_white"
-                  on-show="onShowDialog($event)"
-                  on-hide="onHideDialog()"
-                  submit-action="settingsSubmitAction">
-        <div ng-include="'views/settings.html'"></div>
-    </dialog>
-    <slide-dialog show="insights.currentInsight"
-                  title="{{insights.currentInsight.name}}"
-                  on-show="onShowDialog($event)"
-                  background="{{insights.currentInsight.entryType.color}}"
-                  class="no-padding {{insights.currentInsight.className}}"
-                  on-hide="onHideDialog()">
-        <div ng-include="insights.currentInsight.templateUrl"></div>
-    </slide-dialog>
+    <div ng-include="'views/global_dialogs.html'"></div>
     <ng-include src="'views/entry_templates.html'"></ng-include>
     <ng-include src="'views/entry_editors.html'"></ng-include>
     <script data-main="scripts/main.js" src="components/require.js"></script>
