@@ -3,16 +3,19 @@
   src: url(fonts/Roboto/Roboto-Regular.ttf);
   font-weight: 400;
   font-style: normal; }
+
 @font-face {
   font-family: 'Roboto';
   font-style: bold;
   font-weight: 700;
   src: url(fonts/Roboto/Roboto-Bold.ttf); }
+
 @font-face {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 300;
   src: url(fonts/Roboto/Roboto-Light.ttf); }
+
 html, body {
   height: 100%; }
 
@@ -28,7 +31,8 @@ html {
 .flex, body, .flex-horizontal, .buttons-bar, .double-panel, .flex-vertical, #first-time, .popup.visible, #insights-list .insight-text.center, .cards .card-info .card-details {
   display: -webkit-box;
   display: -webkit-flex;
-  display: flex; }
+  display: flex;
+  min-height: 0; }
 
 body {
   height: 100%;
@@ -183,7 +187,7 @@ a {
   height: 3.5rem;
   line-height: 3.4rem;
   background-color: #017fcf;
-  color: White;
+  color: white;
   box-shadow: 0 3px 4px rgba(0, 0, 0, 0.25);
   position: relative;
   z-index: 2;
@@ -322,8 +326,8 @@ a {
   position: relative; }
 
 .contents-header {
-  background: White;
-  color: #333;
+  background: white;
+  color: #333333;
   font-weight: bold;
   padding: 0.5rem 0.8rem;
   border-bottom: solid 1px #d2d2d2;
@@ -336,7 +340,7 @@ a {
     padding: 0; }
   .contents-header.dark {
     background: #163852;
-    color: White;
+    color: white;
     border-bottom: none; }
     .contents-header.dark select.fancy-select {
       color: White;
@@ -383,7 +387,7 @@ a {
       color: #017fcf;
       opacity: 1;
       font-weight: 400;
-      text-shadow: -1px 1px 0 White;
+      text-shadow: -1px 1px 0 white;
       font-size: 1.3rem; }
 
 .centered-buttons-block {
@@ -439,7 +443,7 @@ a {
     #tabs a:last-child {
       border-right: none; }
     #tabs a.selected {
-      background: #FCC435;
+      background: #fcc435;
       color: #222; }
     #tabs a span {
       display: block;
@@ -451,8 +455,10 @@ a {
 @-webkit-keyframes rotate {
   from {
     -webkit-transform: rotate(0deg); }
+
   to {
     -webkit-transform: rotate(-360deg); } }
+
 .spinner {
   -webkit-transition: opacity 400ms ease-out;
   -moz-transition: opacity 400ms ease-out;
@@ -541,7 +547,7 @@ a {
   #overlay.visible {
     display: block; }
   #overlay.active {
-    opacity: 0.4; }
+    opacity: .4; }
   @media all and (min-width: 1000px) {
     #overlay {
       display: none; } }
@@ -769,7 +775,7 @@ blockquote {
     transform: translateX(0); }
   .popup header {
     background: #017fcf;
-    color: White;
+    color: white;
     height: 3rem;
     line-height: 2.8rem;
     font-weight: 300; }
@@ -777,7 +783,7 @@ blockquote {
       max-height: 1.3rem;
       max-width: 1.3rem;
       vertical-align: middle;
-      margin-top: -.1rem;
+      margin-top: -0.1rem;
       margin-right: .3rem; }
     .popup header .popup-title {
       display: block;
@@ -928,8 +934,8 @@ blockquote {
     .dialog .dialog-actions .dialog-button-image {
       vertical-align: middle;
       height: 1.2rem;
-      margin-top: -.3rem;
-      margin: -.3rem .1rem 0; }
+      margin-top: -0.3rem;
+      margin: -0.3rem 0.1rem 0; }
   .dialog footer {
     padding: 1rem; }
 
@@ -1022,7 +1028,7 @@ select {
     vertical-align: middle;
     margin-right: .2rem;
     position: relative;
-    top: -.1rem; }
+    top: -0.1rem; }
   @media all and (max-width: 320px) {
     .button .button-text {
       display: none; } }
@@ -1047,10 +1053,10 @@ select {
 
 .save-button {
   background: #39b54a;
-  color: White;
+  color: white;
   cursor: pointer; }
   .save-button:hover, .save-button.active {
-    background-color: #3ED453; }
+    background-color: #3ed453; }
 
 .remove-button {
   background-color: #b52d35;
@@ -1491,7 +1497,7 @@ svg.graph {
       width: 5rem;
       height: 5rem; } }
   .player-edit .avatar.avatar-placeholder {
-    background: #01A8CF url(../images/icons/user.svg) no-repeat bottom center;
+    background: #01a8cf url(../images/icons/user.svg) no-repeat bottom center;
     background-size: contain; }
   .player-edit .avatar img {
     border-radius: 50%;
@@ -1635,7 +1641,7 @@ svg.graph {
   margin: 0 auto; }
   .data-table th {
     background: #163852;
-    color: White;
+    color: white;
     text-align: left; }
   .data-table th, .data-table td {
     padding: 1rem .5rem;
@@ -1766,7 +1772,7 @@ svg.graph {
   outline: none;
   -webkit-appearance: none; }
   .dropdown-directive-button.disabled {
-    opacity: 0.5; }
+    opacity: .5; }
   .dropdown-directive-button.no-triangle {
     padding-right: .5rem; }
   .dropdown-directive-button img {
@@ -1783,5 +1789,3 @@ svg.graph {
       top: -2px; }
   .dropdown-directive-button.black-button:not(.no-triangle)::after {
     border-top-color: #999; }
-
-/*# sourceMappingURL=main.css.map */

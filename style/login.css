@@ -116,7 +116,7 @@ a {
         background: #31353d;
         display: block; }
         #login form input[type=submit].facebook-button span, #login form .button.facebook-button span {
-          font-size: 0.8rem; }
+          font-size: .8rem; }
 
 .secondary-color {
   color: #979797; }

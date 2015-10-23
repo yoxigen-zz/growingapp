@@ -59,7 +59,7 @@ define(["angular"], function(angular){
                     selectedToothElement = toothElement;
 
                     if (setModel)
-                        ngModel.$setViewValue(toothElement.id);
+                        ngModel.$setViewValue(toothElement.getAttribute("data-id"));
                 }
             }
         };

@@ -13,6 +13,7 @@ html{
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  min-height: 0;
 }
 body{
   height: 100%;
@@ -21,7 +22,6 @@ body{
   color: $contentTextColor;
   padding: 0;
   margin: 0;
-
   font-size: 16px;
   -webkit-box-orient: vertical;
   -webkit-flex-flow: column;
